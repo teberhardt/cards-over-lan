@@ -24,14 +24,15 @@
         <h1 class="mobile-only nav-header">Menu</h1>
         <input type="button" value="About" id="btn-about" class="lah-btn lah-btn-small" onclick="showModal('modal-about')" />
         <input type="button" value="Options" id="btn-options" class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
-        <input type="button" value="Players" id="btn-players" class="lah-btn lah-btn-small" onclick="togglePlayerList()" />
+        <!-- <input type="button" value="Players" id="btn-players" class="lah-btn lah-btn-small" onclick="togglePlayerList()" /> -->
         <input type="button" value="Fullscreen" id="btn-fullscreen" class="lah-btn lah-btn-small" />
     </nav>
     <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
     <div id="game">
         <div id="black-card-area"></div>
         <div id="status-area">
-            <span id="status"></span>
+            <div id="status"></div>
+            <div id="player-count" title="Player count">--</div>
         </div>
         <div id="score-area">
             <div>

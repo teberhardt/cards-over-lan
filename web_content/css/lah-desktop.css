@@ -1,7 +1,28 @@
 /*DESKTOP*/
 @media only screen and (min-width: 771px){
-    
-/* Cards have .715 w/h ratio */
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #bbb;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #aaa;
+}
 
 :root {
     --card-width: 14rem;
@@ -131,48 +152,6 @@ smaller {
 
 /* PLAYER LIST */
 
-#player-list {
-    padding: 16pt 24pt;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    top: 50%;
-    left: 25%;
-    right: 25%;
-    min-height: 64pt;
-    transform: translate(0, -50%);
-    background: white; 
-    opacity: 1;
-    border: 2px solid black;
-    border-radius: 14pt;
-    transition: opacity .5s;
-}
-
-#player-list.closed {
-    pointer-events: none;    
-    opacity: 0;
-}
-
-.player-list-entry {
-    font-size: 14pt;
-    background: #fafafa;
-    display: grid;
-    grid-template-columns: [cl1] auto [cl2] 24pt [cl3];
-
-    border-radius: 4px;
-    padding: 10pt 8pt;
-    margin: 3pt 0;
-}
-
-.player-list-entry .player-name {
-    grid-column: cl1 / cl2;
-}
-
-.player-list-entry .player-points {
-    grid-column: cl2 / cl3;
-    text-align: center;
-}
 
 /* HAND AREA */
 
@@ -216,38 +195,51 @@ smaller {
 
 #status-area {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     color: black;
     left: 16pt;
-    top: 10pt;
-    font-size: 20pt;
-    line-height: 1.35em;
+    top: 10pt;        
+    min-width: 64pt;
     z-index: 2147483647;
+    cursor: default;
+    opacity: .65;
+    transition: opacity .3s;
+}
+
+#status-area:hover {
+    opacity: 1;
+}
+
+#status-area > *:not(:last-child) {
+    margin-bottom: 4pt;
+}
+
+#status {
+    font-size: 20pt;
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+#player-count {
+    font-size: 14pt;
+    text-align: left;    
+}
+
+#player-count:before {
+    content: "";
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 8pt;
+    transform: translateY(.25em);
+    background-image: url("/img/lah-person.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 /* SCORE AREA */
-#score-area {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 24pt;
-    width: 150pt;
-    height: 48pt;
-}
-
-#score-area > * {
-}
-
-#score-text {
-    width: 48pt;
-    margin-left: 24pt;
-    text-align: right;
-    transform: translateY(-2pt);
-}
 
 /* PLAY AREA */
 

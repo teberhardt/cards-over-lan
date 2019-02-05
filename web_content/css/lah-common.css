@@ -293,3 +293,19 @@ card[black] .ribbon[data-packaccent=black]:after {
     color: #fff !important;
     font-weight: 900;
 }
+
+.ribbon[data-packaccent=pink]:after {
+    background: #f78;
+    color: #000 !important;
+}
+
+.ribbon[data-packaccent=flesh]:after {
+    background: #fa9;
+    color: #a00 !important;
+}
+
+.ribbon[data-packaccent=nostalgia]:after {
+    background: #37d;
+    color: #f81 !important;
+    font-family: "Times New Roman", "LAH", sans-serif !important;
+}

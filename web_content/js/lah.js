@@ -511,7 +511,7 @@
     };
 
     function onPlayerListChanged() {
-
+        document.querySelector("#player-count").textContent = lah.playerList.length;
     }
 
     // Make sure the correct elements are visible/enabled

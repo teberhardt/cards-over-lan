@@ -162,6 +162,10 @@
         align-items: center;
     }
 
+    .lah-stage-playing:not(.lah-judge) #black-card-area card {
+       margin-bottom: 24pt; 
+    }
+
     .lah-stage-playing.lah-judge #black-card-area {
         grid-row: r-start / r-center;
         grid-column: c-start / c-end;
@@ -326,14 +330,53 @@
         justify-content: space-between;
     }
 
+    /* STATUS AREA */
+
     #status-area {
         position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        color: black;
         left: 10pt;
-        top: 10pt;
-        right: 24pt;
-        word-wrap: normal;
+        top: 10pt;  
+        right: 24pt;      
+        min-width: 64pt;
+        z-index: 2147483647;
+        cursor: default;
+        opacity: .65;
+        transition: opacity .3s;
+    }
+    
+    #status-area:hover {
+        opacity: 1;
+    }
+    
+    #status-area > *:not(:last-child) {
+        margin-bottom: 2pt;
+    }
+    
+    #status {
         font-size: 14pt;
-        text-align: left;
+        font-weight: 800;
+        margin-left: 2px;
+    }
+    
+    #player-count {
+        font-size: 10pt;
+        text-align: left;    
+    }
+    
+    #player-count:before {
+        content: "";
+        display: inline-block;
+        width: 1.3em;
+        height: 1.3em;
+        margin-right: 4pt;
+        transform: translateY(.25em);
+        background-image: url("/img/lah-person.png");
+        background-repeat: no-repeat;
+        background-size: contain;
     }
 
     #hand-cards-area {     

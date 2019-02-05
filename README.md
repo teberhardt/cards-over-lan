@@ -105,6 +105,12 @@ it's much easier for everyone if I decouple the CAH content from the game.
 
 This will be available as an option soon.
 
+### How can I contribute?
+
+The game isn't done and nothing is set in stone, so I'm reluctant to invite code contributions until the project is more mature.
+
+However, if you speak a language that isn't English and want to help me translate the cards, feel free to submit a pull request with your translations!
+
 ## Legal
 
 LAN Against Humanity is a clone of Cards Against Humanity. The original game, available at [cardsagainsthumanity.com](https://cardsagainsthumanity.com), is available under a [CC BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/2.0/). This project is in no way endorsed or sponsored by Cards Against Humanity. 
