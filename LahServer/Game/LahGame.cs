@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using LahServer.Game.Trophies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,9 @@ namespace LahServer.Game
 		// All white cards in the game
 		private readonly HashList<WhiteCard> _whiteCards;
 
+        // All trophies in the game
+        private readonly HashList<Trophy> _trophies;
+
 		// All packs in the game
 		private readonly Pack[] _packs;
 
@@ -90,6 +94,8 @@ namespace LahServer.Game
 		public event GameStageChangedEventDelegate StageChanged;
 		// Raised when a round has ended
 		public event RoundEndedEventDelegate RoundEnded;
+        // Raised when game has ended
+        public event GameEndedEventDelegate GameEnded;
 
 		public LahGame(IEnumerable<Pack> packs, LahSettings settings)
 		{
@@ -102,6 +108,7 @@ namespace LahServer.Game
 			_rng = new Random();
 			_cards = new Dictionary<string, Card>();
 			_roundPlays = new HashList<(LahPlayer, WhiteCard[])>();
+            _trophies = new HashList<Trophy>();
 
 			_packs = packs.ToArray();
 
@@ -118,8 +125,14 @@ namespace LahServer.Game
 				}
 			}
 
-			_blackCards.AddRange(_cards.Values.OfType<BlackCard>());
-			_whiteCards.AddRange(_cards.Values.OfType<WhiteCard>());
+			_blackCards.AddRange(_cards.Values.OfType<BlackCard>().Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x))));
+			_whiteCards.AddRange(_cards.Values.OfType<WhiteCard>().Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x))));
+
+            // Combine trophies
+            foreach(var trophy in packs.SelectMany(p => p.GetTrophies()))
+            {
+                _trophies.Add(trophy);
+            }
 
 			ResetCards();
 			NextJudge();
@@ -263,11 +276,25 @@ namespace LahServer.Game
 
 		private void NewGame()
 		{
-			ClearRoundPlays();
-			ResetCards();
-			_roundNum = 0;
-			_judgeIndex = -1;
-			Stage = GameStage.GameStarting;
+            lock(_allPlayersSync)
+            {
+                // Reset scores
+                foreach(var p in _players)
+                {
+                    p.ResetAwards();
+                }
+                
+                // Clear play data
+			    ClearRoundPlays();
+                // Reset all cards
+			    ResetCards();
+                // Reset round
+			    _roundNum = 0;
+			    _judgeIndex = -1;
+
+			    Stage = GameStage.GameStarting;
+                RaisePlayersChanged();
+            }
 		}
 
 		private void Shuffle<T>(HashList<T> list)
@@ -684,9 +711,15 @@ namespace LahServer.Game
 					}
 					break;
 				case GameStage.GameEnd:
+                    AssignTrophies();
 					GameEndTimeoutAsync();
 					break;
 				case GameStage.GameStarting:
+                    if (PlayerCount >= Settings.MinPlayers)
+                    {
+                        NewRound();
+                        return;
+                    }
 					ClearRoundPlays();
 					break;
 			}
@@ -694,6 +727,22 @@ namespace LahServer.Game
 			RaiseStageChanged(oldStage, currentStage);
 			RaiseStateChanged();
 		}
+
+        private void AssignTrophies()
+        {
+            foreach(var player in _players)
+            {
+                if (player.IsAsshole) continue;
+                foreach(var trophy in _trophies)
+                {
+                    if (trophy.IsPlayerEligible(player))
+                    {
+                        player.AddTrophy(trophy);
+                        Console.WriteLine($"{player} earned trophy: \"{trophy.Id}\"");
+                    }
+                }
+            }
+        }
 
 		private void SaveRoundPlays()
 		{
@@ -778,9 +827,11 @@ namespace LahServer.Game
 			RaiseStateChanged();
 		}
 
-		#endregion
+        #endregion
 
-		#region Event Raisers
+        #region Event Raisers
+
+        private void RaiseGameEnded() => GameEnded?.Invoke(GetWinningPlayers().ToArray());
 
 		private void RaiseRoundStarted() => RoundStarted?.Invoke();
 

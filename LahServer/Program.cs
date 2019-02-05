@@ -36,7 +36,7 @@ namespace LahServer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Failed to load deck '{deckPath}': {ex.Message}");
+                    Console.WriteLine($"Failed to load deck '{deckPath}': {ex}");
                 }
             }
 
@@ -46,6 +46,7 @@ namespace LahServer
 			Console.WriteLine($"Player limit: [{settings.MinPlayers}, {settings.MaxPlayers}]");
 			Console.WriteLine($"Hand size: {settings.HandSize}");
 			Console.WriteLine($"Perma-Czar: {settings.PermanentCzar}");
+            Console.WriteLine($"Points to win: {settings.MaxPoints}");
 			Console.WriteLine($"Cards: {_game.BlackCardCount + _game.WhiteCardCount} ({_game.WhiteCardCount}x white, {_game.BlackCardCount}x black)");
 			Console.WriteLine();
 			Console.WriteLine($"Packs:\n{decks.Select(d => $"        [{d}]").Aggregate((c, n) => $"{c}\n{n}")}");
@@ -55,6 +56,7 @@ namespace LahServer
 			_game.RoundStarted += OnGameRoundStarted;
 			_game.StageChanged += OnGameStageChanged;
 			_game.RoundEnded += OnGameRoundEnded;
+            _game.GameEnded += OnGameEnded;
 
             var hostCfg = new HostConfiguration
             {
@@ -75,6 +77,11 @@ namespace LahServer
                 Console.WriteLine("Stopping...");
                 gameServer.Stop();
             }
+        }
+
+        private static void OnGameEnded(LahPlayer[] winners)
+        {
+            Console.WriteLine($"Game ended. Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
         }
 
 		private static void OnGameRoundEnded(int round, LahPlayer roundWinner)

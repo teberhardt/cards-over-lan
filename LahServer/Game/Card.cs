@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace LahServer.Game
 {
@@ -17,6 +19,10 @@ namespace LahServer.Game
 
 		public bool IsCustom { get; private set; }
 
+        [JsonProperty("flags")]
+        [DefaultValue("")]
+        public string ContentFlags { get; private set; } = "";
+
 		public void AddContent(string languageCode, string content) => _content[languageCode] = content;
 
         public string GetContent(string languageCode) => String.IsNullOrWhiteSpace(languageCode) || !_content.TryGetValue(languageCode, out var c) ? null : c;
@@ -32,5 +38,25 @@ namespace LahServer.Game
 			card.AddContent("en-US", content);
 			return card;
 		}
+
+        public bool ContainsContentFlags(string flags)
+        {
+            var flagParts = flags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+            var cardFlagParts = ContentFlags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+            for(int i = 0; i < flagParts.Length; i++)
+            {
+                bool found = false;
+                for(int j = 0; j < cardFlagParts.Length; j++)
+                {
+                    if (cardFlagParts[j] == flagParts[i])
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return false;
+            }
+            return true;
+        }
     }
 }

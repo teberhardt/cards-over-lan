@@ -1,4 +1,5 @@
 ﻿using LahServer.Game.Converters;
+using LahServer.Game.Trophies;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,9 @@ namespace LahServer.Game
         [JsonProperty("cards")]        
         private readonly List<Card> _cards;
 
+        [JsonProperty("trophies")]
+        private readonly List<Trophy> _trophies;
+
         [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue(DefaultName)]
         public string Name { get; private set; } = DefaultName;
@@ -38,6 +42,7 @@ namespace LahServer.Game
             _blackCards = new Dictionary<string, BlackCard>();
             _whiteCards = new Dictionary<string, WhiteCard>();
             _cards = new List<Card>();
+            _trophies = new List<Trophy>();
         }
 
         [OnDeserialized]
@@ -58,6 +63,8 @@ namespace LahServer.Game
             }
         }
 
+        public IEnumerable<Trophy> GetTrophies() => _trophies.AsEnumerable();
+
         public WhiteCard GetWhiteCard(string id) => _whiteCards.TryGetValue(id, out var card) ? card : null;
 
         public BlackCard GetBlackCard(string id) => _blackCards.TryGetValue(id, out var card) ? card : null;
@@ -68,6 +75,6 @@ namespace LahServer.Game
 
         public IEnumerable<Card> GetAllCards() => _cards.AsEnumerable();
 
-        public override string ToString() => $"{Name} [{Id}] ({_cards.Count} cards)";
+        public override string ToString() => $"{Name} [{Id}] ({_cards.Count} cards, {_trophies.Count} trophies)";
     }
 }

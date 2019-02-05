@@ -583,6 +583,11 @@
                 playArea.setVisible(true);
                 handArea.setVisible(false);
                 break;
+            case STAGE_GAME_END:
+                handArea.setVisible(false);
+                playArea.setVisible(false);
+                btnPlay.setVisible(false);
+                break;
         }
 
         handCardsScrollArea.updateScrollTracking();
@@ -649,6 +654,9 @@
                         setStatusText("Nobody won the round");
                     }
                 }
+                break;
+            case STAGE_GAME_END:
+                setStatusText("Game over!");
                 break;
         }
     }

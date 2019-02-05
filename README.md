@@ -62,7 +62,7 @@ The settings.json file contains a number of properties that control how the serv
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
-|`content_exclude`|Array|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`exclude_content`|Array|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
 
 
 ## FAQ
@@ -103,7 +103,22 @@ it's much easier for everyone if I decouple the CAH content from the game.
 
 ### Can I filter out cards that mortally offend me?
 
-This will be available as an option soon.
+Use the `exclude_content` property in settings.json.
+
+Example: if you hate all violence and sexual content, you can do this to exclude any cards mentioning such things:
+
+```json
+"exclude_content": ["v", "s"]
+```
+
+If you only hate cards including both violence _and_ sexual content, but are fine with one or the other, combine the flags in one string.
+The order doesn't matter.
+
+```json
+"exclude_content": ["v s"]
+```
+
+After saving your changes, relaunch the server and enjoy your ten-card deck!
 
 ### How can I contribute?
 

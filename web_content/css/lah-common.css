@@ -230,14 +230,34 @@ span.highlight {
 
 .ribbon[data-packaccent=red]:after {
     background: #800;
+}.ribbon[data-packaccent=orange]:after {
+    background: #d70;
+    color: #000 !important;
+}
+
+.ribbon[data-packaccent=yellow]:after {
+    background: #ed0;
+    color: #000 !important;
+}
+
+.ribbon[data-packaccent=navy]:after {
+    background: #035;
 }
 
 .ribbon[data-packaccent=blue]:after {
     background: #36a;
 }
 
+.ribbon[data-packaccent=lightblue]:after {
+    background: #58c;
+}
+
 .ribbon[data-packaccent=green]:after {
     background: #181;
+}
+
+.ribbon[data-packaccent=turquoise]:after {
+    background: #2a8;
 }
 
 .ribbon[data-packaccent=black]:after {
@@ -245,7 +265,7 @@ span.highlight {
 }
 
 card[black] .ribbon[data-packaccent=black]:after {
-    background: #555;
+    background: #505050;
 }
 
 .ribbon[data-packaccent=purple]:after {

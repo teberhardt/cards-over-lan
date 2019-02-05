@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LahServer.Game.Trophies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace LahServer.Game
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
 		private readonly HashList<WhiteCard> _selectedCards;
+        private readonly HashList<Trophy> _trophies;
 		private int _score;
 		private string _name = "Player";
 		private bool _afk;
@@ -39,6 +41,7 @@ namespace LahServer.Game
 			_hand = new HashList<WhiteCard>();
 			_selectedCards = new HashList<WhiteCard>();
 			_prevPlays = new List<RoundPlay>();
+            _trophies = new HashList<Trophy>();
 		}
 
 		public string Name
@@ -73,6 +76,13 @@ namespace LahServer.Game
 		public bool IsAsshole { get; set; }
 
 		public int RemainingBlankCards => _blankCardsRemaining;
+
+        public void AddTrophy(Trophy trophy)
+        {
+            _trophies.Add(trophy);
+        }
+
+        public Trophy[] GetTrophies() => _trophies.ToArray();
 
 		/// <summary>
 		/// Adds cards to the player's hand. This does not remove cards from the game's draw pile.
@@ -177,6 +187,12 @@ namespace LahServer.Game
 				yield return play;
 			}
 		}
+
+        public void ResetAwards()
+        {
+            _score = 0;
+            _trophies.Clear();
+        }
 
 		public void ClearPreviousPlays()
 		{

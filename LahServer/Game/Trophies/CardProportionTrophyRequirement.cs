@@ -1,0 +1,43 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LahServer.Game.Trophies
+{
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    public sealed class CardProportionTrophyRequirement : TrophyRequirement
+    {
+        [JsonProperty("flags", Required = Required.Always)]
+        private readonly string[] _contentFlags;
+
+        [JsonProperty("winning")]
+        public bool Winning { get; set; }
+
+        [JsonProperty("percent")]
+        [DefaultValue(50)]
+        public int Percent { get; set; } = 50;
+
+        public override bool CheckPlayer(LahPlayer player)
+        {
+            int totalCards = 0;
+            int eligibleCards = 0;
+            foreach(var play in player.GetPreviousPlays())
+            {
+                totalCards += play.PromptCard.BlankCount;
+                if (Winning && !play.Winning) continue;
+                foreach(var card in play.GetCards())
+                {
+                    if (_contentFlags.Any(f => card.ContainsContentFlags(f)))
+                    {
+                        eligibleCards++;
+                    }
+                }
+            }
+            return eligibleCards * 100 / totalCards >= Percent;
+        }
+    }
+}

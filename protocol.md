@@ -140,10 +140,12 @@ The possible strings for the `stage` property are listed below:
     // Final results of game. Null if stage is not game_end.
     "game_results": {
         "winners": [123], // multiple if tie
-        "trophies": [
+        "trophy_winners": [
             {
-                "player_id": 123,
-                "trophy_id": "trophy_racist"
+                "id": 123,
+                "trophies": [
+                    { ... }
+                ]
             }
         ]
     }

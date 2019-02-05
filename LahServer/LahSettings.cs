@@ -122,6 +122,9 @@ namespace LahServer
 		[DefaultValue(false)]
 		public bool PermanentCzar { get; set; }
 
+        [JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string[] ContentExclusions { get; set; } = new string[0];
+
 		[JsonProperty("max_points", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultMaxPoints)]
 		public int MaxPoints

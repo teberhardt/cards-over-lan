@@ -1,13 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LahServer.Game.Converters;
 
 namespace LahServer.Game.Trophies
 {
-	public abstract class TrophyRequirement
+    [JsonConverter(typeof(TrophyRequirementConverter))]
+    public abstract class TrophyRequirement
 	{
-		public abstract bool CheckPlay(RoundPlay play);
-	}
+        public TrophyRequirement()
+        {
+        }
+
+        public abstract bool CheckPlayer(LahPlayer player);
+    }
 }

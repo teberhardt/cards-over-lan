@@ -223,7 +223,12 @@ namespace LahServer
 				game_results = Game.Stage == GameStage.GameEnd
 					? new
 					{
-						winners = Game.GetWinningPlayers().Select(p => p.Id)
+						winners = Game.GetWinningPlayers().Select(p => p.Id),
+                        trophy_winners = Game.GetPlayers().Select(p => new
+                        {
+                            id = p.Id,
+                            trophies = p.GetTrophies()
+                        })
 					}
 					: null
 			});

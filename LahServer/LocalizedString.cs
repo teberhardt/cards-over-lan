@@ -45,7 +45,9 @@ namespace LahServer
 			}
 		}
 
-		private sealed class Converter : JsonConverter
+        public override string ToString() => this[DefaultLocale];
+
+        private sealed class Converter : JsonConverter
 		{
 			public override bool CanConvert(Type objectType)
 			{

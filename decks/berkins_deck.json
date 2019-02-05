@@ -257,7 +257,8 @@
             "content": {
                 "en-US": "A horde of hungry cockroaches.",
                 "de-DE": "Eine Horde hungriger Kakerlaken."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_schoolshoot",
@@ -790,7 +791,8 @@
             "content": {
                 "en-US": "Cumming and shitting and farting.",
                 "de-DE": "Kommen und scheißen und furzen."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_disappoint",
@@ -864,7 +866,8 @@
             "content": {
                 "en-US": "A wet onion.",
                 "de-DE": "Eine nasse Zwiebel."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_smokealarm",
@@ -909,14 +912,16 @@
             "id": "w_cummies",
             "content": {
                 "en-US": "Daddy's cummies."
-            }
+            },
+            "flags": "s w g"
         },
         {
             "id": "w_citrusteeth",
             "content": {
                 "en-US": "Orange juice and toothpaste.",
                 "de-DE": "Orangensaft mit Zahnpasta."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_willsmith",
@@ -993,7 +998,8 @@
             "content": {
                 "en-US": "A Twinkie filled with dog shit.",
                 "de-DE": "Ein Twinkie voller Hundescheiße."
-            }
+            },
+            "flags": "g fe"
         },
         {
             "id": "w_fakedeath",
@@ -1014,7 +1020,8 @@
             "content": {
                 "en-US": "Wasps coming out of every orifice.",
                 "de-DE": "Wespen aus jeder Körperöffnung."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_2gophers",
@@ -1040,14 +1047,16 @@
             "content": {
                 "en-US": "Shitting in reverse.",
                 "da-DK": "Rückwärts scheißen."
-            }
+            },
+            "flags": "w g fe"
         },
         {
             "id": "w_pearlyv",
             "content": {
                 "en-US": "A vagina with teeth.",
                 "de-DE": "Eine Vagina mit Zähnen."
-            }
+            },
+            "flags": "gnf w g"
         },
         {
             "id": "w_billymays",
@@ -1074,7 +1083,8 @@
             "content": {
                 "en-US": "A sandwich filled with dog tongues.",
                 "de-DE": "Ein Sandwich voller Hundezungen."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_youngman",
@@ -1087,14 +1097,16 @@
             "content": {
                 "en-US": "Having teeth for fingernails.",
                 "de-DE": "Zähne für Fingernägel haben."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_coldgravy",
             "content": {
                 "en-US": "Cold gravy.",
                 "de-DE": "Kalte Bratensoße."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_badreplacement",
@@ -1134,7 +1146,8 @@
             "id": "w_earwaxballs",
             "content": {
                 "en-US": "Earwax gumballs."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_hairynips",
@@ -1148,7 +1161,8 @@
             "content": {
                 "en-US": "A turd dangling by one hair from a dog's quivering anus.",
                 "de-DE": "Ein Kackwurst, der an einem Haar an dem zitternden Anus eines Hundes baumelt."
-            }
+            },
+            "flags": "fe g"
         },
         {
             "id": "w_pressurewasher",
@@ -1172,7 +1186,8 @@
             "id": "w_colostomywine",
             "content": {
                 "en-US": "A full colostomy bag disguised as boxed wine."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_lotsababyoil",
@@ -1218,7 +1233,8 @@
             "content": {
                 "en-US": "A piss, shit, and vomit smoothie.",
                 "de-DE": "Ein Pisse-Scheiße-Kotze-Smoothie."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_strawsoulsuck",
@@ -1231,7 +1247,8 @@
             "content": {
                 "en-US": "Dollar store meat.",
                 "de-DE": "Dollarladenfleisch."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_gunfarts",
@@ -1289,14 +1306,16 @@
             "content": {
                 "en-US": "A massive, maggot-infested rectal prolapse oozing a swirling mixture of blood, pus, and shit.",
                 "de-DE": "Ein massiver, von Maden befallener Rektumprolaps, der eine wirbelnde Mischung aus Blut, Eiter und Scheiße hervorbringt."
-            }
+            },
+            "flags": "w g fe"
         },
         {
             "id": "w_macaronichoir",
             "content": {
                 "en-US": "The sound of 30 people fondling cooked macaroni.",
                 "de-DE": "Das Geräusch von 30 Leuten beim Streicheln gekochtes Makkaroni."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_loandefault",
@@ -1339,7 +1358,8 @@
             "content": {
                 "en-US": "A half-melted wax figure of Vincent D'Onofrio.",
                 "de-DE": "Eine halb geschmolzene Wachsfigur von Vincent D'Onofrio."
-            }
+            },
+            "flags": "w ce"
         },
         {
             "id": "w_thesex",
@@ -1384,7 +1404,8 @@
             "id": "w_toothypug",
             "content": {
                 "en-US": "A pug with human teeth."
-            }
+            },
+            "flags": "w an"
         },
         {
             "id": "w_nottheass",
@@ -1398,7 +1419,8 @@
             "content": {
                 "en-US": "A 15-pound turd.",
                 "de-DE": "Eine 7-Kilo-Kackwurst."
-            }
+            },
+            "flags": "g fe"
         },
         {
             "id": "w_cannedlolz",
@@ -1437,7 +1459,8 @@
             "id": "w_chilicondom",
             "content": {
                 "en-US": "A condom full of chili."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_chunkypb",
@@ -1475,7 +1498,8 @@
             "id": "w_4skinbucket",
             "content": {
                 "en-US": "A bucket full of foreskins."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_centersurprise",
@@ -1717,7 +1741,8 @@
             "id": "w_incestgenerations",
             "content": {
                 "en-US": "Five generations of incest."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_autotunedtween",
@@ -1879,7 +1904,8 @@
             "id": "w_cumtoast",
             "content": {
                 "en-US": "Artisan cum toast."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_catnutflick",
@@ -1891,13 +1917,15 @@
             "id": "w_centipeed",
             "content": {
                 "en-US": "A centipede crawling up your urethra."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_diarrheaslurp",
             "content": {
                 "en-US": "Feverishly slurping diarrhea."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "b_futureismeaningless",
