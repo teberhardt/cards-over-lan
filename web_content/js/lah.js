@@ -64,6 +64,7 @@
     const WS_URL = "ws://" + document.domain + ":3000/lah";
 
     lah = {};
+    lah.score = 0;
     lah.round = 0;
     lah.whiteCards = {};
     lah.blackCards = {};
@@ -243,10 +244,18 @@
         },
         "s_players": msg => {
             lah.playerList = msg.players;
+            for(let p of msg.players) {
+                if (p.id == lah.localPlayerId && p.score != lah.score) {
+                    lah.score = p.score;
+                    onClientScoreChanged();
+                    break;
+                }
+            }
             onPlayerListChanged();
         },
         "s_clientinfo": msg => {
             lah.localPlayerId = msg.player_id;
+            onClientScoreChanged();
             setPlayerName(msg.player_name, true);
         },
         "s_hand": msg => {
@@ -711,6 +720,11 @@
 
     function onJudgeSelectionChanged() {
 
+    }
+
+    function onClientScoreChanged() {
+        console.log("ass");
+        document.querySelector("#score").textContent = lah.score.toString();
     }
 
     window.onbeforeunload = function (e) {

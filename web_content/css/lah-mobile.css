@@ -362,7 +362,7 @@
         margin-left: 2px;
     }
     
-    #player-count {
+    #player-count, #score {
         font-size: 10pt;
         text-align: left;    
     }
@@ -375,6 +375,18 @@
         margin-right: 4pt;
         transform: translateY(.25em);
         background-image: url("/img/lah-person.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #score:before {
+        content: "";
+        display: inline-block;
+        width: 1.3em;
+        height: 1.3em;
+        margin-right: 4pt;
+        transform: translateY(.25em);
+        background-image: url("/img/lah-score.png");
         background-repeat: no-repeat;
         background-size: contain;
     }

@@ -160,7 +160,7 @@ Sent by the server to provide clients with the current list of players and their
     "players": [
         {
             "name": "Berkin",
-            "player_id": 123,
+            "id": 123,
             "score": 0
         }
     ]
@@ -192,7 +192,7 @@ Sent to a client to inform them of the cards they have played for the current ro
 
 ### s_clientinfo
 
-Contains player information that identifies a client. Sent by server when the player changes their name.
+Contains player information that identifies a client. Sent by server when the player changes their client options.
 
 ```json
 {
