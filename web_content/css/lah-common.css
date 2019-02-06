@@ -161,6 +161,8 @@ span.highlight {
     flex: none;
 }
 
+/* CARD SELECTION ANIMATIONS */
+
 @keyframes rumble {
     0% {
         transform: translate(0, 0);
@@ -179,6 +181,8 @@ span.highlight {
         transform: rotate(1.1deg);
     }
 }
+
+/* WIN SPIN ANIMATION */
 
 .lah-stage-round-end #play-cards-area .card-group.winner {
     animation: win-spin .9s 
@@ -207,6 +211,8 @@ span.highlight {
     }
 }
 
+/* SHOW/HIDE FADING */
+
 @keyframes fade-out {
     to {        
         display: none !important;
@@ -227,6 +233,22 @@ span.highlight {
 .fade {
     transition: opacity .3s, backdrop-filter .3s;
 }
+
+/* TROPHY IMAGES */
+
+.trophy[data-trophy-id="trophy_gross"] .trophy-icon {
+    background: url("/img/trophies/trophy_gross.png");
+}
+
+.trophy[data-trophy-id="trophy_dick1"] .trophy-icon {
+    background: url("/img/trophies/trophy_dick1.png");
+}
+
+.trophy[data-trophy-id="trophy_loosecannon"] .trophy-icon {
+    background: url("/img/trophies/trophy_loosecannon.png");
+}
+
+/* RIBBON ACCENTS */
 
 .ribbon[data-packaccent=red]:after {
     background: #800;

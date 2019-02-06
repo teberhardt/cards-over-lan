@@ -134,6 +134,7 @@ Card contents are identified using the content flags listed in the table below:
 |`pd`|Pedophilia.|
 |`re`|Religion or religious people.|
 |`s`|General sexual content flag.|
+|`su`|Suicide.|
 |`t`|Terrorism/Terroristic threats.|
 |`v`|General violence flag.|
 |`w`|Generally regarded as weird or unsettling.|

@@ -1,4 +1,12 @@
 (() => {
+    const STAGE_GAME_STARTING = "game_starting";
+    const STAGE_PLAYING = "playing";
+    const STAGE_JUDGING = "judging";
+    const STAGE_ROUND_END = "round_end";
+    const STAGE_GAME_END = "game_end";
+    const WS_URL = "ws://" + document.domain + ":3000/lah";
+    const DEFAULT_LOCALE = "en-US";
+
     class Card {
         constructor(type, id, content, blanks, pack) {
             this._id = id;
@@ -25,7 +33,7 @@
         }
 
         getContent(langCode) {
-            return this._content[langCode] || this._content["en-US"] || "???";
+            return this._content[langCode] || this._content[DEFAULT_LOCALE] || "???";
         }
 
         getLocalContent() {
@@ -33,7 +41,7 @@
         }
 
         toString() {
-            this._content["en-US"] || "???";
+            this._content[DEFAULT_LOCALE] || "???";
         }
 
         static fromObject(json) {
@@ -55,13 +63,6 @@
         }
         return -1;
     }
-
-    const STAGE_GAME_STARTING = "game_starting";
-    const STAGE_PLAYING = "playing";
-    const STAGE_JUDGING = "judging";
-    const STAGE_ROUND_END = "round_end";
-    const STAGE_GAME_END = "game_end";
-    const WS_URL = "ws://" + document.domain + ":3000/lah";
 
     lah = {};
     lah.score = 0;
@@ -99,6 +100,9 @@
     let blackCardArea = null;
     let judgeStatusCardText = null;
     let judgeMessageBody = null;
+    let gameEndScreen = null;
+    let gameEndScoreboardEntries = null;
+    let gameEndTrophiesList = null;
     let btnPlay = null;
     let btnPick = null;
 
@@ -113,6 +117,10 @@
             .replace("(", "&lpar;")
             .replace(")", "&rpar;")
             .replace(/[\n]/, "<br/>");
+    }
+
+    function getLocalString(localizedStringObject) {
+        return localizedStringObject[navigator.language] || localizedStringObject[DEFAULT_LOCALE] || Object.values(localizedStringObject)[0] || "???";
     }
 
     // Make an HTMLElement from the specified Card object
@@ -188,6 +196,50 @@
         logo.setAttribute("aria-hidden", "true");
         el.appendChild(logo);
         return el;
+    }
+
+    function makeFinalScoreboardElement(player, isWinner) {
+        if (!lah.gameResults || !player) return null;
+
+        let e = document.createElement("div");
+        e.classList.add("scoreboard-entry");
+        if (isWinner) {
+            e.classList.add("winner");
+        }
+
+        let eNameCol = document.createElement("div");
+        eNameCol.classList.add("text", "name");
+        eNameCol.setAttribute("data-text", player.name);
+        e.appendChild(eNameCol);
+
+        let eScoreCol = document.createElement("div");
+        eScoreCol.classList.add("text", "score");
+        eScoreCol.setAttribute("data-text", player.score.toString());
+        e.appendChild(eScoreCol);
+
+        let eTrophiesCol = document.createElement("div");
+        eTrophiesCol.classList.add("trophies");
+        e.appendChild(eTrophiesCol);
+
+        // TODO: Trophies in scoreboard entries
+
+        return e;
+    }
+
+    function makeTrophyElement(trophyData) {
+        let e = document.createElement("div");
+        e.classList.add("trophy");
+        let trophyName = getLocalString(trophyData.name);
+        let trophyDesc = getLocalString(trophyData.desc);
+        let trophyId = trophyData.id;
+        e.setAttribute("data-trophy-name", trophyName);
+        e.setAttribute("data-trophy-desc", trophyDesc);
+        e.setAttribute("data-trophy-id", trophyId);
+        let eIcon = document.createElement("div");
+        eIcon.classList.add("trophy-icon");
+        e.appendChild(eIcon);
+
+        return e;
     }
 
     function clearObject(o) {
@@ -537,6 +589,7 @@
         gameArea.setClass("lah-stage-round-end", lah.stage == STAGE_ROUND_END);
         gameArea.setClass("lah-stage-gane-end", lah.stage == STAGE_GAME_END);
         gameArea.setClass("lah-judge", lah.isClientJudge);
+        gameEndScreen.setVisible(lah.stage == STAGE_GAME_END);
 
         switch (lah.stage) {
             case STAGE_GAME_STARTING:
@@ -600,6 +653,29 @@
 
         handCardsScrollArea.updateScrollTracking();
         playCardsScrollArea.updateScrollTracking();
+    }
+
+    function populateGameEndScoreboard() {
+        gameEndScoreboardEntries.killChildren();
+        gameEndTrophiesList.killChildren();
+
+        if (!lah.gameResults) return;
+
+        let rankedPlayers = lah.playerList.slice(0).sort((p1, p2) => p2.score - p1.score);
+
+        for(let player of rankedPlayers) {
+            let isWinner = lah.gameResults.winners.includes(player.id);
+            let eEntry = makeFinalScoreboardElement(player, isWinner);
+            if (eEntry) gameEndScoreboardEntries.appendChild(eEntry);
+        }
+
+        let myTrophies = lah.gameResults.trophy_winners.find(tw => tw.id == lah.localPlayerId);
+        if (myTrophies) {
+            for(let trophyData of myTrophies.trophies) {
+                let eTrophy = makeTrophyElement(trophyData);
+                if (eTrophy) gameEndTrophiesList.appendChild(eTrophy);
+            }
+        }
     }
 
     // Called when game state is updated via s_gamestate
@@ -695,6 +771,10 @@
                         }
                     }
                 }
+            case STAGE_GAME_END:
+                {
+                    populateGameEndScoreboard();   
+                }
         }
     }
 
@@ -739,7 +819,6 @@
     }
 
     function onClientScoreChanged() {
-        console.log("ass");
         document.querySelector("#score").textContent = lah.score.toString();
     }
 
@@ -767,6 +846,9 @@
         blackCardArea = document.getElementById("black-card-area");
         judgeStatusCardText = document.getElementById("judge-status-card-text");
         judgeMessageBody = document.getElementById("judge-message-body");
+        gameEndScreen = document.getElementById("game-end-screen");
+        gameEndScoreboardEntries = document.getElementById("game-end-scoreboard-entries");
+        gameEndTrophiesList = document.getElementById("game-end-trophies-list");
 
         updateStatus();
         updateUiState();

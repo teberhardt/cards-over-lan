@@ -66,26 +66,56 @@
                     <input type="button" value="PLAY" id="btn-play" class="lah-btn hidden" />
             </div>
         </div>
-        <div id="game-end-screen" class="hidden">
+        <div id="game-end-screen" class="fade hidden">
             <div id="game-end-grid">
                 <div id="game-end-heading">
                     Game Results
                 </div>
                 <div id="game-end-scoreboard">
-
+                    <div id="game-end-scoreboard-header">
+                        <div class="header-name">Name</div>
+                        <div class="header-score">Score</div>
+                        <div class="header-trophies">Trophies</div>
+                    </div>
+                    <div id="game-end-scoreboard-entries">
+                        <div class="scoreboard-entry winner">
+                            <div class="text name" data-text="Berkin"></div>
+                            <div class="text score" data-text="5"></div>
+                            <div class="trophies"></div>
+                        </div>
+                        <div class="scoreboard-entry">
+                            <div class="text name" data-text="Michael"></div>
+                            <div class="text score" data-text="3"></div>
+                            <div class="trophies"></div>
+                        </div>
+                        <div class="scoreboard-entry">
+                                <div class="text name" data-text="Moist Billyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"></div>
+                                <div class="text score" data-text="1"></div>
+                                <div class="trophies"></div>
+                            </div>
+                    </div>
                 </div>                
                 <div id="game-end-trophies-area">
                     <div id="game-end-trophies-heading">
                         Trophies
                     </div>
                     <div id="game-end-trophies-list">
-                        <div class="trophy" data-trophy-name="Disgusting Motherfucker" data-trophy-desc="What the fuck is wrong with you?">
+                        <div class="trophy" 
+                        data-trophy-name="Disgusting Motherfucker" 
+                        data-trophy-desc="What the fuck is wrong with you?!" 
+                        data-trophy-id="trophy_gross">
                             <div class="trophy-icon"></div>
                         </div>
-                        <div class="trophy" data-trophy-name="Grandmaster of the Golden Phallus" data-trophy-desc="Awarded only to a true master of dick jokes. Truly the highest honor anyone can ever receive.">
+                        <div class="trophy" 
+                        data-trophy-name="Grandmaster of the Golden Phallus" 
+                        data-trophy-desc="Awarded only to a true master of dick jokes. Truly the highest honor anyone can ever receive."
+                        data-trophy-id="trophy_dick4">
                                 <div class="trophy-icon"></div>
                         </div>
-                        <div class="trophy" data-trophy-name="Loose Cannon" data-trophy-desc="Probably will end up on the news.">
+                        <div class="trophy" 
+                        data-trophy-name="Loose Cannon" 
+                        data-trophy-desc="Probably will end up on the news."
+                        data-trophy-id="trophy_loosecannon">
                                 <div class="trophy-icon"></div>
                         </div>
                     </div>    

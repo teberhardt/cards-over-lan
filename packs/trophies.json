@@ -142,8 +142,8 @@
                 "de-DE": "Verdammt Ekelhaft"
             },
             "desc": {
-                "en-US": "What the fuck is wrong with you?",
-                "de-DE": "Was zur Hölle ist los mit dir?"
+                "en-US": "What the fuck is wrong with you?!",
+                "de-DE": "Was zur Hölle ist los mit dir?!"
             },
             "requirements": [
                 {
@@ -151,6 +151,24 @@
                     "flags": ["g"],
                     "winning": true,
                     "percent": 30
+                }
+            ]
+        },
+        {
+            "id": "trophy_futurekiller",
+            "name": {
+                "en-US": "Aspiring Serial Killer",
+                "de-DE": "Zukünftiger Serienmörder"
+            },
+            "desc": {
+                "en-US": "Thinks up \"theoretical\" methods of torturing and murdering people."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["mu", "bg", "a bg", "a i", "ch i"],
+                    "winning": false,
+                    "percent": 45
                 }
             ]
         }
