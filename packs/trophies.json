@@ -166,9 +166,34 @@
             "requirements": [
                 {
                     "type": "card_proportion",
-                    "flags": ["mu", "bg", "a bg", "a i", "ch i"],
+                    "flags": ["mu", "bg", "a bg", "a i", "ch i", "to"],
                     "winning": false,
                     "percent": 45
+                }
+            ]
+        },
+        {
+            "id": "trophy_innocent",
+            "name": {
+                "en-US": "Innocent",
+                "de-DE": "Unschuldiger"
+            },
+            "desc": {
+                "en-US": "Somehow manage not to play any explicit cards, completely defeating the purpose of the game.",
+                "de-DE": "Es irgendwie schaffen, keine sensiblen Karten zu spielen und dadurch den ganzen Zweck des Spiels zu verfehlen."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "maximum": true,
+                    "winning": false,
+                    "percent": 0,
+                    "flags": [
+                        "a", "as", "bd", "bg", "cn", "a_cr", "ch_cr", "d", "ds", "db", 
+                        "di", "dr", "fe", "g", "gn", "gnm", "gnf", "hp", "i", "ma", 
+                        "mg", "mu", "ncs", "nh", "pd", "s", "su", "t", "to", "v",
+                        "x", "xf"
+                    ]
                 }
             ]
         }

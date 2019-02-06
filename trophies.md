@@ -136,6 +136,7 @@ Card contents are identified using the content flags listed in the table below:
 |`s`|General sexual content flag.|
 |`su`|Suicide.|
 |`t`|Terrorism/Terroristic threats.|
+|`to`|Torture.|
 |`v`|General violence flag.|
 |`w`|Generally regarded as weird or unsettling.|
 |`x`|Pornography.|

@@ -12,7 +12,7 @@ namespace LahServer.Game.Trophies
     public sealed class CardProportionTrophyRequirement : TrophyRequirement
     {
         [JsonProperty("flags", Required = Required.Always)]
-        private readonly string[] _contentFlags;
+        private readonly List<string> _contentFlags = new List<string>();
 
         [JsonProperty("winning")]
         public bool Winning { get; set; }
@@ -20,6 +20,9 @@ namespace LahServer.Game.Trophies
         [JsonProperty("percent")]
         [DefaultValue(50)]
         public int Percent { get; set; } = 50;
+
+        [JsonProperty("maximum")]
+        public bool Maximum { get; set; } = false;
 
         public override bool CheckPlayer(LahPlayer player)
         {
@@ -37,7 +40,7 @@ namespace LahServer.Game.Trophies
                     }
                 }
             }
-            return eligibleCards * 100 / totalCards >= Percent;
+            return Maximum ? eligibleCards * 100 / totalCards <= Percent : eligibleCards * 100 / totalCards >= Percent;
         }
     }
 }

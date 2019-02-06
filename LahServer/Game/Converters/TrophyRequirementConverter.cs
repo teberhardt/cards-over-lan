@@ -28,6 +28,7 @@ namespace LahServer.Game.Converters
         static TrophyRequirementConverter()
         {
             RegisterRequirementType("card_proportion", typeof(CardProportionTrophyRequirement));
+            RegisterRequirementType("cards_played", typeof(CardsPlayedTrophyRequirement));
         }
 
         private static void RegisterRequirementType(string requirementName, Type requirementType)

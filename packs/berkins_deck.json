@@ -3,6 +3,27 @@
     "name": "Berkin's Big Deck",
     "accent": "purple",
     "author": "Nicholas Fleck, Matthew Farstad, Jessica Fleck",
+    "trophies": [
+        {
+            "id": "trophy_beans",
+            "name": {
+                "en-US": "The Bean Trifecta",
+                "de-DE": "Der Bohnendreier"
+            },
+            "desc": {
+                "en-US": "Combine all three bean cards into the ultimate play, and emerge victorious.",
+                "de-DE": "Alle drei Bohnenkarten zur ultimativen Antwort kombinieren und die Runde gewinnen."
+            },
+            "requirements": [
+                {
+                    "type": "cards_played",
+                    "winning": true,
+                    "single_play": true,
+                    "cards": ["w_beangrail", "w_beandog", "w_beanyboi"]
+                }
+            ]
+        }
+    ],
     "cards": [
         {
             "id": "w_saddick",
@@ -928,14 +949,16 @@
             "content": {
                 "en-US": "Will Smith.",
                 "de-DE": "Will Smith."
-            }
+            },
+            "flags": "ce"
         },
         {
             "id": "w_nakedneighbor",
             "content": {
                 "en-US": "Seeing your neighbor masturbating and not being able to look away.",
                 "de-DE": "Deinen Nachbar beim Masturbieren sehen und nicht wegschauen können."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_happygrunt",
@@ -953,7 +976,8 @@
             "id": "w_goodolsex",
             "content": {
                 "en-US": "Good ol'-fashioned missionary."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_justtencents",
@@ -967,7 +991,8 @@
             "content": {
                 "en-US": "Unexpected wetness.",
                 "de-DE": "Unerwartete Nässe."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_altuniverse",
@@ -991,7 +1016,8 @@
             "id": "w_donalddick",
             "content": {
                 "en-US": "Donald Duck getting drilled in the ass by Goofy."
-            }
+            },
+            "flags": "fc s nh"
         },
         {
             "id": "w_badtwinkie",
@@ -1063,20 +1089,23 @@
             "content": {
                 "en-US": "BILLY MAYS HERE WITH AN AMAZING NEW PRODUCT!",
                 "de-DE": "BILLY MAYS HIER MIT EINEM FANTASTISCHEN NEUEN PRODUKT!"
-            }
+            },
+            "flags": "ce"
         },
         {
             "id": "w_mjfoxsurgery",
             "content": {
                 "en-US": "Michael J. Fox performing brain surgery."
-            }
+            },
+            "flags": "ce di"
         },
         {
             "id": "w_vomitlaugh",
             "content": {
                 "en-US": "Vomiting and laughing at the same time.",
                 "de-DE": "Gleichzeitig kotzen und lachen."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_dogtonguewich",
@@ -1120,7 +1149,8 @@
             "content": {
                 "en-US": "A porn video playing at double speed.",
                 "de-DE": "Einen Porno mit doppelter Geschwindigkeit abspielen."
-            }
+            },
+            "flags": "x"
         },
         {
             "id": "w_burninghairsmell",
@@ -1140,7 +1170,8 @@
             "id": "w_shitfan",
             "content": {
                 "en-US": "Shit <i>literally</i> hitting a fan."
-            }
+            },
+            "flags": "fe"
         },
         {
             "id": "w_earwaxballs",
@@ -1168,7 +1199,8 @@
             "id": "w_pressurewasher",
             "content": {
                 "en-US": "Sticking a pressure washer up your dick hole... for science!"
-            }
+            },
+            "flags": "xf gnm s"
         },
         {
             "id": "w_youfuckedup",
@@ -1226,7 +1258,8 @@
             "content": {
                 "en-US": "A warm glass of spit.",
                 "de-DE": "Ein warmes Glas Speichel."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_psvsmoothie",
@@ -1240,7 +1273,8 @@
             "id": "w_strawsoulsuck",
             "content": {
                 "en-US": "Sucking out someone's soul with a bendy straw."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_dollarmeat",
@@ -1255,31 +1289,35 @@
             "content": {
                 "en-US": "Farts that sound like gunshots.",
                 "de-DE": "Fürze, die wie Schüsse klingen."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_isismusic",
             "content": {
                 "en-US": "ISIS recruitment videos with oddly catchy music."
-            }
+            },
+            "flags": "t"
         },
         {
             "id": "w_kidsoldiers",
             "content": {
                 "en-US": "Child soldiers.",
                 "de-DE": "Kindersoldaten."
-            }
+            },
+            "flags": "ch"
         },
         {
             "id": "w_tastyfetus",
             "content": {
                 "en-US": "An aborted fetus that looks oddly appetizing."
-            }
+            },
+            "flags": "db cn"
         },
         {
-            "id": "w_loudassslap",
+            "id": "w_nuclearslap",
             "content": {
-                "en-US": "Slapping that ass so hard the resulting shockwave shakes the whole house."
+                "en-US": "A slap so hard it shakes the Earth."
             }
         },
         {
@@ -1327,13 +1365,15 @@
             "id": "w_steamrollerdeath",
             "content": {
                 "en-US": "Being slowly crushed by a steamroller."
-            }
+            },
+            "flags": "d i bg"
         },
         {
             "id": "w_callherslut",
             "content": {
                 "en-US": "Affectionately calling her a dirty slut."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_eightdirtytalk",
@@ -1735,7 +1775,8 @@
             "id": "w_abortiondestination",
             "content": {
                 "en-US": "The place where all the aborted fetuses go."
-            }
+            },
+            "flags": "db"
         },
         {
             "id": "w_incestgenerations",
@@ -1778,13 +1819,15 @@
             "id": "w_taintsweat",
             "content": {
                 "en-US": "Taint sweat."
-            }
+            },
+            "flags": "gn"
         },
         {
             "id": "w_blueberryporn",
             "content": {
                 "en-US": "Blueberry porn."
-            }
+            },
+            "flags": "w x"
         },
         {
             "id": "w_fornitedancelaw",
@@ -1802,7 +1845,8 @@
             "id": "w_gleamingthorax",
             "content": {
                 "en-US": "His gleaming thorax."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_master",
@@ -1814,7 +1858,8 @@
             "id": "w_livestockworship",
             "content": {
                 "en-US": "Livestock worshippers."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_toomuchbutterwow",
@@ -1832,13 +1877,15 @@
             "id": "w_spaghetbible",
             "content": {
                 "en-US": "A hollowed-out Bible full of spaghetti."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_transfurries",
             "content": {
                 "en-US": "Transhumanist furries."
-            }
+            },
+            "flags": "xf s"
         },
         {
             "id": "w_torsowormkid",
@@ -1862,7 +1909,8 @@
             "id": "w_bootycall",
             "content": {
                 "en-US": "A booty call."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_fatpogoman",
@@ -1880,7 +1928,8 @@
             "id": "w_rhinovagina",
             "content": {
                 "en-US": "A rhinoceros' vagina."
-            }
+            },
+            "flags": "an gn gnf"
         },
         {
             "id": "w_angrypenisbite",
@@ -1898,7 +1947,8 @@
             "id": "w_fancyrimjob",
             "content": {
                 "en-US": "Tongue-lashing the brown star."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_cumtoast",
@@ -1918,14 +1968,14 @@
             "content": {
                 "en-US": "A centipede crawling up your urethra."
             },
-            "flags": "g"
+            "flags": "g gn"
         },
         {
             "id": "w_diarrheaslurp",
             "content": {
                 "en-US": "Feverishly slurping diarrhea."
             },
-            "flags": "g"
+            "flags": "g fe"
         },
         {
             "id": "b_futureismeaningless",
