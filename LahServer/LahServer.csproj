@@ -98,8 +98,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rmdir /s /q "$(TargetDir)web_content"
-rmdir /s /q "$(TargetDir)decks"
+rmdir /s /q "$(TargetDir)packs"
 xcopy /e /s /y /i "$(SolutionDir)web_content" "$(TargetDir)web_content"
-xcopy /e /s /y /i "$(SolutionDir)decks" "$(TargetDir)decks"</PostBuildEvent>
+xcopy /e /s /y /i "$(SolutionDir)packs" "$(TargetDir)packs"</PostBuildEvent>
   </PropertyGroup>
 </Project>

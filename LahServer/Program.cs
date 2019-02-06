@@ -12,6 +12,9 @@ namespace LahServer
 {
     class Program
     {
+        private const string PacksDirectory = "packs";
+        private const string SettingsFilePath = "settings.json";
+
 		private static LahGame _game;
 
         static void Main(string[] args)
@@ -24,10 +27,10 @@ namespace LahServer
             var decks = new List<Pack>();
 
 			// Load the settings
-			var settings = LahSettings.FromFile("settings.json");
+			var settings = LahSettings.FromFile(SettingsFilePath);
 
             // Load all the decks
-            foreach(var deckPath in Directory.EnumerateFiles("decks", "*.json", SearchOption.AllDirectories))
+            foreach(var deckPath in Directory.EnumerateFiles(PacksDirectory, "*.json", SearchOption.AllDirectories))
             {
                 try
                 {

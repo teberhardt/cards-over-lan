@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Cards Against Humanity decks
-/decks/cah/
+/packs/cah/
 
 # User-specific files
 *.rsuser

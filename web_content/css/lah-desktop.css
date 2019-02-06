@@ -251,7 +251,109 @@ smaller {
     background-size: contain;
 }
 
-/* SCORE AREA */
+/* GAME OVER SCREEN / TROPHIES */
+
+#game-end-screen {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+    background: rgba(0, 0, 0, .4);
+}
+
+#game-end-grid {
+    display: grid;
+    grid-template-rows: [r-start] 48pt [r-center] auto [r-end];
+    grid-template-columns: [c-start] auto [c-center] 150pt [c-end];
+    min-width: 600px;
+    width: 60%;
+    max-width: 1024px;
+    min-height: 70%;
+    max-height: 90%;
+    overflow: hidden;
+    background: #dfdfdf;
+    border-radius: var(--card-border-radius);
+}
+
+#game-end-heading {
+    padding: 16pt 24pt;
+    font-size: 28pt;
+}
+
+#game-end-trophies-heading {
+    color: #eee;
+    font-size: 22pt;
+    text-align: center;
+    padding: 16pt 8pt;
+}
+
+#game-end-trophies-area {
+    grid-row: r-start / r-end;
+    grid-column: c-center / c-end;
+    display: flex;
+    flex-direction: column;
+    background: #333;
+}
+
+#game-end-trophies-list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.trophy {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 16pt;
+}
+
+.trophy:before {
+    content: attr(data-trophy-name) ":\a\a" attr(data-trophy-desc);
+    white-space: pre-wrap;
+    line-height: 1.35em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding: 8pt;
+    color: #eee;
+    font-size: 11pt;
+    background: #222;
+    transition: opacity .3s;
+}
+
+.trophy:not(:hover):before {
+    opacity: 0;
+}
+
+.trophy .trophy-icon {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #ddd;
+    background: black;
+    box-sizing: border-box;
+    border-radius: 50%;
+}
+
+.trophy:after {
+    content: attr(data-trophy-name);
+    color: #ddd;
+    margin-top: 6pt;
+    font-size: 12pt;
+    padding: 0 16pt;
+    text-align: center;
+}
 
 /* PLAY AREA */
 

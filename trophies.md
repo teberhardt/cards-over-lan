@@ -139,5 +139,3 @@ Card contents are identified using the content flags listed in the table below:
 |`w`|Generally regarded as weird or unsettling.|
 |`x`|Pornography.|
 |`xf`|Unusual or extreme fetishes (e.g. genital torture, scat, vomit).|
-
-## Trophy requirements

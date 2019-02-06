@@ -87,6 +87,7 @@
     lah.isWaitingOnPlayer = false;
     lah.numBlanks = 0;
     lah.blankCards = []; // Array of strings containing blank card contents
+    lah.gameResults = null;
 
     let gameArea = null;
     let handArea = null;
@@ -227,6 +228,8 @@
             lah.winningPlayerId = msg.winning_player;
             lah.winningPlayIndex = msg.winning_play;
             lah.isWaitingOnPlayer = msg.pending_players.includes(lah.localPlayerId);
+            lah.gameResults = msg.game_results;
+
             // Update black card if necessary
             updateBlackCard(msg.black_card);
             // Update stage-related stuff
@@ -542,10 +545,12 @@
                 btnPlay.setVisible(false);
                 playArea.setVisible(false);
                 handArea.setVisible(false);
+                blackCardArea.setVisible(false);
                 break;
             case STAGE_PLAYING:
                 setEnabled("hand-cards-area", handEnabled);
                 setEnabled("btn-play", handEnabled);
+                blackCardArea.setVisible(true);
                 btnPlay.setVisible(lah.isWaitingOnPlayer);
                 handArea.setVisible(lah.isWaitingOnPlayer && !lah.isClientJudge);
                 playArea.setVisible(!lah.isWaitingOnPlayer && !lah.isClientJudge);
@@ -574,6 +579,7 @@
                 btnPlay.setVisible(false);
                 playArea.setVisible(true);
                 handArea.setVisible(false);
+                blackCardArea.setVisible(true);
                 setEnabled("btn-judge-pick", lah.stage == STAGE_JUDGING && lah.isClientJudge && lah.selectedPlayIndex > -1);
                 break;
             case STAGE_ROUND_END:
@@ -582,11 +588,13 @@
                 btnPlay.setVisible(false);
                 playArea.setVisible(true);
                 handArea.setVisible(false);
+                blackCardArea.setVisible(true);
                 break;
             case STAGE_GAME_END:
                 handArea.setVisible(false);
                 playArea.setVisible(false);
                 btnPlay.setVisible(false);
+                blackCardArea.setVisible(false);
                 break;
         }
 
