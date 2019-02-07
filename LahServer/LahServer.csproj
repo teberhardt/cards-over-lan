@@ -73,6 +73,7 @@
     <Compile Include="Game\NameAttribute.cs" />
     <Compile Include="Game\StringUtilities.cs" />
     <Compile Include="Game\Trophies\CardProportionTrophyRequirement.cs" />
+    <Compile Include="Game\Trophies\CardsPlayedTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\Trophy.cs" />
     <Compile Include="Game\Trophies\TrophyRequirement.cs" />
     <Compile Include="HashList.cs" />

@@ -1978,22 +1978,40 @@
             "flags": "g fe"
         },
         {
+            "id": "w_shootneighbordog",
+            "content": {
+                "en-US": "Shooting your neighbor's dog.",
+                "de-DE": "Den Hund deines Nachbarn erschießen."
+            },
+            "flags": "an an_cr v mu d"
+        },
+        {
+            "id": "w_getflayed",
+            "content": {
+                "en-US": "Getting flayed alive.",
+                "de-DE": "Bei lebendigem Leibe enthäutet werden."
+            },
+            "flags": "v bg d to mu i cr"
+        },
+        {
             "id": "b_futureismeaningless",
             "content": {
-                "en-US": "The future is meaningless, but ________ is now."
+                "en-US": "The future is meaningless, but ________ is now.",
+                "de-DE": "Die Zukunft ist bedeutungslos, aber jetzt gibt es ________."
             }
         },
         {
             "id": "b_sciencetradeoff",
             "content": {
-                "en-US": "Modern technology has finally made ________ possible, but it comes with the unfortunate tradeoff of ________."
+                "en-US": "Modern technology has finally made ________ possible, but it comes with the unfortunate tradeoff of ________.",
+                "de-DE": "Moderne Technologie ermöglicht endlich ________, aber es kommt mit einem unangenehmen Kompromiss: ________."
             },
             "blanks": 2
         },
         {
             "id": "b_conspiracycontroversy",
             "content": {
-                "en-US": "What's been making waves in the conspiracy community?"
+                "en-US": "What's the latest craze in the conspiracy community?"
             }
         },
         {
@@ -2005,7 +2023,7 @@
         {
             "id": "b_theydeserveit",
             "content": {
-                "en-US": "I don't care what anyone else thinks... anybody who is ________ deserves ________!"
+                "en-US": "I don't care what anyone else thinks... anybody that's ________ deserves ________!"
             },
             "blanks": 2
         },
@@ -2019,13 +2037,15 @@
         {
             "id": "b_nightprayer",
             "content": {
-                "en-US": "Every night, I pray for ________.\nAnd every morning, I'm sorely disappointed."
+                "en-US": "Every night, I pray for ________.\nAnd every morning, I'm sorely disappointed.",
+                "de-DE": "Jeden Abend bete ich für ________.\nUnd jeden Morgen bin ich sehr enttäuscht."
             }
         },
         {
             "id": "b_crimewitness",
             "content": {
-                "en-US": "Officer, come quick! I just saw someone ________ and then run off!"
+                "en-US": "Officer, come quick! I just saw someone ________ and then run off!",
+                "de-DE": "Herr Polizist, bitte kommen Sie schnell! Ich habe gerade jemanden ________ und dann weglaufen gesehen!"
             }
         },
         {
@@ -2037,7 +2057,8 @@
         {
             "id": "b_noaliens",
             "content": {
-                "en-US": "What's the real reason aliens haven't contacted us?"
+                "en-US": "What's the real reason aliens haven't contacted us?",
+                "de-DE": "Was ist der wahre Grund dafür, dass Außerirdische uns nicht kontaktiert haben?"
             }
         },
         {
@@ -2186,7 +2207,8 @@
         {
             "id": "b_notmything",
             "content": {
-                "en-US": "Despite what my friends might tell you, I have never liked ______."
+                "en-US": "Despite what my friends might tell you, I have never liked ______.",
+                "de-DE": "Egal was dir meine Freunde vielleicht sagen, habe ich nie _______ genossen."
             },
             "blanks": 1
         },
@@ -2218,13 +2240,15 @@
         {
             "id": "b_partystopper",
             "content": {
-                "en-US": "What never fails to ruin the party?"
+                "en-US": "What never fails to ruin the party?",
+                "de-DE": "Was wird die Party immer ruinieren?"
             }
         },
         {
             "id": "b_badkidparty",
             "content": {
-                "en-US": "What should you never bring to a child's birthday party?"
+                "en-US": "What should you never bring to a child's birthday party?",
+                "da-DK": "Was sollte man überhaupt nie zu einer Geburtstagsfeier mitbringen?"
             }
         },
         {
