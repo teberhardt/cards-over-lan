@@ -163,7 +163,8 @@
         {
             "id": "w_snortingpeppers",
             "content": {
-                "en-US": "Snorting cayenne powder."
+                "en-US": "Snorting cayenne powder.",
+                "de-DE": "Cayennepulver schnupfen."
             },
             "flags": "w"
         },
@@ -193,21 +194,24 @@
         {
             "id": "w_papsmear",
             "content": {
-                "en-US": "A pap smear."
+                "en-US": "A pap smear.",
+                "de-DE": "Ein PAP-Abstrich."
             },
             "flags": "gnf"
         },
         {
             "id": "w_bricks",
             "content": {
-                "en-US": "Cheating at the pillow fight by filling yours with bricks."
+                "en-US": "Cheating at the pillow fight by filling yours with bricks.",
+                "de-DE": "Bei der Kissenschlacht betrügen, indem du dein Kissen mit Ziegeln füllst."
             },
             "flags": "v"
         },
         {
             "id": "w_dickfungus",
             "content": {
-                "en-US": "Penile fungal infections."
+                "en-US": "Penile fungal infections.",
+                "de-DE": "Penis-Pilzinfektionen."
             },
             "flags": "g w gnm"
         },
@@ -221,7 +225,8 @@
         {
             "id": "w_stripsearch",
             "content": {
-                "en-US": "Being strip-searched and liking it."
+                "en-US": "Being strip-searched and liking it.",
+                "de-DE": "Einer Leibesvisitation unterzogen werden und es genießen."
             },
             "flags": "w"
         },
@@ -245,7 +250,8 @@
         {
             "id": "w_heroinass",
             "content": {
-                "en-US": "Smuggling a shit-ton of heroin in your rectum."
+                "en-US": "Smuggling a shit-ton of heroin in your rectum.",
+                "de-DE": "Scheiß viel Heroin in deinem Rektum schmuggeln."
             },
             "flags": "dr gn g"
         },
@@ -332,7 +338,8 @@
         {
             "id": "w_chococysts",
             "content": {
-                "en-US": "Chocolate-covered sebaceous cysts."
+                "en-US": "Chocolate-covered sebaceous cysts.",
+                "de-DE": "Schokoladenüberzogene Grießknoten."
             },
             "flags": "w g"
         },
@@ -347,7 +354,8 @@
         {
             "id": "w_thrillofhunt",
             "content": {
-                "en-US": "The thrill of the hunt."
+                "en-US": "The thrill of the hunt.",
+                "de-DE": "Der Reiz der Jagd."
             }
         },
         {
@@ -376,7 +384,8 @@
         {
             "id": "w_highmusic",
             "content": {
-                "en-US": "Getting high as a kite and listening to Paulstretched music for hours."
+                "en-US": "Getting high as a kite and listening to slowed-down music for hours.",
+                "de-DE": "Sich berauschen und sich für Stunden verlangsamte Musik anhören."
             },
             "flags": "dr"
         },
@@ -405,9 +414,10 @@
             "flags": "xf s w x"
         },
         {
-            "id": "w_unwanteddiscovery",
+            "id": "w_bigdadlube",
             "content": {
-                "en-US": "Accidentally finding your dad's gallon jug of anal lube."
+                "en-US": "Your dad's gallon jug of anal lube.",
+                "de-DE": "Der Anusgleitmittelkanister deines Vaters."
             },
             "flags": "s w"
         },
@@ -431,7 +441,8 @@
         {
             "id": "w_bosspunch",
             "content": {
-                "en-US": "Punching my boss in his dumb fucking face."
+                "en-US": "Punching my boss in his dumb fucking face.",
+                "de-DE": "Meinem dummen Chef ins Gesicht schlagen."
             },
             "flags": "v"
         },
@@ -462,7 +473,8 @@
         {
             "id": "w_altbodybag",
             "content": {
-                "en-US": "Forgetting the body bag and using cling wrap instead."
+                "en-US": "Cling-wrapping a dead body to keep it fresh.",
+                "de-DE": "Eine Leiche in Frischhaltefolie wickeln."
             },
             "flags": "d w g"
         },
@@ -577,14 +589,16 @@
         {
             "id": "w_moderateautism",
             "content": {
-                "en-US": "Moderate autism."
+                "en-US": "Moderate autism.",
+                "de-DE": "Mäßiger Autismus."
             },
             "flags": "ds"
         },
         {
             "id": "w_severeautism",
             "content": {
-                "en-US": "Severe autism."
+                "en-US": "Severe autism.",
+                "de-DE": "Schwerer Autismus."
             },
             "flags": "ds"
         },
@@ -629,7 +643,8 @@
         {
             "id": "w_niceveins",
             "content": {
-                "en-US": "Nice veins."
+                "en-US": "Nice veins.",
+                "de-DE": "Schöne Venen."
             }
         },
         {
@@ -671,7 +686,8 @@
         {
             "id": "w_georgebush",
             "content": {
-                "en-US": "George W. Bush."
+                "en-US": "George W. Bush.",
+                "de-DE": "Geoge W. Bush."
             },
             "flags": "ce"
         },
@@ -844,7 +860,7 @@
         {
             "id": "w_specialwaterboard",
             "content": {
-                "en-US": "Waterboarding with used bong water."
+                "en-US": "Waterboarding with toilet water."
             }
         },
         {
@@ -1498,7 +1514,8 @@
         {
             "id": "w_chilicondom",
             "content": {
-                "en-US": "A condom full of chili."
+                "en-US": "A condom full of chili.",
+                "de-DE": "Eine Kondome voller Chili."
             },
             "flags": "g"
         },
@@ -1537,7 +1554,8 @@
         {
             "id": "w_4skinbucket",
             "content": {
-                "en-US": "A bucket full of foreskins."
+                "en-US": "A bucket full of foreskins.",
+                "de-DE": "Ein Eimer voller Vorhäute."
             },
             "flags": "g"
         },
@@ -1737,7 +1755,8 @@
         {
             "id": "w_autismvaccine",
             "content": {
-                "en-US": "A vaccine for autism."
+                "en-US": "A vaccine for autism.",
+                "de-DE": "Ein Autismusimpfstoff."
             }
         },
         {
@@ -1774,14 +1793,16 @@
         {
             "id": "w_abortiondestination",
             "content": {
-                "en-US": "The place where all the aborted fetuses go."
+                "en-US": "The place where all the aborted fetuses go.",
+                "de-DE": "Der Ort, an den all die abgetriebenen Feten gehen."
             },
             "flags": "db"
         },
         {
             "id": "w_incestgenerations",
             "content": {
-                "en-US": "Five generations of incest."
+                "en-US": "Five generations of incest.",
+                "de-DE": "Fünt Generationen von Inzest."
             },
             "flags": "w g"
         },
@@ -1794,7 +1815,8 @@
         {
             "id": "w_faceofgod",
             "content": {
-                "en-US": "The face of God himself."
+                "en-US": "The face of God himself.",
+                "de-DE": "Das Gesicht Gottes selbst."
             }
         },
         {
@@ -1825,7 +1847,8 @@
         {
             "id": "w_blueberryporn",
             "content": {
-                "en-US": "Blueberry porn."
+                "en-US": "Blueberry porn.",
+                "de-DE": "Blaubeerenpornografie."
             },
             "flags": "w x"
         },
@@ -1851,7 +1874,8 @@
         {
             "id": "w_master",
             "content": {
-                "en-US": "Master."
+                "en-US": "Master.",
+                "de-DE": "Meister."
             }
         },
         {

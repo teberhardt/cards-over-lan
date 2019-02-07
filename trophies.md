@@ -1,6 +1,6 @@
 # Trophies
 
-Trophies are awarded to players depending on actions taken during a game, such as playing certain types of cards.
+Trophies are awarded to players based on actions taken during a game, such as playing certain types of cards.
 
 ## Trophy object format
 
@@ -77,6 +77,21 @@ Requires that all of the specified requirements be met.
 }
 ```
 
+### Cards Played
+
+Type name: `cards_played`
+
+Requires that all of the listed cards have been played.
+
+```json
+{
+    "type": "cards_played",
+    "cards": ["w_example1", "w_example2"],
+    "single_play": false, // Do they need to be in the same play?
+    "winning": false, // Require that played cards have won round(s)
+}
+```
+
 ### Card Proportion
 
 Type name: `card_proportion`
@@ -92,14 +107,32 @@ Requires a certain percentage of played cards to match at least one of the speci
 
     "winning": false, // Specifies whether cards must have won a round
 
+    "maximum": false, // (optional) Filter by maximum proportion instead of minimum
+
     // Minimum percentage of cards to be met
     "percent": 20
 }
 ```
 
+### Win Proportion
+
+Type name: `win_proportion`
+
+Requires that the user win a certain proportion of the rounds in a game.
+
+```json
+{
+    "type": "win_proportion",
+    "percent": 50,
+    "inclusive": true, // (optional) Inclusive comparison (e.g. at 50%, or above 50%?)
+    "maximum": // (optional) Filter by maximum proportion instead of minimum
+}
+```
+
 ## Card contents
 
-Card contents are identified using the content flags listed in the table below:
+Standard content flags are defined below for use by all packs.
+Additional flags not on this list may also be used (e.g. for implementing a special trophy type).
 
 |Flag|Description|
 |:--:|-----------|

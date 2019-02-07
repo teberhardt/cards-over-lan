@@ -37,4 +37,30 @@ Aside from the contents, there are a number of required and optional metadata fi
 
 #### Accents
 
+Accents are used to style the pack name ribbon at the bottom of each card.
+
 Valid accent names are: `white`, `black`, `red`, `orange`, `yellow`, `green`, `blue`, `lightblue`, `turquoise`, `navy`, `purple`, `pink`, `brown`, `limegreen`, `rainbow`
+
+### Cards
+
+The JSON object format for a card is as follows:
+
+```json
+{
+    "id": "w_example",
+    "content": {
+        "en-US": "An example white card.",
+        "de-DE": "Eine Beispielkarte."
+    },
+    "flags": "test"
+}
+```
+
+#### Properties
+
+|Property Name|Description|
+|-------------|-----------|
+|`id`|The ID string used internally to identify the card. The `w_` and `b_` prefixes denote white and black cards respectively.|
+|`content`|Contains the localized card text, indexed by its locale.|
+|`flags`|A string defining content flags for this card.|
+|`blanks`|The number of blank spaces (black cards only).|

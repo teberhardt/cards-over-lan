@@ -248,6 +248,10 @@ span.highlight {
     background: url("/img/trophies/trophy_loosecannon.png");
 }
 
+.trophy[data-trophy-id="trophy_beans"] .trophy-icon {
+    background: url("/img/trophies/trophy_beans.png");
+}
+
 /* RIBBON ACCENTS */
 
 .ribbon[data-packaccent=red]:after {
