@@ -72,6 +72,8 @@
     <Compile Include="Game\LahPlayer.cs" />
     <Compile Include="Game\NameAttribute.cs" />
     <Compile Include="Game\StringUtilities.cs" />
+    <Compile Include="Game\Trophies\AllTrophyRequirement.cs" />
+    <Compile Include="Game\Trophies\AnyTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\CardProportionTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\CardsPlayedTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\Trophy.cs" />
