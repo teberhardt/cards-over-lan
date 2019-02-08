@@ -29,7 +29,8 @@ namespace LahServer.Game.Converters
         {
             RegisterRequirementType("card_proportion", typeof(CardProportionTrophyRequirement));
             RegisterRequirementType("cards_played", typeof(CardsPlayedTrophyRequirement));
-        }
+            RegisterRequirementType("win_proportion", typeof(WinProportionTrophyRequirement));
+		}
 
         private static void RegisterRequirementType(string requirementName, Type requirementType)
         {

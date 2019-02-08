@@ -2,7 +2,7 @@
 
 A Cards Against Humanity clone for hosting on your home network.
 
-**This software is under active development and is not intended for use as of now. Please don't expect a fully-featured product at this point.**
+**This software is a work-in-progress. It may be missing functionality or contain bugs.**
 
 
 ## Features

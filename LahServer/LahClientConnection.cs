@@ -18,6 +18,7 @@ namespace LahServer
 	{
 		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
+		private readonly object _createDestroySync = new object();
 		private bool _removalNotified;
 		private LahPlayer _player;
 		private Thread _afkCheckThread;
@@ -39,7 +40,7 @@ namespace LahServer
 
 		private void UpdateActivityTime(int time)
 		{
-			lock(_afkLock)
+			lock (_afkLock)
 			{
 				if (Player != null && time > 0)
 				{
@@ -51,9 +52,9 @@ namespace LahServer
 
 		private void AfkCheckThread()
 		{
-			while(IsOpen)
+			while (IsOpen)
 			{
-				lock(_afkLock)
+				lock (_afkLock)
 				{
 					bool afk = _inactiveTime == 0;
 					if (Player.IsAfk != afk)
@@ -91,7 +92,7 @@ namespace LahServer
 
 		private void LoadCookies()
 		{
-			foreach(WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
+			foreach (WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
 			{
 				_cookies[cookie.Name] = System.Web.HttpUtility.UrlDecode(cookie.Value);
 			}
@@ -224,11 +225,11 @@ namespace LahServer
 					? new
 					{
 						winners = Game.GetWinningPlayers().Select(p => p.Id),
-                        trophy_winners = Game.GetPlayers().Select(p => new
-                        {
-                            id = p.Id,
-                            trophies = p.GetTrophies()
-                        })
+						trophy_winners = Game.GetPlayers().Select(p => new
+						{
+							id = p.Id,
+							trophies = p.GetTrophies()
+						})
 					}
 					: null
 			});
@@ -236,68 +237,74 @@ namespace LahServer
 
 		protected override void OnOpen()
 		{
-			base.OnOpen();
-			LoadCookies();
-			CreatePlayer();
-			UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-			_afkCheckThread.Start();
-			Console.WriteLine($"{Player} connected");
+			lock (_createDestroySync)
+			{
+				base.OnOpen();
+				LoadCookies();
+				CreatePlayer();
+				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+				_afkCheckThread.Start();
+				Console.WriteLine($"{Player} connected");
+			}
 		}
 
 		protected override void OnClose(CloseEventArgs e)
 		{
-			base.OnClose(e);
-
-			UnregisterEvents();
-
-			string closeReason = e.Reason;
-			if (string.IsNullOrWhiteSpace(closeReason))
+			lock (_createDestroySync)
 			{
-				switch (e.Code)
-				{
-					case 1000:
-					case 1001:
-						closeReason = "User disconnected";
-						break;
-					case 1002:
-						closeReason = "Protocol error";
-						break;
-					case 1003:
-						closeReason = "Received unsupported data type";
-						break;
-					case 1005:
-						closeReason = "No status code given";
-						break;
-					case 1006:
-						closeReason = "Connection closed abnormally";
-						break;
-					case 1007:
-						closeReason = "Invalid message type";
-						break;
-					case 1008:
-						closeReason = "Policy violation";
-						break;
-					case 1009:
-						closeReason = "Message too large";
-						break;
-					case 1010:
-						closeReason = "Failed handshake";
-						break;
-					case 1011:
-						closeReason = "Unable to fulfill client request";
-						break;
-					case 1015:
-						closeReason = "Failed TLS handshake";
-						break;
-					default:
-						closeReason = "Unknown";
-						break;
-				}
-			}
+				base.OnClose(e);
 
-			if (Game.RemovePlayer(Player, closeReason))
-			{				
-				Console.WriteLine($"{Player} disconnected: {closeReason} (code {e.Code})");
+				UnregisterEvents();
+
+				string closeReason = e.Reason;
+				if (string.IsNullOrWhiteSpace(closeReason))
+				{
+					switch (e.Code)
+					{
+						case 1000:
+						case 1001:
+							closeReason = "User disconnected";
+							break;
+						case 1002:
+							closeReason = "Protocol error";
+							break;
+						case 1003:
+							closeReason = "Received unsupported data type";
+							break;
+						case 1005:
+							closeReason = "No status code given";
+							break;
+						case 1006:
+							closeReason = "Connection closed abnormally";
+							break;
+						case 1007:
+							closeReason = "Invalid message type";
+							break;
+						case 1008:
+							closeReason = "Policy violation";
+							break;
+						case 1009:
+							closeReason = "Message too large";
+							break;
+						case 1010:
+							closeReason = "Failed handshake";
+							break;
+						case 1011:
+							closeReason = "Unable to fulfill client request";
+							break;
+						case 1015:
+							closeReason = "Failed TLS handshake";
+							break;
+						default:
+							closeReason = "Unknown";
+							break;
+					}
+				}
+
+				if (Game.RemovePlayer(Player, closeReason))
+				{
+					Console.WriteLine($"{Player} disconnected: {closeReason} (code {e.Code})");
+				}
 			}
 		}
 
@@ -338,7 +345,7 @@ namespace LahServer
 									var name = Game.CreatePlayerName(strName, Player);
 									Player.Name = name;
 									Console.WriteLine($"{oldName} changed their name to {name}");
-								}								
+								}
 								break;
 							}
 						}

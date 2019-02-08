@@ -267,13 +267,13 @@ smaller {
 
 #game-end-grid {
     display: grid;
-    grid-template-rows: [r-start] 48pt [r-center] auto [r-end];
-    grid-template-columns: [c-start] auto [c-center] 150pt [c-end];
+    grid-template-rows: [r-start] 48pt [r-center] 1fr [r-end];
+    grid-template-columns: [c-start] 1fr [c-center] 150pt [c-end];
     min-width: 600px;
     width: 60%;
     max-width: 1024px;
     min-height: 70%;
-    max-height: 90%;
+    height: 70%;
     overflow: hidden;
     background: #dfdfdf;
     border-radius: var(--card-border-radius);
@@ -364,16 +364,13 @@ smaller {
     align-items: center;
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     box-sizing: border-box;
 }
 
 .trophy {
     position: relative;
-    display: flex;
     width: 100%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding-bottom: 16pt;
 }
 
@@ -386,6 +383,7 @@ smaller {
     left: 0;
     top: 0;
     bottom: 0;
+    right: 0;
     padding: 8pt;
     color: #eee;
     font-size: 11pt;
@@ -402,6 +400,7 @@ smaller {
     position: relative;
     width: 100px;
     height: 100px;
+    margin: 0 auto;
     border: 3px solid #ddd;
     background: black;
     box-sizing: border-box;
@@ -427,11 +426,11 @@ smaller {
 
 /* trophy name */
 .trophy:after {
+    display: block;
     content: attr(data-trophy-name);
     color: #ddd;
-    margin-top: 6pt;
+    padding: 6pt;
     font-size: 12pt;
-    padding: 0 16pt;
     text-align: center;
 }
 

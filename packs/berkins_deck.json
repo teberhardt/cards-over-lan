@@ -240,14 +240,6 @@
             "flags": "dr g w fe"
         },
         {
-            "id": "w_foxnews",
-            "content": {
-                "en-US": "Fox News.",
-                "de-DE": "Fox News.",
-                "da-DK": "Fox News."
-            }
-        },
-        {
             "id": "w_heroinass",
             "content": {
                 "en-US": "Smuggling a shit-ton of heroin in your rectum.",
@@ -2016,6 +2008,12 @@
                 "de-DE": "Bei lebendigem Leibe enthäutet werden."
             },
             "flags": "v bg d to mu i cr"
+        },
+        {
+            "id": "w_unexpectedxfiles",
+            "content": {
+                "en-US": "The <i>X-Files</i> theme song, out of nowhere."
+            }
         },
         {
             "id": "b_futureismeaningless",

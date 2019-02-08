@@ -252,6 +252,23 @@ span.highlight {
     background: url("/img/trophies/trophy_beans.png");
 }
 
+.trophy[data-trophy-id="trophy_balls"] .trophy-icon {
+    background: url("/img/trophies/trophy_balls.png");
+}
+
+.trophy[data-trophy-id="trophy_loser"] .trophy-icon {
+    background: url("/img/trophies/trophy_loser.png");
+}
+
+.trophy[data-trophy-id="trophy_nazi"] .trophy-icon {
+    border-color: #c00;
+    background: radial-gradient(white 0%,  white 53%, #c00 54%);
+}
+
+.trophy[data-trophy-id="trophy_nazi"] .trophy-icon:after {
+    filter: brightness(0);
+}
+
 /* RIBBON ACCENTS */
 
 .ribbon[data-packaccent=red]:after {

@@ -76,6 +76,7 @@
     <Compile Include="Game\Trophies\CardsPlayedTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\Trophy.cs" />
     <Compile Include="Game\Trophies\TrophyRequirement.cs" />
+    <Compile Include="Game\Trophies\WinProportionTrophyRequirement.cs" />
     <Compile Include="HashList.cs" />
     <Compile Include="LahClientConnection.cs" />
     <Compile Include="Game\WhiteCard.cs" />

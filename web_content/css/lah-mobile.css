@@ -8,6 +8,7 @@
         --card-height: 14rem;
         --card-border-radius: 14px;
         --card-padding: 1em;
+        --final-score-row-height: 22pt;
     }
 
     body {
@@ -73,9 +74,9 @@
     #navbar {
         position: fixed;
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         flex-wrap: nowrap;
-        justify-content: flex-start;
+        justify-content: flex-end;
         align-items: flex-start;
         background: #ddd;
         top: 0;
@@ -342,7 +343,6 @@
         top: 10pt;  
         right: 24pt;      
         min-width: 64pt;
-        z-index: 2147483647;
         cursor: default;
         opacity: .65;
         transition: opacity .3s;
@@ -389,6 +389,187 @@
         background-image: url("/img/lah-score.png");
         background-repeat: no-repeat;
         background-size: contain;
+    }
+
+    /* GAME OVER SCREEN / TROPHIES */
+
+    #game-end-screen {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 99999999999;
+    }
+
+    #game-end-grid {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: grid;
+        grid-template-rows: [r-start] 48pt [r-c1] 1fr [r-c2] 150px [r-end];
+        grid-template-columns: [c-start] 1fr [c-end];
+        overflow: hidden;
+        background: #dfdfdf;
+    }
+
+    #game-end-heading {
+        grid-row: r-start / r-center;
+        grid-column: c-start / c-end;
+        padding: 10pt 16pt;
+        font-size: 22pt;
+        text-align: center;
+    }
+
+    #game-end-scoreboard {
+        display: flex;
+        grid-row: r-c1 / r-c2;
+        grid-column: c-start / c-end;
+        flex-direction: column;
+        overflow-y: auto;
+        padding: 8pt 16pt;
+        margin-top: 8pt;
+    }
+
+    #game-end-scoreboard-header {    
+        padding-bottom: 3pt;
+        border-bottom: 1px solid rgba(0, 0, 0, .25);
+    }
+
+    #game-end-scoreboard-header, #game-end-scoreboard-entries > .scoreboard-entry {
+        display: grid;
+        grid-template-columns: [c-start] 50% [c-2] 20% [c-3] 30% [c-end];
+        grid-template-rows: [r-start] 100% [r-end];
+    }
+
+    #game-end-scoreboard-entries > .scoreboard-entry > * {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #5a5a5a;
+        font-size: 14pt;
+        margin-left: 2pt;
+        padding-right: 4pt;
+    }
+
+    /* Hack to get overflow ellipsis to work inside flexbox */
+    #game-end-scoreboard-entries > .scoreboard-entry > .text[data-text]:before {
+        content: attr(data-text);
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    #game-end-scoreboard-entries > .scoreboard-entry > *:not(:first-child) {
+        padding-left: 2pt;
+    }
+
+    #game-end-scoreboard-header > * {
+        font-size: 12pt;
+        color: #333;
+        text-align: left;
+        margin-left: 2pt;
+    }
+
+    #game-end-scoreboard-entries > .scoreboard-entry {
+        height: var(--final-score-row-height);
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+    }
+
+    #game-end-scoreboard-entries > .scoreboard-entry.winner > * {
+        color: #d92;
+    }
+
+    #game-end-trophies-heading {
+        color: #eee;
+        font-size: 14pt;
+        text-align: center;
+        padding: 4pt 10pt;
+    }
+
+    #game-end-trophies-area {
+        grid-row: r-c2 / r-end;
+        grid-column: c-start / c-end;
+        display: flex;
+        flex-direction: column;
+        background: #333;
+        overflow: hidden;
+    }
+
+    #game-end-trophies-list {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: stretch;
+        flex-grow: 1;
+        overflow-y: hidden;
+        overflow-x: auto;
+        box-sizing: border-box;
+    }
+
+    .trophy {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 140px;
+        flex-shrink: 0;
+    }
+
+    /* trophy description */
+    .trophy:before {
+        content: attr(data-trophy-name) ":\a\a" attr(data-trophy-desc);
+        white-space: pre-wrap;
+        line-height: 1.25em;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        padding: 6pt 8pt;
+        color: #eee;
+        font-weight: 300;
+        overflow-y: auto;
+        font-size: 9.5pt;
+        background: rgba(30, 30, 30, .97);
+        transition: opacity .3s;
+        z-index: 99999;
+    }
+
+    .trophy:not(:hover):before {
+        opacity: 0;
+    }
+
+    .trophy .trophy-icon {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        margin: 0 auto;
+        transform: translateY(-4pt);
+        border: 3px solid #ddd;
+        background: black;
+        box-sizing: border-box;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-size: 100% !important;
+    }
+
+    /* trophy overlay icon */
+    .trophy .trophy-icon:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url("/img/lah-trophy.png");
+        background-repeat: no-repeat;
+        background-position: 50% 55%;
+        background-size: 60%;
+        filter: drop-shadow(0 0 4px black);
     }
 
     #hand-cards-area {     

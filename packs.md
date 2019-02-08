@@ -64,3 +64,6 @@ The JSON object format for a card is as follows:
 |`content`|Contains the localized card text, indexed by its locale.|
 |`flags`|A string defining content flags for this card.|
 |`blanks`|The number of blank spaces (black cards only).|
+
+### Trophies
+

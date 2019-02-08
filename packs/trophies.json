@@ -171,6 +171,25 @@
                     "percent": 45
                 }
             ]
+        },
+        {
+            "id": "trophy_loser",
+            "name": {
+                "en-US": "Fucking Loser",
+                "de-DE": "Versager"
+            },
+            "desc": {
+                "en-US": "You didn't win a single round. Great job!",
+                "de-DE": "Du hast keine einzige Runde gewonnen. Toll gemacht!"
+            },
+            "requirements": [
+                {
+                    "type": "win_proportion",
+                    "percent": 0,
+                    "maximum": true,
+                    "inclusive": true
+                }
+            ]
         }
     ]
 }
