@@ -12,5 +12,11 @@
 	"afk_time_seconds": 600,
 	"afk_recovery_time_seconds": 90,
 	"exclude_content": [],
-	"enable_trophies": true
+	"enable_trophies": true,
+	"bot_count": 0,
+	"bot_names": [
+	"Bryant Automat", "Jamil Automat", "Forrest Automat", 
+	"Mara Automat", "Rachael Automat", "Marylou Automat", 
+	"Tristian Automat", "Destin Automat", "Kiera Automat", "Chancy Automat"
+	]
 }

@@ -23,6 +23,7 @@ namespace LahServer
 		private const int MinAfkTimeSeconds = 30;
 		private const int MinAfkRecoveryTimeSeconds = 30;
 		private const int MinBlankCards = 0;
+		private const int MinBotCount = 0;
 
 		private const int DefaultRoundEndTimeout = 10000;
 		private const int DefaultGameEndTimeout = 30000;
@@ -30,6 +31,7 @@ namespace LahServer
 		private const int DefaultAfkRecoveryTimeSeconds = 90;
 		private const int DefaultMaxPoints = 10;
 		private const int DefaultBlankCards = 0;
+		private const int DefaultBotCount = 0;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -41,6 +43,7 @@ namespace LahServer
 
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
+		private int _botCount;
 
 		[JsonProperty("host", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue("http://localhost:80")]
@@ -135,6 +138,17 @@ namespace LahServer
 				_maxPoints = value < MinMaxPoints ? MinMaxPoints : value;
 			}
 		}
+
+		[JsonProperty("bot_count", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultBotCount)]
+		public int BotCount
+		{
+			get => _botCount;
+			set => _botCount = value < MinBotCount ? MinBotCount : value;
+		}
+
+		[JsonProperty("bot_names", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public string[] BotNames { get; set; } = new string[0];
 
 		public static LahSettings FromFile(string path) => JsonConvert.DeserializeObject<LahSettings>(File.ReadAllText(path));
 	}

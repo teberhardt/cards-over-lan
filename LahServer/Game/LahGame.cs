@@ -22,6 +22,7 @@ namespace LahServer.Game
 	{
 		#region Constants
 		private const string DefaultPlayerName = "Player";
+		private const string DefaultBotName = "Bot";
 
 		// Shuffle iterations
 		private const int ShufflePasses = 100;
@@ -136,6 +137,15 @@ namespace LahServer.Game
 
 			ResetCards();
 			NextJudge();
+
+			// Init bots
+			if (settings.BotCount > 0)
+			{
+				for (int i = 0; i < settings.BotCount; i++)
+				{
+					var bot = CreatePlayer(settings.BotNames != null && settings.BotNames.Length > 0 ? settings.BotNames[i % settings.BotNames.Length] : DefaultBotName, true);
+				}
+			}
 		}
 
 		/// <summary>
@@ -492,13 +502,15 @@ namespace LahServer.Game
 		/// Creates a new play and adds them to the game.
 		/// </summary>
 		/// <param name="name">The requested player name.</param>
+		/// <param name="bot">Are they a bot?</param>
 		/// <returns></returns>
-		public LahPlayer CreatePlayer(string name = null)
+		public LahPlayer CreatePlayer(string name = null, bool bot = false)
 		{
 			lock (_allPlayersSync)
 			{
 				var player = new LahPlayer(this, CreatePlayerId());
 				player.Name = CreatePlayerName(name, player);
+				if (bot) player.IsAutonomous = true;
 
 				// Subscribe events
 				player.SelectionChanged += OnPlayerSelectionChanged;
@@ -600,6 +612,45 @@ namespace LahServer.Game
 			cards.MoveTo(_whiteDiscardPile);
 		}
 
+		private void PromptAutoPlays()
+		{
+			lock(_allPlayersSync)
+			{
+				if (_players.Any(p => !p.IsAutonomous))
+				{
+					foreach(var p in _players.Where(p => p.IsAutonomous))
+					{
+						Console.WriteLine($"Auto play prompt: {p}");
+						p.AutoPlayAsync();
+					}
+				}
+			}
+		}
+
+		private void PromptAutoJudge()
+		{
+			lock (_allPlayersSync)
+			{
+				if (Judge.IsAutonomous)
+				{
+					Judge.AutoJudgeAsync();
+				}
+			}
+		}
+
+		private void PromptBots()
+		{
+			switch (Stage)
+			{
+				case GameStage.RoundInProgress:
+					PromptAutoPlays();
+					break;
+				case GameStage.JudgingCards:
+					PromptAutoJudge();
+					break;
+			}
+		}
+
 		#region Properties
 
 		/// <summary>
@@ -677,7 +728,7 @@ namespace LahServer.Game
 					break;
 				}
 			}
-			RaisePlayersChanged();
+			OnPlayersChanged();
 			RaiseStateChanged();
 		}
 
@@ -685,6 +736,7 @@ namespace LahServer.Game
 		private void OnPlayersChanged()
 		{
 			RaisePlayersChanged();
+			PromptBots();
 		}
 
 		/// <summary>
@@ -724,6 +776,7 @@ namespace LahServer.Game
 					break;
 			}
 
+			PromptBots();
 			RaiseStageChanged(oldStage, currentStage);
 			RaiseStateChanged();
 		}

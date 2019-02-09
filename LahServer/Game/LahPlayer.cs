@@ -17,6 +17,11 @@ namespace LahServer.Game
 	// TODO: Develop pattern for combining *Changed events to reduce unnecessary client updates
 	public sealed class LahPlayer
 	{
+		private const int AutoPlayDelayMin = 2000;
+		private const int AutoPlayDelayMax = 6000;
+		private const int AutoJudgeDelayMin = 3000;
+		private const int AutoJudgeDelayMax = 6000;
+
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
 		private readonly HashList<WhiteCard> _selectedCards;
@@ -26,6 +31,7 @@ namespace LahServer.Game
 		private bool _afk;
 		private int _blankCardsRemaining;
 		private readonly object _blankCardLock = new object();
+		private readonly Random _rng;
 
 		public event PlayerCardsChangedEventDelegate CardsChanged;
 		public event PlayerSelectionChangedEventDelegate SelectionChanged;
@@ -42,6 +48,7 @@ namespace LahServer.Game
 			_selectedCards = new HashList<WhiteCard>();
 			_prevPlays = new List<RoundPlay>();
             _trophies = new HashList<Trophy>();
+			_rng = new Random(id);
 		}
 
 		public string Name
@@ -74,6 +81,8 @@ namespace LahServer.Game
 		}
 
 		public bool IsAsshole { get; set; }
+
+		public bool IsAutonomous { get; set; }
 
 		public int RemainingBlankCards => _blankCardsRemaining;
 
@@ -142,6 +151,21 @@ namespace LahServer.Game
 			RaiseCardsChanged();
 			RaiseSelectionChanged();
 			return true;
+		}
+
+		public async void AutoPlayAsync()
+		{
+			if (!IsAutonomous || IsSelectionValid) return;
+			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
+			PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.BlankCount));
+		}
+
+		public async void AutoJudgeAsync()
+		{
+			if (!IsAutonomous) return;
+			await Task.Delay(_rng.Next(AutoJudgeDelayMin, AutoJudgeDelayMax + 1));
+			int count = Game.GetRoundPlays().Count();
+			JudgeCards(_rng.Next(count));
 		}
 
 		public bool JudgeCards(int winningPlayIndex)
