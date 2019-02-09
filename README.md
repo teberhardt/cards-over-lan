@@ -12,6 +12,7 @@ A Cards Against Humanity clone for hosting on your home network.
 * **Custom Decks** - Write your own decks using a simple JSON format. Mix and match cards by adding multiple decks to your server.
 * **Localizable Cards** - Cards can be written in multiple languages and your device will display them in your set browser language. This means you can even have many people playing on the same server in different languages.
 * **Trophies** - At the end of each game, see what kind of awful each of your friends is.
+* **Bots** - Add fake players to your game that pick random cards but are probably still funnier than you.
 
 
 ## How it works
