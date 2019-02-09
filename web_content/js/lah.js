@@ -33,7 +33,8 @@
         }
 
         getContent(langCode) {
-            return this._content[langCode] || this._content[DEFAULT_LOCALE] || "???";
+            if (!langCode) return "???";
+            return this._content[langCode] || this._content[langCode.replace(/(.*)-[a-z0-9_\-]+/i, (m, p) => p)] || this._content[DEFAULT_LOCALE] || "???";
         }
 
         getLocalContent() {
@@ -64,7 +65,9 @@
         return -1;
     }
 
-    lah = {};
+    if (typeof lah === 'undefined') {
+        lah = {};
+    }
     lah.score = 0;
     lah.round = 0;
     lah.whiteCards = {};
@@ -127,19 +130,21 @@
     function makeCardElement(card) {
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
-        el.setAttribute("data-card", card.id);
-        el.setAttribute(card.type, "");
-        
-        // Pack info ribbon
-        let ribbon = document.createElement("div");
-        ribbon.classList.add("ribbon");
-        ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
-        ribbon.setAttribute("data-packaccent", (packInfo && packInfo.accent) || "black");
 
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
-        el.appendChild(ribbon);
+        // Pack info ribbon
+        if (packInfo) {
+            el.setAttribute("data-card", card.id);
+            el.setAttribute(card.type, "");
+            
+            let ribbon = document.createElement("div");
+            ribbon.classList.add("ribbon");
+            ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
+            ribbon.setAttribute("data-packaccent", (packInfo && packInfo.accent) || "black");
+            el.appendChild(ribbon);
+        }
 
         // Add pick # if applicable
         if (card.blanks > 1) {
@@ -169,7 +174,7 @@
         let txtArea = document.createElement("textarea");
         txtArea.setAttribute("aria-label", "Custom card text");
         txtArea.setAttribute("wrap", "hard");
-        txtArea.setAttribute("placeholder", "Write your card text here.");
+        txtArea.setAttribute("placeholder", getUiString("ui_blank_card_prompt"));
         txtArea.setAttribute("spellcheck", "false");
         txtArea.onclick = e => e.stopPropagation();
 
@@ -289,13 +294,8 @@
             // Update play area
             updatePlayedCardsArea();
 
-            if (roundChanged) {
-                onRoundChanged();
-            }
-
-            if (stageChanged) {
-                onStageChanged(msg.stage);
-            }
+            if (roundChanged) onRoundChanged();
+            if (stageChanged) onStageChanged(msg.stage);
         },
         "s_players": msg => {
             lah.playerList = msg.players;
@@ -392,7 +392,6 @@
                             playCardsArea.appendChild(groupElement);
                             break;
                         }
-
                         i++;
                     }
                     break;
@@ -518,9 +517,10 @@
         onPlayerNameChanged();
     }
 
-    function loadOptions(name) {
+    function loadOptions() {
         lah.localPlayerName = Cookies.get("name") || "Player";
-        document.getElementById("txt-username").value = lah.localPlayerName;
+        document.querySelector("#txt-username").value = lah.localPlayerName;
+        document.querySelector("#myname").textContent = lah.localPlayerName;
     }
 
     // Sends c_clientinfo message to the server
@@ -542,6 +542,7 @@
     }
 
     applyOptions = function () {
+        setPlayerName(document.querySelector("#txt-username").value);
         hideModal("modal-options");
         sendClientInfo();
     }
@@ -607,22 +608,22 @@
                 btnPlay.setVisible(lah.isWaitingOnPlayer);
                 handArea.setVisible(lah.isWaitingOnPlayer && !lah.isClientJudge);
                 playArea.setVisible(!lah.isWaitingOnPlayer && !lah.isClientJudge);
-
+                document.querySelector("#pending-players").textContent = lah.pendingPlayers.length.toString();
                 if (lah.isClientJudge) {
                     judgeStatusCardText.innerHTML = pendingPlayerCount.toString();
                     if (pendingPlayerCount > 3) {
-                        judgeMessageBody.innerHTML = "<span class='highlight'>You're the Card Czar.</span><br/><smaller>Waiting for other players...</smaller>";
+                        judgeMessageBody.innerHTML = "<span class='highlight'>" + getUiString("ui_you_are_czar") + "</span><br/><smaller>" + getUiString("ui_waiting_for_other_players") + "</smaller>";
                     } else {
                         let strRemainingPlayers = "";
                         for (let i = 0; i < pendingPlayerCount; i++) {
                             if (pendingPlayerCount > 1) {
-                                if (i > 0) strRemainingPlayers += pendingPlayerCount > 2 ? ", " : " ";
-                                if (i == pendingPlayerCount - 1) strRemainingPlayers += "and ";
+                                if (i > 0) strRemainingPlayers += pendingPlayerCount > 2 ? getUiString("ui_list_comma") : getUiString("ui_list_space");
+                                if (i == pendingPlayerCount - 1) strRemainingPlayers += getUiString("ui_list_and");
                             }
-                            let p = lah.playerList.find(p => p.id == lah.pendingPlayers[i]);
+                            let p = getPlayer(lah.pendingPlayers[i]);
                             strRemainingPlayers += (p && p.name) || "???";
                         }
-                        judgeMessageBody.innerHTML = "<span class='highlight'>You're the Card Czar.</span><br/><smaller>Waiting for " + strRemainingPlayers + "...</smaller>";
+                        judgeMessageBody.innerHTML = "<span class='highlight'>" + getUiString("ui_you_are_czar") + "</span><br/><smaller>" + getUiString("ui_waiting_for_x", strRemainingPlayers) + "</smaller>";
                     }
                 }
                 break;
@@ -678,6 +679,10 @@
         }
     }
 
+    function getPlayer(id) {
+        return lah.playerList.find(p => p.id == id);
+    }
+
     // Called when game state is updated via s_gamestate
     function onStateChanged() {
         updateJudgeInfo();
@@ -702,45 +707,47 @@
             if (lah.currentJudgeId != lah.localPlayerId) {
                 lah.isClientJudge = false;
             }
-        }
+        }        
+        let judge = getPlayer(lah.currentJudgeId);
+        document.querySelector("#czar").textContent = (judge && judge.name) || "--";
     }
 
     // Sets the status bar text to a string determined by the local game state
     function updateStatus() {
         if (!ws.isOpen) {
             let ckName = Cookies.get("name");
-            setStatusText(ckName ? "Hello, " + ckName : "Hello");
+            setStatusText(ckName ? getUiString("ui_hello_x", ckName) : getUiString("ui_hello"));
             return;
         }
 
         switch (lah.stage) {
             case STAGE_GAME_STARTING:
-                setStatusText("Waiting for players to join");
+                setStatusText(getUiString("ui_waiting_for_players"));
                 break;
             case STAGE_PLAYING:
-                setStatusText("Round " + lah.round);
+                setStatusText(getUiString("ui_round_num", lah.round));
                 break;
             case STAGE_JUDGING:
                 if (lah.isClientJudge) {
-                    setStatusText("Choose the best play.");
+                    setStatusText(getUiString("ui_choose_best_play"));
                 } else {
-                    setStatusText("Card Czar is deciding...");
+                    setStatusText(getUiString("ui_czar_deciding"));
                 }
                 break;
             case STAGE_ROUND_END:
                 if (lah.winningPlayerId == lah.localPlayerId) {
-                    setStatusText("<span class='highlight'>You won the round!</span>");
+                    setStatusText("<span class='highlight'>" + getUiString("ui_you_win_round") + "</span>");
                 } else {
-                    let winningPlayer = lah.playerList.find(p => p.id == lah.winningPlayerId);
+                    let winningPlayer = getPlayer(lah.winningPlayerId);
                     if (winningPlayer) {
-                        setStatusText(winningPlayer.name + " won the round!");
+                        setStatusText(getUiString("ui_x_wins_round", winningPlayer.name));
                     } else {
-                        setStatusText("Nobody won the round");
+                        setStatusText(getUiString("ui_nobody_wins_round"));
                     }
                 }
                 break;
             case STAGE_GAME_END:
-                setStatusText("Game over!");
+                setStatusText(getUiString("ui_game_over"));
                 break;
         }
     }
@@ -750,24 +757,24 @@
             case STAGE_PLAYING:
                 {
                     if (lah.isClientJudge) {
-                        showBannerMessage("Round " + lah.round + "<br/><small>You're the Card Czar.</small>");
+                        showBannerMessage(getUiString("ui_round_num", lah.round) + "<br/><small>" + getUiString("ui_you_are_czar") + "</small>");
                     } else {
                         let judge = lah.playerList.find(p => p.id == lah.currentJudgeId);
-                        let judgeName = (judge && judge.name) || "Nobody";
-                        showBannerMessage("Round " + lah.round + "<br><small>" + judgeName + " is the Card Czar.</small>");
+                        let judgeName = (judge && judge.name) || getUiString("ui_sub_nobody");
+                        showBannerMessage(getUiString("ui_round_num", lah.round) + "<br><small>" + getUiString("ui_x_is_czar", judgeName) + "</small>");
                     }
                     break;
                 }
             case STAGE_ROUND_END:
                 {
                     if (lah.winningPlayerId == lah.localPlayerId) {
-                        showBannerMessage("You won the round!", 3);
+                        showBannerMessage(getUiString("ui_you_win_round"), 3);
                     } else {
                         let winningPlayer = lah.playerList.find(p => p.id == lah.winningPlayerId);
                         if (winningPlayer) {
-                            showBannerMessage(winningPlayer.name + " wins the round!", 3);
+                            showBannerMessage(getUiString("ui_x_wins_round", winningPlayer.name), 3);
                         } else {
-                            showBannerMessage("Round winner left, so nobody scores!", 3);
+                            showBannerMessage(getUiString("ui_winner_left_nobody_scores"), 3);
                         }
                     }
                 }
@@ -803,7 +810,8 @@
     }
 
     function onPlayerNameChanged() {
-        document.getElementById("txt-username").value = lah.localPlayerName;
+        document.querySelector("#txt-username").value = lah.localPlayerName;
+        document.querySelector("#myname").textContent = lah.localPlayerName;
     }
 
     function onSelectionChanged() {

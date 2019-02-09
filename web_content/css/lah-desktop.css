@@ -34,7 +34,18 @@
 }
 
 body {
-    background: #d7d7d7;
+    background-color: var(--main-bg-color);
+    background-image: 
+    repeating-linear-gradient(55deg, 
+    transparent, transparent 1px, 
+    var(--main-bg-line) 1px, var(--main-bg-line) 3px,
+    transparent 3px, transparent 5px),
+
+    repeating-linear-gradient(-55deg, 
+    transparent, transparent 1px, 
+    var(--main-bg-line) 1px, var(--main-bg-line) 3px,
+    transparent 3px, transparent 5px);
+
     margin: 0;
     padding: 0;
     width: 100vw;
@@ -218,38 +229,50 @@ smaller {
 }
 
 #status {
-    font-size: 20pt;
+    font-size: 22pt;
     font-weight: 800;
     margin-left: 2px;
 }
 
-#player-count, #score {
+#status-area .stat:not(.bare):before {
+    content: "";
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 8pt;
+    transform: translateY(.25em);
+    background-repeat: no-repeat;
+    background-size: contain;
+} 
+
+#status-area .stat {
     font-size: 16pt;
     text-align: left;    
+    max-width: 350px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-#player-count:before {
-    content: "";
-    display: inline-block;
-    width: 1.3em;
-    height: 1.3em;
-    margin-right: 8pt;
-    transform: translateY(.25em);
+#status-area .stat.bare {
+    margin-left: 3px;
+    color: #333;
+}
+
+#status-area #player-count:before {    
     background-image: url("/img/lah-person.png");
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 
-#score:before {
-    content: "";
-    display: inline-block;
-    width: 1.3em;
-    height: 1.3em;
-    margin-right: 8pt;
-    transform: translateY(.25em);
+#status-area #score:before {
     background-image: url("/img/lah-score.png");
-    background-repeat: no-repeat;
-    background-size: contain;
+}
+
+#status-area #czar:before {
+    background-image: url("/img/lah-czar.png");
+}
+
+#status-area #pending-players:before {
+    background-image: url("/img/lah-pending.png");
 }
 
 /* GAME OVER SCREEN / TROPHIES */

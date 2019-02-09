@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -13,6 +13,7 @@
     <title>LAN Against Humanity</title>
     <script src="js/js-cookie.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/lah-strings.js" defer></script>
     <script src="js/common-ui.js" defer></script>
     <script src="js/lah-ui.js" defer></script>
     <script src="js/lah-ws.js"></script>
@@ -22,18 +23,21 @@
 <body onload="lah.start()" class="preload">
     <nav id="navbar" class="mobile-hidden">
         <h1 class="mobile-only nav-header">Menu</h1>
-        <input type="button" value="About" id="btn-about" class="lah-btn lah-btn-small" onclick="showModal('modal-about')" />
-        <input type="button" value="Options" id="btn-options" class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
+        <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small" onclick="showModal('modal-about')" />
+        <input type="button" value="Options" data-localize-value="ui_options" id="btn-options" class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
         <!-- <input type="button" value="Players" id="btn-players" class="lah-btn lah-btn-small" onclick="togglePlayerList()" /> -->
-        <input type="button" value="Fullscreen" id="btn-fullscreen" class="lah-btn lah-btn-small" />
+        <input type="button" value="Fullscreen" data-localize-value="ui_fullscreen" id="btn-fullscreen" class="lah-btn lah-btn-small" />
     </nav>
     <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
     <div id="game">
         <div id="black-card-area"></div>
         <div id="status-area">
             <div id="status"></div>
-            <div id="player-count" title="Player count">--</div>
-            <div id="score" title="Score">--</div>
+            <div id="myname" class="stat bare">--</div>
+            <div id="player-count" class="stat" data-localize-title="ui_player_count">--</div>
+            <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
+            <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
+            <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
         </div>
         <div id="judge-message-area">
             <span id="judge-message-body"></span>
@@ -63,7 +67,7 @@
                 </div>
             </div>
             <div id="hand-controls-area">
-                    <input type="button" value="PLAY" id="btn-play" class="lah-btn hidden" />
+                    <input type="button" value="PLAY" data-localize-value="ui_btn_play" id="btn-play" class="lah-btn hidden" />
             </div>
         </div>
         <div id="game-end-screen" class="fade hidden">
@@ -109,17 +113,17 @@
                 <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <h1>Options</h1>
+                <h1 data-ui-string="ui_options">Options</h1>
                 <div class="lah-vlist">
                     <div class="lah-listitem">
-                        <label class="lah-label">Nickname</label>
-                        <input type="text" id="txt-username" class="lah-txtbox wide" placeholder="Who are you?"
+                        <label class="lah-label" data-ui-string="ui_nickname"></label>
+                        <input type="text" id="txt-username" class="lah-txtbox wide" data-localize-placeholder="ui_username_placeholder"
                             autocomplete="off" />
                     </div>
                     <div class="lah-separator"></div>
                     <div class="lah-listitem">
                         <div class="lah-hlist lah-align-end">
-                            <input type="button" class="lah-btn lah-btn-small" value="Apply" id="btn-options-apply"
+                            <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply" id="btn-options-apply"
                                 onclick="applyOptions()" />
                         </div>
                     </div>

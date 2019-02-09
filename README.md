@@ -22,7 +22,7 @@ The game server consists of a NancyFx web server and WebSocket server. The web s
 
 The root directory contains a few important folders.
 
-* `/decks`: Contains all the decks/trophies that will go in your server.
+* `/packs`: Contains all the decks/trophies that will go in your server.
 * `/web_content`: Contains the webapp.
 * `/LahServer`: Contains the server code.
 

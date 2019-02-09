@@ -3,8 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Cards Against Humanity decks
-/packs/cah/
+# Excluded packs
+/packs/other/
 
 # User-specific files
 *.rsuser

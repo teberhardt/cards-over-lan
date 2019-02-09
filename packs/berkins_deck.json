@@ -8,11 +8,11 @@
             "id": "trophy_beans",
             "name": {
                 "en-US": "The Bean Trifecta",
-                "de-DE": "Der Bohnendreier"
+                "de": "Der Bohnendreier"
             },
             "desc": {
                 "en-US": "Combine all three bean cards into the ultimate play, and emerge victorious.",
-                "de-DE": "Alle drei Bohnenkarten zur ultimativen Antwort kombinieren und die Runde gewinnen."
+                "de": "Alle drei Bohnenkarten zur ultimativen Antwort kombinieren und die Runde gewinnen."
             },
             "requirements": [
                 {
@@ -29,7 +29,7 @@
             "id": "w_saddick",
             "content": {
                 "en-US": "A severed penis.",
-                "de-DE": "Ein abgetrennter Penis."
+                "de": "Ein abgetrennter Penis."
             },
             "flags": "gnm bg"
         },
@@ -37,7 +37,7 @@
             "id": "w_couchfart",
             "content": {
                 "en-US": "Concentrated couch farts.",
-                "de-DE": "Sofafurzkonzentrat."
+                "de": "Sofafurzkonzentrat."
             },
             "flags": "g"
         },
@@ -45,7 +45,7 @@
             "id": "w_crustysock",
             "content": {
                 "en-US": "That one crusty sock.",
-                "de-DE": "Diese eine verkrustete Socke."
+                "de": "Diese eine verkrustete Socke."
             },
             "flags": "g s"
         },
@@ -53,7 +53,7 @@
             "id": "w_thumbbag",
             "content": {
                 "en-US": "A plastic bag full of wriggling thumbs.",
-                "de-DE": "Eine Plastiktüte voller wackelnden Daumen."
+                "de": "Eine Plastiktüte voller wackelnden Daumen."
             },
             "flags": "g w"
         },
@@ -61,7 +61,7 @@
             "id": "w_mysterypube",
             "content": {
                 "en-US": "A mysterious pube.",
-                "de-DE": "Ein mysteriöses Schamhaar."
+                "de": "Ein mysteriöses Schamhaar."
             },
             "flags": "g w"
         },
@@ -69,7 +69,7 @@
             "id": "w_thomas",
             "content": {
                 "en-US": "Thomas the Tank Engine.",
-                "de-DE": "Thomas die Lokomotive."
+                "de": "Thomas die Lokomotive."
             },
             "flags": "fc"
         },
@@ -77,7 +77,7 @@
             "id": "w_thomasdick",
             "content": {
                 "en-US": "Thomas the Tank Engine's gigantic iron dick.",
-                "de-DE": "Der gigantische Eisenschwanz von Thomas, der Lokomotive."
+                "de": "Der gigantische Eisenschwanz von Thomas, der Lokomotive."
             },
             "flags": "gnm fc"
         },
@@ -85,7 +85,7 @@
             "id": "w_tidepods",
             "content": {
                 "en-US": "Tide Pods.",
-                "de-DE": "Tide Pods.",
+                "de": "Tide Pods.",
                 "da-DK": "Tide Pods."
             }
         },
@@ -93,7 +93,7 @@
             "id": "w_pathead",
             "content": {
                 "en-US": "Patrick Stewart's silky-smooth head.",
-                "de-DE": "Patrick Stewarts seidenglatter Kopf."
+                "de": "Patrick Stewarts seidenglatter Kopf."
             },
             "flags": "ce w"
         },
@@ -101,14 +101,14 @@
             "id": "w_lettuce",
             "content": {
                 "en-US": "\"Lettuce\".",
-                "de-DE": "\"Salat\"."
+                "de": "\"Salat\"."
             }
         },
         {
             "id": "w_mcqueen",
             "content": {
                 "en-US": "Lightning McQueen.",
-                "de-DE": "Lightning McQueen.",
+                "de": "Lightning McQueen.",
                 "da-DK": "Lightning McQueen."
             },
             "flags": "fc"
@@ -117,7 +117,7 @@
             "id": "w_dogcum",
             "content": {
                 "en-US": "A donut filled with dog semen.",
-                "de-DE": "Ein Donut voller Hundesamen."
+                "de": "Ein Donut voller Hundesamen."
             },
             "flags": "an s g"
         },
@@ -125,7 +125,7 @@
             "id": "w_dickbreak",
             "content": {
                 "en-US": "Penile fracture.",
-                "de-DE": "Penisbruch."
+                "de": "Penisbruch."
             },
             "flags": "gnm i"
         },
@@ -133,14 +133,14 @@
             "id": "w_jazzhands",
             "content": {
                 "en-US": "Jazz hands.",
-                "de-DE": "Jazz-Hände."
+                "de": "Jazz-Hände."
             }
         },
         {
             "id": "w_deadwood",
             "content": {
                 "en-US": "Post-mortem erection.",
-                "de-DE": "Post-Mortem-Erektion."
+                "de": "Post-Mortem-Erektion."
             },
             "flags": "d gnm s"
         },
@@ -148,7 +148,7 @@
             "id": "w_wafflestomp",
             "content": {
                 "en-US": "Shitting in the shower and stomping it down the drain.",
-                "de-DE": "In die Dusche scheißen und sie in den Abfluss stampfen."
+                "de": "In die Dusche scheißen und sie in den Abfluss stampfen."
             },
             "flags": "w g fe"
         },
@@ -156,7 +156,7 @@
             "id": "w_vaginatacks",
             "content": {
                 "en-US": "A vagina full of thumbtacks.",
-                "de-DE": "Eine Vagina voller Reißzwecken."
+                "de": "Eine Vagina voller Reißzwecken."
             },
             "flags": "gnf w"
         },
@@ -164,7 +164,7 @@
             "id": "w_snortingpeppers",
             "content": {
                 "en-US": "Snorting cayenne powder.",
-                "de-DE": "Cayennepulver schnupfen."
+                "de": "Cayennepulver schnupfen."
             },
             "flags": "w"
         },
@@ -180,14 +180,14 @@
             "id": "w_irs",
             "content": {
                 "en-US": "Threatening letters from the IRS.",
-                "de-DE": "Bedrohliche Briefe von der IRS."
+                "de": "Bedrohliche Briefe von der IRS."
             }
         },
         {
             "id": "w_longhug",
             "content": {
                 "en-US": "A hug that lasts a little too long.",
-                "de-DE": "Eine Umarmung, die ein bisschen zu lange dauert."
+                "de": "Eine Umarmung, die ein bisschen zu lange dauert."
             },
             "flags": "w"
         },
@@ -195,7 +195,7 @@
             "id": "w_papsmear",
             "content": {
                 "en-US": "A pap smear.",
-                "de-DE": "Ein PAP-Abstrich."
+                "de": "Ein PAP-Abstrich."
             },
             "flags": "gnf"
         },
@@ -203,7 +203,7 @@
             "id": "w_bricks",
             "content": {
                 "en-US": "Cheating at the pillow fight by filling yours with bricks.",
-                "de-DE": "Bei der Kissenschlacht betrügen, indem du dein Kissen mit Ziegeln füllst."
+                "de": "Bei der Kissenschlacht betrügen, indem du dein Kissen mit Ziegeln füllst."
             },
             "flags": "v"
         },
@@ -211,7 +211,7 @@
             "id": "w_dickfungus",
             "content": {
                 "en-US": "Penile fungal infections.",
-                "de-DE": "Penis-Pilzinfektionen."
+                "de": "Penis-Pilzinfektionen."
             },
             "flags": "g w gnm"
         },
@@ -226,7 +226,7 @@
             "id": "w_stripsearch",
             "content": {
                 "en-US": "Being strip-searched and liking it.",
-                "de-DE": "Einer Leibesvisitation unterzogen werden und es genießen."
+                "de": "Einer Leibesvisitation unterzogen werden und es genießen."
             },
             "flags": "w"
         },
@@ -234,7 +234,7 @@
             "id": "w_jenkem",
             "content": {
                 "en-US": "Jenkem.",
-                "de-DE": "Jenkem.",
+                "de": "Jenkem.",
                 "da-DK": "Jenkem."
             },
             "flags": "dr g w fe"
@@ -243,7 +243,7 @@
             "id": "w_heroinass",
             "content": {
                 "en-US": "Smuggling a shit-ton of heroin in your rectum.",
-                "de-DE": "Scheiß viel Heroin in deinem Rektum schmuggeln."
+                "de": "Scheiß viel Heroin in deinem Rektum schmuggeln."
             },
             "flags": "dr gn g"
         },
@@ -251,7 +251,7 @@
             "id": "w_blueballs",
             "content": {
                 "en-US": "Blue balls.",
-                "de-DE": "Blaue Eier."
+                "de": "Blaue Eier."
             },
             "flags": "gn gnm i g"
         },
@@ -259,7 +259,7 @@
             "id": "w_maplepiss",
             "content": {
                 "en-US": "Maple syrup urine disease.",
-                "de-DE": "Ahornsirupkrankheit."
+                "de": "Ahornsirupkrankheit."
             },
             "flags": "di w"
         },
@@ -267,7 +267,7 @@
             "id": "w_funeralwood",
             "content": {
                 "en-US": "Getting a boner at a funeral.",
-                "de-DE": "Einen Ständer auf einer Beerdigung kriegen."
+                "de": "Einen Ständer auf einer Beerdigung kriegen."
             },
             "flags": "w s"
         },
@@ -275,7 +275,7 @@
             "id": "w_roaches",
             "content": {
                 "en-US": "A horde of hungry cockroaches.",
-                "de-DE": "Eine Horde hungriger Kakerlaken."
+                "de": "Eine Horde hungriger Kakerlaken."
             },
             "flags": "g"
         },
@@ -283,7 +283,7 @@
             "id": "w_schoolshoot",
             "content": {
                 "en-US": "School shootings.",
-                "de-DE": "Schulschießereien."
+                "de": "Schulschießereien."
             },
             "flags": "v"
         },
@@ -291,7 +291,7 @@
             "id": "w_skinjacket",
             "content": {
                 "en-US": "A leather jacket made of human skin.",
-                "de-DE": "Eine Lederjacke aus menschlicher Haut."
+                "de": "Eine Lederjacke aus menschlicher Haut."
             },
             "flags": "w g"
         },
@@ -299,7 +299,7 @@
             "id": "w_morningbreath",
             "content": {
                 "en-US": "Morning breath.",
-                "de-DE": "Morgenmundgeruch."
+                "de": "Morgenmundgeruch."
             },
             "flags": "g"
         },
@@ -307,7 +307,7 @@
             "id": "w_butterman",
             "content": {
                 "en-US": "A 600lb naked man covered in butter.",
-                "de-DE": "Ein 270kg nackter Mann, der mit Butter bedeckt ist."
+                "de": "Ein 270kg nackter Mann, der mit Butter bedeckt ist."
             },
             "flags": "w g"
         },
@@ -315,7 +315,7 @@
             "id": "w_smoothmario",
             "content": {
                 "en-US": "Mario without a mustache.",
-                "de-DE": "Mario ohne Schnurrbart."
+                "de": "Mario ohne Schnurrbart."
             },
             "flags": "w fc"
         },
@@ -323,7 +323,7 @@
             "id": "w_flybottle",
             "content": {
                 "en-US": "A 2-liter bottle of dead flies.",
-                "de-DE": "Eine 2-Liter-Flasche voller toten Fliegen."
+                "de": "Eine 2-Liter-Flasche voller toten Fliegen."
             },
             "flags": "g"
         },
@@ -331,7 +331,7 @@
             "id": "w_chococysts",
             "content": {
                 "en-US": "Chocolate-covered sebaceous cysts.",
-                "de-DE": "Schokoladenüberzogene Grießknoten."
+                "de": "Schokoladenüberzogene Grießknoten."
             },
             "flags": "w g"
         },
@@ -339,7 +339,7 @@
             "id": "w_dinnerjerk",
             "content": {
                 "en-US": "Masturbating at the dinner table to assert dominance.",
-                "de-DE": "Masturbieren am Esstisch, um die Dominanz zu behaupten."
+                "de": "Masturbieren am Esstisch, um die Dominanz zu behaupten."
             },
             "flags": "w s"
         },
@@ -347,14 +347,14 @@
             "id": "w_thrillofhunt",
             "content": {
                 "en-US": "The thrill of the hunt.",
-                "de-DE": "Der Reiz der Jagd."
+                "de": "Der Reiz der Jagd."
             }
         },
         {
             "id": "w_realdoughboy",
             "content": {
                 "en-US": "The Pillsbury Doughboy with realistic human eyes.",
-                "de-DE": "Der Pillsbury Doughboy mit realistischen menschlichen Augen."
+                "de": "Der Pillsbury Doughboy mit realistischen menschlichen Augen."
             },
             "flags": "w fc"
         },
@@ -362,7 +362,7 @@
             "id": "w_sheeranface",
             "content": {
                 "en-US": "Ed Sheeran's gazing, disembodied face.",
-                "de-DE": "Ed Sheerans starrendes, körperloses Gesicht."
+                "de": "Ed Sheerans starrendes, körperloses Gesicht."
             },
             "flags": "w ce"
         },
@@ -370,14 +370,14 @@
             "id": "w_weirdtube",
             "content": {
                 "en-US": "The weird side of YouTube.",
-                "de-DE": "Der seltsame Bereich von YouTube."
+                "de": "Der seltsame Bereich von YouTube."
             }
         },
         {
             "id": "w_highmusic",
             "content": {
                 "en-US": "Getting high as a kite and listening to slowed-down music for hours.",
-                "de-DE": "Sich berauschen und sich für Stunden verlangsamte Musik anhören."
+                "de": "Sich berauschen und sich für Stunden verlangsamte Musik anhören."
             },
             "flags": "dr"
         },
@@ -385,7 +385,7 @@
             "id": "w_coffeeenema",
             "content": {
                 "en-US": "A coffee enema.",
-                "de-DE": "Ein Kaffeeeinlauf."
+                "de": "Ein Kaffeeeinlauf."
             },
             "flags": "w g"
         },
@@ -393,7 +393,7 @@
             "id": "w_sonicart",
             "content": {
                 "en-US": "Poorly-drawn Sonic OCs.",
-                "de-DE": "Schlecht gezeichnete Sonic-OCs."
+                "de": "Schlecht gezeichnete Sonic-OCs."
             },
             "flags": "fc w"
         },
@@ -401,7 +401,7 @@
             "id": "w_inflateporn",
             "content": {
                 "en-US": "Inflation porn.",
-                "de-DE": "Befüllungspornos."
+                "de": "Befüllungspornos."
             },
             "flags": "xf s w x"
         },
@@ -409,7 +409,7 @@
             "id": "w_bigdadlube",
             "content": {
                 "en-US": "Your dad's gallon jug of anal lube.",
-                "de-DE": "Der Anusgleitmittelkanister deines Vaters."
+                "de": "Der Anusgleitmittelkanister deines Vaters."
             },
             "flags": "s w"
         },
@@ -417,7 +417,7 @@
             "id": "w_vaporwave",
             "content": {
                 "en-US": "Vaporwave.",
-                "de-DE": "Vaporwave.",
+                "de": "Vaporwave.",
                 "da-DK": "Vaporwave.",
                 "es-MX": "Vaporwave."
             }
@@ -426,7 +426,7 @@
             "id": "w_supple",
             "content": {
                 "en-US": "His supple skin.",
-                "de-DE": "Seine geschmeidige Haut."
+                "de": "Seine geschmeidige Haut."
             },
             "flags": "w"
         },
@@ -434,7 +434,7 @@
             "id": "w_bosspunch",
             "content": {
                 "en-US": "Punching my boss in his dumb fucking face.",
-                "de-DE": "Meinem dummen Chef ins Gesicht schlagen."
+                "de": "Meinem dummen Chef ins Gesicht schlagen."
             },
             "flags": "v"
         },
@@ -442,7 +442,7 @@
             "id": "w_bloatpoke",
             "content": {
                 "en-US": "Puncturing bloated roadkill and huffing the fumes.",
-                "de-DE": "Aufgeblähte überfahrene Tiere anstechen und die Dämpfe tief einatmen."
+                "de": "Aufgeblähte überfahrene Tiere anstechen und die Dämpfe tief einatmen."
             },
             "flags": "w g dr"
         },
@@ -450,7 +450,7 @@
             "id": "w_zoophilia",
             "content": {
                 "en-US": "Zoophilia.",
-                "de-DE": "Zoophilie."
+                "de": "Zoophilie."
             },
             "flags": "xf s"
         },
@@ -458,7 +458,7 @@
             "id": "w_kidfreezer",
             "content": {
                 "en-US": "A freezer full of dead children.",
-                "de-DE": "Ein Tiefkühlschrank voller toten Kinder."
+                "de": "Ein Tiefkühlschrank voller toten Kinder."
             },
             "flags": "w g mu d"
         },
@@ -466,7 +466,7 @@
             "id": "w_altbodybag",
             "content": {
                 "en-US": "Cling-wrapping a dead body to keep it fresh.",
-                "de-DE": "Eine Leiche in Frischhaltefolie wickeln."
+                "de": "Eine Leiche in Frischhaltefolie wickeln."
             },
             "flags": "d w g"
         },
@@ -474,7 +474,7 @@
             "id": "w_unfairtwister",
             "content": {
                 "en-US": "Playing Twister against quadriplegics.",
-                "de-DE": "Twister gegen Quadriplegiker spielen."
+                "de": "Twister gegen Quadriplegiker spielen."
             },
             "flags": "ds_cr"
         },
@@ -482,7 +482,7 @@
             "id": "w_loudporn",
             "content": {
                 "en-US": "Watching porn but forgetting to plug in your headphones.",
-                "de-DE": "Pornos anschauen, aber vergessen, deinen Kopfhörer einzustecken."
+                "de": "Pornos anschauen, aber vergessen, deinen Kopfhörer einzustecken."
             },
             "flags": "x"
         },
@@ -490,7 +490,7 @@
             "id": "w_stapletapeworms",
             "content": {
                 "en-US": "Stapling tapeworms on your penis.",
-                "de-DE": "Bandwürmer an deinen Penis antackern."
+                "de": "Bandwürmer an deinen Penis antackern."
             },
             "flags": "w g s xf i"
         },
@@ -498,7 +498,7 @@
             "id": "w_jw",
             "content": {
                 "en-US": "Jehova's Witnesses.",
-                "de-DE": "Zeugen Jehovas."
+                "de": "Zeugen Jehovas."
             },
             "flags": "re"
         },
@@ -526,7 +526,7 @@
             "id": "w_zyklon",
             "content": {
                 "en-US": "Zyklon-B.",
-                "de-DE": "Zyklon-B."
+                "de": "Zyklon-B."
             },
             "flags": "as cr mu"
         },
@@ -534,14 +534,14 @@
             "id": "w_sadanimals",
             "content": {
                 "en-US": "Depressing ASPCA commercials.",
-                "de-DE": "Deprimierende ASPCA-Werbespots."
+                "de": "Deprimierende ASPCA-Werbespots."
             }
         },
         {
             "id": "w_aspcasarah",
             "content": {
                 "en-US": "Sarah McLachlan, here to ruin your fucking day.",
-                "de-DE": "Sarah McLachlan, da, um deinen ganzen Tag zu verficken."
+                "de": "Sarah McLachlan, da, um deinen ganzen Tag zu verficken."
             }
         },
         {
@@ -561,7 +561,7 @@
             "id": "w_frogtub",
             "content": {
                 "en-US": "A bathtub full of live frogs.",
-                "de-DE": "Eine Badewanne voller lebendiger Frösche."
+                "de": "Eine Badewanne voller lebendiger Frösche."
             },
             "flags": "an w g"
         },
@@ -582,7 +582,7 @@
             "id": "w_moderateautism",
             "content": {
                 "en-US": "Moderate autism.",
-                "de-DE": "Mäßiger Autismus."
+                "de": "Mäßiger Autismus."
             },
             "flags": "ds"
         },
@@ -590,7 +590,7 @@
             "id": "w_severeautism",
             "content": {
                 "en-US": "Severe autism.",
-                "de-DE": "Schwerer Autismus."
+                "de": "Schwerer Autismus."
             },
             "flags": "ds"
         },
@@ -598,7 +598,7 @@
             "id": "w_oopshomo",
             "content": {
                 "en-US": "Forgetting to say \"no homo\".",
-                "de-DE": "Vergessen, \"no homo\" zu sagen."
+                "de": "Vergessen, \"no homo\" zu sagen."
             },
             "flags": "nh s"
         },
@@ -606,7 +606,7 @@
             "id": "w_yeshomo",
             "content": {
                 "en-US": "'Forgetting' to say \"no homo\".",
-                "de-DE": "'Vergessen', \"no homo\" zu sagen."
+                "de": "'Vergessen', \"no homo\" zu sagen."
             },
             "flags": "nh s"
         },
@@ -614,7 +614,7 @@
             "id": "w_greengiant",
             "content": {
                 "en-US": "Getting viciously ass-fucked by the Green Giant.",
-                "de-DE": "Vom Grünen Riesen brutal in den Arsch gefickt werden."
+                "de": "Vom Grünen Riesen brutal in den Arsch gefickt werden."
             },
             "flags": "fc s w"
         },
@@ -622,7 +622,7 @@
             "id": "w_greenass",
             "content": {
                 "en-US": "A grass-stained asshole.",
-                "de-DE": "Ein grasfleckiges Arschloch."
+                "de": "Ein grasfleckiges Arschloch."
             },
             "flags": "w g"
         },
@@ -636,7 +636,7 @@
             "id": "w_niceveins",
             "content": {
                 "en-US": "Nice veins.",
-                "de-DE": "Schöne Venen."
+                "de": "Schöne Venen."
             }
         },
         {
@@ -650,7 +650,7 @@
             "id": "w_rectprolapse",
             "content": {
                 "en-US": "Rectal prolapse.",
-                "de-DE": "Rektumprolaps."
+                "de": "Rektumprolaps."
             },
             "flags": "i g"
         },
@@ -665,7 +665,7 @@
             "id": "w_tonsilsnack",
             "content": {
                 "en-US": "Reusing your tonsil stones as fish food.",
-                "de-DE": "Deine Mandelsteine als Fischfutter benutzen."
+                "de": "Deine Mandelsteine als Fischfutter benutzen."
             },
             "flags": "w g"
         },
@@ -679,7 +679,7 @@
             "id": "w_georgebush",
             "content": {
                 "en-US": "George W. Bush.",
-                "de-DE": "Geoge W. Bush."
+                "de": "Geoge W. Bush."
             },
             "flags": "ce"
         },
@@ -687,7 +687,7 @@
             "id": "w_lotsamaggots",
             "content": {
                 "en-US": "An incredible amount of maggots.",
-                "de-DE": "Eine unglaublich große Menge Maden."
+                "de": "Eine unglaublich große Menge Maden."
             },
             "flags": "g"
         },
@@ -695,28 +695,28 @@
             "id": "w_tefiti",
             "content": {
                 "en-US": "The heart of Te Fiti.",
-                "de-DE": "Das Herz von Te Fiti."
+                "de": "Das Herz von Te Fiti."
             }
         },
         {
             "id": "w_trickledown",
             "content": {
                 "en-US": "Trickle-down economics.",
-                "de-DE": "Trinkle-Down-Wirtschaft."
+                "de": "Trinkle-Down-Wirtschaft."
             }
         },
         {
             "id": "w_darkmeat",
             "content": {
                 "en-US": "Dark meat.",
-                "de-DE": "Dunkles Fleisch."
+                "de": "Dunkles Fleisch."
             }
         },
         {
             "id": "w_cumbrick",
             "content": {
                 "en-US": "A solid brick of dried semen.",
-                "de-DE": "Ein Ziegel getrocknetes Samens."
+                "de": "Ein Ziegel getrocknetes Samens."
             },
             "flags": "w g"
         },
@@ -738,7 +738,7 @@
             "id": "w_devilnut",
             "content": {
                 "en-US": "Satan's left testicle.",
-                "de-DE": "Der linke Hode des Teufels."
+                "de": "Der linke Hode des Teufels."
             },
             "flags": "re gnm"
         },
@@ -766,7 +766,7 @@
             "id": "w_ffthreesome",
             "content": {
                 "en-US": "A sweaty threesome between Colonel Sanders, Ronald McDonald, and The King.",
-                "de-DE": "Ein verschwitzter Dreier mit Colonel Sanders, Ronald McDonald und The King."
+                "de": "Ein verschwitzter Dreier mit Colonel Sanders, Ronald McDonald und The King."
             },
             "flags": "w s nh fc"
         },
@@ -774,7 +774,7 @@
             "id": "w_furries",
             "content": {
                 "en-US": "Furries.",
-                "de-DE": "Furrys."
+                "de": "Furrys."
             },
             "flags": "xf"
         },
@@ -782,7 +782,7 @@
             "id": "w_dickpics",
             "content": {
                 "en-US": "Dick pics.",
-                "de-DE": "Penisbilder."
+                "de": "Penisbilder."
             },
             "flags": "gnm"
         },
@@ -790,7 +790,7 @@
             "id": "w_frogmouth",
             "content": {
                 "en-US": "A mouthful of dead frogs.",
-                "de-DE": "Ein Mund voller toter Frösche."
+                "de": "Ein Mund voller toter Frösche."
             },
             "flags": "w g"
         },
@@ -798,7 +798,7 @@
             "id": "w_grinch",
             "content": {
                 "en-US": "The Grinch.",
-                "de-DE": "Der Grinch."
+                "de": "Der Grinch."
             },
             "flags": "fc"
         },
@@ -812,14 +812,14 @@
             "id": "w_nutbust",
             "content": {
                 "en-US": "Busting a nut.",
-                "de-DE": "Heftig ejakulieren."
+                "de": "Heftig ejakulieren."
             }
         },
         {
             "id": "w_csf",
             "content": {
                 "en-US": "Cumming and shitting and farting.",
-                "de-DE": "Kommen und scheißen und furzen."
+                "de": "Kommen und scheißen und furzen."
             },
             "flags": "w g"
         },
@@ -827,14 +827,14 @@
             "id": "w_disappoint",
             "content": {
                 "en-US": "Crushing disappointment.",
-                "de-DE": "Quälende Enttäuschung."
+                "de": "Quälende Enttäuschung."
             }
         },
         {
             "id": "w_ovencry",
             "content": {
                 "en-US": "A faint, muffled cry coming from the oven.",
-                "de-DE": "Ein leiser, gedämpfter Schrei aus dem Ofen."
+                "de": "Ein leiser, gedämpfter Schrei aus dem Ofen."
             }
         },
         {
@@ -859,42 +859,42 @@
             "id": "w_wronghole",
             "content": {
                 "en-US": "The wrong hole.",
-                "de-DE": "Das falsche Loch."
+                "de": "Das falsche Loch."
             }
         },
         {
             "id": "w_goodslap",
             "content": {
                 "en-US": "A good slap.",
-                "de-DE": "Ein guter Klaps."
+                "de": "Ein guter Klaps."
             }
         },
         {
             "id": "w_nightshades",
             "content": {
                 "en-US": "Wearing sunglasses at night.",
-                "de-DE": "Nachts eine Sonnenbrille tragen."
+                "de": "Nachts eine Sonnenbrille tragen."
             }
         },
         {
             "id": "w_shortplunger",
             "content": {
                 "en-US": "A toilet plunger with an uncomfortably short handle.",
-                "de-DE": "Eine Saugglocke mit einem unbequem kurzen Griff."
+                "de": "Eine Saugglocke mit einem unbequem kurzen Griff."
             }
         },
         {
             "id": "w_creepyloo",
             "content": {
                 "en-US": "A toilet that is about to overflow, and you're powerless to stop it.",
-                "de-DE": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu soppen."
+                "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu soppen."
             }
         },
         {
             "id": "w_slimyonion",
             "content": {
                 "en-US": "A wet onion.",
-                "de-DE": "Eine nasse Zwiebel."
+                "de": "Eine nasse Zwiebel."
             },
             "flags": "w g"
         },
@@ -920,21 +920,21 @@
             "id": "w_badsand",
             "content": {
                 "en-US": "Sand in all the wrong places.",
-                "de-DE": "Sand an den falschen Stellen."
+                "de": "Sand an den falschen Stellen."
             }
         },
         {
             "id": "w_wowgirth",
             "content": {
                 "en-US": "Incredible girth.",
-                "de-DE": "Ein unglaublicher Umfang."
+                "de": "Ein unglaublicher Umfang."
             }
         },
         {
             "id": "w_snappysnap",
             "content": {
                 "en-US": "Biting off his dick.",
-                "de-DE": "Seinen Schwanz abbeißen."
+                "de": "Seinen Schwanz abbeißen."
             }
         },
         {
@@ -948,7 +948,7 @@
             "id": "w_citrusteeth",
             "content": {
                 "en-US": "Orange juice and toothpaste.",
-                "de-DE": "Orangensaft mit Zahnpasta."
+                "de": "Orangensaft mit Zahnpasta."
             },
             "flags": "g"
         },
@@ -956,7 +956,7 @@
             "id": "w_willsmith",
             "content": {
                 "en-US": "Will Smith.",
-                "de-DE": "Will Smith."
+                "de": "Will Smith."
             },
             "flags": "ce"
         },
@@ -964,7 +964,7 @@
             "id": "w_nakedneighbor",
             "content": {
                 "en-US": "Seeing your neighbor masturbating and not being able to look away.",
-                "de-DE": "Deinen Nachbar beim Masturbieren sehen und nicht wegschauen können."
+                "de": "Deinen Nachbar beim Masturbieren sehen und nicht wegschauen können."
             },
             "flags": "s"
         },
@@ -991,14 +991,14 @@
             "id": "w_justtencents",
             "content": {
                 "en-US": "Just ten cents a day.",
-                "de-DE": "Nur 10 Zent pro Tag."
+                "de": "Nur 10 Zent pro Tag."
             }
         },
         {
             "id": "w_badwet",
             "content": {
                 "en-US": "Unexpected wetness.",
-                "de-DE": "Unerwartete Nässe."
+                "de": "Unerwartete Nässe."
             },
             "flags": "g"
         },
@@ -1031,7 +1031,7 @@
             "id": "w_badtwinkie",
             "content": {
                 "en-US": "A Twinkie filled with dog shit.",
-                "de-DE": "Ein Twinkie voller Hundescheiße."
+                "de": "Ein Twinkie voller Hundescheiße."
             },
             "flags": "g fe"
         },
@@ -1039,21 +1039,21 @@
             "id": "w_fakedeath",
             "content": {
                 "en-US": "Faking your death.",
-                "de-DE": "Deinen Tod vortauschen."
+                "de": "Deinen Tod vortauschen."
             }
         },
         {
             "id": "w_chernobyl",
             "content": {
                 "en-US": "Chernobyl.",
-                "de-DE": "Tschernobyl."
+                "de": "Tschernobyl."
             }
         },
         {
             "id": "w_waspholes",
             "content": {
                 "en-US": "Wasps coming out of every orifice.",
-                "de-DE": "Wespen aus jeder Körperöffnung."
+                "de": "Wespen aus jeder Körperöffnung."
             },
             "flags": "w g"
         },
@@ -1061,7 +1061,7 @@
             "id": "w_2gophers",
             "content": {
                 "en-US": "Two gophers with raging boners.",
-                "de-DE": "Zwei Taschenratten mit markanten Ständern."
+                "de": "Zwei Taschenratten mit markanten Ständern."
             }
         },
         {
@@ -1088,7 +1088,7 @@
             "id": "w_pearlyv",
             "content": {
                 "en-US": "A vagina with teeth.",
-                "de-DE": "Eine Vagina mit Zähnen."
+                "de": "Eine Vagina mit Zähnen."
             },
             "flags": "gnf w g"
         },
@@ -1096,7 +1096,7 @@
             "id": "w_billymays",
             "content": {
                 "en-US": "BILLY MAYS HERE WITH AN AMAZING NEW PRODUCT!",
-                "de-DE": "BILLY MAYS HIER MIT EINEM FANTASTISCHEN NEUEN PRODUKT!"
+                "de": "BILLY MAYS HIER MIT EINEM FANTASTISCHEN NEUEN PRODUKT!"
             },
             "flags": "ce"
         },
@@ -1111,7 +1111,7 @@
             "id": "w_vomitlaugh",
             "content": {
                 "en-US": "Vomiting and laughing at the same time.",
-                "de-DE": "Gleichzeitig kotzen und lachen."
+                "de": "Gleichzeitig kotzen und lachen."
             },
             "flags": "g"
         },
@@ -1119,7 +1119,7 @@
             "id": "w_dogtonguewich",
             "content": {
                 "en-US": "A sandwich filled with dog tongues.",
-                "de-DE": "Ein Sandwich voller Hundezungen."
+                "de": "Ein Sandwich voller Hundezungen."
             },
             "flags": "w g"
         },
@@ -1133,7 +1133,7 @@
             "id": "w_toothnails",
             "content": {
                 "en-US": "Having teeth for fingernails.",
-                "de-DE": "Zähne für Fingernägel haben."
+                "de": "Zähne für Fingernägel haben."
             },
             "flags": "w"
         },
@@ -1141,7 +1141,7 @@
             "id": "w_coldgravy",
             "content": {
                 "en-US": "Cold gravy.",
-                "de-DE": "Kalte Bratensoße."
+                "de": "Kalte Bratensoße."
             },
             "flags": "g"
         },
@@ -1149,14 +1149,14 @@
             "id": "w_badreplacement",
             "content": {
                 "en-US": "Replacing all the shampoo with hair remover.",
-                "de-DE": "All den Shampoo durch Haarentfernungsmittel ersetzen."
+                "de": "All den Shampoo durch Haarentfernungsmittel ersetzen."
             }
         },
         {
             "id": "w_fastporn",
             "content": {
                 "en-US": "A porn video playing at double speed.",
-                "de-DE": "Einen Porno mit doppelter Geschwindigkeit abspielen."
+                "de": "Einen Porno mit doppelter Geschwindigkeit abspielen."
             },
             "flags": "x"
         },
@@ -1164,14 +1164,14 @@
             "id": "w_burninghairsmell",
             "content": {
                 "en-US": "The smell of burning hair.",
-                "de-DE": "Der Geruch brennender Haare."
+                "de": "Der Geruch brennender Haare."
             }
         },
         {
             "id": "w_toohappydog",
             "content": {
                 "en-US": "A dog that is so happy it pees everywhere.",
-                "de-DE": "Ein begeisterter Hund, der überall hin pinkelt."
+                "de": "Ein begeisterter Hund, der überall hin pinkelt."
             }
         },
         {
@@ -1192,14 +1192,14 @@
             "id": "w_hairynips",
             "content": {
                 "en-US": "Overly hairy areolas.",
-                "de-DE": "Übermäßig haarige Warzenhöfe."
+                "de": "Übermäßig haarige Warzenhöfe."
             }
         },
         {
             "id": "w_pooprope",
             "content": {
                 "en-US": "A turd dangling by one hair from a dog's quivering anus.",
-                "de-DE": "Ein Kackwurst, der an einem Haar an dem zitternden Anus eines Hundes baumelt."
+                "de": "Ein Kackwurst, der an einem Haar an dem zitternden Anus eines Hundes baumelt."
             },
             "flags": "fe g"
         },
@@ -1239,14 +1239,14 @@
             "id": "w_deathtaxes",
             "content": {
                 "en-US": "Death and taxes.",
-                "de-DE": "Tod und Steuern."
+                "de": "Tod und Steuern."
             }
         },
         {
             "id": "w_exclusivefootage",
             "content": {
                 "en-US": "EXCLUSIVE bonus footage!",
-                "de-DE": "EXKLUSIVES Bonusfilmmaterial!"
+                "de": "EXKLUSIVES Bonusfilmmaterial!"
             }
         },
         {
@@ -1265,7 +1265,7 @@
             "id": "w_salivaglass",
             "content": {
                 "en-US": "A warm glass of spit.",
-                "de-DE": "Ein warmes Glas Speichel."
+                "de": "Ein warmes Glas Speichel."
             },
             "flags": "g"
         },
@@ -1273,7 +1273,7 @@
             "id": "w_psvsmoothie",
             "content": {
                 "en-US": "A piss, shit, and vomit smoothie.",
-                "de-DE": "Ein Pisse-Scheiße-Kotze-Smoothie."
+                "de": "Ein Pisse-Scheiße-Kotze-Smoothie."
             },
             "flags": "g"
         },
@@ -1288,7 +1288,7 @@
             "id": "w_dollarmeat",
             "content": {
                 "en-US": "Dollar store meat.",
-                "de-DE": "Dollarladenfleisch."
+                "de": "Dollarladenfleisch."
             },
             "flags": "g"
         },
@@ -1296,7 +1296,7 @@
             "id": "w_gunfarts",
             "content": {
                 "en-US": "Farts that sound like gunshots.",
-                "de-DE": "Fürze, die wie Schüsse klingen."
+                "de": "Fürze, die wie Schüsse klingen."
             },
             "flags": "w"
         },
@@ -1311,7 +1311,7 @@
             "id": "w_kidsoldiers",
             "content": {
                 "en-US": "Child soldiers.",
-                "de-DE": "Kindersoldaten."
+                "de": "Kindersoldaten."
             },
             "flags": "ch"
         },
@@ -1344,14 +1344,14 @@
             "id": "w_blackhole",
             "content": {
                 "en-US": "A black hole.",
-                "de-DE": "Ein schwarzes Loch."
+                "de": "Ein schwarzes Loch."
             }
         },
         {
             "id": "w_godwhydidiwritethis",
             "content": {
                 "en-US": "A massive, maggot-infested rectal prolapse oozing a swirling mixture of blood, pus, and shit.",
-                "de-DE": "Ein massiver, von Maden befallener Rektumprolaps, der eine wirbelnde Mischung aus Blut, Eiter und Scheiße hervorbringt."
+                "de": "Ein massiver, von Maden befallener Rektumprolaps, der eine wirbelnde Mischung aus Blut, Eiter und Scheiße hervorbringt."
             },
             "flags": "w g fe"
         },
@@ -1359,7 +1359,7 @@
             "id": "w_macaronichoir",
             "content": {
                 "en-US": "The sound of 30 people fondling cooked macaroni.",
-                "de-DE": "Das Geräusch von 30 Leuten beim Streicheln gekochtes Makkaroni."
+                "de": "Das Geräusch von 30 Leuten beim Streicheln gekochtes Makkaroni."
             },
             "flags": "w g"
         },
@@ -1405,7 +1405,7 @@
             "id": "w_waxdonofrio",
             "content": {
                 "en-US": "A half-melted wax figure of Vincent D'Onofrio.",
-                "de-DE": "Eine halb geschmolzene Wachsfigur von Vincent D'Onofrio."
+                "de": "Eine halb geschmolzene Wachsfigur von Vincent D'Onofrio."
             },
             "flags": "w ce"
         },
@@ -1413,7 +1413,7 @@
             "id": "w_thesex",
             "content": {
                 "en-US": "Having the Sex.",
-                "de-DE": "Den Sex haben."
+                "de": "Den Sex haben."
             }
         },
         {
@@ -1432,7 +1432,7 @@
             "id": "w_coitussound",
             "content": {
                 "en-US": "The unmistakable sound of coitus.",
-                "de-DE": "Das unverwechselbare Geräusch des Koitus."
+                "de": "Das unverwechselbare Geräusch des Koitus."
             }
         },
         {
@@ -1445,7 +1445,7 @@
             "id": "w_14candles",
             "content": {
                 "en-US": "Inserting 14 lit candles into your anus.",
-                "de-DE": "14 brennende Kerzen in deinen Anus stecken."
+                "de": "14 brennende Kerzen in deinen Anus stecken."
             }
         },
         {
@@ -1459,14 +1459,14 @@
             "id": "w_nottheass",
             "content": {
                 "en-US": "Hearing someone yelling, \"Not the ass! NOT THE ASS!\"",
-                "de-DE": "Jemanden sagen hören, \"Nicht den Arsch! NICHT DEN ARSCH!\""
+                "de": "Jemanden sagen hören, \"Nicht den Arsch! NICHT DEN ARSCH!\""
             }
         },
         {
             "id": "w_15turd",
             "content": {
                 "en-US": "A 15-pound turd.",
-                "de-DE": "Eine 7-Kilo-Kackwurst."
+                "de": "Eine 7-Kilo-Kackwurst."
             },
             "flags": "g fe"
         },
@@ -1474,14 +1474,14 @@
             "id": "w_cannedlolz",
             "content": {
                 "en-US": "Canned laughter.",
-                "de-DE": "Lachkonserven."
+                "de": "Lachkonserven."
             }
         },
         {
             "id": "w_overpricedshit",
             "content": {
                 "en-US": "Overpriced, aggressively-marketed designer bullshit.",
-                "de-DE": "Überteuerte, aggressiv vermarktete Designer-Scheiße."
+                "de": "Überteuerte, aggressiv vermarktete Designer-Scheiße."
             }
         },
         {
@@ -1494,7 +1494,7 @@
             "id": "w_badcarmascot",
             "content": {
                 "en-US": "An obnoxious, cringey car dealership mascot.",
-                "de-DE": "Ein abscheuliches, peinliches Autohaus-Maskottchen."
+                "de": "Ein abscheuliches, peinliches Autohaus-Maskottchen."
             }
         },
         {
@@ -1507,7 +1507,7 @@
             "id": "w_chilicondom",
             "content": {
                 "en-US": "A condom full of chili.",
-                "de-DE": "Eine Kondome voller Chili."
+                "de": "Eine Kondome voller Chili."
             },
             "flags": "g"
         },
@@ -1515,7 +1515,7 @@
             "id": "w_chunkypb",
             "content": {
                 "en-US": "Extra-chunky peanut butter.",
-                "de-DE": "Erdnussbutter mit ganzen Stücken."
+                "de": "Erdnussbutter mit ganzen Stücken."
             }
         },
         {
@@ -1534,7 +1534,7 @@
             "id": "w_drsalt",
             "content": {
                 "en-US": "Dr. Pepper's lesser-known brother, Dr. Salt.",
-                "de-DE": "Der weniger bekannte Bruder von Dr. Pepper, Dr. Salt."
+                "de": "Der weniger bekannte Bruder von Dr. Pepper, Dr. Salt."
             }
         },
         {
@@ -1547,7 +1547,7 @@
             "id": "w_4skinbucket",
             "content": {
                 "en-US": "A bucket full of foreskins.",
-                "de-DE": "Ein Eimer voller Vorhäute."
+                "de": "Ein Eimer voller Vorhäute."
             },
             "flags": "g"
         },
@@ -1573,7 +1573,7 @@
             "id": "w_waldo",
             "content": {
                 "en-US": "Waldo.",
-                "de-DE": "Waldo."
+                "de": "Waldo."
             }
         },
         {
@@ -1610,7 +1610,7 @@
             "id": "w_chesticles",
             "content": {
                 "en-US": "Chesticles.",
-                "de-DE": "Chesticles."
+                "de": "Chesticles."
             }
         },
         {
@@ -1641,7 +1641,7 @@
             "id": "w_oldschoolmedicine",
             "content": {
                 "en-US": "An old-school home remedy made from molasses, ether, arsenic, and death.",
-                "de-DE": "Ein altmodisches Hausmittel aus Melasse, Äther, Arsen und Tod."
+                "de": "Ein altmodisches Hausmittel aus Melasse, Äther, Arsen und Tod."
             }
         },
         {
@@ -1654,21 +1654,21 @@
             "id": "w_kidtradingcards",
             "content": {
                 "en-US": "Using missing children ads as trading cards.",
-                "de-DE": "Vermisstenplakate wie Tauschkarten sammeln."
+                "de": "Vermisstenplakate wie Tauschkarten sammeln."
             }
         },
         {
             "id": "w_longergirhierdick",
             "content": {
                 "en-US": "A longer, girthier dick than yours.",
-                "de-DE": "Ein langerer, dickerer Schwanz als deiner."
+                "de": "Ein langerer, dickerer Schwanz als deiner."
             }
         },
         {
             "id": "w_youngerself",
             "content": {
                 "en-US": "My younger, dumber self.",
-                "de-DE": "Das jüngere, dümmere Ich."
+                "de": "Das jüngere, dümmere Ich."
             }
         },
         {
@@ -1693,7 +1693,7 @@
             "id": "w_twerkshit",
             "content": {
                 "en-US": "Twerking while shitting.",
-                "de-DE": "Twerken beim Scheißen."
+                "de": "Twerken beim Scheißen."
             }
         },
         {
@@ -1748,7 +1748,7 @@
             "id": "w_autismvaccine",
             "content": {
                 "en-US": "A vaccine for autism.",
-                "de-DE": "Ein Autismusimpfstoff."
+                "de": "Ein Autismusimpfstoff."
             }
         },
         {
@@ -1779,14 +1779,14 @@
             "id": "w_lastvictim",
             "content": {
                 "en-US": "My last victim.",
-                "de-DE": "Mein letztes Opfer."
+                "de": "Mein letztes Opfer."
             }
         },
         {
             "id": "w_abortiondestination",
             "content": {
                 "en-US": "The place where all the aborted fetuses go.",
-                "de-DE": "Der Ort, an den all die abgetriebenen Feten gehen."
+                "de": "Der Ort, an den all die abgetriebenen Feten gehen."
             },
             "flags": "db"
         },
@@ -1794,7 +1794,7 @@
             "id": "w_incestgenerations",
             "content": {
                 "en-US": "Five generations of incest.",
-                "de-DE": "Fünt Generationen von Inzest."
+                "de": "Fünt Generationen von Inzest."
             },
             "flags": "w g"
         },
@@ -1808,7 +1808,7 @@
             "id": "w_faceofgod",
             "content": {
                 "en-US": "The face of God himself.",
-                "de-DE": "Das Gesicht Gottes selbst."
+                "de": "Das Gesicht Gottes selbst."
             }
         },
         {
@@ -1840,7 +1840,7 @@
             "id": "w_blueberryporn",
             "content": {
                 "en-US": "Blueberry porn.",
-                "de-DE": "Blaubeerenpornografie."
+                "de": "Blaubeerenpornografie."
             },
             "flags": "w x"
         },
@@ -1867,7 +1867,7 @@
             "id": "w_master",
             "content": {
                 "en-US": "Master.",
-                "de-DE": "Meister."
+                "de": "Meister."
             }
         },
         {
@@ -1997,7 +1997,7 @@
             "id": "w_shootneighbordog",
             "content": {
                 "en-US": "Shooting your neighbor's dog.",
-                "de-DE": "Den Hund deines Nachbarn erschießen."
+                "de": "Den Hund deines Nachbarn erschießen."
             },
             "flags": "an an_cr v mu d"
         },
@@ -2005,7 +2005,7 @@
             "id": "w_getflayed",
             "content": {
                 "en-US": "Getting flayed alive.",
-                "de-DE": "Bei lebendigem Leibe enthäutet werden."
+                "de": "Bei lebendigem Leibe enthäutet werden."
             },
             "flags": "v bg d to mu i cr"
         },
@@ -2016,17 +2016,25 @@
             }
         },
         {
+            "id": "b_strangechildhumor",
+            "content": {
+                "en-US": "What's entertaining as a child but questionable in retrospect?",
+                "de": "Was ist als Kind amüsant, aber im Nachhinein bedenklich?"
+            },
+            "blanks": 1
+        },
+        {
             "id": "b_futureismeaningless",
             "content": {
                 "en-US": "The future is meaningless, but ________ is now.",
-                "de-DE": "Die Zukunft ist bedeutungslos, aber jetzt gibt es ________."
+                "de": "Die Zukunft ist bedeutungslos, aber jetzt gibt es ________."
             }
         },
         {
             "id": "b_sciencetradeoff",
             "content": {
                 "en-US": "Modern technology has finally made ________ possible, but it comes with the unfortunate tradeoff of ________.",
-                "de-DE": "Moderne Technologie ermöglicht endlich ________, aber es kommt mit einem unangenehmen Kompromiss: ________."
+                "de": "Moderne Technologie ermöglicht endlich ________, aber es gibt einen unangenehmen Kompromiss: ________."
             },
             "blanks": 2
         },
@@ -2039,7 +2047,8 @@
         {
             "id": "b_damnedifido",
             "content": {
-                "en-US": "_________.\nDamned if you do, damned if you don't."
+                "en-US": "_________.\nDamned if you do, damned if you don't.",
+                "de": "_________.\nWenn du's auch machst, ist es verkehrt."
             }
         },
         {
@@ -2053,48 +2062,49 @@
             "id": "b_altlullaby",
             "content": {
                 "en-US": "I was a difficult child; I absolutely wouldn't fall asleep without ________.",
-                "de-DE": "Ich war ein schwieriges Kind; ich würde ohne _________ absolut nicht einschlafen."
+                "de": "Ich war ein schwieriges Kind; ich würde ohne _________ absolut nicht einschlafen."
             }
         },
         {
             "id": "b_nightprayer",
             "content": {
                 "en-US": "Every night, I pray for ________.\nAnd every morning, I'm sorely disappointed.",
-                "de-DE": "Jeden Abend bete ich für ________.\nUnd jeden Morgen bin ich sehr enttäuscht."
+                "de": "Jeden Abend bete ich für ________.\nUnd jeden Morgen bin ich sehr enttäuscht."
             }
         },
         {
             "id": "b_crimewitness",
             "content": {
                 "en-US": "Officer, come quick! I just saw someone ________ and then run off!",
-                "de-DE": "Herr Polizist, bitte kommen Sie schnell! Ich habe gerade jemanden ________ und dann weglaufen gesehen!"
+                "de": "Herr Polizist, bitte kommen Sie schnell! Ich habe gerade jemanden ________ und dann weglaufen gesehen!"
             }
         },
         {
             "id": "b_kojimagame",
             "content": {
-                "en-US": "____________: a Hideo Kojima game."
+                "en-US": "____________: a Hideo Kojima game.",
+                "de": "____________: ein Spiel von Hideo Kojima."
             }
         },
         {
             "id": "b_noaliens",
             "content": {
                 "en-US": "What's the real reason aliens haven't contacted us?",
-                "de-DE": "Was ist der wahre Grund dafür, dass Außerirdische uns nicht kontaktiert haben?"
+                "de": "Was ist der wahre Grund dafür, dass Außerirdische uns nicht kontaktiert haben?"
             }
         },
         {
             "id": "b_whatscookin",
             "content": {
                 "en-US": "Wow, that smells good! What are you cooking?",
-                "de-DE": "Das riecht aber gut! Was kochst du da?"
+                "de": "Das riecht aber gut! Was kochst du da?"
             }
         },
         {
             "id": "b_nobodyexpectsme",
             "content": {
                 "en-US": "Nobody ever thought they'd see me ______. Well, today's the day I make it happen!",
-                "de-DE": "Niemand hätte je gedacht, dass sie mich ______ sehen würden. Nun, heute ist der Tag, an dem ich es möglich mache!"
+                "de": "Niemand hätte je gedacht, dass sie mich ______ sehen würden. Nun, heute ist der Tag, an dem ich es möglich mache!"
             },
             "blanks": 1
         },
@@ -2102,7 +2112,7 @@
             "id": "b_walmartban",
             "content": {
                 "en-US": "Why was I permanently banned from Walmart?",
-                "de-DE": "Warum wurde ich dauerhaft von Walmart ausgeschlossen?"
+                "de": "Warum wurde ich dauerhaft von Walmart ausgeschlossen?"
             },
             "blanks": 1
         },
@@ -2110,7 +2120,7 @@
             "id": "b_premaritalnono",
             "content": {
                 "en-US": "My girlfriend firmly believes in no _______ before marriage.",
-                "de-DE": "Meine Freundin glaubt fest an kein _______ vor der Hochzeit."
+                "de": "Meine Freundin glaubt fest an kein _______ vor der Hochzeit."
             },
             "blanks": 1
         },
@@ -2118,7 +2128,7 @@
             "id": "b_distdrivingticket",
             "content": {
                 "en-US": "Police are now handing out tickets to people for _______ while driving.",
-                "de-DE": "Die Polizei verteilt jetzt Strafzettel wegen _______ am Steuer."
+                "de": "Die Polizei verteilt jetzt Strafzettel wegen _______ am Steuer."
             }
         },
         {
@@ -2137,28 +2147,28 @@
             "id": "b_oneeasypayment",
             "content": {
                 "en-US": "For just one easy payment of $19.95, you too can be a proud owner of _______!",
-                "de-DE": "Für nur eine einfache Zahlung von $19,95 können auch Sie ein stolzer Besitzer von _______ sein!"
+                "de": "Für nur eine einfache Zahlung von $19,95 können auch Sie ein stolzer Besitzer von _______ sein!"
             }
         },
         {
             "id": "b_whatsdaddydoing",
             "content": {
                 "en-US": "Mommy, mommy! I just saw daddy and he was _______!",
-                "de-DE": "Mama, mama! Ich habe gerade Papa beim ________ gesehen!"
+                "de": "Mama, mama! Ich habe gerade Papa beim ________ gesehen!"
             }
         },
         {
             "id": "b_fbifindpackage",
             "content": {
                 "en-US": "The FBI is investigating after the White House received a suspicious package addressed to the President that contained _______.",
-                "de-DE": "Das FBI untersucht, nachdem das Weiße Haus ein verdächtiges Paket an den Präsidenten erhalten hat, das _______ enthielt."
+                "de": "Das FBI untersucht, nachdem das Weiße Haus ein verdächtiges Paket an den Präsidenten erhalten hat, das _______ enthielt."
             }
         },
         {
             "id": "b_newschoolprogram",
             "content": {
                 "en-US": "To meet new Department of Education requirements, US high schools now require freshmen to take a course on _______.",
-                "de-DE": "Um die neuen Anforderungen des Bildungsministeriums zu erfüllen, müssen Studienanfänger in den USA nun einen Kurs am _______ belegen."
+                "de": "Um die neuen Anforderungen des Bildungsministeriums zu erfüllen, müssen Studienanfänger in den USA nun einen Kurs am _______ belegen."
             }
         },
         {
@@ -2177,7 +2187,7 @@
             "id": "b_badaltegg",
             "content": {
                 "en-US": "It might sound like a good idea, but I can tell you from experience that _______ makes a <i>terrible</i> egg substitute.",
-                "de-DE": "Es klingt vielleicht wie eine gute Idee, aber ich kann dir aus Erfahrung sagen, dass _______ einen <i>furchtbaren</i> Eiersatz macht."
+                "de": "Es klingt vielleicht wie eine gute Idee, aber ich kann dir aus Erfahrung sagen, dass _______ einen <i>furchtbaren</i> Eiersatz macht."
             }
         },
         {
@@ -2190,21 +2200,21 @@
             "id": "b_aftersex",
             "content": {
                 "en-US": "After sex, my favorite thing to do is ________.",
-                "de-DE": "Nach dem Sex ist meine Lieblingsbeschäftigung ________."
+                "de": "Nach dem Sex ist meine Lieblingsbeschäftigung ________."
             }
         },
         {
             "id": "b_morningsmell",
             "content": {
                 "en-US": "Nothing's better than the smell of _______ in the morning.",
-                "de-DE": "Nichts ist besser als der Geruch von _______ am Morgen."
+                "de": "Nichts ist besser als der Geruch von _______ am Morgen."
             }
         },
         {
             "id": "b_dategonebad",
             "content": {
                 "en-US": "What's the most obvious sign that the date isn't going well?",
-                "de-DE": "Was ist das offensichtlichste Zeichen dafür, dass das Verabredung nicht gut läuft?"
+                "de": "Was ist das offensichtlichste Zeichen dafür, dass das Verabredung nicht gut läuft?"
             }
         },
         {
@@ -2230,7 +2240,7 @@
             "id": "b_notmything",
             "content": {
                 "en-US": "Despite what my friends might tell you, I have never liked ______.",
-                "de-DE": "Egal was dir meine Freunde vielleicht sagen, habe ich nie _______ genossen."
+                "de": "Egal was dir meine Freunde vielleicht sagen, habe ich nie _______ genossen."
             },
             "blanks": 1
         },
@@ -2263,7 +2273,7 @@
             "id": "b_partystopper",
             "content": {
                 "en-US": "What never fails to ruin the party?",
-                "de-DE": "Was wird die Party immer ruinieren?"
+                "de": "Was wird die Party immer ruinieren?"
             }
         },
         {
@@ -2283,7 +2293,7 @@
             "id": "b_soupsurprise",
             "content": {
                 "en-US": "What did I find in my soup?",
-                "de-DE": "Was habe ich in meiner Suppe entdeckt?"
+                "de": "Was habe ich in meiner Suppe entdeckt?"
             }
         },
         {
@@ -2297,7 +2307,7 @@
             "id": "b_moneycanneverbuy",
             "content": {
                 "en-US": "What can money never buy?",
-                "de-DE": "Was kann man nie kaufen?"
+                "de": "Was kann man nie kaufen?"
             },
             "blanks": 1
         },
@@ -2312,7 +2322,7 @@
             "id": "b_woody",
             "content": {
                 "en-US": "There's ____ in my boot!",
-                "de-DE": "Da ist ____ in meinem Stiefel!"
+                "de": "Da ist ____ in meinem Stiefel!"
             },
             "blanks": 1
         },
@@ -2388,7 +2398,7 @@
             "id": "b_dogmouth",
             "content": {
                 "en-US": "What's that in my dog's mouth?!",
-                "de-DE": "Was ist im Mund meines Hundes?!"
+                "de": "Was ist im Mund meines Hundes?!"
             },
             "blanks": 1
         },
@@ -2396,7 +2406,7 @@
             "id": "b_mailbox",
             "content": {
                 "en-US": "Nothing is worse than finding ____ in your mailbox.",
-                "de-DE": "Nichts ist schlimmer, als ____ im Briefkasten zu finden."
+                "de": "Nichts ist schlimmer, als ____ im Briefkasten zu finden."
             },
             "blanks": 1
         },
@@ -2489,14 +2499,14 @@
             "id": "b_specialfather",
             "content": {
                 "en-US": "Any man can be a father, but it takes someone special to be ________.",
-                "de-DE": "Jeder Mann kann ein Vater sein, aber es braucht jemanden Besonderen, um ________ zu sein."
+                "de": "Jeder Mann kann ein Vater sein, aber es braucht jemanden Besonderen, um ________ zu sein."
             }
         },
         {
             "id": "b_newlawban",
             "content": {
                 "en-US": "In five years, a new law will be passed that bans _________.",
-                "de-DE": "In fünf Jahren wird ein neues Gesetz verabschiedet werden, das ________ verbietet."
+                "de": "In fünf Jahren wird ein neues Gesetz verabschiedet werden, das ________ verbietet."
             }
         }
     ]

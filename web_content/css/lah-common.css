@@ -33,6 +33,8 @@
 :root {
     --placeholder-color: #999;
     --modal-nav-height: 24pt;
+    --main-bg-color: #d4d4d4;
+    --main-bg-line: #dadada;
 }
 
 ::-webkit-input-placeholder {
