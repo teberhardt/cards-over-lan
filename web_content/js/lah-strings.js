@@ -88,7 +88,7 @@
         },
         "ui_winner_left_nobody_scores": {
             "en": "Round winner left. Nobody scores.",
-            "de": "Der Rundesieger hat das Spiel verlassen. Punkte für keinen!"
+            "de": "Der Rundensieger hat das Spiel verlassen. Punkte für keinen!"
         },
         "ui_waiting_for_other_players": {
             "en": "Waiting for other players...",
@@ -129,6 +129,14 @@
         "ui_game_results": {
             "en": "Game Results",
             "de": "Spielergebnisse"
+        },
+        "ui_accent_color": {
+            "en": "Accent color",
+            "de": "Akzentfarbe"
+        },
+        "ui_accent_color_placeholder": {
+            "en": "Type a color name",
+            "de": "Farbename hier eingeben"
         }
     };
 
@@ -143,7 +151,7 @@
 
     getUiString = function (key) {
         let entry = uiStrings[key];
-        if (!entry) return "???";
+        if (!entry) return key;
         let lang = navigator.language;
         let fmtStr = entry[lang] || entry[lang.replace(/(.*)-[a-z0-9_\-]+/i, (m, p) => p)] || entry[DEFAULT_LOCALE] || Object.values(entry)[0];
         if (!fmtStr) return key;

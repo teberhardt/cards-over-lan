@@ -519,6 +519,7 @@
 
     function loadOptions() {
         lah.localPlayerName = Cookies.get("name") || "Player";
+        loadAccentColor();
         document.querySelector("#txt-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;
     }
@@ -543,6 +544,7 @@
 
     applyOptions = function () {
         setPlayerName(document.querySelector("#txt-username").value);
+        saveAccentColor();
         hideModal("modal-options");
         sendClientInfo();
     }

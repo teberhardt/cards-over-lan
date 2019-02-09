@@ -13,17 +13,6 @@
 
     body {
         background-color: var(--main-bg-color);
-        background-image: 
-        repeating-linear-gradient(55deg, 
-        transparent, transparent 1px, 
-        var(--main-bg-line) 1px, var(--main-bg-line) 3px,
-        transparent 3px, transparent 5px),
-
-        repeating-linear-gradient(-55deg, 
-        transparent, transparent 1px, 
-        var(--main-bg-line) 1px, var(--main-bg-line) 3px,
-        transparent 3px, transparent 5px);
-
         margin: 0;
         padding: 0;
         width: 100vw;
@@ -51,29 +40,26 @@
         pointer-events: none !important;
     }
 
-    .mobile-btn-menu:after {
-        content: "\2807";  
-        text-align: center; 
-        margin-left: .25em;
-    }
-
     .mobile-btn-menu {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
         width: 1em;
         height: 1em;
+        background: url("/img/lah_settings.png");
+        background-size: .9em .9em;
+        background-origin: 50% 50%;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
         padding: .2em;
-        font-size: 28pt;
-        text-align: center;
+        font-size: 24pt;
         overflow: visible;
         color: #333;
+        opacity: .5;
         z-index: 10000;
     }
 
     .mobile-btn-menu:active {
         color: #666;
-        background: rgba(.5, .5, .5, .05);
+        background-color: rgba(.5, .5, .5, .05);
     }
 
     #btn-mobile-nav {
@@ -193,13 +179,11 @@
 
     #judge-message-area {
         display: none;
-        grid-row: r-start / r-center;
+        grid-row: r-center / r-end;
         grid-column: c-start / c-end;
-        flex-direction: row;
         justify-self: center;
-        align-self: flex-end;
-        transform: translateY(calc(var(--card-height) * -1 - 16pt));
-        font-size: 12pt !important;
+        align-self: flex-start;
+        font-size: 11pt !important;
     }
 
     #judge-message-body, #judge-message-body * {
@@ -214,6 +198,7 @@
         grid-column: c-start / c-end;
         justify-content: center;
         align-items: center;
+        transform: translateY(8pt);
         color: #888;
         pointer-events: none;
     }
@@ -358,6 +343,13 @@
         opacity: .65;
         transition: opacity .3s;
     }
+
+    #stat-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 2pt;
+    }
     
     #status-area:hover {
         opacity: 1;
@@ -373,17 +365,18 @@
         margin-left: 2px;
     }
     
-    #status-area .stat {
-        font-size: 10pt;
+    #stat-list .stat {
+        font-size: 11pt;
         text-align: left;  
-        max-width: 150px;
+        max-width: 40%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;  
     }
 
     #status-area .stat.bare {
-        margin-left: 2px;
+        margin-left: 1pt;
+        max-width: 90%;
         color: #333;
     }
 
@@ -396,6 +389,10 @@
         transform: translateY(.25em);
         background-repeat: no-repeat;
         background-size: contain;
+    }
+
+    #status-area #myname {
+        font-size: .75em;
     }
     
     #status-area #player-count:before {
@@ -930,7 +927,6 @@
         padding: 6pt;
         outline: none;
         border: 2px solid black;
-        border-bottom-width: 4px;
         border-radius: 4pt;
         font-size: 14pt;
     }
@@ -940,6 +936,10 @@
         font-size: 14pt;
         margin: 4pt 1pt;
         color: #444;
+    }
+
+    #txt-accent-color {
+        transition: background-color .3s;
     }
     
     .modal {

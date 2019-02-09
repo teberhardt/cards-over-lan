@@ -32,9 +32,14 @@
 
 :root {
     --placeholder-color: #999;
-    --modal-nav-height: 24pt;
+    --modal-nav-height: 22pt;
     --main-bg-color: #d4d4d4;
-    --main-bg-line: #dadada;
+    --default-accent-color: #eee;
+    --accent-bg: var(--default-accent-color);
+    --accent-fg: #000;
+    --accent-ol: transparent;
+    --main-bg-line: rgba(0, 0, 0, .0);
+    --btn-color: #eee;
 }
 
 ::-webkit-input-placeholder {

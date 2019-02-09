@@ -18,6 +18,7 @@
     <script src="js/lah-ui.js" defer></script>
     <script src="js/lah-ws.js"></script>
     <script src="js/lah.js"></script>
+    <script src="js/incantate.js"></script>
 </head>
 
 <body onload="lah.start()" class="preload">
@@ -34,10 +35,12 @@
         <div id="status-area">
             <div id="status"></div>
             <div id="myname" class="stat bare">--</div>
-            <div id="player-count" class="stat" data-localize-title="ui_player_count">--</div>
-            <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
-            <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
-            <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
+            <div id="stat-list">
+                <div id="player-count" class="stat" data-localize-title="ui_player_count">--</div>
+                <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
+                <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
+                <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
+            </div>
         </div>
         <div id="judge-message-area">
             <span id="judge-message-body"></span>
@@ -117,8 +120,11 @@
                 <div class="lah-vlist">
                     <div class="lah-listitem">
                         <label class="lah-label" data-ui-string="ui_nickname"></label>
-                        <input type="text" id="txt-username" class="lah-txtbox wide" data-localize-placeholder="ui_username_placeholder"
-                            autocomplete="off" />
+                        <input type="text" id="txt-username" class="lah-txtbox wide" data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
+                    </div>
+                    <div class="lah-listitem">
+                        <label class="lah-label" data-ui-string="ui_accent_color"></label>
+                        <input type="text" id="txt-accent-color" class="lah-txtbox wide" data-localize-placeholder="ui_accent_color_placeholder" autocomplete="off" maxlength="250" />
                     </div>
                     <div class="lah-separator"></div>
                     <div class="lah-listitem">

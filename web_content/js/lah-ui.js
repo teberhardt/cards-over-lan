@@ -2,6 +2,7 @@
     let notifyBannerTimeoutToken = null;
     let banner = document.querySelector("#notify-banner");
     let bannerText = document.querySelector("#notify-banner-text");
+    let txtAccentColor = document.querySelector("#txt-accent-color");
 
     togglePlayerList = function() {
         document.querySelector("#player-list").toggleClass("closed");
@@ -47,5 +48,48 @@
     document.querySelector("#btn-fullscreen").addEventListener("mousedown", () => {
         toggleFullscreen();
     });
+
+    let updateAccentColorFieldStyle = function() {
+        let colorText = txtAccentColor.value;
+        if (!colorText.trim()) {
+            txtAccentColor.style["background-color"] = null;
+            txtAccentColor.style["color"] = null;
+        } else {
+            let color = Incantate.getColor(colorText);
+            let foreColor = color.isBright() ? "#000" : "#fff";
+            txtAccentColor.style["background-color"] = color.toString();
+            txtAccentColor.style["color"] = foreColor;
+        }
+    };
+
+    txtAccentColor.addEventListener("input", () => {
+        updateAccentColorFieldStyle();
+    });
+
+    saveAccentColor = function() {
+        let colorText = txtAccentColor.value;
+        if (!colorText.trim()) {
+            setAccentColor(null);
+        } else {
+            let color = Incantate.getColor(colorText);
+            setAccentColor(color);
+        }
+        Cookies.set("accent_bg", colorText.trim(), { expires: 365 });
+    }
+
+    setAccentColor = function(color) {
+        document.body.style.setProperty("--accent-bg", color && color.toString());
+        document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#fff") || "#000");
+        document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#fff") || "transparent");
+    }
+
+    loadAccentColor = function() {
+        let colorText = Cookies.get("accent_bg");
+        let color = colorText && Incantate.getColor(colorText);
+        txtAccentColor.value = colorText;
+        updateAccentColorFieldStyle();
+        setAccentColor(color);
+    }
+
     setLpIgnore();
 })();

@@ -34,22 +34,12 @@
 }
 
 body {
-    background-color: var(--main-bg-color);
-    background-image: 
-    repeating-linear-gradient(55deg, 
-    transparent, transparent 1px, 
-    var(--main-bg-line) 1px, var(--main-bg-line) 3px,
-    transparent 3px, transparent 5px),
-
-    repeating-linear-gradient(-55deg, 
-    transparent, transparent 1px, 
-    var(--main-bg-line) 1px, var(--main-bg-line) 3px,
-    transparent 3px, transparent 5px);
-
+    background-color: var(--accent-bg);
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
+    color: var(--accent-fg);
 }
 
 small {
@@ -210,7 +200,7 @@ smaller {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    color: black;
+    color: var(--accent-fg);
     left: 16pt;
     top: 10pt;        
     min-width: 64pt;
@@ -243,6 +233,8 @@ smaller {
     transform: translateY(.25em);
     background-repeat: no-repeat;
     background-size: contain;
+    background-color: var(--accent-ol);
+    border-radius: 3px;
 } 
 
 #status-area .stat {
@@ -255,12 +247,11 @@ smaller {
 }
 
 #status-area .stat.bare {
-    margin-left: 3px;
-    color: #333;
+    margin-left: 3px;    
 }
 
 #status-area #player-count:before {    
-    background-image: url("/img/lah-person.png");
+    background-image: url("/img/lah-person.png");    
 }
 
 #status-area #score:before {
@@ -703,6 +694,7 @@ card .ribbon:hover+.pick {
 card[black] {
     background-color: black;
     color: white;
+    border: 2px solid var(--accent-ol);
     font-weight: 300;
 }
 
@@ -830,30 +822,31 @@ card[data-selection]::after {
 .lah-btn {
     outline: none;
     padding: 8pt 25pt;
-    background: #eee;
-    border: 2px solid black;
-    /* border-width: 2px 2px 7px 2px; */
+    background: var(--lah-btn-color) !important;
+    color: var(--accent-fg) !important;
+    border: 2px solid var(--accent-fg);
     border-radius: 6pt;
     font-size: 22pt;
     margin: 0 6pt;
 }
 
+.lah-hlist > .lah-btn:last-child {
+    margin-right: 0;
+}
+
+.lah-hlist > .lah-btn:first-child {
+    margin-left: 0;
+}
+
 .lah-btn-small {
     font-size: 14pt;
     padding: 4pt 12pt;
-    /* border-bottom-width: 4px; */
+    font-weight: 500;
     margin: 0 4pt;
 }
 
-.lah-btn.lah-dark, .lah-dark .lah-btn {
-    background: #333;
-    color: #eee;
-    border-color: #eee;
-}
-
 .lah-btn:not(.disabled):hover {
-    border-color: #444;
-    color: #444;
+    filter: brightness(1.025);
     cursor: pointer;
 }
 
@@ -881,7 +874,6 @@ card[data-selection]::after {
     padding: 6pt;
     outline: none;
     border: 2px solid black;
-    border-bottom-width: 4px;
     border-radius: 4pt;
     font-size: 14pt;
     min-width: 16em;
@@ -892,6 +884,10 @@ card[data-selection]::after {
     font-size: 14pt;
     margin: 4pt 1pt;
     color: #444;
+}
+
+#txt-accent-color {
+    transition: background-color .3s;
 }
 
 .modal {
@@ -906,21 +902,22 @@ card[data-selection]::after {
     align-items: center;
     background: rgba(.13, .13, .13, .85);
     z-index: 2147483647;
+    color: black;
+    --accent-fg: #000;
+    --accent-bg: #eee;
 }
 
 .modal-dialog {
     background: #f6f6f6;  
     position: relative;  
-    padding: 20pt 24pt;
+    padding: 20pt 24pt 16pt 24pt;
     border-radius: 6pt;
     max-width: 60%;
     min-width: 50%;
 }
 
 .modal-body {
-    width: 100%;
-    height: 100%;
-    margin-top: var(--modal-nav-height);
+    flex-grow: 1;
 }
 
 .modal-nav {
