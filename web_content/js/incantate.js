@@ -40,7 +40,7 @@
     };
   
     RGB.prototype.isBright = function() {
-      return (this.r * 1.7 + this.g * 1.8 + this.b * .3) / 3 > .5;
+      return (this.r * 1.7 + this.g * 2.3 + this.b * .3) / 3 > .5;
     };
   
     RGB.prototype.saturation = function() {
@@ -475,6 +475,11 @@
         rgb.r = (rgb.r + 1) * .24;
         rgb.g = (rgb.g + 1) * .18;
         rgb.b *= 0.1;
+      },
+      "shitting": function(rgb) {
+        rgb.r = (rgb.r + 1) * .18;
+        rgb.g = (rgb.g + 1) * .11;
+        rgb.b *= 0.11;
       },
       "poo": function(rgb) {
         rgb.r = (rgb.r + 1) * .34;

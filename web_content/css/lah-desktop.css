@@ -694,7 +694,7 @@ card .ribbon:hover+.pick {
 card[black] {
     background-color: black;
     color: white;
-    border: 2px solid var(--accent-ol);
+    border: 1.5px solid var(--accent-ol);
     font-weight: 300;
 }
 
@@ -846,7 +846,7 @@ card[data-selection]::after {
 }
 
 .lah-btn:not(.disabled):hover {
-    filter: brightness(1.025);
+    filter: brightness(1.1);
     cursor: pointer;
 }
 

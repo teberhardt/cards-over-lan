@@ -76,6 +76,7 @@
     <Compile Include="Game\Trophies\AnyTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\CardProportionTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\CardsPlayedTrophyRequirement.cs" />
+    <Compile Include="Game\Trophies\LostToBotTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\Trophy.cs" />
     <Compile Include="Game\Trophies\TrophyRequirement.cs" />
     <Compile Include="Game\Trophies\WinProportionTrophyRequirement.cs" />

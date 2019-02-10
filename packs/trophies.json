@@ -190,6 +190,22 @@
                     "inclusive": true
                 }
             ]
+        },
+        {
+            "id": "trophy_lost_to_bot",
+            "name": {
+                "en-US": "Obsolete",
+                "de-DE": "Veraltet"
+            },
+            "desc": {
+                "en-US": "You lost to a bot. A BOT.",
+                "de-DE": "Du hast gegen einen Bot verloren. GEGEN EINEN BOT."
+            },
+            "requirements": [
+                {
+                    "type": "lost_to_bot"
+                }
+            ]
         }
     ]
 }

@@ -36,7 +36,7 @@
     --main-bg-color: #d4d4d4;
     --default-accent-color: #eee;
     --accent-bg: var(--default-accent-color);
-    --accent-fg: #000;
+    --accent-fg: #111;
     --accent-ol: transparent;
     --main-bg-line: rgba(0, 0, 0, .0);
     --btn-color: #eee;

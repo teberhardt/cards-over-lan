@@ -79,8 +79,8 @@
 
     setAccentColor = function(color) {
         document.body.style.setProperty("--accent-bg", color && color.toString());
-        document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#fff") || "#000");
-        document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#fff") || "transparent");
+        document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#ddd") || "#000");
+        document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#ddd") || "transparent");
     }
 
     loadAccentColor = function() {

@@ -32,6 +32,7 @@ namespace LahServer.Game.Converters
             RegisterRequirementType("win_proportion", typeof(WinProportionTrophyRequirement));
             RegisterRequirementType("any", typeof(AnyTrophyRequirement));
             RegisterRequirementType("all", typeof(AllTrophyRequirement));
+			RegisterRequirementType("lost_to_bot", typeof(LostToBotTrophyRequirement));
 		}
 
         private static void RegisterRequirementType(string requirementName, Type requirementType)
