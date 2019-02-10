@@ -65,7 +65,9 @@ The settings.json file contains a number of properties that control how the serv
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
-|`exclude_content`|Array|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`bot_count`|Integer|Number of bots to add to the game.|
+|`bot_names`|String[]|List of names to assign to bots.|
 
 
 ## FAQ
