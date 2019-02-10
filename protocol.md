@@ -1,17 +1,17 @@
 
-# LAN Against Humanity Protocol
+# Game Protocol
 
 ## Overview
 
-LAN Against Humanity clients use the WebSocket protocol to communicate with the server.
+Clients use the WebSocket protocol to communicate with the server.
 
-The server listens for client connections on `./lah:3000` by default.
+The server listens for client connections on `./game:3000` by default.
 
 Clients are provided certain query string options:
 
 * `name`: Sets your name to the specified string upon successful connection.
 
-There is no explicit concept of 'responses' in LAH's protocol. While the server may send a message in response to a particular client message, it is not required to explicitly state that it is a response.
+There is no explicit concept of 'responses' in the protocol. While the server may send a message in response to a particular client message, it is not required to explicitly state that it is a response.
 
 Messages are encoded as UTF-8 JSON objects. Each object must contain at least a `msg` property, which is a string describing what kind of message is being sent.
 

@@ -4,7 +4,7 @@
     const STAGE_JUDGING = "judging";
     const STAGE_ROUND_END = "round_end";
     const STAGE_GAME_END = "game_end";
-    const WS_URL = "ws://" + document.domain + ":3000/lah";
+    const WS_URL = "ws://" + document.domain + ":3000/game";
     const DEFAULT_LOCALE = "en-US";
 
     class Card {

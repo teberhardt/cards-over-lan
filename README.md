@@ -1,4 +1,4 @@
-# LAN Against Humanity
+# Cards Over LAN
 
 A Cards Against Humanity clone for hosting on your home network.
 
@@ -27,7 +27,7 @@ The root directory contains a few important folders.
 
 * `/packs`: Contains all the decks/trophies that will go in your server.
 * `/web_content`: Contains the webapp.
-* `/LahServer`: Contains the server code.
+* `/CardsOverLan`: Contains the server code.
 
 ### Prerequisites
 
@@ -35,12 +35,12 @@ You need Visual Studio 2017 and .NET Framework 4.7.2.
 
 ### Building
 
-Open the `LahServer` project in Visual Studio and build it.
+Open the `CardsOverLan` project in Visual Studio and build it.
 
 The build will contain copies of the `decks` and `web_content` folders.
 It also contains a `settings.json` file that contains the server settings. See below for how to configure this file.
 
-After building, run LahServer.exe to start the server.
+After building, run CardsOverLan.exe to start the server.
 
 ### Firewall settings
 
@@ -133,7 +133,7 @@ However, if you speak a language that isn't English and want to help me translat
 
 ## Legal
 
-LAN Against Humanity is a clone of Cards Against Humanity. The original game, available at [cardsagainsthumanity.com](https://cardsagainsthumanity.com), is available under a [CC BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/2.0/). This project is in no way endorsed or sponsored by Cards Against Humanity. 
+Cards Over LAN is a clone of Cards Against Humanity. The original game, available at [cardsagainsthumanity.com](https://cardsagainsthumanity.com), is available under a [CC BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/2.0/). This project is in no way endorsed or sponsored by Cards Against Humanity. 
 
 For project license information, see [LICENSE](LICENSE). 
 

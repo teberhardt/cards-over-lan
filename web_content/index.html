@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/lah-common.css" />
     <link rel="stylesheet" type="text/css" href="css/lah-desktop.css" />
     <link rel="stylesheet" type="text/css" href="css/lah-mobile.css" />
-    <title>LAN Against Humanity</title>
+    <title>Cards Over LAN</title>
     <script src="js/js-cookie.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/lah-strings.js" defer></script>
@@ -23,7 +23,7 @@
 
 <body onload="lah.start()" class="preload">
     <nav id="navbar" class="mobile-hidden">
-        <h1 class="mobile-only nav-header">Menu</h1>
+        <h1 class="mobile-only nav-header" data-ui-string="ui_menu_title">Menu</h1>
         <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small" onclick="showModal('modal-about')" />
         <input type="button" value="Options" data-localize-value="ui_options" id="btn-options" class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
         <!-- <input type="button" value="Players" id="btn-players" class="lah-btn lah-btn-small" onclick="togglePlayerList()" /> -->

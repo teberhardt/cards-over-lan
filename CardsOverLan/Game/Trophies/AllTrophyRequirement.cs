@@ -1,0 +1,20 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CardsOverLan.Game.Trophies
+{
+	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+	public sealed class AllTrophyRequirement : TrophyRequirement
+	{
+		private readonly List<TrophyRequirement> _reqs = new List<TrophyRequirement>();
+
+		public override bool CheckPlayer(Player player)
+		{
+			return _reqs.All(r => r != null && r.CheckPlayer(player));
+		}
+	}
+}

@@ -137,6 +137,10 @@
         "ui_accent_color_placeholder": {
             "en": "Type a color name",
             "de": "Farbename hier eingeben"
+        },
+        "ui_menu_title": {
+            "en": "Menu",
+            "de": "Menü"
         }
     };
 
