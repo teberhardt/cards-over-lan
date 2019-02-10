@@ -2,6 +2,8 @@
 
 A Cards Against Humanity clone for hosting on your home network.
 
+![](https://i.imgur.com/8lON8ZR.gif)
+
 **This software is a work-in-progress. It may be missing functionality or contain bugs.**
 
 
