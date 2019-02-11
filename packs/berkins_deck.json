@@ -2053,7 +2053,8 @@
         {
             "id": "w_fuckseverheadneck",
             "content": {
-                "en-US": "Fucking a severed head in the neck-hole."
+                "en-US": "Fucking a severed head in the neck-hole.",
+                "de": "Einen abgetrennten Kopf ins Halsloch ficken."
             }
         },
         {
@@ -2096,7 +2097,8 @@
         {
             "id": "w_polio",
             "content": {
-                "en-US": "Polio."
+                "en-US": "Polio.",
+                "de": "Polio."
             }
         },
         {
@@ -2342,7 +2344,8 @@
         {
             "id": "b_heartwarming",
             "content": {
-                "en-US": "Nothing warms my heart quite like seeing someone _______."
+                "en-US": "Nothing warms my heart quite like seeing someone _______.",
+                "de": "Nichts ist herzerwärmender, als jemanden ________ zu sehen."
             }
         },
         {
@@ -2381,7 +2384,8 @@
         {
             "id": "b_disappointment",
             "content": {
-                "en-US": "Nothing is more disappointing than expecting _______, but receiving _______."
+                "en-US": "Nothing is more disappointing than expecting _______, but receiving _______.",
+                "de": "Nichts ist enttäuschender, als wenn man ________ erwartet, jedoch ________ bekommt."
             },
             "blanks": 2
         },
@@ -2415,7 +2419,8 @@
         {
             "id": "b_santagift",
             "content": {
-                "en-US": "What did Santa leave in my stocking this year?"
+                "en-US": "What did Santa leave in my stocking this year?",
+                "de": "Was hat der Weihnachtsmann dieses Jahr in meinem Strumpf gelassen?"
             },
             "blanks": 1
         },
@@ -2506,7 +2511,8 @@
         {
             "id": "b_burialbonus",
             "content": {
-                "en-US": "To honor his dying wish, my great-grandfather was buried with ________ in his coffin."
+                "en-US": "To honor his dying wish, my great-grandfather was buried with ________ in his coffin.",
+                "de": "Um seinem letzten Wunsch nachzukommen, wurde mein Urgroßvater mit ________ in seinem Sarg begraben."
             },
             "blanks": 1
         },
@@ -2551,14 +2557,16 @@
         {
             "id": "b_scarredparents",
             "content": {
-                "en-US": "My parents were forever scarred when they walked in on me while I was _______."
+                "en-US": "My parents were forever scarred when they walked in on me while I was _______.",
+                "de": "Meine Eltern wurden fürs Leben gezeichnet, als sie bei mir beim ________ hereingeplatzt haben."
             },
             "blanks": 1
         },
         {
             "id": "b_punishmentnowreward",
             "content": {
-                "en-US": "What is a punishment as a child but a reward as an adult?"
+                "en-US": "What is a punishment as a child but a reward as an adult?",
+                "de": "Was ist eine Strafe als Kind, aber eine Belohnung als Erwachsener?"
             },
             "blanks": 1
         },
@@ -2591,25 +2599,29 @@
         {
             "id": "b_strangeaddiction",
             "content": {
-                "en-US": "Today on <i>My Strange Addiction</i>: Meet Laura, a woman who can't stop ________."
+                "en-US": "Today on <i>My Strange Addiction</i>: Meet Laura, a woman who can't stop ________.",
+                "de": "Heute bei <i>My Strange Addiction</i>: Das ist Laura, eine Frau, die nicht ________ aufhören kann."
             }
         },
         {
             "id": "b_bucketlist",
             "content": {
-                "en-US": "My bucket list:\n- Travel the world.\n- Go skydiving.\n- ________."
+                "en-US": "My bucket list:\n- Travel the world.\n- Go skydiving.\n- ________.",
+                "de": "Meine Löffelliste:\n- Die Welt bereisen.\n- Fallschirmspringen gehen.\n- ________."
             }
         },
         {
             "id": "b_strangevideofile",
             "content": {
-                "en-US": "Hello, tech support? I found a weird file on my computer named _______.mp4.\nShould I be worried?"
+                "en-US": "Hello, tech support? I found a weird file on my computer named _______.mp4.\nShould I be worried?",
+                "de": "Hallo, technischer Support? Ich habe eine seltsame Datei auf meinem Computer namens _______.mp4 gefunden.\nIst sie etwas Schlimmes?"
             }
         },
         {
             "id": "b_artschoolgrad",
             "content": {
-                "en-US": "Now that I've graduated from art school, I can finally be ________!"
+                "en-US": "Now that I've graduated from art school, I can finally be ________!",
+                "de": "Jetzt, da ich die Kunstschule abgeschlossen habe, kann ich endlich ________ sein!"
             }
         },
         {

@@ -119,7 +119,7 @@
             .replace("\"", "&quot;")
             .replace("(", "&lpar;")
             .replace(")", "&rpar;")
-            .replace(/[\n]/, "<br/>");
+            .replace(/[\n]/gm, "<br/>");
     }
 
     function getLocalString(localizedStringObject) {

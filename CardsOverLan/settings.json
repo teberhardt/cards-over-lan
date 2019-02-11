@@ -16,5 +16,6 @@
 	"bot_count": 3,
 	"bot_names": [
 	"AutoRodney", "AutoJaiden", "AutoDixon", "AutoMatt", "AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", "AutoClara", "AutoAlvin"
-	]
+	],
+	"require_languages": ["en"]
 }

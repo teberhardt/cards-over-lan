@@ -150,6 +150,9 @@ namespace CardsOverLan
 		[JsonProperty("bot_names", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string[] BotNames { get; set; } = new string[0];
 
+		[JsonProperty("require_languages", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public string[] RequiredLanguages { get; set; } = new string[0];
+
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}
 }

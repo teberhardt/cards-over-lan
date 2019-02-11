@@ -114,7 +114,9 @@ namespace CardsOverLan.Game
 			_packs = packs.ToArray();
 
 			// Combine decks and remove duplicates
-			foreach (var card in packs.SelectMany(d => d.GetAllCards()))
+			foreach (var card in packs
+				.SelectMany(d => d.GetAllCards())
+				.Where(c => settings.RequiredLanguages?.Length == 0 || settings.RequiredLanguages.All(l => c.SupportsLanguage(l))))
 			{
 				if (!_cards.ContainsKey(card.ID))
 				{

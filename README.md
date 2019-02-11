@@ -68,6 +68,7 @@ The settings.json file contains a number of properties that control how the serv
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_names`|String[]|List of names to assign to bots.|
+|`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 
 
 ## FAQ
