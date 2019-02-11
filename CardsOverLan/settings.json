@@ -13,10 +13,8 @@
 	"afk_recovery_time_seconds": 90,
 	"exclude_content": [],
 	"enable_trophies": true,
-	"bot_count": 2,
+	"bot_count": 3,
 	"bot_names": [
-	"Bryant Automat", "Jamil Automat", "Forrest Automat", 
-	"Mara Automat", "Rachael Automat", "Marylou Automat", 
-	"Tristian Automat", "Destin Automat", "Kiera Automat", "Chancy Automat"
+	"AutoRodney", "AutoJaiden", "AutoDixon", "AutoMatt", "AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", "AutoClara", "AutoAlvin"
 	]
 }

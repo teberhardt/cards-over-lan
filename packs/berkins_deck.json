@@ -2016,6 +2016,48 @@
             }
         },
         {
+            "id": "w_fuckseverheadneck",
+            "content": {
+                "en-US": "Fucking a severed head in the neck-hole."
+            }
+        },
+        {
+            "id": "w_vsauce",
+            "content": {
+                "en-US": "Vsauce, Michael here."
+            }
+        },
+        {
+            "id": "w_mydingdingdong",
+            "content": {
+                "en-US": "Ooh... my ding-ding-dong."
+            }
+        },
+        {
+            "id": "w_soniconeeyetwoeye",
+            "content": {
+                "en-US": "Arguing about whether Sonic the Hedgehog has one eye or two."
+            }
+        },
+        {
+            "id": "b_newfoodcraze",
+            "content": {
+                "en-US": "What's the newest food craze that really shouldn't exist?"
+            }
+        },
+        {
+            "id": "b_poisoncontrolcall",
+            "content": {
+                "en-US": "Hello, Poison Control? My son swallowed _______, please help!"
+            }
+        },
+        {
+            "id": "b_hurtsalotmore",
+            "content": {
+                "en-US": "_______ hurts a lot more than I expected it to."
+            }
+        },
+        {
             "id": "b_strangechildhumor",
             "content": {
                 "en-US": "What's entertaining as a child but questionable in retrospect?",

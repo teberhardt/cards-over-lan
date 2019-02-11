@@ -34,10 +34,15 @@
     --placeholder-color: #999;
     --modal-nav-height: 22pt;
     --main-bg-color: #d4d4d4;
+    --btn-border-color: #111;
+    --btn-bg-color: #f6f6f6;
+    --btn-text-color: #111;
     --default-accent-color: #eee;
     --accent-bg: var(--default-accent-color);
     --accent-fg: #111;
     --accent-ol: transparent;
+    --accent-group: rgba(0, 0, 0, .25);
+    --accent-group-hover: rgba(0, 0, 0, .35);
     --main-bg-line: rgba(0, 0, 0, .0);
     --btn-color: #eee;
 }
@@ -113,7 +118,7 @@
 .card-group {
     display: flex;
     flex-grow: 0;
-    background: #bbb;
+    background: var(--accent-group);
     padding: 3pt;
     margin: 0 4pt;
     border-radius: 8pt;

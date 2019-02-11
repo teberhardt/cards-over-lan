@@ -361,6 +361,7 @@ smaller {
     font-size: 22pt;
     text-align: center;
     padding: 16pt 8pt;
+    word-wrap: break-word;
 }
 
 #game-end-trophies-area {

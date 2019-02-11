@@ -737,6 +737,7 @@ namespace CardsOverLan.Game
 		{
 			RaisePlayersChanged();
 			PromptBots();
+			CheckRoundPlays();
 		}
 
 		/// <summary>

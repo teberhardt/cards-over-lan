@@ -50,6 +50,10 @@
             "en": "PLAY",
             "de": "FERTIG"
         },
+        "ui_btn_vote": {
+            "en": "VOTE",
+            "de": "WÄHLEN"
+        },
         "ui_blank_card_prompt": {
             "en": "Write your card here.",
             "de": "Kartentext hier eingeben."
@@ -141,6 +145,18 @@
         "ui_menu_title": {
             "en": "Menu",
             "de": "Menü"
+        },
+        "ui_trophies": {
+            "en": "Trophies",
+            "de": "Errungenschaften"
+        },
+        "ui_scoreboard_score": {
+            "en": "Score",
+            "de": "Punkte"
+        },
+        "ui_scoreboard_trophies": {
+            "en": "Trophies",
+            "de": "Errungenschaften"
         }
     };
 

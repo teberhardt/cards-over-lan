@@ -7,6 +7,7 @@
     <meta name="theme-color" content="black" />
     <meta name="msapplication-navbutton-color" content="black">
     <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" type="text/css" href="css/lah-common.css" />
     <link rel="stylesheet" type="text/css" href="css/lah-desktop.css" />
     <link rel="stylesheet" type="text/css" href="css/lah-mobile.css" />
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div id="judge-controls-area">
-                <input type="button" value="VOTE" id="btn-judge-pick" class="lah-btn" />
+                <input type="button" data-localize-value="ui_btn_vote" value="VOTE" id="btn-judge-pick" class="lah-btn" />
             </div>
         </div>
         <div id="hand-area">            
@@ -75,24 +76,23 @@
         </div>
         <div id="game-end-screen" class="fade hidden">
             <div id="game-end-grid">
-                <div id="game-end-heading">
+                <div id="game-end-heading" data-ui-string="ui_game_results">
                     Game Results
                 </div>
                 <div id="game-end-scoreboard">
                     <div id="game-end-scoreboard-header">
-                        <div class="header-name">Name</div>
-                        <div class="header-score">Score</div>
-                        <div class="header-trophies">Trophies</div>
+                        <div class="header-name" data-ui-string="ui_nickname">Name</div>
+                        <div class="header-score" data-ui-string="ui_scoreboard_score">Score</div>
+                        <div class="header-trophies" data-ui-string="ui_scoreboard_trophies">Trophies</div>
                     </div>
                     <div id="game-end-scoreboard-entries">
                     </div>
                 </div>                
                 <div id="game-end-trophies-area">
-                    <div id="game-end-trophies-heading">
+                    <div id="game-end-trophies-heading" data-ui-string="ui_trophies">
                         Trophies
                     </div>
-                    <div id="game-end-trophies-list">
-                    </div>    
+                    <div id="game-end-trophies-list"></div>    
                 </div>
             </div>
         </div>
@@ -129,8 +129,7 @@
                     <div class="lah-separator"></div>
                     <div class="lah-listitem">
                         <div class="lah-hlist lah-align-end">
-                            <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply" id="btn-options-apply"
-                                onclick="applyOptions()" />
+                            <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply" id="btn-options-apply" onclick="applyOptions()" />
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,8 @@
     }
 
     body {
-        background-color: var(--main-bg-color);
+        background-color: var(--accent-bg);
+        color: var(--accent-fg);
         margin: 0;
         padding: 0;
         width: 100vw;
@@ -49,6 +50,9 @@
         background-origin: 50% 50%;
         background-position: 50% 50%;
         background-repeat: no-repeat;
+        background-color: var(--accent-ol);
+        border-radius: 3px;
+        margin: 3px;
         padding: .2em;
         font-size: 24pt;
         overflow: visible;
@@ -75,7 +79,8 @@
         flex-wrap: nowrap;
         justify-content: flex-end;
         align-items: flex-start;
-        background: #ddd;
+        color: #111 !important;
+        background: #ddd !important;
         top: 0;
         left: 0;
         right: 0;
@@ -88,6 +93,9 @@
     #navbar .lah-btn {
         padding: 12pt 6pt;
         margin: 4pt 0;
+        color: #111;
+        background: #eee;
+        border-color: #111;
     }
 
     #navbar .nav-header {
@@ -161,7 +169,7 @@
     }
 
     .lah-stage-playing:not(.lah-judge) #black-card-area card {
-       margin-bottom: 24pt; 
+       margin-bottom: 12pt; 
     }
 
     .lah-stage-playing.lah-judge #black-card-area {
@@ -243,11 +251,11 @@
         grid-column: c-start / c-end;
         position: relative;  
         display: flex;
-        align-items: center;        
+        align-items: center;      
     }
 
     .lah-stage-judging.lah-judge #play-cards-area {
-        margin-bottom: 56pt;
+        margin-bottom: 64pt;
     }
 
     .lah-stage-round-end #play-cards-scroll-area {
@@ -289,11 +297,11 @@
     }
     
     #game.lah-stage-judging.lah-judge #play-cards-area > .card-group:hover {
-        background: #aaa;
+        background: var(--accent-group-hover);
     }
     
     #game.lah-stage-judging.lah-judge #play-cards-area > .card-group.judge-selected {
-        background: #888;
+        background: var(--accent-group-hover);
         margin: 0 8pt;
         transform: translate(0, -8pt);
     }
@@ -334,7 +342,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        color: black;
+        color: var(--accent-fg);
         left: 10pt;
         top: 10pt;  
         right: 24pt;      
@@ -368,7 +376,7 @@
     #stat-list .stat {
         font-size: 11pt;
         text-align: left;  
-        max-width: 40%;
+        max-width: 50%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;  
@@ -377,7 +385,8 @@
     #status-area .stat.bare {
         margin-left: 1pt;
         max-width: 90%;
-        color: #333;
+        color: var(--accent-fg);
+        opacity: .8;
     }
 
     #status-area .stat:not(.bare):before {
@@ -389,6 +398,8 @@
         transform: translateY(.25em);
         background-repeat: no-repeat;
         background-size: contain;
+        border-radius: 3px;
+        background-color: var(--accent-ol);
     }
 
     #status-area #myname {
@@ -458,6 +469,12 @@
         border-bottom: 1px solid rgba(0, 0, 0, .25);
     }
 
+    #game-end-scoreboard-header > div {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
     #game-end-scoreboard-header, #game-end-scoreboard-entries > .scoreboard-entry {
         display: grid;
         grid-template-columns: [c-start] 50% [c-2] 20% [c-3] 30% [c-end];
@@ -514,6 +531,7 @@
         grid-row: r-c2 / r-end;
         grid-column: c-start / c-end;
         display: flex;
+        align-items: center;
         flex-direction: column;
         background: #333;
         overflow: hidden;
@@ -521,7 +539,7 @@
 
     #game-end-trophies-list {
         display: flex;
-        width: 100%;
+        max-width: 100%;
         flex-direction: row;
         align-items: stretch;
         flex-grow: 1;
@@ -778,6 +796,7 @@
     card[black] {
         background-color: black;
         color: white;
+        border: 2px solid var(--accent-ol);
         font-weight: 200;
     }
     
@@ -890,17 +909,23 @@
     .lah-btn {
         outline: none;
         padding: 8pt 25pt;
-        background: #eee;
-        border: 2px solid black;
-        /* border-width: 2px 2px 7px 2px; */
+        background-color: var(--btn-bg-color);
+        color: var(--btn-text-color);
+        border: 2px solid var(--btn-border-color);
         border-radius: 6pt;
         font-size: 22pt;
+    }
+
+    /* themed controls */
+    #game .lah-btn, #game .lah-txtbox {
+        color: var(--accent-fg);
+        background-color: var(--accent-bg);
+        border-color: var(--accent-fg);
     }
     
     .lah-btn-small {
         font-size: 16pt;
         padding: 4pt 12pt;
-        /* border-bottom-width: 4px; */
     }
     
     .lah-btn:not(.disabled):hover {
@@ -945,6 +970,7 @@
     .modal {
         display: flex;
         position: fixed;
+        color: #111;
         left: 0;
         top: 0;
         bottom: 0;

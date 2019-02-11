@@ -40,7 +40,7 @@
     };
   
     RGB.prototype.isBright = function() {
-      return (this.r * 1.7 + this.g * 2.3 + this.b * .3) / 3 > .5;
+      return (this.r * 1.7 + this.g * 2.7 + this.b * .3) / 3 > .5;
     };
   
     RGB.prototype.saturation = function() {
