@@ -1,6 +1,6 @@
 {
-    "id": "lah_trophies",
-    "name": "LAH Base Trophies",
+    "id": "base_trophies",
+    "name": "Base Trophies",
     "trophies": [
         {
             "id": "trophy_nazi",

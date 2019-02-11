@@ -512,14 +512,16 @@
         {
             "id": "w_blackvomit",
             "content": {
-                "en-US": "Vomiting mysterious black liquid."
+                "en-US": "Vomiting mysterious black liquid.",
+                "de": "Mysteriöse schwarze Flussigkeit kotzen."
             },
             "flags": "w g"
         },
         {
             "id": "w_oddmusic",
             "content": {
-                "en-US": "Ominous music."
+                "en-US": "Ominous music.",
+                "de": "Unheimliche Musik."
             }
         },
         {
@@ -547,7 +549,8 @@
         {
             "id": "w_richprince",
             "content": {
-                "en-US": "A wealthy Nigerian prince."
+                "en-US": "A wealthy Nigerian prince.",
+                "de": "Ein reicher nigerianischer Prinz."
             }
         },
         {
@@ -575,7 +578,8 @@
         {
             "id": "w_limphandshake",
             "content": {
-                "en-US": "A limp handshake."
+                "en-US": "A limp handshake.",
+                "de": "Ein weicher Handschlag."
             }
         },
         {
@@ -758,7 +762,8 @@
         {
             "id": "w_superherpes",
             "content": {
-                "en-US": "Super herpes."
+                "en-US": "Super herpes.",
+                "de": "Superherpes."
             },
             "flags": "s di"
         },
@@ -805,7 +810,8 @@
         {
             "id": "w_ballcrush",
             "content": {
-                "en-US": "Putting your balls in a can crusher."
+                "en-US": "Putting your balls in a can crusher.",
+                "de": "Deine Eier in einen Dosenbrecher stecken."
             }
         },
         {
@@ -901,13 +907,15 @@
         {
             "id": "w_smokealarm",
             "content": {
-                "en-US": "A smoke alarm that just won't turn off."
+                "en-US": "A smoke alarm that refuses to turn off.",
+                "de": "Ein Rauchmelder, der nicht abgeschaltet werden kann."
             }
         },
         {
             "id": "w_hitleragain",
             "content": {
-                "en-US": "Resurrecting Hitler."
+                "en-US": "Resurrecting Hitler.",
+                "de": "Hitler wieder aufleben lassen."
             }
         },
         {
@@ -1337,7 +1345,8 @@
         {
             "id": "w_electricsquirrel",
             "content": {
-                "en-US": "A dead, smoldering squirrel stuck between two power lines."
+                "en-US": "A dead, smoldering squirrel stuck between two power lines.",
+                "de": "Ein totes, schwelendes Eichhörnchen, das zwischen zwei Stromleitungen steckt."
             }
         },
         {
@@ -1487,7 +1496,8 @@
         {
             "id": "w_infgauntlet",
             "content": {
-                "en-US": "The Infinity Gauntlet."
+                "en-US": "The Infinity Gauntlet.",
+                "de": "Der Unendlichkeitsfehdehandschuh."
             }
         },
         {
@@ -1554,19 +1564,22 @@
         {
             "id": "w_centersurprise",
             "content": {
-                "en-US": "The surprise in the center."
+                "en-US": "The surprise in the center.",
+                "de": "Die Überraschung in der Mitte."
             }
         },
         {
             "id": "w_spacedab",
             "content": {
-                "en-US": "Dabbing in outer space."
+                "en-US": "Dabbing in outer space.",
+                "de": "Dabben im All."
             }
         },
         {
             "id": "w_beangrail",
             "content": {
-                "en-US": "The Holy Grail of baked beans."
+                "en-US": "The Holy Grail of baked beans.",
+                "de": "Der Heilige Gral gebackener Bohnen."
             }
         },
         {
@@ -1585,19 +1598,22 @@
         {
             "id": "w_beandog",
             "content": {
-                "en-US": "That talking dog from the baked beans commercials."
+                "en-US": "That talking dog from the baked beans commercials.",
+                "de": "Der sprechende Hund aus den Baked-Beans-Werbesendungen."
             }
         },
         {
             "id": "w_sadsexscene",
             "content": {
-                "en-US": "Crying at a sex scene."
+                "en-US": "Crying at a sex scene.",
+                "de": "Über eine Sexszene weinen."
             }
         },
         {
             "id": "w_metric",
             "content": {
-                "en-US": "The metric system."
+                "en-US": "The metric system.",
+                "de": "Das metrische System."
             }
         },
         {
@@ -1616,25 +1632,29 @@
         {
             "id": "w_offandon",
             "content": {
-                "en-US": "Turning it off and on again."
+                "en-US": "Turning it off and on again.",
+                "de": "Es ausschalten und wieder anschalten."
             }
         },
         {
             "id": "w_kimk",
             "content": {
-                "en-US": "Kim Kardashian."
+                "en-US": "Kim Kardashian.",
+                "de": "Kim Kardashian."
             }
         },
         {
             "id": "w_driedcorpse",
             "content": {
-                "en-US": "A dessicated corpse."
+                "en-US": "A dessicated corpse.",
+                "de": "Eine vertrocknete Leiche."
             }
         },
         {
             "id": "w_notmuchreally",
             "content": {
-                "en-US": "Not much to speak of."
+                "en-US": "Not much to speak of.",
+                "de": "Nichts Besonderes."
             }
         },
         {
@@ -1647,7 +1667,8 @@
         {
             "id": "w_rundrugring",
             "content": {
-                "en-US": "Running a massive multinational drug empire."
+                "en-US": "Running a massive multinational drug empire.",
+                "de": "Ein massives multinationales Drogenimperium führen."
             }
         },
         {
@@ -1674,7 +1695,8 @@
         {
             "id": "w_freezedeath",
             "content": {
-                "en-US": "Freezing to death."
+                "en-US": "Freezing to death.",
+                "de": "Erfrieren."
             }
         },
         {
@@ -1760,7 +1782,8 @@
         {
             "id": "w_catseatingher",
             "content": {
-                "en-US": "A dead woman being slowly consumed by her 57 cats."
+                "en-US": "A dead woman being slowly consumed by her 57 cats.",
+                "de": "Eine Leiche einer Frau, die von ihren 57 Katzen gefressen wird."
             }
         },
         {
@@ -1814,7 +1837,8 @@
         {
             "id": "w_pubeperm",
             "content": {
-                "en-US": "Perming your pubes."
+                "en-US": "Perming your pubes.",
+                "de": "Sich die Schamhaare eine Dauerwelle legen."
             }
         },
         {
@@ -1880,7 +1904,8 @@
         {
             "id": "w_toomuchbutterwow",
             "content": {
-                "en-US": "An disgusting amount of butter."
+                "en-US": "An disgusting amount of butter.",
+                "de": "Eine widerliche Menge Butter."
             }
         },
         {
@@ -1892,21 +1917,24 @@
         {
             "id": "w_spaghetbible",
             "content": {
-                "en-US": "A hollowed-out Bible full of spaghetti."
+                "en-US": "A hollowed-out Bible full of spaghetti.",
+                "de": "Eine ausgehöhlte Bibel voller Spaghetti."
             },
             "flags": "w"
         },
         {
             "id": "w_transfurries",
             "content": {
-                "en-US": "Transhumanist furries."
+                "en-US": "Transhumanist furries.",
+                "de": "Transhumanistische Furrys."
             },
             "flags": "xf s"
         },
         {
             "id": "w_torsowormkid",
             "content": {
-                "en-US": "An armless, legless child wriggling around like a sad little worm."
+                "en-US": "An armless, legless child wriggling around like a sad little grub.",
+                "de": "Ein Kind ohne Arme oder Beine, das wie eine traurige Larve wackelt."
             }
         },
         {
@@ -1918,7 +1946,8 @@
         {
             "id": "w_bigmouthful",
             "content": {
-                "en-US": "A big mouthful."
+                "en-US": "A big mouthful.",
+                "de": "Ein großer Mundvoll."
             }
         },
         {
@@ -1937,7 +1966,8 @@
         {
             "id": "w_beanyboi",
             "content": {
-                "en-US": "Pouring beans into your child's waiting mouth."
+                "en-US": "Pouring beans into your child's waiting mouth.",
+                "de": "Bohnen im wartenden Mund deines Kindes gießen."
             }
         },
         {
@@ -1950,7 +1980,8 @@
         {
             "id": "w_angrypenisbite",
             "content": {
-                "en-US": "Biting off a man's penis out of anger."
+                "en-US": "Biting off a man's penis out of anger.",
+                "de": "Aus Wut den Penis eines Mannes abbeißen."
             }
         },
         {
@@ -1969,20 +2000,23 @@
         {
             "id": "w_cumtoast",
             "content": {
-                "en-US": "Artisan cum toast."
+                "en-US": "Artisan cum toast.",
+                "de": "Kunstsamentoast."
             },
             "flags": "g"
         },
         {
             "id": "w_catnutflick",
             "content": {
-                "en-US": "Flicking your cat in the nuts."
+                "en-US": "Flicking your cat in the nuts.",
+                "de": "Deinen Kater am Hodensack schnipsen."
             }
         },
         {
             "id": "w_centipeed",
             "content": {
-                "en-US": "A centipede crawling up your urethra."
+                "en-US": "A centipede crawling up your urethra.",
+                "de": "Ein Hundertfüßer in deinen Harnkanal."
             },
             "flags": "g gn"
         },
@@ -2012,7 +2046,8 @@
         {
             "id": "w_unexpectedxfiles",
             "content": {
-                "en-US": "The <i>X-Files</i> theme song, out of nowhere."
+                "en-US": "The <i>X-Files</i> theme song, out of nowhere.",
+                "de": "Plötzlich, der Titelsong von <i>X-Files</i>."
             }
         },
         {
@@ -2024,7 +2059,8 @@
         {
             "id": "w_vsauce",
             "content": {
-                "en-US": "Vsauce, Michael here."
+                "en-US": "Vsauce, Michael here.",
+                "de": "Vsauce, Michael hier."
             }
         },
         {
@@ -2216,7 +2252,8 @@
         {
             "id": "b_autoproblems",
             "content": {
-                "en-US": "This might sound crazy, but every time I start my car, the inside starts smelling like _______!"
+                "en-US": "This might sound crazy, but every time I start my car, the inside starts smelling like _______!",
+                "de": "Das mag verrückt klingen, aber wenn ich mein Auto starte, riecht es wie ________!"
             }
         },
         {
@@ -2268,7 +2305,8 @@
         {
             "id": "b_heartwarming",
             "content": {
-                "en-US": "Nothing is more heartwarming than seeing someone _______."
+                "en-US": "Nothing is more heartwarming than seeing someone _______.",
+                "de": "Nichts ist herzerwärmender, als jemanden ________ zu sehen."
             }
         },
         {
