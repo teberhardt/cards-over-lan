@@ -2076,9 +2076,45 @@
             }
         },
         {
+            "id": "w_dryerlintmouth",
+            "content": {
+                "en-US": "A mouthful of dryer lint."
+            }
+        },
+        {
+            "id": "w_monthsoldcumtissues",
+            "content": {
+                "en-US": "Months-old cum tissues."
+            }
+        },
+        {
+            "id": "w_corpseskullfuck",
+            "content": {
+                "en-US": "Skull-fucking a corpse in the moonlight."
+            }
+        },
+        {
+            "id": "w_polio",
+            "content": {
+                "en-US": "Polio."
+            }
+        },
+        {
+            "id": "w_laughbatdisintegrate",
+            "content": {
+                "en-US": "Laughing wickedly and bursting into a cloud of bats."
+            }
+        },
+        {
+            "id": "w_babybabypowder",
+            "content": {
+                "en-US": "Baby powder made from real babies."
+            }
+        },
+        {
             "id": "b_newfoodcraze",
             "content": {
-                "en-US": "What's the newest food craze that really shouldn't exist?"
+                "en-US": "What's the latest food trend that never should have happened?"
             }
         },
         {
@@ -2090,7 +2126,8 @@
         {
             "id": "b_hurtsalotmore",
             "content": {
-                "en-US": "_______ hurts a lot more than I expected it to."
+                "en-US": "_______ hurts a lot more than I expected it to.",
+                "de": "________ tut viel mehr weh, als ich dachte."
             }
         },
         {
@@ -2218,7 +2255,7 @@
         {
             "id": "b_personalhero",
             "content": {
-                "en-US": "In my mind, anyone who is _______ is a true hero."
+                "en-US": "In my mind, anyone who's _______ is a true hero."
             }
         },
         {
@@ -2305,8 +2342,7 @@
         {
             "id": "b_heartwarming",
             "content": {
-                "en-US": "Nothing is more heartwarming than seeing someone _______.",
-                "de": "Nichts ist herzerwärmender, als jemanden ________ zu sehen."
+                "en-US": "Nothing warms my heart quite like seeing someone _______."
             }
         },
         {
@@ -2394,7 +2430,7 @@
         {
             "id": "b_drugcraze",
             "content": {
-                "en-US": "Local news stations are now reporting that the latest drug craze among teens is ________."
+                "en-US": "Local news stations are now reporting on the latest drug craze among teens: ________."
             },
             "blanks": 1
         },
@@ -2409,13 +2445,13 @@
         {
             "id": "b_deliveryservice",
             "content": {
-                "en-US": "Finally! A service that delivers ____ right to your door."
+                "en-US": "Finally! A service that delivers ______ right to your door."
             }
         },
         {
-            "id": "b_behindthedoor",
+            "id": "b_amazonweirdproduct",
             "content": {
-                "en-US": "If ______ is behind that door, I'd be very okay with it."
+                "en-US": "It's crazy what you can buy online these days... Did you know Amazon sells ________?"
             }
         },
         {
@@ -2461,9 +2497,9 @@
             "blanks": 1
         },
         {
-            "id": "b_weddingtopic",
+            "id": "b_weirdproposal",
             "content": {
-                "en-US": "The most unexpected thing to bring up in a wedding speech."
+                "en-US": "Proposals these days are crazy. I know someone who hid their engagement ring inside ________!"
             },
             "blanks": 1
         },
@@ -2493,7 +2529,7 @@
         {
             "id": "b_thinkofyou",
             "content": {
-                "en-US": "Whenever I think of you, the fond memories of _______ come rushing back."
+                "en-US": "Whenever I think of you, all those fond memories of _______ come rushing back."
             },
             "blanks": 1
         },
@@ -2507,7 +2543,8 @@
         {
             "id": "b_blackhole",
             "content": {
-                "en-US": "The gravitational pull from _______ is so strong, not even light can escape."
+                "en-US": "The gravitational pull from _______ is so strong, not even light can escape.",
+                "de": "Die Anziehungskraft von ________ ist so stark, dass nicht einmal Licht entweichen kann."
             },
             "blanks": 1
         },
