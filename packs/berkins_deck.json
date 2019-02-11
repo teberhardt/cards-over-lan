@@ -148,7 +148,7 @@
             "id": "w_wafflestomp",
             "content": {
                 "en-US": "Shitting in the shower and stomping it down the drain.",
-                "de": "In die Dusche scheißen und sie in den Abfluss stampfen."
+                "de": "In die Dusche scheißen und es in den Abfluss stampfen."
             },
             "flags": "w g fe"
         },
@@ -742,7 +742,7 @@
             "id": "w_devilnut",
             "content": {
                 "en-US": "Satan's left testicle.",
-                "de": "Der linke Hode des Teufels."
+                "de": "Der linke Hoden des Teufels."
             },
             "flags": "re gnm"
         },
@@ -2001,7 +2001,7 @@
             "id": "w_cumtoast",
             "content": {
                 "en-US": "Artisan cum toast.",
-                "de": "Kunstsamentoast."
+                "de": "Handgemachter Samentoast."
             },
             "flags": "g"
         },
@@ -2600,7 +2600,7 @@
             "id": "b_strangeaddiction",
             "content": {
                 "en-US": "Today on <i>My Strange Addiction</i>: Meet Laura, a woman who can't stop ________.",
-                "de": "Heute bei <i>My Strange Addiction</i>: Das ist Laura, eine Frau, die nicht ________ aufhören kann."
+                "de": "Heute bei <i>My Strange Addiction</i>: Das ist Laura, eine Frau, die nicht mit ________ aufhören kann."
             }
         },
         {
