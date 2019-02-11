@@ -79,7 +79,7 @@
                 "en-US": "Thomas the Tank Engine's gigantic iron dick.",
                 "de": "Der gigantische Eisenschwanz von Thomas, der Lokomotive."
             },
-            "flags": "gnm fc"
+            "flags": "gnm fc l"
         },
         {
             "id": "w_tidepods",
@@ -228,7 +228,7 @@
                 "en-US": "Being strip-searched and liking it.",
                 "de": "Einer Leibesvisitation unterzogen werden und es genießen."
             },
-            "flags": "w"
+            "flags": "w s"
         },
         {
             "id": "w_jenkem",
@@ -245,7 +245,7 @@
                 "en-US": "Smuggling a shit-ton of heroin in your rectum.",
                 "de": "Scheiß viel Heroin in deinem Rektum schmuggeln."
             },
-            "flags": "dr gn g"
+            "flags": "dr gn g l"
         },
         {
             "id": "w_blueballs",
@@ -812,14 +812,16 @@
             "content": {
                 "en-US": "Putting your balls in a can crusher.",
                 "de": "Deine Eier in einen Dosenbrecher stecken."
-            }
+            },
+            "flags": "gn gnm i xf"
         },
         {
             "id": "w_nutbust",
             "content": {
                 "en-US": "Busting a nut.",
                 "de": "Heftig ejakulieren."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_csf",
@@ -827,7 +829,7 @@
                 "en-US": "Cumming and shitting and farting.",
                 "de": "Kommen und scheißen und furzen."
             },
-            "flags": "w g"
+            "flags": "s w g"
         },
         {
             "id": "w_disappoint",
@@ -841,32 +843,37 @@
             "content": {
                 "en-US": "A faint, muffled cry coming from the oven.",
                 "de": "Ein leiser, gedämpfter Schrei aus dem Ofen."
-            }
+            },
+            "flags": "to"
         },
         {
             "id": "w_turbofap",
             "content": {
                 "en-US": "Jacking off vigorously."
-            }
+            },
+            "flags": "s gnm gn"
         },
         {
             "id": "w_extremesadism",
             "content": {
                 "en-US": "Extreme sadistic tendencies."
-            }
+            },
+            "flags": "to"
         },
         {
             "id": "w_specialwaterboard",
             "content": {
                 "en-US": "Waterboarding with toilet water."
-            }
+            },
+            "flags": "to g"
         },
         {
             "id": "w_wronghole",
             "content": {
                 "en-US": "The wrong hole.",
                 "de": "Das falsche Loch."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_goodslap",
@@ -894,7 +901,8 @@
             "content": {
                 "en-US": "A toilet that is about to overflow, and you're powerless to stop it.",
                 "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu soppen."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_slimyonion",
@@ -916,34 +924,39 @@
             "content": {
                 "en-US": "Resurrecting Hitler.",
                 "de": "Hitler wieder aufleben lassen."
-            }
+            },
+            "flags": "as"
         },
         {
             "id": "w_naughtysanta",
             "content": {
                 "en-US": "Waking up to Santa naked in your bed."
-            }
+            },
+            "flags": "s pd"
         },
         {
             "id": "w_badsand",
             "content": {
                 "en-US": "Sand in all the wrong places.",
                 "de": "Sand an den falschen Stellen."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_wowgirth",
             "content": {
                 "en-US": "Incredible girth.",
                 "de": "Ein unglaublicher Umfang."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_snappysnap",
             "content": {
                 "en-US": "Biting off his dick.",
                 "de": "Seinen Schwanz abbeißen."
-            }
+            },
+            "flags": "to i gn gnm s"
         },
         {
             "id": "w_cummies",
@@ -986,7 +999,8 @@
             "id": "w_thanos",
             "content": {
                 "en-US": "Thanos' snap."
-            }
+            },
+            "flags": "fc"
         },
         {
             "id": "w_goodolsex",
@@ -1026,7 +1040,8 @@
             "id": "w_whitevanman",
             "content": {
                 "en-US": "A friendly old man waving from a white van."
-            }
+            },
+            "flags": "pd"
         },
         {
             "id": "w_donalddick",
@@ -1048,7 +1063,8 @@
             "content": {
                 "en-US": "Faking your death.",
                 "de": "Deinen Tod vortauschen."
-            }
+            },
+            "flags": "d"
         },
         {
             "id": "w_chernobyl",
@@ -1070,7 +1086,8 @@
             "content": {
                 "en-US": "Two gophers with raging boners.",
                 "de": "Zwei Taschenratten mit markanten Ständern."
-            }
+            },
+            "flags": "an w s gn gnm"
         },
         {
             "id": "w_spaghetti",
@@ -1222,13 +1239,15 @@
             "id": "w_youfuckedup",
             "content": {
                 "en-US": "The moment that you realized you fucked up."
-            }
+            },
+            "flags": "l"
         },
         {
             "id": "w_musclebear",
             "content": {
                 "en-US": "A smiling, anthropomorphic grizzly bear with bulging muscles and a piercing gaze."
-            }
+            },
+            "flags": "an w"
         },
         {
             "id": "w_colostomywine",
@@ -1248,7 +1267,8 @@
             "content": {
                 "en-US": "Death and taxes.",
                 "de": "Tod und Steuern."
-            }
+            },
+            "flags": "d"
         },
         {
             "id": "w_exclusivefootage",
@@ -1267,7 +1287,8 @@
             "id": "w_mirrorman",
             "content": {
                 "en-US": "A perfectly symmetrical man who speaks only in palindromes."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_salivaglass",
@@ -1283,7 +1304,7 @@
                 "en-US": "A piss, shit, and vomit smoothie.",
                 "de": "Ein Pisse-Scheiße-Kotze-Smoothie."
             },
-            "flags": "g"
+            "flags": "g fe"
         },
         {
             "id": "w_strawsoulsuck",
@@ -1333,21 +1354,24 @@
         {
             "id": "w_nuclearslap",
             "content": {
-                "en-US": "A slap so hard it shakes the Earth."
-            }
+                "en-US": "A slap so hard that it shakes the ground."
+            },
+            "flags": "v"
         },
         {
             "id": "w_prettyman",
             "content": {
                 "en-US": "A <i>very</i> attractive man with an amazingly toned ass."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_electricsquirrel",
             "content": {
                 "en-US": "A dead, smoldering squirrel stuck between two power lines.",
                 "de": "Ein totes, schwelendes Eichhörnchen, das zwischen zwei Stromleitungen steckt."
-            }
+            },
+            "flags": "d g an"
         },
         {
             "id": "w_blackhole",
@@ -1423,26 +1447,30 @@
             "content": {
                 "en-US": "Having the Sex.",
                 "de": "Den Sex haben."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_angrytoilet",
             "content": {
                 "en-US": "An angry toilet ejecting gallons of sewage at incredible speed."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_fatalfart",
             "content": {
                 "en-US": "Farting so hard that the blood vessels in your eyes burst."
-            }
+            },
+            "flags": "g i"
         },
         {
             "id": "w_coitussound",
             "content": {
                 "en-US": "The unmistakable sound of coitus.",
                 "de": "Das unverwechselbare Geräusch des Koitus."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_vaselinepig",
@@ -1455,7 +1483,8 @@
             "content": {
                 "en-US": "Inserting 14 lit candles into your anus.",
                 "de": "14 brennende Kerzen in deinen Anus stecken."
-            }
+            },
+            "flags": "s xf"
         },
         {
             "id": "w_toothypug",
@@ -1469,7 +1498,8 @@
             "content": {
                 "en-US": "Hearing someone yelling, \"Not the ass! NOT THE ASS!\"",
                 "de": "Jemanden sagen hören, \"Nicht den Arsch! NICHT DEN ARSCH!\""
-            }
+            },
+            "flags": "s l"
         },
         {
             "id": "w_15turd",
@@ -1491,7 +1521,8 @@
             "content": {
                 "en-US": "Overpriced, aggressively-marketed designer bullshit.",
                 "de": "Überteuerte, aggressiv vermarktete Designer-Scheiße."
-            }
+            },
+            "flags": "l"
         },
         {
             "id": "w_infgauntlet",
@@ -1511,7 +1542,8 @@
             "id": "w_pg12",
             "content": {
                 "en-US": "Being 12 years old and watching a PG-13 movie like a complete badass."
-            }
+            },
+            "flags": "l"
         },
         {
             "id": "w_chilicondom",
@@ -1559,7 +1591,7 @@
                 "en-US": "A bucket full of foreskins.",
                 "de": "Ein Eimer voller Vorhäute."
             },
-            "flags": "g"
+            "flags": "g gnm gn"
         },
         {
             "id": "w_centersurprise",
@@ -1587,7 +1619,8 @@
             "content": {
                 "en-US": "Waldo.",
                 "de": "Waldo."
-            }
+            },
+            "flags": "fc"
         },
         {
             "id": "w_fingerbankrob",
@@ -1607,7 +1640,8 @@
             "content": {
                 "en-US": "Crying at a sex scene.",
                 "de": "Über eine Sexszene weinen."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_metric",
@@ -1627,7 +1661,8 @@
             "content": {
                 "en-US": "Chesticles.",
                 "de": "Chesticles."
-            }
+            },
+            "flags": "w g"
         },
         {
             "id": "w_offandon",
@@ -1641,14 +1676,16 @@
             "content": {
                 "en-US": "Kim Kardashian.",
                 "de": "Kim Kardashian."
-            }
+            },
+            "flags": "ce"
         },
         {
             "id": "w_driedcorpse",
             "content": {
                 "en-US": "A dessicated corpse.",
                 "de": "Eine vertrocknete Leiche."
-            }
+            },
+            "flags": "d"
         },
         {
             "id": "w_notmuchreally",
@@ -1669,21 +1706,24 @@
             "content": {
                 "en-US": "Running a massive multinational drug empire.",
                 "de": "Ein massives multinationales Drogenimperium führen."
-            }
+            },
+            "flags": "dr"
         },
         {
             "id": "w_kidtradingcards",
             "content": {
                 "en-US": "Using missing children ads as trading cards.",
                 "de": "Vermisstenplakate wie Sammelkarten sammeln."
-            }
+            },
+            "flags": "ch_cr a"
         },
         {
             "id": "w_longergirhierdick",
             "content": {
                 "en-US": "A longer, girthier dick than yours.",
                 "de": "Ein langerer, dickerer Schwanz als deiner."
-            }
+            },
+            "flags": "s gn gnm"
         },
         {
             "id": "w_youngerself",
@@ -1697,7 +1737,8 @@
             "content": {
                 "en-US": "Freezing to death.",
                 "de": "Erfrieren."
-            }
+            },
+            "flags": "d"
         },
         {
             "id": "w_siliconeimplants",
@@ -1709,20 +1750,23 @@
             "id": "w_weirddancinghousemen",
             "content": {
                 "en-US": "Coming home to three buff, naked men breakdancing in your living room."
-            }
+            },
+            "flags": "s w"
         },
         {
             "id": "w_twerkshit",
             "content": {
                 "en-US": "Twerking while shitting.",
                 "de": "Twerken beim Scheißen."
-            }
+            },
+            "flags": "g fe"
         },
         {
             "id": "w_sitsquish",
             "content": {
                 "en-US": "Hearing a squishing noise when you sit down."
-            }
+            },
+            "flags": "g"
         },
         {
             "id": "w_maxabsorb",
@@ -1746,7 +1790,8 @@
             "id": "w_crabscuttle",
             "content": {
                 "en-US": "Scuttling away sideways like a crab."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_mlm",
@@ -1758,13 +1803,15 @@
             "id": "w_goodmouthshit",
             "content": {
                 "en-US": "Shitting into my mouth like the good little dirty whore you are."
-            }
+            },
+            "flags": "s fe xf"
         },
         {
             "id": "w_dadmonsterdong",
             "content": {
                 "en-US": "My dad's monster dong."
-            }
+            },
+            "flags": "s gn gnm ic"
         },
         {
             "id": "w_autismvaccine",
@@ -1777,14 +1824,16 @@
             "id": "w_forestautist",
             "content": {
                 "en-US": "Ditching your autistic son in the forest."
-            }
+            },
+            "flags": "ch ch_cr"
         },
         {
             "id": "w_catseatingher",
             "content": {
                 "en-US": "A dead woman being slowly consumed by her 57 cats.",
                 "de": "Eine Leiche einer Frau, die von ihren 57 Katzen gefressen wird."
-            }
+            },
+            "flags": "g d an"
         },
         {
             "id": "w_suddenbigscream",
@@ -1803,7 +1852,8 @@
             "content": {
                 "en-US": "My last victim.",
                 "de": "Mein letztes Opfer."
-            }
+            },
+            "flags": "mu"
         },
         {
             "id": "w_abortiondestination",
@@ -1819,7 +1869,7 @@
                 "en-US": "Five generations of incest.",
                 "de": "Fünf Generationen von Inzest."
             },
-            "flags": "w g"
+            "flags": "w g ic"
         },
         {
             "id": "w_autotunedtween",
@@ -1832,14 +1882,16 @@
             "content": {
                 "en-US": "The face of God himself.",
                 "de": "Das Gesicht Gottes selbst."
-            }
+            },
+            "flags": "re"
         },
         {
             "id": "w_pubeperm",
             "content": {
                 "en-US": "Perming your pubes.",
                 "de": "Sich die Schamhaare eine Dauerwelle legen."
-            }
+            },
+            "flags": "w gn"
         },
         {
             "id": "w_pizzazz",
@@ -1851,7 +1903,8 @@
             "id": "w_naughtynaughtygirl",
             "content": {
                 "en-US": "A naughty, naughty girl."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_taintsweat",
@@ -1935,13 +1988,15 @@
             "content": {
                 "en-US": "An armless, legless child wriggling around like a sad little grub.",
                 "de": "Ein Kind ohne Arme oder Beine, das wie eine traurige Larve wackelt."
-            }
+            },
+            "flags": "ch dg"
         },
         {
             "id": "w_realvitruvian",
             "content": {
                 "en-US": "The Vitruvian Man, but for real and he has three dicks."
-            }
+            },
+            "flags": "nu gn gnm"
         },
         {
             "id": "w_bigmouthful",
@@ -1968,7 +2023,8 @@
             "content": {
                 "en-US": "Pouring beans into your child's waiting mouth.",
                 "de": "Bohnen im wartenden Mund deines Kindes gießen."
-            }
+            },
+            "flags": "g w"
         },
         {
             "id": "w_rhinovagina",
@@ -1982,13 +2038,15 @@
             "content": {
                 "en-US": "Biting off a man's penis out of anger.",
                 "de": "Aus Wut den Penis eines Mannes abbeißen."
-            }
+            },
+            "flags": "v gn gnm i"
         },
         {
             "id": "w_dbzincest",
             "content": {
                 "en-US": "Fucking your cousin on your favorite Dragon Ball Z blanket."
-            }
+            },
+            "flags": "ic s w"
         },
         {
             "id": "w_fancyrimjob",
@@ -2001,7 +2059,7 @@
             "id": "w_cumtoast",
             "content": {
                 "en-US": "Artisan cum toast.",
-                "de": "Kunstsamentoast."
+                "de": "Kunsthandwerklicher Samentoast."
             },
             "flags": "g"
         },
@@ -2055,63 +2113,72 @@
             "content": {
                 "en-US": "Fucking a severed head in the neck-hole.",
                 "de": "Einen abgetrennten Kopf ins Halsloch ficken."
-            }
+            },
+            "flags": "d s g w"
         },
         {
             "id": "w_vsauce",
             "content": {
                 "en-US": "Vsauce, Michael here.",
                 "de": "Vsauce, Michael hier."
-            }
+            },
+            "flags": "ce"
         },
         {
             "id": "w_mydingdingdong",
             "content": {
                 "en-US": "Ooh... my ding-ding-dong."
-            }
+            },
+            "flags": "s gn gnm"
         },
         {
             "id": "w_soniconeeyetwoeye",
             "content": {
                 "en-US": "Arguing about whether Sonic the Hedgehog has one eye or two."
-            }
+            },
+            "flags": "fc"
         },
         {
             "id": "w_dryerlintmouth",
             "content": {
                 "en-US": "A mouthful of dryer lint."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_monthsoldcumtissues",
             "content": {
                 "en-US": "Months-old cum tissues."
-            }
+            },
+            "flags": "g s"
         },
         {
             "id": "w_corpseskullfuck",
             "content": {
                 "en-US": "Skull-fucking a corpse in the moonlight."
-            }
+            },
+            "flags": "g s d"
         },
         {
             "id": "w_polio",
             "content": {
                 "en-US": "Polio.",
                 "de": "Polio."
-            }
+            },
+            "flags": "di"
         },
         {
             "id": "w_laughbatdisintegrate",
             "content": {
-                "en-US": "Laughing wickedly and bursting into a cloud of bats."
+                "en-US": "Cackling evilly and bursting into a cloud of bats."
             }
         },
         {
             "id": "w_babybabypowder",
             "content": {
                 "en-US": "Baby powder made from real babies."
-            }
+            },
+            "flags": "db"
         },
         {
             "id": "b_newfoodcraze",

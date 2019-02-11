@@ -148,6 +148,7 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`d`|Death.|
 |`ds`|Disabilities.|
 |`db`|Abortion/dead baby jokes.|
+|`dg`|Degrading remarks or behavior.|
 |`di`|Disease/Sickness/Medical conditions.|
 |`dr`|Drugs/Drug usage.|
 |`fc`|Fictional characters.|
@@ -158,12 +159,15 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`gnm`|Male genitalia.|
 |`hp`|Homophobia/Transphobia.|
 |`i`|Injury.|
+|`ic`|Incest.|
+|`l`|Obscene language.|
 |`lgbt`|Relating to the LGBT community.|
 |`ma`|Misandry.|
 |`mg`|Misogyny.|
 |`mu`|Murder.|
 |`ncs`|Nonconsensual sexual acts.|
 |`nh`|Non-heterosexual sexual acts.|
+|`nu`|Nudity.|
 |`pd`|Pedophilia.|
 |`re`|Religion or religious people.|
 |`s`|General sexual content flag.|

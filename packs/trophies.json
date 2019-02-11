@@ -104,8 +104,8 @@
                 "de-DE": "Großmeister des goldenen Phallus"
             },
             "desc": {
-                "en-US": "Awarded only to a true master of dick jokes. Truly the highest honor anyone can ever receive.",
-                "de-DE": "Nur an den wahren Meistern der Schwanzwitze verliehen. Wahrlich die höchste Ehre, die man je erhalten kann."
+                "en-US": "Awarded only to a true master of dick jokes. The highest honor anyone can ever receive.",
+                "de-DE": "Nur an den wahren Meistern der Schwanzwitze verliehen. Die höchste Ehre, die man je erhalten kann."
             },
             "requirements": [
                 {
@@ -204,6 +204,37 @@
             "requirements": [
                 {
                     "type": "lost_to_bot"
+                }
+            ]
+        },
+        {
+            "id": "trophy_cogdis",
+            "name": {
+                "en-US": "Cognitive Dissonance"
+            },
+            "desc": {
+                "en-US": "Demonstrate your inability to form an opinion."
+            },
+            "requirements": [
+                {
+                    "type": "any",
+                    "requirements": [
+                        {
+                            "type": "all",
+                            "requirements": [
+                                {
+                                    "type": "card_proportion",
+                                    "percent": 10,
+                                    "flags": ["hp"]
+                                },
+                                {
+                                    "type": "card_proportion",
+                                    "percent": 10,
+                                    "flags": ["lgbt", "nh"]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
