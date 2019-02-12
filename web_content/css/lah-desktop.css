@@ -784,7 +784,7 @@ card[data-card="blank"] .blank-card-text, card[data-card^="custom:"] {
 }
 
 card[white].winner, .card-group.winner card[white] {
-    background: linear-gradient(to bottom, rgb(255, 230, 5), rgb(231, 160, 8));
+    background: linear-gradient(to bottom, rgb(255, 230, 5), rgb(231, 160, 8)) !important;
     color: black;
     border-color: #423b00;
 }

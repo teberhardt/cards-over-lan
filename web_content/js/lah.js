@@ -1,11 +1,12 @@
 (() => {
+    const IS_HTTPS = location.protocol === "https:";
     const STAGE_GAME_STARTING = "game_starting";
     const STAGE_PLAYING = "playing";
     const STAGE_JUDGING = "judging";
     const STAGE_ROUND_END = "round_end";
     const STAGE_GAME_END = "game_end";
-    const WS_URL = "ws://" + document.domain + ":3000/game";
-    const DEFAULT_LOCALE = "en-US";
+    const WS_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":3000/game";
+    const DEFAULT_LOCALE = "en";
 
     class Card {
         constructor(type, id, content, blanks, pack) {
@@ -134,10 +135,12 @@
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
+        el.setAttribute("data-card", card.id);
+        el.setAttribute(card.type, "");
+
         // Pack info ribbon
         if (packInfo) {
-            el.setAttribute("data-card", card.id);
-            el.setAttribute(card.type, "");
+           
             
             let ribbon = document.createElement("div");
             ribbon.classList.add("ribbon");
@@ -337,7 +340,7 @@
         let customMatch = cardId.match(/^\s*custom:\s*(.*)\s*$/m);
         let card = null;
         if (customMatch) {
-            card = new Card("white", cardId, {"en-US": customMatch[1] || "???"});
+            card = new Card("white", cardId, {"en": customMatch[1] || "???"});
         } else {
             card = lah.whiteCards[cardId];
         }

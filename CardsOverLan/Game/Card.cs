@@ -56,20 +56,22 @@ namespace CardsOverLan.Game
 
         public bool ContainsContentFlags(string flags)
         {
-            var flagParts = flags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+            var searchFlagParts = flags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(s => s.Trim())
+				.Select(s => (shouldMatch: !s.StartsWith("!"), flag: s.TrimStart('!'))).ToArray();
             var cardFlagParts = ContentFlags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-            for(int i = 0; i < flagParts.Length; i++)
+            for(int i = 0; i < searchFlagParts.Length; i++)
             {
                 bool found = false;
                 for(int j = 0; j < cardFlagParts.Length; j++)
                 {
-                    if (cardFlagParts[j] == flagParts[i])
+                    if (cardFlagParts[j] == searchFlagParts[i].flag)
                     {
                         found = true;
                         break;
                     }
                 }
-                if (!found) return false;
+                if (found != searchFlagParts[i].shouldMatch) return false;
             }
             return true;
         }

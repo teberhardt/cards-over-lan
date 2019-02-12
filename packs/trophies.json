@@ -5,31 +5,31 @@
         {
             "id": "trophy_nazi",
             "name": {
-                "en-US": "Probably a Nazi",
-                "de-DE": "Wahrscheinlich ein Nazi"
+                "en": "Probably a Nazi",
+                "de": "Wahrscheinlich ein Nazi"
             },
             "desc": {
-                "en-US": "This person is, with overwhelming likelihood, probably a Nazi.",
-                "de-DE": "Diese Person ist, mit überwältigender Sicherheit, wahrscheinlich ein Nazi."
+                "en": "This person is, with overwhelming likelihood, probably a Nazi.",
+                "de": "Diese Person ist, mit überwältigender Sicherheit, wahrscheinlich ein Nazi."
             },
             "requirements": [
                 {
                     "type": "card_proportion",
                     "flags": ["as"],
                     "winning": false,
-                    "percent": 30
+                    "percent": 25
                 }
             ]
         },
         {
             "id": "trophy_childhate",
             "name": {
-                "en-US": "Child Hater",
-                "de-DE": "Kinderhasser"
+                "en": "Child Hater",
+                "de": "Kinderhasser"
             },
             "desc": {
-                "en-US": "Should never have children. Ever.",
-                "de-DE": "Sollte nie Kinder haben. Niemals."
+                "en": "Should never have children. Ever.",
+                "de": "Sollte nie Kinder haben. Niemals."
             },
             "requirements": [
                 {
@@ -43,12 +43,12 @@
         {
             "id": "trophy_dick1",
             "name": {
-                "en-US": "Cocky",
-                "de-DE": "Schwanzig"
+                "en": "Cocky",
+                "de": "Schwanzig"
             },
             "desc": {
-                "en-US": "Likes talking about dicks, perhaps a bit too much.",
-                "de-DE": "Redet gern über Penisse... vielleicht ein bisschen zu gern."
+                "en": "Likes talking about dicks, perhaps a bit too much.",
+                "de": "Redet gern über Penisse... vielleicht ein bisschen zu gern."
             },
             "requirements": [
                 {
@@ -62,12 +62,31 @@
         {
             "id": "trophy_dick2",
             "name": {
-                "en-US": "Penis Connoisseur",
-                "de-DE": "Penisliebhaber"
+                "en": "Penis Connoisseur",
+                "de": "Penisliebhaber"
             },
             "desc": {
-                "en-US": "Absolutely obsessed with the male genitals.",
-                "de-DE": "Total Penisbesessen."
+                "en": "Absolutely obsessed with the male genitals.",
+                "de": "Total Penisbesessen."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["gnm"],
+                    "winning": false,
+                    "percent": 30
+                }
+            ]
+        },
+        {
+            "id": "trophy_dick3",
+            "name": {
+                "en": "Penis Veteran",
+                "de": "Penisexperte"
+            },
+            "desc": {
+                "en": "A seasoned veteran of cock.",
+                "de": "Ein erfahrener Fachmann des Penis."
             },
             "requirements": [
                 {
@@ -79,14 +98,14 @@
             ]
         },
         {
-            "id": "trophy_dick3",
+            "id": "trophy_dick4",
             "name": {
-                "en-US": "Penis Veteran",
-                "de-DE": "Penisexperte"
+                "en": "Grandmaster of the Golden Phallus",
+                "de": "Großmeister des goldenen Phallus"
             },
             "desc": {
-                "en-US": "A seasoned veteran of cock.",
-                "de-DE": "Ein erfahrener Fachmann des Penis."
+                "en": "Awarded only to a true master of dick jokes. The highest honor anyone can ever receive.",
+                "de": "Nur an den wahren Meistern der Schwanzwitze verliehen. Die höchste Ehre, die man je erhalten kann."
             },
             "requirements": [
                 {
@@ -98,33 +117,14 @@
             ]
         },
         {
-            "id": "trophy_dick4",
-            "name": {
-                "en-US": "Grandmaster of the Golden Phallus",
-                "de-DE": "Großmeister des goldenen Phallus"
-            },
-            "desc": {
-                "en-US": "Awarded only to a true master of dick jokes. The highest honor anyone can ever receive.",
-                "de-DE": "Nur an den wahren Meistern der Schwanzwitze verliehen. Die höchste Ehre, die man je erhalten kann."
-            },
-            "requirements": [
-                {
-                    "type": "card_proportion",
-                    "flags": ["gnm"],
-                    "winning": true,
-                    "percent": 75
-                }
-            ]
-        },
-        {
             "id": "trophy_loosecannon",
             "name": {
-                "en-US": "Loose Cannon",
-                "de-DE": "Tickende Zeitbombe"
+                "en": "Loose Cannon",
+                "de": "Tickende Zeitbombe"
             },
             "desc": {
-                "en-US": "Likely to end up on the news.",
-                "de-DE": "Wird wahrscheinlich in den Nachrichten landen."
+                "en": "Likely to end up on the news.",
+                "de": "Wird wahrscheinlich in den Nachrichten landen."
             },
             "requirements": [
                 {
@@ -138,18 +138,18 @@
         {
             "id": "trophy_gross",
             "name": {
-                "en-US": "Disgusting Motherfucker",
-                "de-DE": "Verdammt Ekelhaft"
+                "en": "Disgusting Motherfucker",
+                "de": "Verdammt Ekelhaft"
             },
             "desc": {
-                "en-US": "What the fuck is wrong with you?!",
-                "de-DE": "Was zur Hölle ist los mit dir?!"
+                "en": "What the fuck is wrong with you?!",
+                "de": "Was zur Hölle ist los mit dir?!"
             },
             "requirements": [
                 {
                     "type": "card_proportion",
                     "flags": ["g"],
-                    "winning": true,
+                    "winning": false,
                     "percent": 30
                 }
             ]
@@ -157,11 +157,11 @@
         {
             "id": "trophy_futurekiller",
             "name": {
-                "en-US": "Aspiring Serial Killer",
-                "de-DE": "Zukünftiger Serienmörder"
+                "en": "Aspiring Serial Killer",
+                "de": "Zukünftiger Serienmörder"
             },
             "desc": {
-                "en-US": "Thinks up \"theoretical\" methods of torturing and murdering people."
+                "en": "Thinks up \"theoretical\" methods of torturing and murdering people."
             },
             "requirements": [
                 {
@@ -175,12 +175,12 @@
         {
             "id": "trophy_loser",
             "name": {
-                "en-US": "Fucking Loser",
-                "de-DE": "Versager"
+                "en": "Fucking Loser",
+                "de": "Versager"
             },
             "desc": {
-                "en-US": "You didn't win a single round. Great job!",
-                "de-DE": "Du hast keine einzige Runde gewonnen. Toll gemacht!"
+                "en": "You didn't win a single round. Great job!",
+                "de": "Du hast keine einzige Runde gewonnen. Toll gemacht!"
             },
             "requirements": [
                 {
@@ -194,12 +194,12 @@
         {
             "id": "trophy_lost_to_bot",
             "name": {
-                "en-US": "Obsolete",
-                "de-DE": "Veraltet"
+                "en": "Obsolete",
+                "de": "Veraltet"
             },
             "desc": {
-                "en-US": "You lost to a bot. A BOT.",
-                "de-DE": "Du hast gegen einen Bot verloren. GEGEN EINEN BOT."
+                "en": "You lost to a bot. A BOT.",
+                "de": "Du hast gegen einen Bot verloren. GEGEN EINEN BOT."
             },
             "requirements": [
                 {
@@ -210,10 +210,10 @@
         {
             "id": "trophy_cogdis",
             "name": {
-                "en-US": "Cognitive Dissonance"
+                "en": "Cognitive Dissonance"
             },
             "desc": {
-                "en-US": "Demonstrate your inability to form an opinion."
+                "en": "Express your crippling moral ambivalence."
             },
             "requirements": [
                 {
@@ -224,17 +224,38 @@
                             "requirements": [
                                 {
                                     "type": "card_proportion",
-                                    "percent": 10,
-                                    "flags": ["hp"]
+                                    "percent": 15,
+                                    "flags": ["hp !nh !lgbt", "as !nh !lgbt"]
                                 },
                                 {
                                     "type": "card_proportion",
-                                    "percent": 10,
-                                    "flags": ["lgbt", "nh"]
+                                    "percent": 15,
+                                    "flags": ["lgbt !hp !as", "nh !hp !as"]
                                 }
                             ]
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "id": "trophy_priest",
+            "name": {
+                "en": "As God Intended"
+            },
+            "desc": {
+                "en": "Embrace your inner priest."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["re"],
+                    "percent": 10
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["pd"],
+                    "percent": 10
                 }
             ]
         }

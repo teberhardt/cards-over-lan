@@ -79,7 +79,7 @@
             "de": "Du hast die Runde gewonnen!"
         },
         "ui_you_are_czar": {
-            "en": "You're the Carz Czar.",
+            "en": "You're the Card Czar.",
             "de": "Du bist der Zar."
         },
         "ui_sub_nobody": {

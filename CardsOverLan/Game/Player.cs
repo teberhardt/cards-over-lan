@@ -19,8 +19,8 @@ namespace CardsOverLan.Game
 	{
 		private const int AutoPlayDelayMin = 2000;
 		private const int AutoPlayDelayMax = 6000;
-		private const int AutoJudgeDelayMin = 3000;
-		private const int AutoJudgeDelayMax = 6000;
+		private const int AutoJudgeDelayMin = 5000;
+		private const int AutoJudgeDelayMax = 8000;
 
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
