@@ -899,8 +899,8 @@
         {
             "id": "w_creepyloo",
             "content": {
-                "en": "A toilet that is about to overflow, and you're powerless to stop it.",
-                "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu soppen."
+                "en": "A toilet about to overflow, and you're powerless to stop it.",
+                "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu stoppen."
             },
             "flags": "g"
         },
