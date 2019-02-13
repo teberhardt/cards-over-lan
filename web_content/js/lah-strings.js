@@ -157,6 +157,10 @@
         "ui_scoreboard_trophies": {
             "en": "Trophies",
             "de": "Errungenschaften"
+        },
+        "ui_player_list_title": {
+            "en": "Players",
+            "de": "Spielerliste"
         }
     };
 

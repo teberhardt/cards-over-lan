@@ -125,6 +125,112 @@ smaller {
     grid-template-rows: [r-start] 50% [r-center] 50% [r-end];
 }
 
+/* PLAYER LIST */
+
+#player-list-area {
+    grid-row: r-start / r-center;
+    grid-column: c-center / c-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    margin: calc(var(--navbar-height) + 10pt) 10pt 0 0;
+    cursor: default;
+}
+
+#player-list-wrapper {
+    width: 35%;
+    max-width: 400px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    transition: opacity .3s;
+}
+
+#player-list-wrapper:not(:hover) {
+    opacity: .7;
+}
+
+#player-list {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+}
+
+#player-list-title {
+    font-size: 12pt;
+    font-weight: 600;
+    margin: 0 3pt 2pt 0;
+    text-align: right;
+    opacity: .8;
+}
+
+#player-list .player-list-entry {
+    display: grid;
+    flex-shrink: 0;
+    grid-template-rows: [r-start] 1fr [r-end];
+    grid-template-columns: [c-start] 1fr [c-center] 32pt [c-end];
+    padding: 3pt 0;
+    margin-right: 3pt;
+}
+
+#player-list .player-list-entry.is-you {
+    color: var(--accent-highlight);
+}
+
+.player-list-entry > * {
+    font-size: 12pt;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.player-list-entry > .col-name {
+    grid-column: c-start / c-center;
+}
+
+.player-list-entry > .col-name:before {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: var(--accent-ol);
+    border-radius: 3px;
+    background-size: 100% 100%;
+    transform: translateY(.125em);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-position: bottom;
+}
+
+.player-list-entry.is-judge > .col-name:before {
+    content: "";
+    margin-right: 3pt;
+    background-image: url("/img/lah-czar.png");    
+}
+
+.player-list-entry.is-pending > .col-name:before {
+    content: "";
+    margin-right: 3pt;
+    background-image: url("/img/lah-pending.png");    
+}
+
+.player-list-entry > .col-score {
+    grid-column: c-center / c-end;
+    text-align: right;
+}
+
+.player-list-entry > .col-score:after {
+    content: "\1f7ca";
+    display: inline-block;
+    transform: translateY(-.03em);
+    margin-left: .5pt;
+    font-weight: 500;
+}
+
 /* NOTIFICATION BANNER */
 
 #notify-banner {
@@ -151,9 +257,6 @@ smaller {
     color: white;
     text-align: center;
 }
-
-/* PLAYER LIST */
-
 
 /* HAND AREA */
 

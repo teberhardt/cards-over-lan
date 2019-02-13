@@ -25,10 +25,12 @@
 <body onload="lah.start()" class="preload">
     <nav id="navbar" class="mobile-hidden">
         <h1 class="mobile-only nav-header" data-ui-string="ui_menu_title">Menu</h1>
-        <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small" onclick="showModal('modal-about')" />
-        <input type="button" value="Options" data-localize-value="ui_options" id="btn-options" class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
-        <!-- <input type="button" value="Players" id="btn-players" class="lah-btn lah-btn-small" onclick="togglePlayerList()" /> -->
-        <input type="button" value="Fullscreen" data-localize-value="ui_fullscreen" id="btn-fullscreen" class="lah-btn lah-btn-small" />
+        <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small"
+            onclick="showModal('modal-about')" />
+        <input type="button" value="Options" data-localize-value="ui_options" id="btn-options"
+            class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
+        <input type="button" value="Fullscreen" data-localize-value="ui_fullscreen" id="btn-fullscreen"
+            class="lah-btn lah-btn-small" />
     </nav>
     <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
     <div id="game">
@@ -41,6 +43,12 @@
                 <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
                 <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
                 <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
+            </div>
+        </div>
+        <div id="player-list-area">
+            <div id="player-list-wrapper">
+                <div id="player-list-title" data-ui-string="ui_player_list_title"></div>
+                <div id="player-list"></div>
             </div>
         </div>
         <div id="judge-message-area">
@@ -61,17 +69,19 @@
                 </div>
             </div>
             <div id="judge-controls-area">
-                <input type="button" data-localize-value="ui_btn_vote" value="VOTE" id="btn-judge-pick" class="lah-btn" />
+                <input type="button" data-localize-value="ui_btn_vote" value="VOTE" id="btn-judge-pick"
+                    class="lah-btn" />
             </div>
         </div>
-        <div id="hand-area">            
+        <div id="hand-area">
             <div id="hand-cards-area" class="lah-card-area">
                 <div id="hand-cards-scroll-area" class="lah-card-container-outer">
                     <div id="hand-cards-container" class="lah-card-container-inner"></div>
                 </div>
             </div>
             <div id="hand-controls-area">
-                    <input type="button" value="PLAY" data-localize-value="ui_btn_play" id="btn-play" class="lah-btn hidden" />
+                <input type="button" value="PLAY" data-localize-value="ui_btn_play" id="btn-play"
+                    class="lah-btn hidden" />
             </div>
         </div>
         <div id="game-end-screen" class="fade hidden">
@@ -87,12 +97,12 @@
                     </div>
                     <div id="game-end-scoreboard-entries">
                     </div>
-                </div>                
+                </div>
                 <div id="game-end-trophies-area">
                     <div id="game-end-trophies-heading" data-ui-string="ui_trophies">
                         Trophies
                     </div>
-                    <div id="game-end-trophies-list"></div>    
+                    <div id="game-end-trophies-list"></div>
                 </div>
             </div>
         </div>
@@ -120,16 +130,20 @@
                 <div class="lah-vlist">
                     <div class="lah-listitem">
                         <label class="lah-label" data-ui-string="ui_nickname"></label>
-                        <input type="text" id="txt-username" class="lah-txtbox wide" data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
+                        <input type="text" id="txt-username" class="lah-txtbox wide"
+                            data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
                     </div>
                     <div class="lah-listitem">
                         <label class="lah-label" data-ui-string="ui_accent_color"></label>
-                        <input type="text" id="txt-accent-color" class="lah-txtbox wide" data-localize-placeholder="ui_accent_color_placeholder" autocomplete="off" maxlength="250" />
+                        <input type="text" id="txt-accent-color" class="lah-txtbox wide"
+                            data-localize-placeholder="ui_accent_color_placeholder" autocomplete="off"
+                            maxlength="250" />
                     </div>
                     <div class="lah-separator"></div>
                     <div class="lah-listitem">
                         <div class="lah-hlist lah-align-end">
-                            <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply" id="btn-options-apply" onclick="applyOptions()" />
+                            <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply"
+                                id="btn-options-apply" onclick="applyOptions()" />
                         </div>
                     </div>
                 </div>
@@ -145,13 +159,16 @@
                 <h1>About</h1>
                 <p>This game is a clone of Cards Against Humanity.</p>
                 <p>
-                    The original game is available for download or purchase at <a href="https://cardsagainsthumanity.com" target="_blank">cardsagainsthumanity.com</a>, 
-                    and is generously distributed under a <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0 license</a>.
+                    The original game is available for download or purchase at <a
+                        href="https://cardsagainsthumanity.com" target="_blank">cardsagainsthumanity.com</a>,
+                    and is generously distributed under a <a
+                        href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA 2.0 license</a>.
                     This fan-made project is in no way endorsed, sponsored, or supported by Cards Against Humanity.
                 </p>
                 <p>
                     Source code and license information, including licenses for third-party software used in this game,
-                    can be found on <a href="https://github.com/TheBerkin/lan-against-humanity" target="_blank">GitHub</a>.
+                    can be found on <a href="https://github.com/TheBerkin/lan-against-humanity"
+                        target="_blank">GitHub</a>.
                 </p>
             </div>
         </div>

@@ -633,7 +633,7 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
-				if (Judge.IsAutonomous)
+				if (Judge?.IsAutonomous ?? false)
 				{
 					Judge.AutoJudgeAsync();
 				}

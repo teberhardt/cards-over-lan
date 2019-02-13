@@ -41,6 +41,7 @@
     --accent-bg: var(--default-accent-color);
     --accent-fg: #111;
     --accent-ol: transparent;
+    --accent-highlight: #094;
     --accent-group: rgba(0, 0, 0, .25);
     --accent-group-hover: rgba(0, 0, 0, .35);
     --main-bg-line: rgba(0, 0, 0, .0);
@@ -145,7 +146,7 @@ card {
 }
 
 span.highlight {
-    color: #094;
+    color: var(--accent-highlight);
 }
 
 .lah-card-area {

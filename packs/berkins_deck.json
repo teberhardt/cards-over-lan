@@ -465,8 +465,8 @@
         {
             "id": "w_altbodybag",
             "content": {
-                "en": "Cling-wrapping a dead body to keep it fresh.",
-                "de": "Eine Leiche in Frischhaltefolie wickeln."
+                "en": "Cling-wrapping a dead body for freshness.",
+                "de": "Eine Leiche in Frischhaltefolie wickeln, um sie frisch zu halten."
             },
             "flags": "d w g"
         },
