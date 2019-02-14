@@ -551,7 +551,7 @@
     }
 
     function loadOptions() {
-        lah.localPlayerName = Cookies.get("name") || "Player";
+        lah.localPlayerName = Cookies.get("name") || getUiString("ui_default_player_name");
         loadAccentColor();
         document.querySelector("#txt-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;

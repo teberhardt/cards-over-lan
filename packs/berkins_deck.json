@@ -2127,7 +2127,7 @@
         {
             "id": "w_mydingdingdong",
             "content": {
-                "en": "Ooh... my ding-ding-dong."
+                "en": "Mmm... my ding ding dong."
             },
             "flags": "s gn gnm"
         },
@@ -2203,24 +2203,62 @@
             "id": "w_bathsaltskinpeel",
             "content": {
                 "en": "Getting high on bath salts and peeling your skin off."
-            }
+            },
+            "flags": "dr i"
         },
         {
             "id": "w_kevinkwiktripsext",
             "content": {
                 "en": "Exchanging nasty sexts with \"Kevin\" from Kwik Trip."
-            }
+            },
+            "flags": "s"
         },
         {
             "id": "w_malepincushion",
             "content": {
                 "en": "Testicle acupuncture."
+            },
+            "flags": "gn gnm xf"
+        },
+        {
+            "id": "w_megateethmouth",
+            "content": {
+                "en": "A huge mouth with many teeth and a big, terrible tongue."
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_genderrevealparyconcept",
+            "content": {
+                "en": "The mere concept of gender reveal parties."
             }
         },
         {
-            "id": "b_newfoodcraze",
+            "id": "w_horse",
             "content": {
-                "en": "What's the latest food trend that never should have happened?"
+                "en": "Horse.",
+                "de": "Pferd."
+            },
+            "flags": "an"
+        },
+        {
+            "id": "w_nut",
+            "content": {
+                "en": "Nut.",
+                "de": "Nuss."
+            }
+        },
+        {
+            "id": "w_bignut",
+            "content": {
+                "en": "Big Nut.",
+                "de": "Große Nuss."
+            }
+        },
+        {
+            "id": "b_newcrazytrend",
+            "content": {
+                "en": "What's the hottest new trend everyone's talking about?"
             }
         },
         {
@@ -2580,7 +2618,7 @@
         {
             "id": "b_omen",
             "content": {
-                "en": "According to popular superstition, seeing ____ is considered a bad omen."
+                "en": "According to popular superstition, seeing _______ is considered a bad omen."
             },
             "blanks": 1
         },
@@ -2594,7 +2632,7 @@
         {
             "id": "b_securebank",
             "content": {
-                "en": "Our bank boasts a state-of-the-art security system&ndash; one of the first in the world to use ____ to keep your money safe."
+                "en": "Our bank boasts a state-of-the-art security system&ndash; one of the first in the world to use _______ to keep your money safe."
             },
             "blanks": 1
         },

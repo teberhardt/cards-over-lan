@@ -2,6 +2,10 @@
     const DEFAULT_LOCALE = "en";
 
     let uiStrings = {
+        "ui_default_player_name": {
+            "en": "Player",
+            "de": "Spieler"
+        },
         "ui_hello": {
             "en": "Hello",
             "de": "Hallo"
