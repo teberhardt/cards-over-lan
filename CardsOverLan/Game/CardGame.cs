@@ -622,7 +622,6 @@ namespace CardsOverLan.Game
 				{
 					foreach(var p in _players.Where(p => p.IsAutonomous))
 					{
-						Console.WriteLine($"Auto play prompt: {p}");
 						p.AutoPlayAsync();
 					}
 				}
