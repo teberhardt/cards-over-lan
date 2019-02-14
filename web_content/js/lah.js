@@ -94,6 +94,8 @@
     lah.numBlanks = 0;
     lah.blankCards = []; // Array of strings containing blank card contents
     lah.gameResults = null;
+    lah.lastRejectReason = "";
+    lah.lastRejectDesc = "";
 
     let gameArea = null;
     let handArea = null;
@@ -238,10 +240,15 @@
     function makeFinalScoreboardElement(player, isWinner) {
         if (!lah.gameResults || !player) return null;
 
+        let trophyInfo = lah.gameResults.trophy_winners.find(w => w.id == player.id);
+
         let e = document.createElement("div");
         e.classList.add("scoreboard-entry");
         if (isWinner) {
             e.classList.add("winner");
+        }
+        if (player.id == lah.localPlayerId) {
+            e.classList.add("is-you");
         }
 
         let eNameCol = document.createElement("div");
@@ -255,10 +262,9 @@
         e.appendChild(eScoreCol);
 
         let eTrophiesCol = document.createElement("div");
-        eTrophiesCol.classList.add("trophies");
+        eTrophiesCol.classList.add("trophies", "text");
+        eTrophiesCol.setAttribute("data-text", (trophyInfo && trophyInfo.trophies.length) || "0");
         e.appendChild(eTrophiesCol);
-
-        // TODO: Trophies in scoreboard entries
 
         return e;
     }
@@ -363,6 +369,11 @@
             lah.clientPlayedCards = msg.selection;
             onPlayedCardsChanged();
             onStateChanged();
+        },
+        "s_rejectclient": msg => {
+            lah.lastRejectReason = msg.reason;
+            lah.lastRejectDesc = msg.desc;
+            console.log("Rejected by server: " + msg.reason);
         }
     };
 
@@ -591,7 +602,7 @@
     // Raised when connection closes
     function onConnectionClosed() {
         console.log("disconnected");
-        setStatusText("Not connected");
+        setStatusText(!lah.lastRejectReason ? getUiString("ui_not_connected") : getUiString("ui_disconnected", lah.lastRejectReason));
     };
 
     // Raised when connection opens

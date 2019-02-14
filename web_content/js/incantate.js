@@ -40,7 +40,7 @@
     };
   
     RGB.prototype.isBright = function() {
-      return (this.r * 1.7 + this.g * 2.7 + this.b * .3) / 3 > .5;
+      return (this.r * 1.5 + this.g * 2.6 + this.b * .3) / 3 > .5;
     };
   
     RGB.prototype.saturation = function() {
@@ -240,7 +240,7 @@
       "fog": "9ebfb8",
       "forest": [0, .7, 0],
       "fuchsia": [.65, .22, .65],
-      "gold": [1, .9, 0],
+      "gold": [1, .7, 0],
       "gorilla": "292929",
       "grape": [.45, .15, .3],
       "grapefruit": [1, .35, .35],
@@ -461,9 +461,12 @@
         desat(rgb, .7);
       },
       "golden": function(rgb) {
+        rgb.r += .5;
+        rgb.g += .5;
+        rgb.b += .5;
         desat(rgb, .6);
         rgb.b *= .1;
-        rgb.g *= 1.5;
+        rgb.g *= 1.2;
         rgb.r *= 1.6;
       },
       "dead": function(rgb) {

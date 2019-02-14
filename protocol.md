@@ -203,3 +203,24 @@ Contains player information that identifies a client. Sent by server when the pl
     "player_name": "Berkin"
 }
 ```
+
+### s_rejectclient
+
+Used when the server rejects a client from connecting to the game.
+For rejected clients, this is the first and only message sent.
+After sending, the client is immediately disconnected.
+
+```json
+{
+    "msg": "s_rejectclient",
+    "reason": "reject_server_full",
+    "desc": "Extended rejection description goes here"
+}
+```
+
+#### Reason IDs
+
+|Reason ID|Description|
+|---------|-----------|
+|`reject_server_full`|The server is full and cannot accept any more players.|
+|`reject_banned`|The server has banned the connecting client.|

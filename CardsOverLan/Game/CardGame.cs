@@ -542,7 +542,7 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
-				bool success = _players.Remove(player);
+                if (player == null || !_players.Remove(player)) return false;                
 
 				// Unsubscribe events
 				player.SelectionChanged -= OnPlayerSelectionChanged;
@@ -556,7 +556,7 @@ namespace CardsOverLan.Game
 				player.DiscardSelection();
 
 				RaisePlayerLeft(player, reason);
-				return success;
+				return true;
 			}
 		}
 

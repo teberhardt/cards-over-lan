@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CardsOverLan.Game.Converters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Runtime.Serialization;
 namespace CardsOverLan.Game
 {
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
+    [JsonConverter(typeof(CardConverter))]
     public abstract class Card
     {
         protected const string DefaultLocale = "en";

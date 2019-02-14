@@ -14,6 +14,14 @@
             "en": "Hello, {0}",
             "de": "Hallo, {0}"
         },
+        "ui_not_connected": {
+            "en": "Not connected",
+            "de": "Nicht verbunden"
+        },
+        "ui_disconnected": {
+            "en": "Disconnected ({0})",
+            "de": "Verbindung getrennt ({0})"
+        },
         "ui_waiting_for_players": {
             "en": "Waiting for more players",
             "de": "Warte auf weitere Spieler"

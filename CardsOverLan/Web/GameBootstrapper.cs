@@ -3,7 +3,7 @@ using Nancy.Conventions;
 
 namespace CardsOverLan.Web
 {
-    class GameBootstrapper : DefaultNancyBootstrapper
+    internal sealed class GameBootstrapper : DefaultNancyBootstrapper
     {
         public GameBootstrapper()
         {

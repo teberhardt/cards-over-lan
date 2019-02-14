@@ -12,6 +12,7 @@ namespace CardsOverLan
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public sealed class GameSettings
 	{
+        private const string DefaultServerName = "Cards Over LAN";
 		private const int DefaultHandSize = 10;
 		private const int DefaultMinPlayers = 3;
 		private const int DefaultMaxPlayers = 10;
@@ -44,6 +45,11 @@ namespace CardsOverLan
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
 		private int _botCount;
+
+
+        [JsonProperty("server_name", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
+        [DefaultValue(DefaultServerName)]
+        public string ServerName { get; set; } = DefaultServerName;
 
 		[JsonProperty("host", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue("http://localhost:80")]

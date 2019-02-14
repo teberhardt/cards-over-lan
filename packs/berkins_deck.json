@@ -2228,9 +2228,9 @@
             "flags": "w"
         },
         {
-            "id": "w_genderrevealparyconcept",
+            "id": "w_genderrevealparties",
             "content": {
-                "en": "The mere concept of gender reveal parties."
+                "en": "Gender reveal parties."
             }
         },
         {

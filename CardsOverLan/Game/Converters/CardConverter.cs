@@ -1,11 +1,23 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System;
 
 namespace CardsOverLan.Game.Converters
 {
     class CardConverter : JsonConverter
     {
+        private static readonly JsonSerializer _serializer = new JsonSerializer { ContractResolver = new BaseSpecifiedConcreteClassConverter() };
+
+        private sealed class BaseSpecifiedConcreteClassConverter : DefaultContractResolver
+        {
+            protected override JsonConverter ResolveContractConverter(Type objectType)
+            {
+                if (typeof(Card).IsAssignableFrom(objectType) && !objectType.IsAbstract) return null;
+                return base.ResolveContractConverter(objectType);
+            }
+        }
+
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(Card);
@@ -20,18 +32,18 @@ namespace CardsOverLan.Game.Converters
 
             if (id.StartsWith("w_"))
             {
-                return o.ToObject<WhiteCard>();
+                return o.ToObject<WhiteCard>(_serializer);
             }
             else if (id.StartsWith("b_"))
             {
-                return o.ToObject<BlackCard>();
+                return o.ToObject<BlackCard>(_serializer);
             }
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            serializer.Serialize(writer, value);
+            _serializer.Serialize(writer, value);
         }
     }
 }
