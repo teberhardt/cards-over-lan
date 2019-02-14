@@ -66,9 +66,10 @@
         return -1;
     }
 
-    if (typeof lah === 'undefined') {
+    if (typeof lah === "undefined") {
         lah = {};
     }
+
     lah.score = 0;
     lah.round = 0;
     lah.whiteCards = {};
@@ -109,6 +110,7 @@
     let gameEndTrophiesList = null;
     let btnPlay = null;
     let btnPick = null;
+    let playerList = null;
 
     let ws = new LahClient(WS_URL, 10000);
 
@@ -206,6 +208,33 @@
         return el;
     }
 
+    function makePlayerListElement(player) {
+        let e = document.createElement("div");
+        e.classList.add("player-list-entry");
+        if (lah.currentJudgeId === player.id) {
+            e.classList.add("is-judge");
+        }
+        if (player.id == lah.localPlayerId) {
+            e.classList.add("is-you");
+        }
+        if (lah.pendingPlayers.includes(player.id)) {
+            e.classList.add("is-pending");
+        }
+
+        let colName = document.createElement("span");
+        colName.classList.add("col-name");
+        colName.innerText = player.name;
+
+        let colScore = document.createElement("span");
+        colScore.classList.add("col-score");
+        colScore.innerText = player.score.toString();
+
+        e.appendChild(colName);
+        e.appendChild(colScore);
+
+        return e;
+    }
+
     function makeFinalScoreboardElement(player, isWinner) {
         if (!lah.gameResults || !player) return null;
 
@@ -299,6 +328,7 @@
 
             if (roundChanged) onRoundChanged();
             if (stageChanged) onStageChanged(msg.stage);
+            populatePlayerList();
         },
         "s_players": msg => {
             lah.playerList = msg.players;
@@ -582,6 +612,7 @@
 
     function onPlayerListChanged() {
         document.querySelector("#player-count").textContent = lah.playerList.length;
+        populatePlayerList();
     }
 
     // Make sure the correct elements are visible/enabled
@@ -661,13 +692,22 @@
         playCardsScrollArea.updateScrollTracking();
     }
 
+    function populatePlayerList() {
+        playerList.killChildren();
+        let rankedPlayers = [...lah.playerList].sort((p1, p2) => p2.score - p1.score);
+        for(let player of rankedPlayers) {
+            let eEntry = makePlayerListElement(player);
+            playerList.appendChild(eEntry);
+        }
+    }
+
     function populateGameEndScoreboard() {
         gameEndScoreboardEntries.killChildren();
         gameEndTrophiesList.killChildren();
 
         if (!lah.gameResults) return;
 
-        let rankedPlayers = lah.playerList.slice(0).sort((p1, p2) => p2.score - p1.score);
+        let rankedPlayers = [...lah.playerList].sort((p1, p2) => p2.score - p1.score);
 
         for(let player of rankedPlayers) {
             let isWinner = lah.gameResults.winners.includes(player.id);
@@ -862,6 +902,7 @@
         gameEndScreen = document.getElementById("game-end-screen");
         gameEndScoreboardEntries = document.getElementById("game-end-scoreboard-entries");
         gameEndTrophiesList = document.getElementById("game-end-trophies-list");
+        playerList = document.getElementById("player-list");
 
         updateStatus();
         updateUiState();

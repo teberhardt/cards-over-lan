@@ -10,6 +10,8 @@ namespace CardsOverLan.Game
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public abstract class Card
     {
+        protected const string DefaultLocale = "en";
+
         [JsonProperty("content")]
         private readonly Dictionary<string, string> _content = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -45,7 +47,7 @@ namespace CardsOverLan.Game
 				ID = $"custom: {content}",
 				IsCustom = true
 			};
-			card.AddContent("en", content);
+			card.AddContent(DefaultLocale, content);
 			return card;
 		}
 

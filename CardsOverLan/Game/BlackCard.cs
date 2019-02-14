@@ -19,6 +19,6 @@ namespace CardsOverLan.Game
 			}
 		}
 
-		public override string ToString() => GetContent(CultureInfo.CurrentCulture.IetfLanguageTag) ?? GetContent("en-US") ?? "???";
+		public override string ToString() => GetContent(CultureInfo.CurrentCulture.IetfLanguageTag) ?? GetContent(DefaultLocale) ?? "???";
 	}
 }

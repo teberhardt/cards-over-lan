@@ -465,8 +465,8 @@
         {
             "id": "w_altbodybag",
             "content": {
-                "en": "Cling-wrapping a dead body to keep it fresh.",
-                "de": "Eine Leiche in Frischhaltefolie wickeln."
+                "en": "Cling-wrapping a dead body for freshness.",
+                "de": "Eine Leiche in Frischhaltefolie wickeln, um sie frisch zu halten."
             },
             "flags": "d w g"
         },
@@ -899,8 +899,8 @@
         {
             "id": "w_creepyloo",
             "content": {
-                "en": "A toilet that is about to overflow, and you're powerless to stop it.",
-                "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, sie zu soppen."
+                "en": "A toilet about to overflow, and you're powerless to stop it.",
+                "de": "Eine Toilette, die kurz davor steht, überzulaufen, und du bist machtlos, es zu verhindern."
             },
             "flags": "g"
         },
