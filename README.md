@@ -107,6 +107,8 @@ CAH is licensed under a CC BY-NC-SA 2.0 license.
 If I distributed my software with their IP included, I would have to place all of my code under that same license. Since Creative Commons is not designed for software,
 it's much easier for everyone if I decouple the CAH content from the game.
 
+If you want the CAH cards in the game, see [this repo](https://github.com/cardsoverlan/cah-packs).
+
 ### Can I filter out cards that mortally offend me?
 
 Use the `exclude_content` property in settings.json.
