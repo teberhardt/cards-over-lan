@@ -127,6 +127,12 @@
         grid-template-rows: [r-start] 50% [r-center] 50% [r-end];
     }
 
+    /* PLAYER LIST */
+    #player-list-area {
+        /* Currently not supported on mobile */
+        display: none;
+    }
+
     /* NOTIFICATION BANNER */
 
     #notify-banner {
