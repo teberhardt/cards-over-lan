@@ -602,7 +602,7 @@
     // Raised when connection closes
     function onConnectionClosed() {
         console.log("disconnected");
-        setStatusText(!lah.lastRejectReason ? getUiString("ui_not_connected") : getUiString("ui_disconnected", lah.lastRejectReason));
+        setStatusText(!lah.lastRejectReason ? getUiString("ui_not_connected") : getUiString("ui_disconnected", getUiString("ui_" + lah.lastRejectReason)));
     };
 
     // Raised when connection opens

@@ -22,6 +22,10 @@
             "en": "Disconnected ({0})",
             "de": "Verbindung getrennt ({0})"
         },
+        "ui_reject_server_full": {
+            "en": "Server is full",
+            "de": "Server ist voll"
+        },
         "ui_waiting_for_players": {
             "en": "Waiting for more players",
             "de": "Warte auf weitere Spieler"
