@@ -31,7 +31,7 @@ The root directory contains a few important folders.
 
 ### Prerequisites
 
-You need Visual Studio 2017 and .NET Framework 4.7.2.
+To build the server, you need Visual Studio 2017 and .NET Framework 4.7.2.
 
 ### Building
 
