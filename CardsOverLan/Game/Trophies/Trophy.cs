@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,13 @@ namespace CardsOverLan.Game.Trophies
 
         [JsonProperty("name", Required = Required.Always)]
         public LocalizedString Name { get; private set; }
+
+		[JsonProperty("trophy_class", Required = Required.DisallowNull)]
+		[DefaultValue("")]
+		public string TrophyClass { get; private set; } = "";
+
+		[JsonProperty("trophy_grade")]
+		public int TrophyGrade { get; private set; }
 
         [JsonProperty("desc", Required = Required.Always)]
         public LocalizedString Description { get; private set; }

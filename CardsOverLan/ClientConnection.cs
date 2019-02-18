@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace CardsOverLan
     internal sealed class ClientConnection : WebSocketBehavior
     {
         private const string REJECT_SERVER_FULL = "reject_server_full";
+		private const string REJECT_DUPLICATE = "reject_duplicate";
 
         private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
@@ -27,12 +29,17 @@ namespace CardsOverLan
         private readonly Dictionary<string, string> _cookies;
         private int _inactiveTime;
         private readonly object _afkLock = new object();
+		private bool _isDuplicate;
+		private IPAddress _ip;
 
         public CardGame Game { get; }
+		public CardGameServer Server { get; }
         public Player Player => _player;
+		internal IPAddress Address => _ip;
 
-        public ClientConnection(CardGame game)
+        public ClientConnection(CardGameServer server, CardGame game)
         {
+			Server = server;
             Game = game;
             _cookies = new Dictionary<string, string>();
             _afkCheckThread = new Thread(AfkCheckThread);
@@ -255,6 +262,8 @@ namespace CardsOverLan
             lock (_createDestroySync)
             {
                 base.OnOpen();
+				_ip = Context.UserEndPoint.Address;
+
 
                 // Make sure player can actually join
                 if (Game.PlayerCount >= Game.Settings.MaxPlayers)
@@ -263,6 +272,13 @@ namespace CardsOverLan
                     Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_SERVER_FULL);
                     return;
                 }
+				else if (!Server.TryAddToPool(this))
+				{
+					_isDuplicate = true;
+					SendRejectToPlayer(REJECT_DUPLICATE);
+					Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
+					return;
+				}
 
                 LoadCookies();
                 CreatePlayer();
@@ -277,6 +293,11 @@ namespace CardsOverLan
             lock (_createDestroySync)
             {
                 base.OnClose(e);
+
+				if (!_isDuplicate)
+				{
+					Server.TryRemoveFromPool(this);
+				}
 
                 UnregisterEvents();
 

@@ -224,3 +224,4 @@ After sending, the client is immediately disconnected.
 |---------|-----------|
 |`reject_server_full`|The server is full and cannot accept any more players.|
 |`reject_banned`|The server has banned the connecting client.|
+|`reject_duplicate`|The server has detected that the client is attempting to open more than one instance of the game.|

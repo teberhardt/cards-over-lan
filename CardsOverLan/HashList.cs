@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CardsOverLan
 {
@@ -42,7 +44,7 @@ namespace CardsOverLan
 
 		public bool Add(T item)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				if (!_hashSet.Add(item)) return false;
 				_list.Add(item);
@@ -52,7 +54,7 @@ namespace CardsOverLan
 
 		public void AddRange(IEnumerable<T> items)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				foreach (var item in items)
 				{
@@ -63,11 +65,25 @@ namespace CardsOverLan
 
 		public void RemoveRange(IEnumerable<T> items)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
-				foreach(var item in items)
+				foreach (var item in items.ToArray())
 				{
 					Remove(item);
+				}
+			}
+		}
+
+		public void RemoveAll(Predicate<T> match)
+		{
+			lock(_editLock)
+			{
+				foreach(var item in _list.ToArray())
+				{
+					if (match(item))
+					{
+						Remove(item);
+					}
 				}
 			}
 		}

@@ -169,6 +169,7 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`nh`|Non-heterosexual sexual acts.|
 |`nu`|Nudity.|
 |`pd`|Pedophilia.|
+|`ra`|Racism.|
 |`re`|Religion or religious people.|
 |`s`|General sexual content flag.|
 |`su`|Suicide.|

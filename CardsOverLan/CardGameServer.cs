@@ -1,5 +1,7 @@
 ﻿using CardsOverLan.Game;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using WebSocketSharp.Server;
 
 namespace CardsOverLan
@@ -9,6 +11,7 @@ namespace CardsOverLan
         private readonly WebSocketServer _ws;
         private readonly CardGame _game;
 		private bool _disposed = false;
+		private readonly HashSet<IPAddress> _clientIpPool = new HashSet<IPAddress>();
 
         public CardGameServer(CardGame game)
         {
@@ -18,12 +21,22 @@ namespace CardsOverLan
 
         public void Start()
         {
-            _ws.AddWebSocketService("/game", () => new ClientConnection(_game));
+            _ws.AddWebSocketService("/game", () => new ClientConnection(this, _game));
             _ws.Start();
 			Console.WriteLine("WebSocket server active");
         }
 
-        public void Stop()
+		internal bool TryAddToPool(ClientConnection cc)
+		{
+			return _clientIpPool.Add(cc.Address);
+		}
+
+		internal bool TryRemoveFromPool(ClientConnection cc)
+		{
+			return _clientIpPool.Remove(cc.Address);
+		}
+
+		public void Stop()
         {
             _ws.Stop();
         }

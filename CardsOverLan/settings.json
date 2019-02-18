@@ -4,6 +4,7 @@
 	"max_players": 15,
 	"min_players": 3,
 	"max_player_name_length": 64,
+	"allow_duplicates": false,
 	"hand_size": 10,
 	"blank_cards": 3,
 	"round_end_timeout": 5000,

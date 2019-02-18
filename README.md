@@ -57,13 +57,14 @@ The settings.json file contains a number of properties that control how the serv
 |`max_players`|Integer|Maximum number of players that the server can hold.|
 |`min_players`|Integer|Minimum required players in order for the game to start.|
 |`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
+|`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
 |`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`max_points`|Integer|Points required for a player to win the game.|
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
-|`winner_czar`|Boolean|When set to `true`, the round winner will always be the next Card Czar.|
+|`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner.|
 |`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|

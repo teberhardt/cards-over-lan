@@ -88,6 +88,19 @@ namespace CardsOverLan.Game
 
         public void AddTrophy(Trophy trophy)
         {
+			if (_trophies.Any(t => 
+			!String.IsNullOrWhiteSpace(t.TrophyClass) 
+			&& String.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase) 
+			&& t.TrophyGrade > trophy.TrophyGrade))
+			{
+				return;
+			}
+
+			_trophies.RemoveAll(t =>
+			!String.IsNullOrWhiteSpace(t.TrophyClass)
+			&& String.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase)
+			&& t.TrophyGrade < trophy.TrophyGrade);			
+			
             _trophies.Add(trophy);
         }
 

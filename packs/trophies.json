@@ -50,6 +50,8 @@
                 "en": "Likes talking about dicks, perhaps a bit too much.",
                 "de": "Redet gern über Penisse... vielleicht ein bisschen zu gern."
             },
+            "trophy_class": "dick",
+            "trophy_grade": 1,
             "requirements": [
                 {
                     "type": "card_proportion",
@@ -69,6 +71,8 @@
                 "en": "Absolutely obsessed with the male genitals.",
                 "de": "Total Penisbesessen."
             },
+            "trophy_class": "dick",
+            "trophy_grade": 2,
             "requirements": [
                 {
                     "type": "card_proportion",
@@ -88,6 +92,8 @@
                 "en": "A seasoned veteran of cock.",
                 "de": "Ein erfahrener Fachmann des Penis."
             },
+            "trophy_class": "dick",
+            "trophy_grade": 3,
             "requirements": [
                 {
                     "type": "card_proportion",
@@ -112,7 +118,7 @@
                     "type": "card_proportion",
                     "flags": ["gnm"],
                     "winning": true,
-                    "percent": 60
+                    "percent": 50
                 }
             ]
         },
@@ -131,7 +137,7 @@
                     "type": "card_proportion",
                     "flags": ["v", "t"],
                     "winning": false,
-                    "percent": 30
+                    "percent": 20
                 }
             ]
         },
@@ -150,7 +156,7 @@
                     "type": "card_proportion",
                     "flags": ["g"],
                     "winning": false,
-                    "percent": 30
+                    "percent": 20
                 }
             ]
         },
@@ -161,7 +167,7 @@
                 "de": "Zukünftiger Serienmörder"
             },
             "desc": {
-                "en": "Thinks up \"theoretical\" methods of torturing and murdering people."
+                "en": "Suggest \"theoretical\" methods of torturing and murdering people."
             },
             "requirements": [
                 {
@@ -224,12 +230,12 @@
                             "requirements": [
                                 {
                                     "type": "card_proportion",
-                                    "percent": 15,
+                                    "percent": 6,
                                     "flags": ["hp !nh !lgbt", "as !nh !lgbt"]
                                 },
                                 {
                                     "type": "card_proportion",
-                                    "percent": 15,
+                                    "percent": 6,
                                     "flags": ["lgbt !hp !as", "nh !hp !as"]
                                 }
                             ]
@@ -270,8 +276,29 @@
             "requirements": [
                 {
                     "type": "card_proportion",
-                    "flags": "ic",
+                    "flags": ["ic"],
                     "percent": 15
+                }
+            ]
+        },
+        {
+            "id": "trophy_alabama",
+            "name": {
+                "en": "Bible Belt"
+            },
+            "desc": {
+                "en": "Channel your inner redneck."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["re", "as", "ra"],
+                    "percent": 25
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["ic", "pd", "hp"],
+                    "percent": 25
                 }
             ]
         }

@@ -26,6 +26,10 @@
             "en": "Server is full",
             "de": "Server ist voll"
         },
+        "ui_reject_duplicate": {
+            "en": "Duplicate player",
+            "de": "Duplizierter Spieler"
+        },
         "ui_waiting_for_players": {
             "en": "Waiting for more players",
             "de": "Warte auf weitere Spieler"
