@@ -258,6 +258,22 @@
                     "percent": 10
                 }
             ]
+        },
+        {
+            "id": "trophy_incest",
+            "name": {
+                "en": "Brotherly Love"
+            },
+            "desc": {
+                "en": "The gene pool is apparently just a puddle."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": "ic",
+                    "percent": 15
+                }
+            ]
         }
     ]
 }

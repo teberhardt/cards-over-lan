@@ -2061,14 +2061,15 @@
                 "en": "Artisan cum toast.",
                 "de": "Kunsthandwerklicher Samentoast."
             },
-            "flags": "g"
+            "flags": "g s"
         },
         {
             "id": "w_catnutflick",
             "content": {
                 "en": "Flicking your cat in the nuts.",
                 "de": "Deinen Kater am Hodensack schnipsen."
-            }
+            },
+            "flags": "gn gnm an an_ab"
         },
         {
             "id": "w_centipeed",
@@ -2081,7 +2082,8 @@
         {
             "id": "w_diarrheaslurp",
             "content": {
-                "en": "Feverishly slurping diarrhea."
+                "en": "Feverishly slurping diarrhea.",
+                "de": "Fieberhaft Durchfall schlürfen."
             },
             "flags": "g fe"
         },
@@ -2134,28 +2136,32 @@
         {
             "id": "w_soniconeeyetwoeye",
             "content": {
-                "en": "Arguing about whether Sonic the Hedgehog has one eye or two."
+                "en": "Arguing over whether Sonic the Hedgehog has one eye or two.",
+                "de": "Streiten darüber, ob Sonic der Igel ein oder zwei Augen hat."
             },
             "flags": "fc"
         },
         {
             "id": "w_dryerlintmouth",
             "content": {
-                "en": "A mouthful of dryer lint."
+                "en": "A mouthful of dryer lint.",
+                "de": "Ein Mundvoll Trocknerfusseln."
             },
             "flags": "w"
         },
         {
             "id": "w_monthsoldcumtissues",
             "content": {
-                "en": "Months-old cum tissues."
+                "en": "Months-old cum tissues.",
+                "de": "Sperma-Taschentücher von vor einigen Monaten."
             },
             "flags": "g s"
         },
         {
             "id": "w_corpseskullfuck",
             "content": {
-                "en": "Skull-fucking a corpse in the moonlight."
+                "en": "Skull-fucking a corpse in the moonlight.",
+                "de": "Im Mondlicht eine Leiche in den Schädel ficken."
             },
             "flags": "g s d"
         },
@@ -2170,67 +2176,77 @@
         {
             "id": "w_laughbatdisintegrate",
             "content": {
-                "en": "Cackling evilly and bursting into a cloud of bats."
+                "en": "Cackling evilly and bursting into a cloud of bats.",
+                "de": "Gackern und in eine Wolke von Fledermäusen platzen."
             }
         },
         {
             "id": "w_babybabypowder",
             "content": {
-                "en": "Baby powder made from real babies."
+                "en": "Baby powder made from real babies.",
+                "de": "Babypuder aus echen Babys."
             },
             "flags": "db"
         },
         {
             "id": "w_funnyheliumdeath",
             "content": {
-                "en": "Hilariously dying from helium asphyxiation."
+                "en": "Hilariously dying from helium asphyxiation.",
+                "de": "Lustiger Tod durch Heliumatmung."
             },
             "flags": "d"
         },
         {
             "id": "w_mrrogers",
             "content": {
-                "en": "Mr. Rogers."
+                "en": "Mister Rogers.",
+                "de": "Mister Rogers."
             }
         },
         {
             "id": "w_familyhonoruphold",
             "content": {
-                "en": "Upholding the family's honor."
+                "en": "Upholding the family's honor.",
+                "de": "Die Ehre der Familie wahren."
             }
         },
         {
             "id": "w_bathsaltskinpeel",
             "content": {
-                "en": "Getting high on bath salts and peeling your skin off."
+                "en": "Getting high on bath salts and peeling your skin off.",
+                "de": "Mit Badesalzdrogen high werden und sich die Haut abschälen."
             },
             "flags": "dr i"
         },
         {
             "id": "w_kevinkwiktripsext",
             "content": {
-                "en": "Exchanging nasty sexts with \"Kevin\" from Kwik Trip."
+                "en": "Exchanging nasty sexts with \"Kevin\" from Kwik Trip.",
+                "de": "Unanständige Sexte mit \"Kevin\" von der Tankstelle austauschen."
             },
             "flags": "s"
         },
         {
             "id": "w_malepincushion",
             "content": {
-                "en": "Testicle acupuncture."
+                "en": "Testicle acupuncture.",
+                "de": "Hodenakupunktur."
             },
             "flags": "gn gnm xf"
         },
         {
             "id": "w_megateethmouth",
             "content": {
-                "en": "A huge mouth with many teeth and a big, terrible tongue."
+                "en": "A huge mouth with many teeth and a big, terrible tongue.",
+                "de": "Ein großer Mund mit vielen Zähnen und einer "
             },
             "flags": "w"
         },
         {
             "id": "w_genderrevealparties",
             "content": {
-                "en": "Gender reveal parties."
+                "en": "Gender reveal parties.",
+                "de": "Gender Reveal Partys."
             }
         },
         {
@@ -2256,23 +2272,137 @@
             }
         },
         {
+            "id": "w_peelermurder",
+            "content": {
+                "en": "Slowly and methodically killing a man with a carrot peeler.",
+                "de": "Langsam und methodisch einen Mann mit einem Karottenschäler töten."
+            },
+            "flags": "mu w"
+        },
+        {
+            "id": "w_bloodydildo",
+            "content": {
+                "en": "A bloody dildo.",
+                "de": "Ein blutiger Dildo."
+            },
+            "flags": "s gn gnm g"
+        },
+        {
+            "id": "w_wetcigbutts",
+            "content": {
+                "en": "A warm slurry of cigarette butts and old man spit.",
+                "de": "Eine warme Mischung aus Zigarettenkippen und Spucke eines alten Mannes."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_catlittercalzone",
+            "content": {
+                "en": "A cat litter calzone.",
+                "de": "Eine Katzenstreu-Calzone."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_dogecoin",
+            "content": {
+                "en": "Dogecoin.",
+                "de": "Dogecoin."
+            }
+        },
+        {
+            "id": "w_damngoodwaffles",
+            "content": {
+                "en": "Some damn good waffles.",
+                "de": "Ein paar verdammt gute Waffeln."
+            },
+            "flags": "l"
+        },
+        {
+            "id": "w_condimentbukkake",
+            "content": {
+                "en": "A ketchup and mustard bukkake.",
+                "de": "Ein Ketchup-Senf-Bukkake."
+            },
+            "flags": "s g"
+        },
+        {
+            "id": "w_goodsauce",
+            "content": {
+                "en": "The good sauce.",
+                "de": "Die gute Soße."
+            }
+        },
+        {
+            "id": "w_bathroommazedreams",
+            "content": {
+                "en": "Bathroom maze dreams.",
+                "de": "Badezimmer-Labyrinthe-Träume."
+            }
+        },
+        {
+            "id": "w_defenselesskid",
+            "content": {
+                "en": "A defenseless child.",
+                "de": "Ein wehrloses Kind."
+            },
+            "flags": "ch"
+        },
+        {
+            "id": "w_lemonstealwhores",
+            "content": {
+                "en": "Lemon-stealing whores.",
+                "de": "Zitronenklauende Huren."
+            },
+            "flags": "s dg"
+        },
+        {
+            "id": "w_weirdantbutt",
+            "content": {
+                "en": "Funneling live ants into my cavernous rectum.",
+                "de": "Lebende Ameisen in meinen höhlenartigen Rektum einfüllen."
+            },
+            "flags": "s g xf"
+        },
+        {
+            "id": "w_hotpisskettle",
+            "content": {
+                "en": "A kettle full of boiling piss.",
+                "de": "Ein Kessel voller kochender Pisse."
+            },
+            "flags": "g l"
+        },
+        {
+            "id": "b_happinessis",
+            "content": {
+                "en": "Happiness is ________.",
+                "de": "Zufriedenheit ist ________."
+            },
+            "blanks": 1
+        },
+        {
             "id": "b_newcrazytrend",
             "content": {
-                "en": "What's the hottest new trend everyone's talking about?"
-            }
+                "en": "What's the hottest new trend everyone's talking about?",
+                "de": "Was ist der heißeste neue Trend?"
+            },
+            "blanks": 1
         },
         {
             "id": "b_poisoncontrolcall",
             "content": {
-                "en": "Hello, Poison Control? My son swallowed _______, please help!"
-            }
+                "en": "\"This is Poison Control.\"\n\n\"Hi, my son just swallowed _______, what should I do?\"",
+                "de": "\"Giftnotruf, was kann ich für Sie tun?\"\n\n\"Mein Sohn hat gerade ________ geschluckt, was soll ich machen?\""
+            },
+            "blanks": 1
         },
         {
             "id": "b_hurtsalotmore",
             "content": {
                 "en": "_______ hurts a lot more than I expected it to.",
                 "de": "________ tut viel mehr weh, als ich dachte."
-            }
+            },
+            "blanks": 1
         },
         {
             "id": "b_strangechildhumor",
@@ -2399,7 +2529,7 @@
         {
             "id": "b_personalhero",
             "content": {
-                "en": "In my mind, anyone who's _______ is a true hero."
+                "en": "In my mind, anyone who's _______ is a damn hero."
             }
         },
         {
@@ -2588,12 +2718,6 @@
                 "de": "Da ist ____ in meinem Stiefel!"
             },
             "blanks": 1
-        },
-        {
-            "id": "b_deliveryservice",
-            "content": {
-                "en": "Finally! A service that delivers ______ right to your door."
-            }
         },
         {
             "id": "b_amazonweirdproduct",

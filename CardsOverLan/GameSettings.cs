@@ -131,7 +131,15 @@ namespace CardsOverLan
 		[DefaultValue(false)]
 		public bool PermanentCzar { get; set; }
 
-        [JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		[JsonProperty("bot_czars", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool AllowBotCzars { get; set; } = true;
+
+		[JsonProperty("winner_czar", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(false)]
+		public bool WinnerCzar { get; set; } = false;
+
+		[JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string[] ContentExclusions { get; set; } = new string[0];
 
 		[JsonProperty("max_points", DefaultValueHandling = DefaultValueHandling.Populate)]

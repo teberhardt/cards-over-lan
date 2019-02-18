@@ -60,6 +60,8 @@ namespace CardsOverLan
             Console.WriteLine($"Player limit: [{Settings.MinPlayers}, {Settings.MaxPlayers}]");
             Console.WriteLine($"Hand size: {Settings.HandSize}");
             Console.WriteLine($"Perma-Czar: {Settings.PermanentCzar}");
+			Console.WriteLine($"Bot Czars: {Settings.AllowBotCzars}");
+			Console.WriteLine($"Winner Is Czar: {Settings.WinnerCzar}");
             Console.WriteLine($"Points to win: {Settings.MaxPoints}");
             Console.WriteLine($"Cards: {Game.BlackCardCount + Game.WhiteCardCount} ({Game.WhiteCardCount}x white, {Game.BlackCardCount}x black)");
             Console.WriteLine();

@@ -63,11 +63,13 @@ The settings.json file contains a number of properties that control how the serv
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`max_points`|Integer|Points required for a player to win the game.|
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
+|`winner_czar`|Boolean|When set to `true`, the round winner will always be the next Card Czar.|
 |`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_names`|String[]|List of names to assign to bots.|
+|`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 
 

@@ -1,21 +1,26 @@
 ﻿{
 	"host": "http://localhost:80",
-	"max_players": 10,
+	"server_name": "Cards Over LAN",
+	"max_players": 15,
 	"min_players": 3,
 	"max_player_name_length": 64,
 	"hand_size": 10,
 	"blank_cards": 3,
 	"round_end_timeout": 5000,
 	"game_end_timeout": 30000,
-	"max_points": 5,
+	"max_points": 8,
 	"perma_czar": false,
+	"winner_czar": true,
 	"afk_time_seconds": 600,
 	"afk_recovery_time_seconds": 90,
 	"exclude_content": [],
 	"enable_trophies": true,
-	"bot_count": 3,
+	"bot_count": 1,
+	"bot_czars": false,
 	"bot_names": [
-	"AutoRodney", "AutoJaiden", "AutoDixon", "AutoMatt", "AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", "AutoClara", "AutoAlvin"
+		"AutoRodney", "AutoScott", "AutoDixon", "AutoMatt", 
+		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
+		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
 	"require_languages": ["en"]
 }

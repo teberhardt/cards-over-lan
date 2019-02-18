@@ -160,7 +160,7 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`hp`|Homophobia/Transphobia.|
 |`i`|Injury.|
 |`ic`|Incest.|
-|`l`|Obscene language.|
+|`l`|Obscene/impolite language.|
 |`lgbt`|Relating to the LGBT community.|
 |`ma`|Misandry.|
 |`mg`|Misogyny.|

@@ -247,7 +247,7 @@ namespace CardsOverLan.Game
 							int index = (i + offset) % n;
 							var judgeCandidate = _players[index];
 							// Ignore them if they're AFK
-							if (judgeCandidate.IsAfk) continue;
+							if (judgeCandidate.IsAfk || (!Settings.AllowBotCzars && judgeCandidate.IsAutonomous)) continue;
 							_judgeIndex = index;
 							return;
 						}
@@ -271,13 +271,21 @@ namespace CardsOverLan.Game
 						}
 					}
 
-					// Make the next non-AFK person the judge.
-					for (int i = 1; i < n; i++)
+					// If winner_czar is enabled, choose the round winner
+					if (Settings.WinnerCzar && _winningPlayIndex > -1 && !RoundWinner.IsAutonomous)
 					{
-						int index = (_judgeIndex + i) % n;
+						_judgeIndex = _players.IndexOf(RoundWinner);
+						return;
+					}
+
+					// Make the next non-AFK person the judge.
+					for (int i = _judgeIndex > -1 ? 1 : 0; i < (_judgeIndex > -1 ? n - 1 : n); i++)
+					{
+						int index = ((_judgeIndex < 0 ? 0 : _judgeIndex) + i) % n;
 						var judgeCandidate = _players[index];
-						if (judgeCandidate.IsAfk) continue;
+						if (judgeCandidate.IsAfk || (!Settings.AllowBotCzars && judgeCandidate.IsAutonomous)) continue;
 						_judgeIndex = index;
+						return;
 					}
 
 					// Fallback
@@ -554,6 +562,11 @@ namespace CardsOverLan.Game
 				// Reclaim their cards
 				player.DiscardHand();
 				player.DiscardSelection();
+
+				if (Judge == player)
+				{
+					NextJudge();
+				}
 
 				RaisePlayerLeft(player, reason);
 				return true;

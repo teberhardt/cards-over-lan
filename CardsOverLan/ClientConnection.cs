@@ -268,7 +268,7 @@ namespace CardsOverLan
                 CreatePlayer();
                 UpdateActivityTime(Game.Settings.AfkTimeSeconds);
                 _afkCheckThread.Start();
-                Console.WriteLine($"{Player} connected");
+                Console.WriteLine($"{Player} ({Context.UserEndPoint.Address}) connected");
             }
         }
 
