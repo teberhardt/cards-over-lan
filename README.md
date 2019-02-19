@@ -55,27 +55,27 @@ The settings.json file contains a number of properties that control how the serv
 
 |Property|Type|Description|
 |--------|----|-----------|
-|`host`|String|The URL and port that the server will be hosted on.|
-|`max_players`|Integer|Maximum number of players that the server can hold.|
-|`min_players`|Integer|Minimum required players in order for the game to start.|
-|`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
-|`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
-|`hand_size`|Integer|Number of cards dealt to each player.|
-|`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
-|`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
-|`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
-|`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
-|`max_points`|Integer|Points required for a player to win the game.|
-|`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
-|`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner.|
-|`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
-|`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
+|`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
+|`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
 |`bot_count`|Integer|Number of bots to add to the game.|
-|`bot_names`|String[]|List of names to assign to bots.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
+|`bot_names`|String[]|List of names to assign to bots.|
+|`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
+|`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
+|`hand_size`|Integer|Number of cards dealt to each player.|
+|`host`|String|The URL and port that the server will be hosted on.|
+|`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
+|`max_players`|Integer|Maximum number of players that the server can hold.|
+|`max_points`|Integer|Points required for a player to win the game.|
+|`min_players`|Integer|Minimum required players in order for the game to start.|
+|`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
+|`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
 |`use_packs`|Stringp[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
+|`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner. Overridden by `bot_czars` and `perma_czar`.|
 
 
 ## FAQ
@@ -90,7 +90,7 @@ And those are great, there's nothing wrong with them. As mentioned above, this i
 
 ### Can I add my own cards?
 
-Yes, decks are written using a simple JSON format. Add them to the `decks` folder before starting up the server.
+Yes, decks are written using a simple JSON format. Add them to the `packs` folder before starting up the server.
 
 ### Can I host this on a public webserver?
 
@@ -106,7 +106,7 @@ No.
 
 ### There's a feature I want you to add.
 
-Submit an issue and we'll see what can be done.
+Please submit an issue detailing what you're looking for, and we can discuss.
 
 ### Why don't you include the CAH cards?
 
