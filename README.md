@@ -137,9 +137,9 @@ After saving your changes, relaunch the server and enjoy your ten-card deck!
 
 ### How can I contribute?
 
-The game isn't done and nothing is set in stone, so I'm reluctant to invite code contributions until the project is more mature.
+Regarding code contributions, I will have guidelines for this up soon.
 
-However, if you speak a language that isn't English and want to help me translate the cards, feel free to submit a pull request with your translations!
+If you speak a language that isn't English and want to help me translate the cards, feel free to submit a pull request with your translations!
 
 ## Legal
 
