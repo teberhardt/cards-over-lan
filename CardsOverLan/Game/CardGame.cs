@@ -196,20 +196,25 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
+				// Move to next black card
+				_blackCardIndex++;
+
 				// Reset player selections
 				foreach (var player in _players)
 				{
 					player.DiscardSelection();
+					Deal(player, CurrentBlackCard.DrawCount);
 				}
 
-				// Move to next black card
-				_blackCardIndex++;
 				// Move to next judge
 				NextJudge();
+
 				// Move to next round
 				_roundNum++;
+
 				// Change stage
 				Stage = GameStage.RoundInProgress;
+
 				// Raise round started event
 				RaiseRoundStarted();
 			}
@@ -307,6 +312,7 @@ namespace CardsOverLan.Game
                 // Reset scores
                 foreach(var p in _players)
                 {
+					p.Discards = Settings.Discards;
                     p.ResetAwards();
                 }
                 
@@ -449,7 +455,7 @@ namespace CardsOverLan.Game
 		/// </summary>
 		/// <param name="player">The player to deal to.</param>
 		/// <param name="extraCards">(Optional) The number of additional cards to deal.</param>
-		private void Deal(Player player, int extraCards = 0)
+		internal void Deal(Player player, int extraCards = 0)
 		{
 			int drawNum = Math.Max(0, Settings.HandSize - player.HandSize + extraCards);
 			if (drawNum <= 0) return;
@@ -536,8 +542,9 @@ namespace CardsOverLan.Game
 				player.AfkChanged += OnPlayerAfkChanged;
 
 				// Give them some cards
-				Deal(player);
+				Deal(player, CurrentBlackCard?.DrawCount ?? 0);
 				player.AddBlankCards(Settings.BlankCards);
+				player.Discards = Settings.Discards;
 
 				// Add them to the player list
 				_players.Add(player);

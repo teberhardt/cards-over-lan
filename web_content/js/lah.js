@@ -9,11 +9,12 @@
     const DEFAULT_LOCALE = "en";
 
     class Card {
-        constructor(type, id, content, blanks, pack, tier, tierCost, nextTierId) {
+        constructor(type, id, content, draw, pick, pack, tier, tierCost, nextTierId) {
             this._id = id;
             this._content = content;
             this._type = type;
-            this._blanks = blanks;
+            this._draw = draw;
+            this._pick = pick;
             this._pack = pack;
             this._tier = tier;
             this._tierCost = tierCost;
@@ -28,8 +29,12 @@
             return this._type;
         }
 
-        get blanks() {
-            return this._blanks;
+        get draw() {
+            return this._draw;
+        }
+
+        get pick() {
+            return this._pick;
         }
 
         get pack() {
@@ -66,6 +71,7 @@
                 json["id"].startsWith("b_") ? "black" : "white",
                 json["id"],
                 json["content"],
+                json["draw"] || 0,
                 json["pick"] || 1,
                 json["pack"] || "",
                 json["tier"] || 0,
@@ -115,6 +121,7 @@
     lah.lastRejectReason = "";
     lah.lastRejectDesc = "";
     lah.auxPoints = 0;
+    lah.discards = 0;
 
     let gameArea = null;
     let handArea = null;
@@ -151,15 +158,18 @@
     }
 
     // Make an HTMLElement from the specified Card object
-    function makeCardElement(card, showTierControls) {
+    function makeCardElement(card, showControls) {
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
         el.setAttribute("data-card", card.id);
+        el.setAttribute(card.type, "");
 
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
-        if (showTierControls) {
+        // Upgrade/discard controls
+        if (showControls) {
+            // Upgrade controls
             if (card.tier > 0) {
                 el.setAttribute("data-tier", card.tier);
             }
@@ -187,14 +197,22 @@
 
                 el.appendChild(btnUpgrade);
             }
+
+            // Discard controls
+            if (lah.discards > 0) {
+                let btnDiscard = document.createElement("div");
+                btnDiscard.classList.add("btn-discard");
+                btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
+                btnDiscard.addEventListener("click", e => {
+                    e.stopPropagation();
+                    lah.discardCard(card.id);
+                });
+                el.appendChild(btnDiscard);
+            }
         }
-        
-        el.setAttribute(card.type, "");
 
         // Pack info ribbon
         if (packInfo) {
-           
-            
             let ribbon = document.createElement("div");
             ribbon.classList.add("ribbon");
             ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
@@ -202,13 +220,24 @@
             el.appendChild(ribbon);
         }
 
+        // Add draw # if applicable
+        if (card.draw > 0) {
+            let divDraw = document.createElement("div");
+            divDraw.classList.add("draw");
+            let spanDrawNum = document.createElement("span");
+            spanDrawNum.classList.add("num");
+            spanDrawNum.innerText = card.draw.toString();
+            divDraw.appendChild(spanDrawNum);
+            el.appendChild(divDraw);
+        }
+
         // Add pick # if applicable
-        if (card.blanks > 1) {
+        if (card.pick > 1) {
             let divPick = document.createElement("div");
             divPick.classList.add("pick");
             let spanPickNum = document.createElement("span");
             spanPickNum.classList.add("num");
-            spanPickNum.innerText = card.blanks.toString();
+            spanPickNum.innerText = card.pick.toString();
             divPick.appendChild(spanPickNum);
             el.appendChild(divPick);
         }
@@ -404,7 +433,8 @@
         "s_hand": msg => {
             let prevNumBlanks = lah.numBlanks;
             lah.playerHand = msg.hand;
-            lah.numBlanks = msg.blanks;    
+            lah.numBlanks = msg.blanks;   
+            lah.discards = msg.discards; 
             if (lah.blankCards.length > msg.blanks) {
                 lah.blankCards.length = msg.blanks;
             } else if (lah.blankCards.length < msg.blanks) {
@@ -561,8 +591,8 @@
         // selecting
         else {
             // Make sure the selection is not too big
-            if (lah.playerHandSelection.length >= lah.currentBlackCard.blanks) {
-                lah.playerHandSelection.splice(0, lah.playerHandSelection.length - lah.currentBlackCard.blanks + 1);
+            if (lah.playerHandSelection.length >= lah.currentBlackCard.pick) {
+                lah.playerHandSelection.splice(0, lah.playerHandSelection.length - lah.currentBlackCard.pick + 1);
             }
             lah.playerHandSelection.push({id: cardId, blankIndex: blankCardIndex});
         }
@@ -919,7 +949,14 @@
         });
     }
 
-    // Raised when the PICK button is clicked
+    lah.discardCard = function(cardId) {
+        sendMessage({
+            msg: "c_discardcard",
+            card_id: cardId
+        });
+    }
+
+    // Raised when the VOTE button is clicked
     function onJudgePickClicked() {
         lah.judgeCards(lah.selectedPlayIndex);
     }
@@ -934,7 +971,7 @@
     }
 
     function onSelectionChanged() {
-        setEnabled("btn-play", (lah.currentBlackCard && lah.playerHandSelection.length == lah.currentBlackCard.blanks));
+        setEnabled("btn-play", (lah.currentBlackCard && lah.playerHandSelection.length == lah.currentBlackCard.pick));
     }
 
     function onRoundChanged() {

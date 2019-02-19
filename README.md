@@ -62,6 +62,7 @@ The settings.json file contains a number of properties that control how the serv
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`bot_names`|String[]|List of names to assign to bots.|
+|`discards`|Integer|The number of discards allowed per player.|
 |`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|

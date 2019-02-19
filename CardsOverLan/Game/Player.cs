@@ -29,11 +29,13 @@ namespace CardsOverLan.Game
 		private readonly HashList<WhiteCard> _selectedCards;
         private readonly HashList<Trophy> _trophies;
 		private int _score;
-        private int _auxPoints;
+        private int _coins;
+		private int _discards;
 		private string _name = DefaultName;
 		private bool _afk;
 		private int _blankCardsRemaining;
 		private readonly object _blankCardLock = new object();
+		private readonly object _discardLock = new object();
 		private readonly Random _rng;
 
 		public event PlayerCardsChangedEventDelegate CardsChanged;
@@ -71,7 +73,25 @@ namespace CardsOverLan.Game
 
 		public int Score => _score;
 
-        public int AuxPoints => _auxPoints;
+        public int Coins => _coins;
+
+		public int Discards
+		{
+			get
+			{
+				lock(_discardLock)
+				{
+					return _discards;
+				}
+			}
+			set
+			{
+				lock(_discardLock)
+				{
+					_discards = value;
+				}
+			}
+		}
 
 		public bool IsAfk
 		{
@@ -118,7 +138,7 @@ namespace CardsOverLan.Game
 		/// <param name="cards">The cards to add.</param>
 		public void AddToHand(IEnumerable<WhiteCard> cards)
 		{
-			_hand.AddRange(cards);
+			_hand.InsertRange(0, cards);
 			RaiseCardsChanged();
 		}
 
@@ -174,19 +194,29 @@ namespace CardsOverLan.Game
 
         public bool UpgradeCard(WhiteCard card)
         {
-            if (!Game.Settings.UpgradesEnabled || card == null || !_hand.Contains(card)) return false;
+            if (!Game.Settings.UpgradesEnabled || card == null || !HasWhiteCard(card)) return false;
             var tierCard = Game.GetNextTierCard(card);
             if (tierCard == null) return false;
-            if (!SpendAuxPoints(tierCard.TierCost)) return false;
+            if (!SpendCoins(tierCard.TierCost)) return false;
             _hand.Replace(card, tierCard);
             RaiseCardsChanged();
             Console.WriteLine($"{this} upgraded {card.ID} to {tierCard.ID} (-{tierCard.TierCost} CC)");
             return true;
         }
 
+		public bool DiscardCard(WhiteCard card)
+		{
+			if (card == null || !HasWhiteCard(card)) return false;
+			if (!SpendDiscard()) return false;
+			_hand.Remove(card);
+			Game.Deal(this);
+			RaiseCardsChanged();
+			return true;
+		}
+
 		public async void AutoPlayAsync()
 		{
-			if (!IsAutonomous || IsSelectionValid) return;
+			if (!IsAutonomous) return;
 			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
 			PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.PickCount));
 		}
@@ -246,18 +276,28 @@ namespace CardsOverLan.Game
         public void ResetAwards()
         {
             _score = 0;
-            _auxPoints = 0;
+            _coins = 0;			
             _trophies.Clear();
             RaiseAuxDataChanged();
         }
 
-        public bool SpendAuxPoints(int auxPoints)
+        public bool SpendCoins(int coins)
         {
-            if (auxPoints > _auxPoints) return false;
-            _auxPoints -= auxPoints;
+            if (coins > _coins) return false;
+            _coins -= coins;
             RaiseAuxDataChanged();
             return true;
         }
+
+		public bool SpendDiscard()
+		{
+			lock(_discardLock)
+			{
+				if (_discards <= 0) return false;
+				_discards--;
+				return true;
+			}
+		}
 
 		public void ClearPreviousPlays()
 		{
@@ -304,7 +344,7 @@ namespace CardsOverLan.Game
 
         public void AddAuxPoints(int auxPoints)
         {
-            _auxPoints += auxPoints > 0 ? auxPoints : 0;
+            _coins += auxPoints > 0 ? auxPoints : 0;
             RaiseAuxDataChanged();
         }
 

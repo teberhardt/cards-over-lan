@@ -69,7 +69,8 @@ The JSON object format for a card is as follows:
 |`next_tier_id`|(Optional) The ID of the upgraded version of the card.|
 |`tier_cost`|(Optional) The cost of acquiring this card as an upgrade.|
 |`flags`|A string defining content flags for this card.|
-|`blanks`|The number of blank spaces (black cards only).|
+|`pick`|The number of blank spaces (black cards only).|
+|`draw`|The number of extra white cards drawn per player (black cards only).|
 
 ### Trophies
 

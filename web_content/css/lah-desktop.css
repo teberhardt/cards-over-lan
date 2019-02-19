@@ -728,17 +728,29 @@ card.placeholder::after {
 
 card .pick {
     position: absolute;
-    font-size: 0.75em;
+    font-size: .75em;
     right: 1.45rem;
     bottom: 1.5rem;
     transition: opacity .2s;
+}
+
+card .draw {
+    position: absolute;
+    font-size: .75em;
+    right: 1.45rem;
+    bottom: 3.625em;
+    transition: opacity .35s;
 }
 
 card .pick::before {
     content: "PICK ";
 }
 
-card .pick .num {
+card .draw::before {
+    content: "DRAW ";
+}
+
+card .pick .num, card .draw .num {
     color: black;
     display: inline-block;
     text-align: center;
@@ -796,7 +808,7 @@ card .ribbon:hover:after {
     transform: rotate(0deg) translateY(-10px);
 }
 
-card .ribbon:hover+.pick {
+card .ribbon:hover ~ .pick, card .ribbon:hover ~ .draw {
     opacity: 0;
 }
 
@@ -813,9 +825,41 @@ card[white] {
     font-weight: 500;
 }
 
+/* DISCARD BUTTONS */
+
+card .btn-discard {
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    height: 36px;
+    width: 36px;
+    overflow: hidden;
+    image-rendering: optimizeQuality;
+    background-image: url("/img/discard.png");
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-origin: 50% 50%;
+    background-position: 50% 50%;
+    border-bottom-left-radius: 4px;
+    opacity: 0;
+    box-sizing: content-box;
+}
+
+card:hover .btn-discard {
+    opacity: .5;
+}
+
+card:hover .btn-discard:hover {
+    background-color: rgba(0, 0, 0, .075);
+    opacity: 1;
+}
+
+/* CARD UPGRADE BUTTONS */
+
 card .btn-upgrade {
     position: absolute;
-    left: -6pt;
+    left: 0;
     top: -10pt;
     font-size: 10pt;
     min-width: 16pt;
@@ -846,21 +890,7 @@ card .btn-upgrade.nope {
     transform: translateY(.15em);
 }
 
-#hand-area card[data-upgrade]:not([data-tier]) {
-    color: #0044aa;
-}
-
-#hand-area card[data-tier="1"] {
-    color: #7f4321;
-}
-
-#hand-area card[data-tier="2"] {
-    color: #777798;
-}
-
-#hand-area card[data-tier="3"] {
-    color: #cf6024;
-}
+/* BLANK CARDS */
 
 card[data-card="blank"] > .blank-card-text-container {
     pointer-events: auto !important;

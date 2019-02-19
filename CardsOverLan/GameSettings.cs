@@ -25,6 +25,7 @@ namespace CardsOverLan
 		private const int MinAfkRecoveryTimeSeconds = 30;
 		private const int MinBlankCards = 0;
 		private const int MinBotCount = 0;
+		private const int MinDiscards = 0;
 
 		private const int DefaultRoundEndTimeout = 10000;
 		private const int DefaultGameEndTimeout = 30000;
@@ -33,6 +34,7 @@ namespace CardsOverLan
 		private const int DefaultMaxPoints = 10;
 		private const int DefaultBlankCards = 0;
 		private const int DefaultBotCount = 0;
+		private const int DefaultDiscards = 5;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -41,6 +43,7 @@ namespace CardsOverLan
 		private int _minPlayers = DefaultMinPlayers;
 		private int _roundEndTimeout = DefaultRoundEndTimeout;
 		private int _gameEndTimeout = DefaultGameEndTimeout;
+		private int _discards = DefaultDiscards;
 
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
@@ -177,6 +180,14 @@ namespace CardsOverLan
         [JsonProperty("enable_upgrades", DefaultValueHandling = DefaultValueHandling.Populate)]
         [DefaultValue(true)]
         public bool UpgradesEnabled { get; set; } = true;
+
+		[JsonProperty("discards", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultDiscards)]
+		public int Discards
+		{
+			get => _discards;
+			set => _discards = value < MinDiscards ? MinDiscards : value;
+		}
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

@@ -81,6 +81,15 @@ Sent by the user when they request to spend Aux Points to upgrade a card to a hi
 }
 ```
 
+### c_discardcard
+
+Send by the user when they request to discard a card in their hand.
+
+```json
+    "msg": "c_discardcard",
+    "card_id": "w_example"
+```
+
 ## Server messages
 
 ### s_allcards

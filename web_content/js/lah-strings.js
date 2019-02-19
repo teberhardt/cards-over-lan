@@ -66,6 +66,10 @@
             "en": "Upgrade: {0}<span class='icon-coin'></span>",
             "de": "Verbessern: {0}<span class='icon-coin'></span>"
         },
+        "ui_discard_tooltip": {
+            "en": "Discard ({0} left)",
+            "de": "Entfernen ({0} übrig)"
+        },
         "ui_pending_players": {
             "en": "Pending players",
             "de": "Ausstehende Spieler"

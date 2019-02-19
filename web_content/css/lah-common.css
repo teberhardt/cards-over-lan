@@ -400,3 +400,21 @@ card[black] .ribbon[data-packaccent=black]:after {
     color: #f81 !important;
     font-family: "Times New Roman", "LAH", sans-serif !important;
 }
+
+/* CARD TIER COLORS */
+
+#hand-area card[data-tier="1"] {
+    color: #7f4321;
+}
+
+#hand-area card[data-tier="2"] {
+    color: #777798;
+}
+
+#hand-area card[data-tier="3"] {
+    color: #cf6024;
+}
+
+#hand-area card[data-tier="4"] {
+    color: #bc0000;
+}

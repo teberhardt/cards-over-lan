@@ -15,489 +15,496 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-    internal sealed class ClientConnection : WebSocketBehavior
-    {
-        private const string REJECT_SERVER_FULL = "reject_server_full";
-        private const string REJECT_DUPLICATE = "reject_duplicate";
+	internal sealed class ClientConnection : WebSocketBehavior
+	{
+		private const string REJECT_SERVER_FULL = "reject_server_full";
+		private const string REJECT_DUPLICATE = "reject_duplicate";
 
-        private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
+		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
-        private readonly object _createDestroySync = new object();
-        private bool _removalNotified;
-        private Player _player;
-        private Thread _afkCheckThread;
-        private readonly Dictionary<string, string> _cookies;
-        private int _inactiveTime;
-        private readonly object _afkLock = new object();
-        private bool _isDuplicate;
-        private IPAddress _ip;
+		private readonly object _createDestroySync = new object();
+		private bool _removalNotified;
+		private Player _player;
+		private Thread _afkCheckThread;
+		private readonly Dictionary<string, string> _cookies;
+		private int _inactiveTime;
+		private readonly object _afkLock = new object();
+		private bool _isDuplicate;
+		private IPAddress _ip;
 
-        public CardGame Game { get; }
-        public CardGameServer Server { get; }
-        public Player Player => _player;
-        internal IPAddress Address => _ip;
+		public CardGame Game { get; }
+		public CardGameServer Server { get; }
+		public Player Player => _player;
+		internal IPAddress Address => _ip;
 
-        public ClientConnection(CardGameServer server, CardGame game)
-        {
-            Server = server;
-            Game = game;
-            _cookies = new Dictionary<string, string>();
-            _afkCheckThread = new Thread(AfkCheckThread);
-        }
+		public ClientConnection(CardGameServer server, CardGame game)
+		{
+			Server = server;
+			Game = game;
+			_cookies = new Dictionary<string, string>();
+			_afkCheckThread = new Thread(AfkCheckThread);
+		}
 
-        public bool IsOpen => State == WebSocketState.Open;
+		public bool IsOpen => State == WebSocketState.Open;
 
-        private void UpdateActivityTime(int time)
-        {
-            lock (_afkLock)
-            {
-                if (Player != null && time > 0)
-                {
-                    Player.IsAfk = false;
-                }
-                _inactiveTime = time;
-            }
-        }
+		private void UpdateActivityTime(int time)
+		{
+			lock (_afkLock)
+			{
+				if (Player != null && time > 0)
+				{
+					Player.IsAfk = false;
+				}
+				_inactiveTime = time;
+			}
+		}
 
-        private void AfkCheckThread()
-        {
-            while (IsOpen)
-            {
-                lock (_afkLock)
-                {
-                    bool afk = _inactiveTime == 0;
-                    if (Player.IsAfk != afk)
-                    {
-                        bool isAfkEligible = (!Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress)
-                            || (Game.Judge == Player && (Game.Stage == GameStage.RoundInProgress || Game.Stage == GameStage.JudgingCards));
-                        if (afk && isAfkEligible)
-                        {
-                            Player.IsAfk = true;
-                            Console.WriteLine($"{Player} is AFK (inactive for {Game.Settings.AfkTimeSeconds}s)");
-                        }
-                        else
-                        {
-                            Player.IsAfk = false;
-                        }
-                    }
-                }
-                Thread.Sleep(1000);
-                _inactiveTime = _inactiveTime > 0 ? _inactiveTime - 1 : 0;
-            }
-        }
+		private void AfkCheckThread()
+		{
+			while (IsOpen)
+			{
+				lock (_afkLock)
+				{
+					bool afk = _inactiveTime == 0;
+					if (Player.IsAfk != afk)
+					{
+						bool isAfkEligible = (!Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress)
+							|| (Game.Judge == Player && (Game.Stage == GameStage.RoundInProgress || Game.Stage == GameStage.JudgingCards));
+						if (afk && isAfkEligible)
+						{
+							Player.IsAfk = true;
+							Console.WriteLine($"{Player} is AFK (inactive for {Game.Settings.AfkTimeSeconds}s)");
+						}
+						else
+						{
+							Player.IsAfk = false;
+						}
+					}
+				}
+				Thread.Sleep(1000);
+				_inactiveTime = _inactiveTime > 0 ? _inactiveTime - 1 : 0;
+			}
+		}
 
-        private void CreatePlayer()
-        {
-            _player = Game.CreatePlayer(GetCookie("name"));
+		private void CreatePlayer()
+		{
+			_player = Game.CreatePlayer(GetCookie("name"));
 
-            RegisterEvents();
+			RegisterEvents();
 
-            SendClientInfoToPlayer();
-            SendPlayerListToPlayer();
-            SendAllCardsToPlayer();
-            SendHandToPlayer();
-            SendGameStateToPlayer();
-            SendAuxDataToPlayer();
-        }
+			SendClientInfoToPlayer();
+			SendPlayerListToPlayer();
+			SendAllCardsToPlayer();
+			SendHandToPlayer();
+			SendGameStateToPlayer();
+			SendAuxDataToPlayer();
+		}
 
-        private void LoadCookies()
-        {
-            foreach (WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
-            {
-                _cookies[cookie.Name] = System.Web.HttpUtility.UrlDecode(cookie.Value);
-            }
-        }
+		private void LoadCookies()
+		{
+			foreach (WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
+			{
+				_cookies[cookie.Name] = System.Web.HttpUtility.UrlDecode(cookie.Value);
+			}
+		}
 
-        private string GetCookie(string name)
-        {
-            return _cookies.TryGetValue(name, out var val) ? val : null;
-        }
+		private string GetCookie(string name)
+		{
+			return _cookies.TryGetValue(name, out var val) ? val : null;
+		}
 
-        private void RegisterEvents()
-        {
-            Player.CardsChanged += OnPlayerCardsChanged;
-            Player.SelectionChanged += OnPlayerSelectionChanged;
-            Player.NameChanged += OnPlayerNameChanged;
-            Player.AuxDataChanged += OnPlayerAuxDataChanged;
-            Game.GameStateChanged += OnGameStateChanged;
-            Game.PlayersChanged += OnGamePlayersChanged;
-            Game.StageChanged += OnGameStageChanged;
-        }
+		private void RegisterEvents()
+		{
+			Player.CardsChanged += OnPlayerCardsChanged;
+			Player.SelectionChanged += OnPlayerSelectionChanged;
+			Player.NameChanged += OnPlayerNameChanged;
+			Player.AuxDataChanged += OnPlayerAuxDataChanged;
+			Game.GameStateChanged += OnGameStateChanged;
+			Game.PlayersChanged += OnGamePlayersChanged;
+			Game.StageChanged += OnGameStageChanged;
+		}
 
-        private void UnregisterEvents()
-        {
-            if (Player != null)
-            {
-                Player.CardsChanged -= OnPlayerCardsChanged;
-                Player.SelectionChanged -= OnPlayerSelectionChanged;
-                Player.NameChanged -= OnPlayerNameChanged;
-                Player.AuxDataChanged -= OnPlayerAuxDataChanged;
-            }
-            Game.GameStateChanged -= OnGameStateChanged;
-            Game.PlayersChanged -= OnGamePlayersChanged;
-            Game.StageChanged -= OnGameStageChanged;
-        }
+		private void UnregisterEvents()
+		{
+			if (Player != null)
+			{
+				Player.CardsChanged -= OnPlayerCardsChanged;
+				Player.SelectionChanged -= OnPlayerSelectionChanged;
+				Player.NameChanged -= OnPlayerNameChanged;
+				Player.AuxDataChanged -= OnPlayerAuxDataChanged;
+			}
+			Game.GameStateChanged -= OnGameStateChanged;
+			Game.PlayersChanged -= OnGamePlayersChanged;
+			Game.StageChanged -= OnGameStageChanged;
+		}
 
-        private void OnGamePlayersChanged()
-        {
-            SendPlayerListToPlayer();
-        }
+		private void OnGamePlayersChanged()
+		{
+			SendPlayerListToPlayer();
+		}
 
-        private void OnPlayerAuxDataChanged(Player player)
-        {
-            SendAuxDataToPlayer();
-        }
+		private void OnPlayerAuxDataChanged(Player player)
+		{
+			SendAuxDataToPlayer();
+		}
 
-        private void OnPlayerNameChanged(Player player, string name)
-        {
-            SendClientInfoToPlayer();
-        }
+		private void OnPlayerNameChanged(Player player, string name)
+		{
+			SendClientInfoToPlayer();
+		}
 
-        private void OnPlayerSelectionChanged(Player player, WhiteCard[] selection)
-        {
-            SendSelectionToPlayer();
-        }
+		private void OnPlayerSelectionChanged(Player player, WhiteCard[] selection)
+		{
+			SendSelectionToPlayer();
+		}
 
-        private void OnPlayerCardsChanged(Player player, WhiteCard[] cards)
-        {
-            SendHandToPlayer();
-        }
+		private void OnPlayerCardsChanged(Player player, WhiteCard[] cards)
+		{
+			SendHandToPlayer();
+		}
 
-        private void OnGameStateChanged()
-        {
-            SendGameStateToPlayer();
-        }
+		private void OnGameStateChanged()
+		{
+			SendGameStateToPlayer();
+		}
 
-        private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
-        {
-            // Players who were waiting for a game to start aren't exactly AFK
-            if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
-            {
-                UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-            }
-            else if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
-            {
-                UpdateActivityTime(Game.Settings.AfkRecoveryTimeSeconds);
-            }
-        }
+		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
+		{
+			// Players who were waiting for a game to start aren't exactly AFK
+			if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
+			{
+				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+			}
+			else if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
+			{
+				UpdateActivityTime(Game.Settings.AfkRecoveryTimeSeconds);
+			}
+		}
 
-        private void SendHandToPlayer()
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_hand",
-                blanks = _player.RemainingBlankCards,
-                hand = _player.GetCurrentHand().Select(c => c.ID)
-            });
-        }
+		private void SendHandToPlayer()
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_hand",
+				blanks = _player.RemainingBlankCards,
+				hand = _player.GetCurrentHand().Select(c => c.ID),
+				discards = _player.Discards
+			});
+		}
 
-        private void SendPlayerListToPlayer()
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_players",
-                players = Game.GetPlayers().Select(p => new
-                {
-                    name = HttpUtility.HtmlEncode(p.Name),
-                    id = p.Id,
-                    score = p.Score,
-                    upgrade_points = p.AuxPoints
-                })
-            });
-        }
+		private void SendPlayerListToPlayer()
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_players",
+				players = Game.GetPlayers().Select(p => new
+				{
+					name = HttpUtility.HtmlEncode(p.Name),
+					id = p.Id,
+					score = p.Score,
+					upgrade_points = p.Coins
+				})
+			});
+		}
 
-        private void SendClientInfoToPlayer()
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_clientinfo",
-                player_id = Player.Id,
-                player_name = Player.Name
-            });
-        }
+		private void SendClientInfoToPlayer()
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_clientinfo",
+				player_id = Player.Id,
+				player_name = Player.Name
+			});
+		}
 
-        private void SendSelectionToPlayer()
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_cardsplayed",
-                selection = _player.GetSelectedCards().Select(c => c.ID)
-            });
-        }
+		private void SendSelectionToPlayer()
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_cardsplayed",
+				selection = _player.GetSelectedCards().Select(c => c.ID)
+			});
+		}
 
-        private void SendAuxDataToPlayer()
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_auxclientdata",
-                aux_points = _player.AuxPoints
-            });
-        }
+		private void SendAuxDataToPlayer()
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_auxclientdata",
+				aux_points = _player.Coins
+			});
+		}
 
-        private void SendGameStateToPlayer()
-        {
-            SendMessageObject(new
-            {
-                msg = "s_gamestate",
-                stage = Game.Stage,
-                round = Game.Round,
-                black_card = Game.CurrentBlackCard?.ID,
-                pending_players = Game.GetPendingPlayers().Select(p => p.Id),
-                judge = Game.Judge?.Id ?? -1,
-                plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.ID)),
-                winning_play = Game.WinningPlayIndex,
-                winning_player = Game.RoundWinner?.Id ?? -1,
-                game_results = Game.Stage == GameStage.GameEnd
-                    ? new
-                    {
-                        winners = Game.GetWinningPlayers().Select(p => p.Id),
-                        trophy_winners = Game.GetPlayers().Select(p => new
-                        {
-                            id = p.Id,
-                            trophies = p.GetTrophies()
-                        })
-                    }
-                    : null
-            });
-        }
+		private void SendGameStateToPlayer()
+		{
+			SendMessageObject(new
+			{
+				msg = "s_gamestate",
+				stage = Game.Stage,
+				round = Game.Round,
+				black_card = Game.CurrentBlackCard?.ID,
+				pending_players = Game.GetPendingPlayers().Select(p => p.Id),
+				judge = Game.Judge?.Id ?? -1,
+				plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.ID)),
+				winning_play = Game.WinningPlayIndex,
+				winning_player = Game.RoundWinner?.Id ?? -1,
+				game_results = Game.Stage == GameStage.GameEnd
+					? new
+					{
+						winners = Game.GetWinningPlayers().Select(p => p.Id),
+						trophy_winners = Game.GetPlayers().Select(p => new
+						{
+							id = p.Id,
+							trophies = p.GetTrophies()
+						})
+					}
+					: null
+			});
+		}
 
-        private void SendRejectToPlayer(string rejectReason, string rejectDesc = "")
-        {
-            SendMessageObject(new
-            {
-                msg = "s_rejectclient",
-                reason = rejectReason,
-                desc = rejectDesc
-            });
-        }
+		private void SendRejectToPlayer(string rejectReason, string rejectDesc = "")
+		{
+			SendMessageObject(new
+			{
+				msg = "s_rejectclient",
+				reason = rejectReason,
+				desc = rejectDesc
+			});
+		}
 
-        protected override void OnOpen()
-        {
-            lock (_createDestroySync)
-            {
-                base.OnOpen();
-                _ip = Context.UserEndPoint.Address;
+		protected override void OnOpen()
+		{
+			lock (_createDestroySync)
+			{
+				base.OnOpen();
+				_ip = Context.UserEndPoint.Address;
 
 
-                // Make sure player can actually join
-                if (Game.PlayerCount >= Game.Settings.MaxPlayers)
-                {
-                    SendRejectToPlayer(REJECT_SERVER_FULL);
-                    Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_SERVER_FULL);
-                    return;
-                }
-                else if (!Server.TryAddToPool(this))
-                {
-                    _isDuplicate = true;
-                    if (!Game.Settings.AllowDuplicatePlayers)
-                    {
-                        SendRejectToPlayer(REJECT_DUPLICATE);
-                        Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
-                        return;
-                    }
-                }
+				// Make sure player can actually join
+				if (Game.PlayerCount >= Game.Settings.MaxPlayers)
+				{
+					SendRejectToPlayer(REJECT_SERVER_FULL);
+					Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_SERVER_FULL);
+					return;
+				}
+				else if (!Server.TryAddToPool(this))
+				{
+					_isDuplicate = true;
+					if (!Game.Settings.AllowDuplicatePlayers)
+					{
+						SendRejectToPlayer(REJECT_DUPLICATE);
+						Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
+						return;
+					}
+				}
 
-                LoadCookies();
-                CreatePlayer();
-                UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-                _afkCheckThread.Start();
-                Console.WriteLine($"{Player} ({Context.UserEndPoint.Address}) connected");
-            }
-        }
+				LoadCookies();
+				CreatePlayer();
+				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+				_afkCheckThread.Start();
+				Console.WriteLine($"{Player} ({Context.UserEndPoint.Address}) connected");
+			}
+		}
 
-        protected override void OnClose(CloseEventArgs e)
-        {
-            lock (_createDestroySync)
-            {
-                base.OnClose(e);
+		protected override void OnClose(CloseEventArgs e)
+		{
+			lock (_createDestroySync)
+			{
+				base.OnClose(e);
 
-                if (!_isDuplicate)
-                {
-                    Server.TryRemoveFromPool(this);
-                }
+				if (!_isDuplicate)
+				{
+					Server.TryRemoveFromPool(this);
+				}
 
-                UnregisterEvents();
+				UnregisterEvents();
 
-                string closeReason = e.Reason;
-                if (string.IsNullOrWhiteSpace(closeReason))
-                {
-                    switch (e.Code)
-                    {
-                        case 1000:
-                        case 1001:
-                            closeReason = "User disconnected";
-                            break;
-                        case 1002:
-                            closeReason = "Protocol error";
-                            break;
-                        case 1003:
-                            closeReason = "Received unsupported data type";
-                            break;
-                        case 1005:
-                            closeReason = "No status code given";
-                            break;
-                        case 1006:
-                            closeReason = "Connection closed abnormally";
-                            break;
-                        case 1007:
-                            closeReason = "Invalid message type";
-                            break;
-                        case 1008:
-                            closeReason = "Policy violation";
-                            break;
-                        case 1009:
-                            closeReason = "Message too large";
-                            break;
-                        case 1010:
-                            closeReason = "Failed handshake";
-                            break;
-                        case 1011:
-                            closeReason = "Unable to fulfill client request";
-                            break;
-                        case 1015:
-                            closeReason = "Failed TLS handshake";
-                            break;
-                        default:
-                            closeReason = "Unknown";
-                            break;
-                    }
-                }
+				string closeReason = e.Reason;
+				if (string.IsNullOrWhiteSpace(closeReason))
+				{
+					switch (e.Code)
+					{
+						case 1000:
+						case 1001:
+							closeReason = "User disconnected";
+							break;
+						case 1002:
+							closeReason = "Protocol error";
+							break;
+						case 1003:
+							closeReason = "Received unsupported data type";
+							break;
+						case 1005:
+							closeReason = "No status code given";
+							break;
+						case 1006:
+							closeReason = "Connection closed abnormally";
+							break;
+						case 1007:
+							closeReason = "Invalid message type";
+							break;
+						case 1008:
+							closeReason = "Policy violation";
+							break;
+						case 1009:
+							closeReason = "Message too large";
+							break;
+						case 1010:
+							closeReason = "Failed handshake";
+							break;
+						case 1011:
+							closeReason = "Unable to fulfill client request";
+							break;
+						case 1015:
+							closeReason = "Failed TLS handshake";
+							break;
+						default:
+							closeReason = "Unknown";
+							break;
+					}
+				}
 
-                if (Game.RemovePlayer(Player, closeReason))
-                {
-                    Console.WriteLine($"{Player} disconnected: {closeReason} (code {e.Code})");
-                }
-            }
-        }
+				if (Game.RemovePlayer(Player, closeReason))
+				{
+					Console.WriteLine($"{Player} disconnected: {closeReason} (code {e.Code})");
+				}
+			}
+		}
 
-        // Used when player is manually disconnected by server
-        internal void NotifyRemoval(string reason)
-        {
-            if (!IsOpen) return;
-            _removalNotified = true;
-            Console.WriteLine($"Player {Player} disconnected by server ({reason})");
-            Context.WebSocket.Close();
-        }
+		// Used when player is manually disconnected by server
+		internal void NotifyRemoval(string reason)
+		{
+			if (!IsOpen) return;
+			_removalNotified = true;
+			Console.WriteLine($"Player {Player} disconnected by server ({reason})");
+			Context.WebSocket.Close();
+		}
 
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            base.OnMessage(e);
-            var json = JToken.Parse(e.Data) as JObject;
-            if (json == null) return;
+		protected override void OnMessage(MessageEventArgs e)
+		{
+			base.OnMessage(e);
+			var json = JToken.Parse(e.Data) as JObject;
+			if (json == null) return;
 
-            var msg = json["msg"]?.Value<string>();
-            if (msg == null) return;
+			var msg = json["msg"]?.Value<string>();
+			if (msg == null) return;
 
-            switch (msg)
-            {
-                case "c_updateinfo":
-                    {
-                        var userInfoObject = json["userinfo"] as JObject;
-                        if (userInfoObject == null) break;
-                        foreach (var key in userInfoObject)
-                        {
-                            switch (key.Key.ToLowerInvariant())
-                            {
-                                case "name":
-                                    {
-                                        var strName = key.Value.Value<string>();
-                                        if (strName != Player.Name)
-                                        {
-                                            var oldName = Player.Name;
-                                            var name = Game.CreatePlayerName(strName, Player);
-                                            Player.Name = name;
-                                            Console.WriteLine($"{oldName} changed their name to {name}");
-                                        }
-                                        break;
-                                    }
-                            }
-                        }
-                        UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-                        break;
-                    }
-                case "c_playcards":
-                    {
-                        var cardArray = (json["cards"] as JArray)?
-                            .Select(v => GetCardFromId(v.Value<string>()))?
-                            .OfType<WhiteCard>()?.ToArray();
+			switch (msg)
+			{
+				case "c_updateinfo":
+				{
+					var userInfoObject = json["userinfo"] as JObject;
+					if (userInfoObject == null) break;
+					foreach (var key in userInfoObject)
+					{
+						switch (key.Key.ToLowerInvariant())
+						{
+							case "name":
+							{
+								var strName = key.Value.Value<string>();
+								if (strName != Player.Name)
+								{
+									var oldName = Player.Name;
+									var name = Game.CreatePlayerName(strName, Player);
+									Player.Name = name;
+									Console.WriteLine($"{oldName} changed their name to {name}");
+								}
+								break;
+							}
+						}
+					}
+					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					break;
+				}
+				case "c_playcards":
+				{
+					var cardArray = (json["cards"] as JArray)?
+						.Select(v => GetCardFromId(v.Value<string>()))?
+						.OfType<WhiteCard>()?.ToArray();
 
-                        if (cardArray == null) break;
-                        Player.PlayCards(cardArray);
-                        UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-                        break;
-                    }
-                case "c_judgecards":
-                    {
-                        var winningPlayIndex = json["play_index"]?.Value<int>() ?? -1;
-                        if (winningPlayIndex < 0) break;
-                        Player.JudgeCards(winningPlayIndex);
-                        UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-                        break;
-                    }
-                case "c_upgradecard":
-                    {
-                        var requestedUpgradeCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
-                        Player.UpgradeCard(requestedUpgradeCard);
-                        break;
-                    }
-            }
-        }
+					if (cardArray == null) break;
+					Player.PlayCards(cardArray);
+					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					break;
+				}
+				case "c_judgecards":
+				{
+					var winningPlayIndex = json["play_index"]?.Value<int>() ?? -1;
+					if (winningPlayIndex < 0) break;
+					Player.JudgeCards(winningPlayIndex);
+					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					break;
+				}
+				case "c_upgradecard":
+				{
+					var requestedUpgradeCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
+					Player.UpgradeCard(requestedUpgradeCard);
+					break;
+				}
+				case "c_discardcard":
+				{
+					var requestedDiscardCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
+					Player.DiscardCard(requestedDiscardCard);
+					break;
+				}
+			}
+		}
 
-        private Card GetCardFromId(string id)
-        {
-            const string customFlag = "custom:";
-            const string customContentXss = "Trying to hack a card game, of all things.";
-            const int maxCustomTextLength = 72;
+		private Card GetCardFromId(string id)
+		{
+			const string customFlag = "custom:";
+			const string customContentXss = "Trying to hack a card game, of all things.";
+			const int maxCustomTextLength = 72;
 
-            var idTrimmed = id?.Trim();
-            if (String.IsNullOrWhiteSpace(idTrimmed)) return null;
+			var idTrimmed = id?.Trim();
+			if (String.IsNullOrWhiteSpace(idTrimmed)) return null;
 
-            // Is it a custom card?
-            if (id.StartsWith(customFlag))
-            {
-                var customContent = idTrimmed.Substring(customFlag.Length).Trim();
-                if (customContent.Length == 0) return null;
+			// Is it a custom card?
+			if (id.StartsWith(customFlag))
+			{
+				var customContent = idTrimmed.Substring(customFlag.Length).Trim();
+				if (customContent.Length == 0) return null;
 
-                // Make sure there's nothing sketchy in the card text.
-                bool xss = false;
-                var sanitizedContent = StringUtilities.SanitizeClientString(
-                    customContent,
-                    maxCustomTextLength,
-                    ref xss,
-                    c => !Char.IsControl(c) && (Char.IsLetterOrDigit(c) || AllowedCustomCardChars.Contains(c)));
+				// Make sure there's nothing sketchy in the card text.
+				bool xss = false;
+				var sanitizedContent = StringUtilities.SanitizeClientString(
+					customContent,
+					maxCustomTextLength,
+					ref xss,
+					c => !Char.IsControl(c) && (Char.IsLetterOrDigit(c) || AllowedCustomCardChars.Contains(c)));
 
-                // :)
-                if (xss)
-                {
-                    Player.AddPoints(-69);
-                    sanitizedContent = customContentXss;
-                    Player.IsAsshole = true;
-                }
+				// :)
+				if (xss)
+				{
+					Player.AddPoints(-69);
+					sanitizedContent = customContentXss;
+					Player.IsAsshole = true;
+				}
 
-                return Card.CreateCustom(sanitizedContent);
-            }
+				return Card.CreateCustom(sanitizedContent);
+			}
 
-            return Game.GetCardById(id);
-        }
+			return Game.GetCardById(id);
+		}
 
-        private void SendAllCardsToPlayer()
-        {
-            var response = new
-            {
-                msg = "s_allcards",
-                packs = Game.GetPacks()
-            };
-            SendMessageObject(response);
-        }
+		private void SendAllCardsToPlayer()
+		{
+			var response = new
+			{
+				msg = "s_allcards",
+				packs = Game.GetPacks()
+			};
+			SendMessageObject(response);
+		}
 
-        private void SendMessageObject(object o)
-        {
-            Send(JsonConvert.SerializeObject(o, Formatting.None));
-        }
-    }
+		private void SendMessageObject(object o)
+		{
+			Send(JsonConvert.SerializeObject(o, Formatting.None));
+		}
+	}
 }

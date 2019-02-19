@@ -2504,6 +2504,22 @@
             "flags": "s g gn gnm w"
         },
         {
+            "id": "w_crazyweirddream",
+            "content": {
+                "en": "My dream last night was nuts! I was trapped in ________, had to fight off ________, then suddenly I was killed by ________!",
+                "de": "Mein letzter Traum war verrückt! Ich wurde in ________ gefangen, musste ________ abwehren, und dann wurde plötzlich von ________ getötet!"
+            },
+            "draw": 2,
+            "pick": 3
+        },
+        {
+            "id": "b_theytoldmecantcombine",
+            "content": {
+                "en": "The fools!\nThey told me it couldn't be done.\nThey told me I couldn't combine ________ with ________.\nNow I'll prove them all wrong!"
+            },
+            "pick": 2
+        },
+        {
             "id": "b_happinessis",
             "content": {
                 "en": "Happiness is ________.",
@@ -2860,20 +2876,20 @@
         {
             "id": "b_amazonweirdproduct",
             "content": {
-                "en": "It's crazy what you can buy online these days... Did you know Amazon sells ________?"
+                "en": "It's crazy what they sell online these days... Did you know Amazon sells ________?"
             }
         },
         {
             "id": "b_xraysurprise",
             "content": {
-                "en": "Doctors were shocked to find ____ on the patient's abdominal x-ray."
+                "en": "Doctors were shocked when they found ______ on the patient's abdominal x-ray."
             },
             "pick": 1
         },
         {
             "id": "b_researchlink",
             "content": {
-                "en": "Recent studies have revealed a strong link between ____ and ____."
+                "en": "Recent studies have revealed a strong link between ________ and ________."
             },
             "pick": 2
         },
@@ -2887,7 +2903,7 @@
         {
             "id": "b_ramsey",
             "content": {
-                "en": "On today's show, Chef Ramsey will create a spectacular new dish using ______ and ______."
+                "en": "On today's show, we will learn how to prepare a delicious dish using ______ and ______."
             },
             "pick": 2
         },
@@ -2931,8 +2947,8 @@
         {
             "id": "b_mailbox",
             "content": {
-                "en": "Nothing is worse than finding ____ in your mailbox.",
-                "de": "Nichts ist schlimmer, als ____ im Briefkasten zu finden."
+                "en": "Nothing is worse than finding _______ in your mailbox.",
+                "de": "Nichts ist schlimmer, als _______ im Briefkasten zu finden."
             },
             "pick": 1
         },
@@ -2992,6 +3008,7 @@
             "content": {
                 "en": "_______ - _______ = _______."
             },
+            "draw": 2,
             "pick": 3
         },
         {

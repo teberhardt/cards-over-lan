@@ -19,6 +19,9 @@ namespace CardsOverLan.Game
 			}
 		}
 
+		[JsonProperty("draw", DefaultValueHandling = DefaultValueHandling.Populate)]
+		public int DrawCount { get; set; }
+
 		public override string ToString() => GetContent(CultureInfo.CurrentCulture.IetfLanguageTag) ?? GetContent(DefaultLocale) ?? "???";
 	}
 }

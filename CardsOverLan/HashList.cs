@@ -63,6 +63,20 @@ namespace CardsOverLan
 			}
 		}
 
+		public void InsertRange(int index, IEnumerable<T> items)
+		{
+			lock (_editLock)
+			{
+				if (index < 0 || index > Count) throw new IndexOutOfRangeException("Index must be non-negative and less than or equal to the size of the collection.");
+				int i = 0;
+				foreach (var item in items)
+				{
+					Insert(index + i, item);
+					i++;
+				}
+			}
+		}
+
 		public void RemoveRange(IEnumerable<T> items)
 		{
 			lock (_editLock)

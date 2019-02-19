@@ -109,7 +109,7 @@ namespace CardsOverLan
         private void OnGameRoundStarted()
         {
             Console.WriteLine($"ROUND {Game.Round}:");
-            Console.WriteLine($"Current black card: {Game.CurrentBlackCard}");
+            Console.WriteLine($"Current black card: {Game.CurrentBlackCard} (draw {Game.CurrentBlackCard.DrawCount}, pick {Game.CurrentBlackCard.PickCount})");
             Console.WriteLine($"Judge is {Game.Judge}");
         }
 

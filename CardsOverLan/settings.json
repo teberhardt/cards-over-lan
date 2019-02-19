@@ -18,8 +18,8 @@
 	"afk_recovery_time_seconds": 90,
 	"exclude_content": [],
 	"enable_trophies": true,
-	"bot_count": 1,
-	"bot_czars": false,
+	"bot_count": 2,
+	"bot_czars": true,
 	"bot_names": [
 		"AutoRodney", "AutoScott", "AutoDixon", "AutoMatt", 
 		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
