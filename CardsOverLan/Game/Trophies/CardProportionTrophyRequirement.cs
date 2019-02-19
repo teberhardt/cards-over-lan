@@ -30,7 +30,7 @@ namespace CardsOverLan.Game.Trophies
             int eligibleCards = 0;
             foreach(var play in player.GetPreviousPlays())
             {
-                totalCards += play.PromptCard.BlankCount;
+                totalCards += play.PromptCard.PickCount;
                 if (Winning && !play.Winning) continue;
                 foreach(var card in play.GetCards())
                 {

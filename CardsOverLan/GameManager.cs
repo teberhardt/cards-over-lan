@@ -63,9 +63,11 @@ namespace CardsOverLan
 			Console.WriteLine($"Bot Czars: {Settings.AllowBotCzars}");
 			Console.WriteLine($"Winner Is Czar: {Settings.WinnerCzar}");
             Console.WriteLine($"Points to win: {Settings.MaxPoints}");
+            Console.WriteLine($"Upgrades enabled: {Settings.UpgradesEnabled}");
+            Console.WriteLine($"Allow duplicate players: {Settings.AllowDuplicatePlayers}");
             Console.WriteLine($"Cards: {Game.BlackCardCount + Game.WhiteCardCount} ({Game.WhiteCardCount}x white, {Game.BlackCardCount}x black)");
             Console.WriteLine();
-            Console.WriteLine($"Packs:\n{_packs.Select(d => $"        [{d}]").Aggregate((c, n) => $"{c}\n{n}")}");
+            Console.WriteLine($"Packs:\n{Game.GetPacks().Select(d => $"        [{d}]").Aggregate((c, n) => $"{c}\n{n}")}");
             Console.WriteLine("\n=================================\n");
 
             Game.GameStateChanged += OnGameStateChanged;

@@ -55,7 +55,7 @@ The client does not know whose play it is until the round ends.
 
 ### c_updateinfo
 
-Send by the user to update client-specific information, such as username.
+Sent by the user to update client-specific information, such as username.
 
 List of possible user info keys:
 |Key|Description|
@@ -67,6 +67,17 @@ List of possible user info keys:
     "userinfo": {
         "name": "Berkin"
     }
+}
+```
+
+### c_upgradecard
+
+Sent by the user when they request to spend Aux Points to upgrade a card to a higher tier.
+
+```json
+{
+    "msg": "c_upgradecard",
+    "card_id": "w_example"
 }
 ```
 
@@ -163,9 +174,20 @@ Sent by the server to provide clients with the current list of players and their
         {
             "name": "Berkin",
             "id": 123,
-            "score": 0
+            "score": 0,
         }
     ]
+}
+```
+
+### s_auxclientdata
+
+Provides auxiliary client data to a single player, such as auxiliary points.
+
+```json
+{
+    "msg": "s_auxclientdata",
+    "aux_points": 3
 }
 ```
 
@@ -173,10 +195,16 @@ Sent by the server to provide clients with the current list of players and their
 
 Sent to a client to inform them of the current contents of their hand.
 
+Sent in response to the following actions:
+* Game has started.
+* Player plays a card.
+* Player discards a card.
+
 ```json
 {
     "msg": "s_hand",
     "blanks": 2, // Number of available blank cards
+    "discards": 10, // Number of available discards
     "hand": ["w_example1", "w_example2"]
 }
 ```
@@ -194,7 +222,7 @@ Sent to a client to inform them of the cards they have played for the current ro
 
 ### s_clientinfo
 
-Contains player information that identifies a client. Sent by server when the player changes their client options.
+Contains information that identifies a client. Sent by server when the player changes their client options.
 
 ```json
 {

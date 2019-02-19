@@ -18,7 +18,7 @@ namespace CardsOverLan
     internal sealed class ClientConnection : WebSocketBehavior
     {
         private const string REJECT_SERVER_FULL = "reject_server_full";
-		private const string REJECT_DUPLICATE = "reject_duplicate";
+        private const string REJECT_DUPLICATE = "reject_duplicate";
 
         private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
@@ -29,17 +29,17 @@ namespace CardsOverLan
         private readonly Dictionary<string, string> _cookies;
         private int _inactiveTime;
         private readonly object _afkLock = new object();
-		private bool _isDuplicate;
-		private IPAddress _ip;
+        private bool _isDuplicate;
+        private IPAddress _ip;
 
         public CardGame Game { get; }
-		public CardGameServer Server { get; }
+        public CardGameServer Server { get; }
         public Player Player => _player;
-		internal IPAddress Address => _ip;
+        internal IPAddress Address => _ip;
 
         public ClientConnection(CardGameServer server, CardGame game)
         {
-			Server = server;
+            Server = server;
             Game = game;
             _cookies = new Dictionary<string, string>();
             _afkCheckThread = new Thread(AfkCheckThread);
@@ -97,6 +97,7 @@ namespace CardsOverLan
             SendAllCardsToPlayer();
             SendHandToPlayer();
             SendGameStateToPlayer();
+            SendAuxDataToPlayer();
         }
 
         private void LoadCookies()
@@ -117,6 +118,7 @@ namespace CardsOverLan
             Player.CardsChanged += OnPlayerCardsChanged;
             Player.SelectionChanged += OnPlayerSelectionChanged;
             Player.NameChanged += OnPlayerNameChanged;
+            Player.AuxDataChanged += OnPlayerAuxDataChanged;
             Game.GameStateChanged += OnGameStateChanged;
             Game.PlayersChanged += OnGamePlayersChanged;
             Game.StageChanged += OnGameStageChanged;
@@ -129,6 +131,7 @@ namespace CardsOverLan
                 Player.CardsChanged -= OnPlayerCardsChanged;
                 Player.SelectionChanged -= OnPlayerSelectionChanged;
                 Player.NameChanged -= OnPlayerNameChanged;
+                Player.AuxDataChanged -= OnPlayerAuxDataChanged;
             }
             Game.GameStateChanged -= OnGameStateChanged;
             Game.PlayersChanged -= OnGamePlayersChanged;
@@ -138,6 +141,11 @@ namespace CardsOverLan
         private void OnGamePlayersChanged()
         {
             SendPlayerListToPlayer();
+        }
+
+        private void OnPlayerAuxDataChanged(Player player)
+        {
+            SendAuxDataToPlayer();
         }
 
         private void OnPlayerNameChanged(Player player, string name)
@@ -194,7 +202,8 @@ namespace CardsOverLan
                 {
                     name = HttpUtility.HtmlEncode(p.Name),
                     id = p.Id,
-                    score = p.Score
+                    score = p.Score,
+                    upgrade_points = p.AuxPoints
                 })
             });
         }
@@ -217,6 +226,16 @@ namespace CardsOverLan
             {
                 msg = "s_cardsplayed",
                 selection = _player.GetSelectedCards().Select(c => c.ID)
+            });
+        }
+
+        private void SendAuxDataToPlayer()
+        {
+            if (!IsOpen) return;
+            SendMessageObject(new
+            {
+                msg = "s_auxclientdata",
+                aux_points = _player.AuxPoints
             });
         }
 
@@ -262,7 +281,7 @@ namespace CardsOverLan
             lock (_createDestroySync)
             {
                 base.OnOpen();
-				_ip = Context.UserEndPoint.Address;
+                _ip = Context.UserEndPoint.Address;
 
 
                 // Make sure player can actually join
@@ -272,13 +291,16 @@ namespace CardsOverLan
                     Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_SERVER_FULL);
                     return;
                 }
-				else if (!Server.TryAddToPool(this))
-				{
-					_isDuplicate = true;
-					SendRejectToPlayer(REJECT_DUPLICATE);
-					Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
-					return;
-				}
+                else if (!Server.TryAddToPool(this))
+                {
+                    _isDuplicate = true;
+                    if (!Game.Settings.AllowDuplicatePlayers)
+                    {
+                        SendRejectToPlayer(REJECT_DUPLICATE);
+                        Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
+                        return;
+                    }
+                }
 
                 LoadCookies();
                 CreatePlayer();
@@ -294,10 +316,10 @@ namespace CardsOverLan
             {
                 base.OnClose(e);
 
-				if (!_isDuplicate)
-				{
-					Server.TryRemoveFromPool(this);
-				}
+                if (!_isDuplicate)
+                {
+                    Server.TryRemoveFromPool(this);
+                }
 
                 UnregisterEvents();
 
@@ -415,6 +437,12 @@ namespace CardsOverLan
                         if (winningPlayIndex < 0) break;
                         Player.JudgeCards(winningPlayIndex);
                         UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+                        break;
+                    }
+                case "c_upgradecard":
+                    {
+                        var requestedUpgradeCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
+                        Player.UpgradeCard(requestedUpgradeCard);
                         break;
                     }
             }

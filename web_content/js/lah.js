@@ -9,12 +9,15 @@
     const DEFAULT_LOCALE = "en";
 
     class Card {
-        constructor(type, id, content, blanks, pack) {
+        constructor(type, id, content, blanks, pack, tier, tierCost, nextTierId) {
             this._id = id;
             this._content = content;
             this._type = type;
             this._blanks = blanks;
             this._pack = pack;
+            this._tier = tier;
+            this._tierCost = tierCost;
+            this._nextTierId = nextTierId;
         }
 
         get id() {
@@ -31,6 +34,18 @@
 
         get pack() {
             return this._pack;
+        }
+
+        get tier() {
+            return this._tier;
+        }
+
+        get tierCost() {
+            return this._tierCost;
+        }
+
+        get nextTierId() {
+            return this._nextTierId;
         }
 
         getContent(langCode) {
@@ -51,8 +66,11 @@
                 json["id"].startsWith("b_") ? "black" : "white",
                 json["id"],
                 json["content"],
-                json["blanks"] || 1,
-                json["pack"] || ""
+                json["pick"] || 1,
+                json["pack"] || "",
+                json["tier"] || 0,
+                json["tier_cost"] || 0,
+                json["next_tier_id"] || ""
             );
         }
     }
@@ -96,6 +114,7 @@
     lah.gameResults = null;
     lah.lastRejectReason = "";
     lah.lastRejectDesc = "";
+    lah.auxPoints = 0;
 
     let gameArea = null;
     let handArea = null;
@@ -132,14 +151,44 @@
     }
 
     // Make an HTMLElement from the specified Card object
-    function makeCardElement(card) {
+    function makeCardElement(card, showTierControls) {
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
+        el.setAttribute("data-card", card.id);
 
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
-        el.setAttribute("data-card", card.id);
+        if (showTierControls) {
+            if (card.tier > 0) {
+                el.setAttribute("data-tier", card.tier);
+            }
+            if (card.nextTierId) {
+                let nextTierCard = lah.whiteCards[card.nextTierId];
+                el.setAttribute("data-upgrade", card.nextTierId);
+                el.setAttribute("data-upgrade-cost", (nextTierCard && nextTierCard.tierCost) || 0);
+
+                let btnUpgrade = document.createElement("div");
+                btnUpgrade.setClass("btn-upgrade", true);
+                let cost = nextTierCard.tierCost;
+                btnUpgrade.innerHTML = getUiString("ui_upgrade_button", cost);
+                btnUpgrade.addEventListener("mouseover", e => e.stopPropagation());
+                btnUpgrade.addEventListener("click", e => {
+                    if (lah.auxPoints < cost) {
+                        btnUpgrade.setClass("nope", true);
+                        setTimeout(() => {
+                            btnUpgrade.setClass("nope", false);
+                        }, 250);
+                    } else {
+                        lah.upgradeCard(card.id);
+                    }
+                    e.stopPropagation();
+                });
+
+                el.appendChild(btnUpgrade);
+            }
+        }
+        
         el.setAttribute(card.type, "");
 
         // Pack info ribbon
@@ -374,6 +423,10 @@
             lah.lastRejectReason = msg.reason;
             lah.lastRejectDesc = msg.desc;
             console.log("Rejected by server: " + msg.reason);
+        },
+        "s_auxclientdata": msg => {
+            lah.auxPoints = msg.aux_points;
+            onAuxDataChanged();
         }
     };
 
@@ -452,7 +505,7 @@
             let card = lah.whiteCards[cardId];
             let id = cardId;
             if (card) {
-                let e = makeCardElement(card);
+                let e = makeCardElement(card, true);
                 e.onclick = () => onHandCardClicked(id, e);
                 handCardsContainer.appendChild(e);
             }
@@ -504,7 +557,6 @@
         if (selectionContainsCard(cardId) || selectionContainsBlank(blankCardIndex)) {
             let removeIndex = lah.playerHandSelection.indexOfWhere(s => (cardId && s.id === cardId) || s.blankIndex === blankCardIndex);
             if (removeIndex >= 0) lah.playerHandSelection.splice(removeIndex, 1);
-            console.log(blankCardIndex);
         }
         // selecting
         else {
@@ -860,6 +912,13 @@
         updateHandCardSelection();
     };
 
+    lah.upgradeCard = function(cardId) {
+        sendMessage({
+            msg: "c_upgradecard",
+            card_id: cardId
+        });
+    }
+
     // Raised when the PICK button is clicked
     function onJudgePickClicked() {
         lah.judgeCards(lah.selectedPlayIndex);
@@ -868,6 +927,10 @@
     function onPlayerNameChanged() {
         document.querySelector("#txt-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;
+    }
+
+    function onAuxDataChanged() {
+        document.querySelector("#stat-list #coins").textContent = lah.auxPoints.toString();
     }
 
     function onSelectionChanged() {

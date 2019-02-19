@@ -6,6 +6,13 @@
 
 @font-face {
     font-family: "LAH";
+    src: url(/fonts/Roboto-Italic.ttf);
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "LAH";
     src: url(/fonts/Roboto-Medium.ttf);
     font-weight: 500;
 }
@@ -244,7 +251,15 @@ span.highlight {
 }
 
 .fade {
-    transition: opacity .3s, backdrop-filter .3s;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out;
+}
+
+.hidden.fade.fade-up {
+    transform: translateY(-10px);
+}
+
+.hidden.fade.fade-zoom {
+    transform: scale(1.03);
 }
 
 /* TROPHY IMAGES */

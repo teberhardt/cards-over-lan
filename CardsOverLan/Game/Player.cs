@@ -13,10 +13,12 @@ namespace CardsOverLan.Game
 	public delegate void PlayerNameChangedEventDelegate(Player player, string name);
 	public delegate void PlayerJudgedCardsEventDelegate(Player player, int winningPlayIndex);
 	public delegate void PlayerAfkChangedEventDelegate(Player player, bool afk);
+    public delegate void PlayerAuxDataChangedEventDelegate(Player player);
 
 	// TODO: Develop pattern for combining *Changed events to reduce unnecessary client updates
 	public sealed class Player
 	{
+        private const string DefaultName = "Player";
 		private const int AutoPlayDelayMin = 2000;
 		private const int AutoPlayDelayMax = 6000;
 		private const int AutoJudgeDelayMin = 5000;
@@ -27,7 +29,8 @@ namespace CardsOverLan.Game
 		private readonly HashList<WhiteCard> _selectedCards;
         private readonly HashList<Trophy> _trophies;
 		private int _score;
-		private string _name = "Player";
+        private int _auxPoints;
+		private string _name = DefaultName;
 		private bool _afk;
 		private int _blankCardsRemaining;
 		private readonly object _blankCardLock = new object();
@@ -39,6 +42,7 @@ namespace CardsOverLan.Game
 		public event PlayerNameChangedEventDelegate NameChanged;
 		public event PlayerJudgedCardsEventDelegate JudgedCards;
 		public event PlayerAfkChangedEventDelegate AfkChanged;
+        public event PlayerAuxDataChangedEventDelegate AuxDataChanged;
 
 		internal Player(CardGame game, int id)
 		{
@@ -66,6 +70,8 @@ namespace CardsOverLan.Game
 		public int Id { get; }
 
 		public int Score => _score;
+
+        public int AuxPoints => _auxPoints;
 
 		public bool IsAfk
 		{
@@ -155,7 +161,7 @@ namespace CardsOverLan.Game
 			if (RemainingBlankCards < numCustomCards) return false;
 
 			// Make sure they own all the cards they want to play, and that they are playing the correct number of cards
-			if (cardArray.Length != Game.CurrentBlackCard.BlankCount || cardArray.Any(c => !c.IsCustom && !HasWhiteCard(c))) return false;
+			if (cardArray.Length != Game.CurrentBlackCard.PickCount || cardArray.Any(c => !c.IsCustom && !HasWhiteCard(c))) return false;
 
 			RemoveBlankCards(numCustomCards);
 			_hand.RemoveRange(cards);
@@ -166,11 +172,23 @@ namespace CardsOverLan.Game
 			return true;
 		}
 
+        public bool UpgradeCard(WhiteCard card)
+        {
+            if (!Game.Settings.UpgradesEnabled || card == null || !_hand.Contains(card)) return false;
+            var tierCard = Game.GetNextTierCard(card);
+            if (tierCard == null) return false;
+            if (!SpendAuxPoints(tierCard.TierCost)) return false;
+            _hand.Replace(card, tierCard);
+            RaiseCardsChanged();
+            Console.WriteLine($"{this} upgraded {card.ID} to {tierCard.ID} (-{tierCard.TierCost} CC)");
+            return true;
+        }
+
 		public async void AutoPlayAsync()
 		{
 			if (!IsAutonomous || IsSelectionValid) return;
 			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
-			PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.BlankCount));
+			PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.PickCount));
 		}
 
 		public async void AutoJudgeAsync()
@@ -228,7 +246,17 @@ namespace CardsOverLan.Game
         public void ResetAwards()
         {
             _score = 0;
+            _auxPoints = 0;
             _trophies.Clear();
+            RaiseAuxDataChanged();
+        }
+
+        public bool SpendAuxPoints(int auxPoints)
+        {
+            if (auxPoints > _auxPoints) return false;
+            _auxPoints -= auxPoints;
+            RaiseAuxDataChanged();
+            return true;
         }
 
 		public void ClearPreviousPlays()
@@ -245,7 +273,7 @@ namespace CardsOverLan.Game
 		/// <summary>
 		/// Indicates whether the player's current selection is valid for the game's current black card.
 		/// </summary>
-		public bool IsSelectionValid => Game.CurrentBlackCard.BlankCount > 0 && _selectedCards.Count > 0 && _selectedCards.Count == Game.CurrentBlackCard.BlankCount;
+		public bool IsSelectionValid => Game.CurrentBlackCard.PickCount > 0 && _selectedCards.Count > 0 && _selectedCards.Count == Game.CurrentBlackCard.PickCount;
 
 		/// <summary>
 		/// Indicates whether the player has the specified white card.
@@ -262,14 +290,23 @@ namespace CardsOverLan.Game
 		public bool CanJudgeCards => Game.Stage == GameStage.JudgingCards && Game.Judge == this;
 
 		/// <summary>
-		/// Adds Awesome Points to the player's score.
+		/// Adds points/upgrade points to the player's score.
 		/// </summary>
-		/// <param name="points">The number of Awesome Points to add. Use a negative number to remove points.</param>
+		/// <param name="points">The number of points to add. Use a negative number to remove points.</param>
 		public void AddPoints(int points)
 		{
-			_score += points;
-			if (points != 0) RaiseScoreChanged();
+			_score += points;            
+			if (points != 0)
+            {
+                RaiseScoreChanged();
+            }
 		}
+
+        public void AddAuxPoints(int auxPoints)
+        {
+            _auxPoints += auxPoints > 0 ? auxPoints : 0;
+            RaiseAuxDataChanged();
+        }
 
 		/// <summary>
 		/// Dumps the player's cards to the game discard pile.
@@ -318,6 +355,11 @@ namespace CardsOverLan.Game
 		{
 			AfkChanged?.Invoke(this, afk);
 		}
+
+        private void RaiseAuxDataChanged()
+        {
+            AuxDataChanged?.Invoke(this);
+        }
 
 		public int HandSize => _hand.Count;
 

@@ -4,7 +4,8 @@ A Cards Against Humanity clone for hosting on your home network.
 
 ![](https://i.imgur.com/8lON8ZR.gif)
 
-**This software is a work-in-progress. It may be missing functionality or contain bugs.**
+|**This software is a work-in-progress. It may be missing functionality or contain bugs.**|
+|---|
 
 
 ## Features
@@ -15,6 +16,7 @@ A Cards Against Humanity clone for hosting on your home network.
 * **Localizable Cards** - Cards can be written in multiple languages and your device will display them in your set browser language. This means you can even have many people playing on the same server in different languages.
 * **Trophies** - At the end of each game, see what kind of awful each of your friends is.
 * **Bots** - Add fake players to your game that pick random cards but are probably still funnier than you.
+* **Card Upgrades** - Some cards may be "upgraded" by using Card Coins. You earn Card Coins with each round you win. They might have more uses later, or be removed entirely. Who knows what the future may hold?
 
 
 ## How it works
@@ -60,6 +62,7 @@ The settings.json file contains a number of properties that control how the serv
 |`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
 |`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
+|`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`max_points`|Integer|Points required for a player to win the game.|
@@ -72,6 +75,7 @@ The settings.json file contains a number of properties that control how the serv
 |`bot_names`|String[]|List of names to assign to bots.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
+|`use_packs`|Stringp[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
 
 
 ## FAQ

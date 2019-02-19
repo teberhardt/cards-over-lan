@@ -58,6 +58,14 @@
             "en": "Score",
             "de": "Punktzahl"
         },
+        "ui_aux_points": {
+            "en": "Card Coins",
+            "de": "Kartenmünzen"
+        },
+        "ui_upgrade_button": {
+            "en": "Upgrade: {0}<span class='icon-coin'></span>",
+            "de": "Verbessern: {0}<span class='icon-coin'></span>"
+        },
         "ui_pending_players": {
             "en": "Pending players",
             "de": "Ausstehende Spieler"

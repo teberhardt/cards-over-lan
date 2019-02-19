@@ -428,6 +428,10 @@
         background-image: url("/img/lah-pending.png");
     }
 
+    #status-area #coins:before {
+        background-image: url("/img/lah-coin.png");
+    }
+
     /* GAME OVER SCREEN / TROPHIES */
 
     #game-end-screen {

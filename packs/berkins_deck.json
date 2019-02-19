@@ -784,14 +784,6 @@
             "flags": "xf"
         },
         {
-            "id": "w_dickpics",
-            "content": {
-                "en": "Dick pics.",
-                "de": "Penisbilder."
-            },
-            "flags": "gnm"
-        },
-        {
             "id": "w_frogmouth",
             "content": {
                 "en": "A mouthful of dead frogs.",
@@ -1197,7 +1189,8 @@
             "content": {
                 "en": "A dog that is so happy it pees everywhere.",
                 "de": "Ein begeisterter Hund, der überall hin pinkelt."
-            }
+            },
+            "flags": "an"
         },
         {
             "id": "w_shitfan",
@@ -1218,7 +1211,8 @@
             "content": {
                 "en": "Overly hairy areolas.",
                 "de": "Übermäßig haarige Warzenhöfe."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_pooprope",
@@ -1414,7 +1408,7 @@
             "content": {
                 "en": "Affectionately calling her a dirty slut."
             },
-            "flags": "s"
+            "flags": "s dg"
         },
         {
             "id": "w_eightdirtytalk",
@@ -1564,7 +1558,8 @@
             "id": "w_foamass",
             "content": {
                 "en": "Filling my mouth with expanding foam insulation."
-            }
+            },
+            "flags": "w"
         },
         {
             "id": "w_blindingbeam",
@@ -1633,7 +1628,8 @@
             "content": {
                 "en": "That talking dog from the baked beans commercials.",
                 "de": "Der sprechende Hund aus den Baked-Beans-Werbesendungen."
-            }
+            },
+            "flags": "an"
         },
         {
             "id": "w_sadsexscene",
@@ -1875,7 +1871,8 @@
             "id": "w_autotunedtween",
             "content": {
                 "en": "An autotuned tween \"singer\"."
-            }
+            },
+            "flags": "ch"
         },
         {
             "id": "w_faceofgod",
@@ -1919,7 +1916,7 @@
                 "en": "Blueberry porn.",
                 "de": "Blaubeerenpornografie."
             },
-            "flags": "w x"
+            "flags": "w x s"
         },
         {
             "id": "w_fornitedancelaw",
@@ -2069,7 +2066,16 @@
                 "en": "Flicking your cat in the nuts.",
                 "de": "Deinen Kater am Hodensack schnipsen."
             },
-            "flags": "gn gnm an an_ab"
+            "flags": "gn gnm an an_ab ab"
+        },
+        {
+            "id": "w_millipeed",
+            "content": {
+                "en": "A millipede crawling up your urethra.",
+                "de": "Ein Tausendfüßler in deinen Harnkanal."
+            },
+            "next_tier_id": "w_centipeed",
+            "flags": "g gn in"
         },
         {
             "id": "w_centipeed",
@@ -2077,7 +2083,20 @@
                 "en": "A centipede crawling up your urethra.",
                 "de": "Ein Hundertfüßer in deinen Harnkanal."
             },
-            "flags": "g gn"
+            "next_tier_id": "w_spiderpeed",
+            "tier_cost": 1,
+            "tier": 1,
+            "flags": "g gn in"
+        },
+        {
+            "id": "w_spiderpeed",
+            "content": {
+                "en": "A spider centipede crawling up your urethra.",
+                "de": "Ein Spinnenläufer in deinen Harnkanal."
+            },
+            "tier_cost": 1,
+            "tier": 2,
+            "flags": "g gn in"
         },
         {
             "id": "w_diarrheaslurp",
@@ -2365,12 +2384,124 @@
             "flags": "s g xf"
         },
         {
-            "id": "w_hotpisskettle",
+            "id": "w_pisskettle",
+            "content": {
+                "en": "A kettle full of piss.",
+                "de": "Ein Kessel voller Pisse."
+            },
+            "tier": 0,
+            "next_tier_id": "w_pisskettle_tier1",
+            "flags": "g l"
+        },
+        {
+            "id": "w_pisskettle_tier1",
             "content": {
                 "en": "A kettle full of boiling piss.",
                 "de": "Ein Kessel voller kochender Pisse."
             },
+            "tier": 1,
+            "tier_cost": 2,
             "flags": "g l"
+        },
+        {
+            "id": "w_attitude",
+            "content": {
+                "en": "Attitude."
+            }
+        },
+        {
+            "id": "w_rigormortis",
+            "content": {
+                "en": "Rigor mortis."
+            },
+            "flags": "d"
+        },
+        {
+            "id": "w_unvaxxkids",
+            "content": {
+                "en": "Unvaccinated children.",
+                "de": "Ungeimpfte Kinder."
+            }
+        },
+        {
+            "id": "w_havingfingers",
+            "content": {
+                "en": "Having fingers and using them to do finger things.",
+                "de": "Finger haben und sie benutzen, um Fingerdinge zu machen."
+            }
+        },
+        {
+            "id": "w_cripplingdepression",
+            "content": {
+                "en": "Crippling depression."
+            },
+            "flags": "di"
+        },
+        {
+            "id": "w_mykatanathroughyou",
+            "content": {
+                "en": "My katana slicing majestically through you."
+            },
+            "flags": "mu d"
+        },
+        {
+            "id": "w_entrailsallover",
+            "content": {
+                "en": "Entrails, everywhere.",
+                "de": "Därme, überall."
+            },
+            "flags": "bg"
+        },
+        {
+            "id": "w_segwayalexjones",
+            "content": {
+                "en": "Being chased by Alex Jones on a tiny Segway&trade;.",
+                "de": "Von Alex Jones auf einem kleinen Segway&trade; verfolgt werden."
+            },
+            "flags": "ce w"
+        },
+        {
+            "id": "w_screamingtedtalk",
+            "content": {
+                "en": "A TED Talk that's just 15 minutes of nonstop screaming.",
+                "de": "Ein TED Talk, das nur 15 Minuten ununterbrochenes Schreien ist."
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_sisterass",
+            "content": {
+                "en": "My sister's ass.",
+                "de": "Der Arsch meiner Schwester."
+            },
+            "next_tier_id": "w_sisterass_tier1",
+            "flags": "w ic l"
+        },
+        {
+            "id": "w_sisterass_tier1",
+            "content": {
+                "en": "My sister's tight ass.",
+                "de": "Der enge Arsch meiner Schwester."
+            },
+            "tier": 1,
+            "tier_cost": 1,
+            "flags": "w ic l"
+        },
+        {
+            "id": "w_otherkin",
+            "content": {
+                "en": "Otherkin.",
+                "de": "Otherkin."
+            },
+            "flags": "s xf w"
+        },
+        {
+            "id": "w_longmeat4skin",
+            "content": {
+                "en": "A long, meaty foreskin.",
+                "de": "Eine lange, fleischige Vorhaut."
+            },
+            "flags": "s g gn gnm w"
         },
         {
             "id": "b_happinessis",
@@ -2378,7 +2509,14 @@
                 "en": "Happiness is ________.",
                 "de": "Zufriedenheit ist ________."
             },
-            "blanks": 1
+            "pick": 1
+        },
+        {
+            "id": "b_nevergetsold",
+            "content": {
+                "en": "________. It never gets old!"
+            },
+            "pick": 1
         },
         {
             "id": "b_newcrazytrend",
@@ -2386,7 +2524,7 @@
                 "en": "What's the hottest new trend everyone's talking about?",
                 "de": "Was ist der heißeste neue Trend?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_poisoncontrolcall",
@@ -2394,7 +2532,7 @@
                 "en": "\"This is Poison Control.\"\n\n\"Hi, my son just swallowed _______, what should I do?\"",
                 "de": "\"Giftnotruf, was kann ich für Sie tun?\"\n\n\"Mein Sohn hat gerade ________ geschluckt, was soll ich machen?\""
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_hurtsalotmore",
@@ -2402,7 +2540,7 @@
                 "en": "_______ hurts a lot more than I expected it to.",
                 "de": "________ tut viel mehr weh, als ich dachte."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_strangechildhumor",
@@ -2410,7 +2548,7 @@
                 "en": "What's entertaining as a child but questionable in retrospect?",
                 "de": "Was ist als Kind amüsant, aber im Nachhinein bedenklich?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_futureismeaningless",
@@ -2425,7 +2563,7 @@
                 "en": "Modern technology has finally made ________ possible, but it comes with the unfortunate tradeoff of ________.",
                 "de": "Moderne Technologie ermöglicht endlich ________, aber es gibt einen unangenehmen Kompromiss: ________."
             },
-            "blanks": 2
+            "pick": 2
         },
         {
             "id": "b_conspiracycontroversy",
@@ -2445,7 +2583,7 @@
             "content": {
                 "en": "I don't care what anyone else thinks... anybody that's ________ deserves ________!"
             },
-            "blanks": 2
+            "pick": 2
         },
         {
             "id": "b_altlullaby",
@@ -2495,7 +2633,7 @@
                 "en": "Nobody ever thought they'd see me ______. Well, today's the day I make it happen!",
                 "de": "Niemand hätte je gedacht, dass sie mich ______ sehen würden. Nun, heute ist der Tag, an dem ich es möglich mache!"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_walmartban",
@@ -2503,7 +2641,7 @@
                 "en": "Why was I permanently banned from Walmart?",
                 "de": "Warum wurde ich dauerhaft von Walmart ausgeschlossen?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_premaritalnono",
@@ -2511,7 +2649,7 @@
                 "en": "My girlfriend firmly believes in no _______ before marriage.",
                 "de": "Meine Freundin glaubt fest an kein _______ vor der Hochzeit."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_distdrivingticket",
@@ -2625,7 +2763,7 @@
             "content": {
                 "en": "When Christmas morning came, the kids excitedly ran to their stockings, but were shocked find them filled with ________."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_notmything",
@@ -2633,7 +2771,7 @@
                 "en": "Despite what my friends might tell you, I have never liked ______.",
                 "de": "Egal was dir meine Freunde vielleicht sagen, habe ich nie _______ genossen."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_partofbreakfast",
@@ -2659,7 +2797,7 @@
                 "en": "Nothing is more disappointing than expecting _______, but receiving _______.",
                 "de": "Nichts ist enttäuschender, als wenn man ________ erwartet, jedoch ________ bekommt."
             },
-            "blanks": 2
+            "pick": 2
         },
         {
             "id": "b_partystopper",
@@ -2694,7 +2832,7 @@
                 "en": "What did Santa leave in my stocking this year?",
                 "de": "Was hat der Weihnachtsmann dieses Jahr in meinem Strumpf gelassen?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_moneycanneverbuy",
@@ -2702,14 +2840,14 @@
                 "en": "What can money never buy?",
                 "de": "Was kann man nie kaufen?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_drugcraze",
             "content": {
                 "en": "Local news stations are now reporting on the latest drug craze among teens: ________."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_woody",
@@ -2717,7 +2855,7 @@
                 "en": "There's ____ in my boot!",
                 "de": "Da ist ____ in meinem Stiefel!"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_amazonweirdproduct",
@@ -2730,49 +2868,49 @@
             "content": {
                 "en": "Doctors were shocked to find ____ on the patient's abdominal x-ray."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_researchlink",
             "content": {
                 "en": "Recent studies have revealed a strong link between ____ and ____."
             },
-            "blanks": 2
+            "pick": 2
         },
         {
             "id": "b_omen",
             "content": {
                 "en": "According to popular superstition, seeing _______ is considered a bad omen."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_ramsey",
             "content": {
                 "en": "On today's show, Chef Ramsey will create a spectacular new dish using ______ and ______."
             },
-            "blanks": 2
+            "pick": 2
         },
         {
             "id": "b_securebank",
             "content": {
                 "en": "Our bank boasts a state-of-the-art security system&ndash; one of the first in the world to use _______ to keep your money safe."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_murdermystery",
             "content": {
                 "en": "Ted Bundy, the infamous serial killer, murdered 30 people using ________."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_weirdproposal",
             "content": {
                 "en": "Proposals these days are crazy. I know someone who hid their engagement ring inside ________!"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_burialbonus",
@@ -2780,7 +2918,7 @@
                 "en": "To honor his dying wish, my great-grandfather was buried with ________ in his coffin.",
                 "de": "Um seinem letzten Wunsch nachzukommen, wurde mein Urgroßvater mit ________ in seinem Sarg begraben."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_dogmouth",
@@ -2788,7 +2926,7 @@
                 "en": "What's that in my dog's mouth?!",
                 "de": "Was ist im Mund meines Hundes?!"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_mailbox",
@@ -2796,21 +2934,21 @@
                 "en": "Nothing is worse than finding ____ in your mailbox.",
                 "de": "Nichts ist schlimmer, als ____ im Briefkasten zu finden."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_thinkofyou",
             "content": {
                 "en": "Whenever I think of you, all those fond memories of _______ come rushing back."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_hottestpepper",
             "content": {
                 "en": "Reaching over 2,000,000 Scoville units, the Carolina _______ holds the Guiness World Record for the hottest chili pepper."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_blackhole",
@@ -2818,7 +2956,7 @@
                 "en": "The gravitational pull from _______ is so strong, not even light can escape.",
                 "de": "Die Anziehungskraft von ________ ist so stark, dass nicht einmal Licht entweichen kann."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_scarredparents",
@@ -2826,7 +2964,7 @@
                 "en": "My parents were forever scarred when they walked in on me while I was _______.",
                 "de": "Meine Eltern wurden fürs Leben gezeichnet, als sie bei mir beim ________ hereingeplatzt haben."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_punishmentnowreward",
@@ -2834,14 +2972,14 @@
                 "en": "What is a punishment as a child but a reward as an adult?",
                 "de": "Was ist eine Strafe als Kind, aber eine Belohnung als Erwachsener?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_bibleplagues",
             "content": {
                 "en": "When the plagues came, the water turned to blood. The whole country was overrun by frogs. Then, all dust in the land became _______."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_newemoji",
@@ -2854,7 +2992,7 @@
             "content": {
                 "en": "_______ - _______ = _______."
             },
-            "blanks": 3
+            "pick": 3
         },
         {
             "id": "b_badlisa",

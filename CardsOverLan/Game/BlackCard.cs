@@ -6,16 +6,16 @@ namespace CardsOverLan.Game
 {
 	public sealed class BlackCard : Card
 	{
-		private int _blankCount = 1;
+		private int _pickCount = 1;
 
-		[JsonProperty("blanks", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[JsonProperty("pick", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(1)]
-		public int BlankCount
+		public int PickCount
 		{
-			get => _blankCount;
+			get => _pickCount;
 			private set
 			{
-				_blankCount = value < 1 ? 1 : value;
+				_pickCount = value < 1 ? 1 : value;
 			}
 		}
 

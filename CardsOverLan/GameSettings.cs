@@ -79,6 +79,10 @@ namespace CardsOverLan
 			set => _maxNameLength = value <= 0 ? 1 : value;
 		}
 
+        [JsonProperty("allow_duplicates", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue(false)]
+        public bool AllowDuplicatePlayers { get; set; } = false;
+
 		[JsonProperty("hand_size", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(10)]
 		public int HandSize
@@ -166,6 +170,13 @@ namespace CardsOverLan
 
 		[JsonProperty("require_languages", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string[] RequiredLanguages { get; set; } = new string[0];
+
+        [JsonProperty("use_packs", Required = Required.DisallowNull)]
+        public string[] UsePacks { get; set; } = new string[0];
+
+        [JsonProperty("enable_upgrades", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue(true)]
+        public bool UpgradesEnabled { get; set; } = true;
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

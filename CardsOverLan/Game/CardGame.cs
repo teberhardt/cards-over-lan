@@ -111,10 +111,12 @@ namespace CardsOverLan.Game
 			_roundPlays = new HashList<(Player, WhiteCard[])>();
             _trophies = new HashList<Trophy>();
 
-			_packs = packs.ToArray();
+			_packs = packs
+                .Where(p => Settings.UsePacks == null || Settings.UsePacks.Length == 0 || Settings.UsePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase))
+                .ToArray();
 
 			// Combine decks and remove duplicates
-			foreach (var card in packs
+			foreach (var card in _packs                
 				.SelectMany(d => d.GetAllCards())
 				.Where(c => settings.RequiredLanguages?.Length == 0 || settings.RequiredLanguages.All(l => c.SupportsLanguage(l))))
 			{
@@ -129,7 +131,9 @@ namespace CardsOverLan.Game
 			}
 
 			_blackCards.AddRange(_cards.Values.OfType<BlackCard>().Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x))));
-			_whiteCards.AddRange(_cards.Values.OfType<WhiteCard>().Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x))));
+			_whiteCards.AddRange(_cards.Values.OfType<WhiteCard>()
+                .Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x)))
+                .Where(c => Settings.UpgradesEnabled ? c.Tier <= 0 : String.IsNullOrEmpty(c.NextTierId)));
 
             // Combine trophies
             foreach(var trophy in packs.SelectMany(p => p.GetTrophies()))
@@ -272,16 +276,18 @@ namespace CardsOverLan.Game
 					}
 
 					// If winner_czar is enabled, choose the round winner
-					if (Settings.WinnerCzar && _winningPlayIndex > -1 && !RoundWinner.IsAutonomous)
+					if (Settings.WinnerCzar && _winningPlayIndex > -1 && (Settings.AllowBotCzars || !RoundWinner.IsAutonomous))
 					{
 						_judgeIndex = _players.IndexOf(RoundWinner);
 						return;
 					}
 
+                    if (_judgeIndex < 0) _judgeIndex = 0;
+
 					// Make the next non-AFK person the judge.
-					for (int i = _judgeIndex > -1 ? 1 : 0; i < (_judgeIndex > -1 ? n - 1 : n); i++)
+					for (int i = 1; i < n - 1; i++)
 					{
-						int index = ((_judgeIndex < 0 ? 0 : _judgeIndex) + i) % n;
+						int index = (_judgeIndex + i) % n;
 						var judgeCandidate = _players[index];
 						if (judgeCandidate.IsAfk || (!Settings.AllowBotCzars && judgeCandidate.IsAutonomous)) continue;
 						_judgeIndex = index;
@@ -618,6 +624,11 @@ namespace CardsOverLan.Game
 			foreach (var card in _whiteCards) yield return card;
 		}
 
+        public WhiteCard GetNextTierCard(WhiteCard card)
+        {
+            return String.IsNullOrWhiteSpace(card.NextTierId) ? null : _cards.TryGetValue(card.NextTierId, out var tierCard) ? tierCard as WhiteCard : null;
+        }
+
 		/// <summary>
 		/// Moves all the contents of the provided hashlist of white cards to the disacard pile.
 		/// </summary>
@@ -827,7 +838,11 @@ namespace CardsOverLan.Game
 		{
 			var winningPlayer = RoundWinner;
 			if (winningPlayer == null) return;
-			winningPlayer.AddPoints(1);
+            int tierBonus = _winningPlayIndex > -1 && _winningPlayIndex < _roundPlays.Count 
+                ? _roundPlays[_winningPlayIndex].Item2.Sum(c => c.Tier) 
+                : 0;
+			winningPlayer.AddPoints(1 + tierBonus);
+            winningPlayer.AddAuxPoints(CurrentBlackCard.PickCount);
 		}
 
 		private async void RoundEndTimeoutAsync()

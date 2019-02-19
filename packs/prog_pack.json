@@ -207,35 +207,35 @@
             "content": {
                 "en": "What's causing this weird bug in my code?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_compilererror",
             "content": {
                 "en": "I can't figure out this compiler error... it says I'm missing ________.dll, but I don't even use that!"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_whygithubban",
             "content": {
                 "en": "Why did I get banned from GitHub?"
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_exestoppedworking",
             "content": {
                 "en": "________.exe has stopped working."
             },
-            "blanks": 1
+            "pick": 1
         },
         {
             "id": "b_gitcommit",
             "content": {
                 "en": "My last Git commit message: \"Added _________.\""
             },
-            "blanks": 1
+            "pick": 1
         }
     ]
 }

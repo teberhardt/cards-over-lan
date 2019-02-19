@@ -100,6 +100,17 @@ namespace CardsOverLan
 			}
 		}
 
+        public bool Replace(T original, T replacement)
+        {
+            lock(_editLock)
+            {
+                if (!Contains(original)) return false;
+                int index = IndexOf(original);
+                this[index] = replacement;
+                return true;
+            }
+        }
+
 		public void Clear()
 		{
 			lock(_editLock)

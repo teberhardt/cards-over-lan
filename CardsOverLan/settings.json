@@ -4,9 +4,11 @@
 	"max_players": 15,
 	"min_players": 3,
 	"max_player_name_length": 64,
-	"allow_duplicates": false,
+	"allow_duplicates": true,
 	"hand_size": 10,
 	"blank_cards": 3,
+	"discards": 10,
+	"enable_upgrades": true,
 	"round_end_timeout": 5000,
 	"game_end_timeout": 30000,
 	"max_points": 8,
@@ -23,5 +25,6 @@
 		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
 		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
-	"require_languages": ["en"]
+	"require_languages": ["en"],
+	"use_packs": []
 }
