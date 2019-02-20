@@ -626,6 +626,7 @@
         let selectionDirty = false;
         // Clear out any cards not in the hand
         for(let selectedCard of [...lah.playerHandSelection]) {
+            if (selectedCard.blankIndex !== undefined) continue;
             let index = lah.playerHand.indexOf(selectedCard.id);
             if (index < 0) {
                 lah.playerHandSelection.splice(index, 1);

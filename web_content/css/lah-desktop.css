@@ -708,13 +708,8 @@ card {
     font-weight: 600
 }
 
-card.disabled {
-    pointer-events: none;
-    opacity: .8;
-}
-
 card.collapse {
-    animation: collapse .2s ease-in;
+    animation: collapse .2s ease-in-out !important;
 }
 
 card.placeholder {

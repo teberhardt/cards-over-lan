@@ -152,6 +152,11 @@ card {
     box-sizing: content-box;
 }
 
+card.disabled {
+    pointer-events: none !important;
+    opacity: .8;
+}
+
 span.highlight {
     color: var(--accent-highlight);
 }
@@ -203,8 +208,9 @@ span.highlight {
 }
 
 @keyframes collapse {
-    90% {
+    to {
         transform: rotate(90deg) scale(0);
+        -webkit-transform: rotate(90deg) scale(0);
         opacity: 0;
     }
 }

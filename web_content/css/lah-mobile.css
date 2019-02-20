@@ -711,6 +711,10 @@
         min-height: var(--card-height) !important;
         font-size: 11pt;
     }
+
+    card.collapse {
+        animation: collapse .35s ease-in-out !important;
+    }
     
     card.placeholder {
         border-style: dashed;
@@ -815,6 +819,34 @@
         color: black;
         font-weight: 500;
     }
+
+    /* DISCARD BUTTONS */
+
+    card .btn-discard {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+        height: 24px;
+        width: 24px;
+        overflow: hidden;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        border-bottom-left-radius: 4px;
+        box-sizing: content-box;
+        opacity: .5;
+    }
+
+    card .btn-discard:after {
+        content: "\d7";
+    }
+
+    card .btn-discard:hover {
+        background-color: rgba(0, 0, 0, .075);
+    }
+
+    /* BLANK CARDS */
 
     card[data-card="blank"] > .blank-card-text-container {
         pointer-events: auto !important;
