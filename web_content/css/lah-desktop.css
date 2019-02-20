@@ -708,6 +708,15 @@ card {
     font-weight: 600
 }
 
+card.disabled {
+    pointer-events: none;
+    opacity: .8;
+}
+
+card.collapse {
+    animation: collapse .2s ease-in;
+}
+
 card.placeholder {
     border-style: dashed;
     border-width: 2px;

@@ -205,7 +205,16 @@
                 btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
                 btnDiscard.addEventListener("click", e => {
                     e.stopPropagation();
-                    lah.discardCard(card.id);
+                    el.classList.add("disabled");
+                    el.classList.add("collapse");
+                    // Backup timeout in case browser doesn't support animationend event
+                    let timeoutToken = setTimeout(() => {
+                        lah.discardCard(card.id);
+                    }, 500);
+                    el.addEventListener("animationend", () => {
+                        clearTimeout(timeoutToken);
+                        lah.discardCard(card.id);
+                    });
                 });
                 el.appendChild(btnDiscard);
             }
@@ -443,6 +452,7 @@
                 }
             }
             updateHandCardsArea();
+            updateHandCardSelection();
         },
         "s_cardsplayed": msg => {
             lah.clientPlayedCards = msg.selection;
@@ -612,6 +622,18 @@
         for (let el of cardElements) {
             el.removeAttribute("data-selection");
         }
+
+        let selectionDirty = false;
+        // Clear out any cards not in the hand
+        for(let selectedCard of [...lah.playerHandSelection]) {
+            let index = lah.playerHand.indexOf(selectedCard.id);
+            if (index < 0) {
+                lah.playerHandSelection.splice(index, 1);
+                selectionDirty = true;
+            }
+        }
+
+        if (selectionDirty) onSelectionChanged();
 
         for (let i = 0; i < lah.playerHandSelection.length; i++) {
             let selection = lah.playerHandSelection[i];
