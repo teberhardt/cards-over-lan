@@ -3007,7 +3007,8 @@
             "id": "b_newemoji",
             "content": {
                 "en": "Among the dozens of new emojis added by Unicode in 2018, the most controversial one depicts _______."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_subtraction",
@@ -3021,49 +3022,91 @@
             "id": "b_badlisa",
             "content": {
                 "en": "Lisa had always been a bit withdrawn, but it came as a shock to her neighbors when she was arrested for ________."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_strangeaddiction",
             "content": {
                 "en": "Today on <i>My Strange Addiction</i>: Meet Laura, a woman who can't stop ________.",
                 "de": "Heute bei <i>My Strange Addiction</i>: Das ist Laura, eine Frau, die nicht mit ________ aufhören kann."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_bucketlist",
             "content": {
                 "en": "My bucket list:\n- Travel the world.\n- Go skydiving.\n- ________.",
                 "de": "Meine Löffelliste:\n- Die Welt bereisen.\n- Fallschirmspringen gehen.\n- ________."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_strangevideofile",
             "content": {
                 "en": "Hello, tech support? I found a weird file on my computer named _______.mp4.\nShould I be worried?",
                 "de": "Hallo, technischer Support? Ich habe eine seltsame Datei auf meinem Computer namens _______.mp4 gefunden.\nIst sie etwas Schlimmes?"
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_artschoolgrad",
             "content": {
                 "en": "Now that I've graduated from art school, I can finally be ________!",
                 "de": "Jetzt, da ich die Kunstschule abgeschlossen habe, kann ich endlich ________ sein!"
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_specialfather",
             "content": {
                 "en": "Any man can be a father, but it takes someone special to be ________.",
                 "de": "Jeder Mann kann ein Vater sein, aber es braucht jemanden Besonderen, um ________ zu sein."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_newlawban",
             "content": {
                 "en": "Five years from now, a new law will be passed that bans _________.",
                 "de": "In fünf Jahren wird ein neues Gesetz verabschiedet werden, das ________ verbietet."
-            }
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_whatsfordinnertonight",
+            "content": {
+                "en": "________.\nIt's what's for dinner, tonight."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_desperateformoneyokay",
+            "content": {
+                "en": "Look, ________ isn't something I wanted to do, but I was desperate and needed the money!"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_mostpossiblepain",
+            "content": {
+                "en": "They say that ________ is the most pain that a human can endure."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_sexisnicebut",
+            "content": {
+                "en": "Sex is nice and all, but have you ever tried ________?"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_dnatestresults",
+            "content": {
+                "en": "My DNA test results came back... Turns out I'm 25% ________!"
+            },
+            "pick": 1
         }
     ]
 }

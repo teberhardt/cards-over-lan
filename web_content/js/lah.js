@@ -1021,7 +1021,7 @@
     function refreshServerInfo() {
         $.ajax({
             dataType: "json",
-            url: "http://127.0.0.1/gameinfo",
+            url: "/gameinfo",
             success: data => {
                 console.log("server info received");
                 lah.serverInfo = data;
