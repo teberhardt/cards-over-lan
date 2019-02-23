@@ -968,6 +968,7 @@
     .lah-btn-small {
         font-size: 16pt;
         padding: 4pt 12pt;
+        margin: 4pt 4pt;
     }
     
     .lah-btn:not(.disabled):hover {
@@ -1005,6 +1006,14 @@
         color: #444;
     }
 
+    .lah-fill {
+        flex-grow: 1 !important;
+    }
+
+    .wide {
+        align-self: stretch;
+    }
+
     #txt-accent-color {
         transition: background-color .3s;
     }
@@ -1022,14 +1031,17 @@
     
     .modal-dialog {
         background: #f6f6f6; 
-        padding: 20pt 24pt;
+        padding: 20pt 16pt;
         flex-grow: 1;
     }
     
     .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
         height: 100%;
-        margin-top: var(--modal-nav-height);
+        /* margin-top: var(--modal-nav-height); */
     }
     
     .modal-nav {
@@ -1070,16 +1082,15 @@
         width: 100%;
     }
     
-    .lah-vlist > .lah-listitem {
+    .lah-vlist > .lah-listitem, .modal-body > .lah-listitem {
         display: flex;
         flex-direction: column;
-        flex-grow: 1;
         margin: 4pt;
         width: 100%;
     }
     
-    .lah-vlist > .lah-separator {
-        margin: 8pt 4pt;
+    .lah-vlist > .lah-gap {
+        margin: 4pt 4pt;
     }
     
     .lah-vlist > .lah-listend {
@@ -1095,8 +1106,62 @@
     .lah-align-end {
         justify-content: flex-end;
     }
+
+    .lah-stretch-items > * {
+        justify-self: stretch;
+        flex-grow: 1;
+    }
     
     .lah-listitem > input[type="text"] {
         flex-grow: 1;
+    }
+
+    #join-screen-title {
+        margin: 4px 0;
+        text-align: center;
+    }
+    
+    #join-screen-server-name {
+        margin: 4px;
+        font-size: 12pt;
+        color: #444;
+        text-align: center;
+    }
+    
+    #join-stat-grid {
+        display: grid;
+        grid-template: [r-start] 1fr [r1] 1fr [r-end] / [c-start] 1fr [c1] 1fr [c-end];
+        margin: 4px 0;
+        color: #333;
+    }
+    
+    #join-stat-grid .server-stat {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 6px 6px;
+        padding: 2px 6px;
+    }
+    
+    #join-stat-grid .server-stat .name {
+        display: block;
+        text-align: center;
+    }
+    
+    #join-stat-grid .server-stat .value {
+        display: block;
+        font-size: 24pt;
+        text-align: center;
+        color: #454545;
+        font-weight: 700;
+    }
+
+    #join-controls {
+        flex-direction: column;
+        align-content: stretch;
+    }
+
+    #join-controls > .lah-btn {
+        margin: 4pt 0;
     }
 }

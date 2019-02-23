@@ -3,6 +3,7 @@
 	"server_name": "Cards Over LAN",
 	"max_players": 15,
 	"min_players": 3,
+	"max_spectators": 10,
 	"max_player_name_length": 64,
 	"allow_duplicates": true,
 	"hand_size": 10,

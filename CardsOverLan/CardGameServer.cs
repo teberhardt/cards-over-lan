@@ -8,22 +8,30 @@ namespace CardsOverLan
 {
     public sealed class CardGameServer : IDisposable
     {
+        private const string WebSocketListenAddress = "ws://0.0.0.0:3000";
+        private const string ServerPlayDir = "/play";
+        private const string ServerSpectateDir = "/spectate";
+
         private readonly WebSocketServer _ws;
         private readonly CardGame _game;
 		private bool _disposed = false;
 		private readonly HashSet<IPAddress> _clientIpPool = new HashSet<IPAddress>();
+        private HashSet<SpectatorConnection> _spectatorClients = new HashSet<SpectatorConnection>();
+        private readonly object _spectatorLock = new object();
 
         public CardGameServer(CardGame game)
         {
             _game = game;
-            _ws = new WebSocketServer("ws://0.0.0.0:3000");
+            _ws = new WebSocketServer(WebSocketListenAddress);
         }
 
         public void Start()
         {
-            _ws.AddWebSocketService("/game", () => new ClientConnection(this, _game));
+            Console.WriteLine("Starting WebSocket services...");
+            _ws.AddWebSocketService(ServerPlayDir, () => new ClientConnection(this, _game));
+            _ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, _game));
             _ws.Start();
-			Console.WriteLine("WebSocket server active");
+			Console.WriteLine("WebSocket services online.");
         }
 
 		internal bool TryAddToPool(ClientConnection cc)

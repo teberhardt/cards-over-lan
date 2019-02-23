@@ -48,11 +48,13 @@
     --accent-bg: var(--default-accent-color);
     --accent-fg: #111;
     --accent-ol: transparent;
+    --accent-btn-primary: #39f;
+    --accent-btn-secondary: #f93;
     --accent-highlight: #094;
     --accent-group: rgba(0, 0, 0, .25);
     --accent-group-hover: rgba(0, 0, 0, .35);
     --main-bg-line: rgba(0, 0, 0, .0);
-    --btn-color: #eee;
+    --btn-color: rgba(0, 0, 0, .05);
 }
 
 ::-webkit-input-placeholder {
@@ -90,6 +92,15 @@
 * {
     font-family: "LAH", sans-serif !important;
     font-weight: 700;
+}
+
+hr {
+    border: 0 solid rgba(0, 0, 0, .1);
+    border-bottom-width: 1px;
+    margin: 0.5em 8px;
+    flex-shrink: 0;
+    align-self: stretch;
+    height: 1px;
 }
 
 #score-area {
@@ -414,6 +425,12 @@ card[black] .ribbon[data-packaccent=black]:after {
     font-family: "Times New Roman", "LAH", sans-serif !important;
 }
 
+.ribbon[data-packaccent=transcend]:after {
+    background: #03f;
+    color: #f0f !important;
+    font-weight: 900 !important;
+}
+
 /* CARD TIER COLORS */
 
 #hand-area card[data-tier="1"] {
@@ -430,4 +447,18 @@ card[black] .ribbon[data-packaccent=black]:after {
 
 #hand-area card[data-tier="4"] {
     color: #bc0000;
+}
+
+/* BUTTON COLORS */
+
+.lah-btn.primary {
+    background-color: var(--accent-btn-primary) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.lah-btn.secondary {
+    background-color: var(--accent-btn-secondary) !important;
+    color: white !important;
+    border: none !important;
 }

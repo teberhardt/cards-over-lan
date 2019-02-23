@@ -2,6 +2,42 @@
     const DEFAULT_LOCALE = "en";
 
     let uiStrings = {
+        "ui_game_title": {
+            "en": "Cards Over LAN",
+            "de": "Cards Over LAN"
+        },
+        "ui_loading": {
+            "en": "Loading...",
+            "de": "Laden..."
+        },
+        "ui_btn_play_game": {
+            "en": "Join Game",
+            "de": "Spiel beitreten"
+        },
+        "ui_btn_spectate_game": {
+            "en": "Spectate",
+            "de": "Zuschauen"
+        },
+        "ui_join_player_limit": {
+            "en": "{1}/{2}",
+            "de": "{1}/{2}"
+        },
+        "ui_player_limit": {
+            "en": "Players",
+            "de": "Spieler"
+        },
+        "ui_pack_count": {
+            "en": "Packs",
+            "de": "Packe"
+        },
+        "ui_white_card_count": {
+            "en": "White Cards",
+            "de": "Antwortkarten"
+        },
+        "ui_black_card_count": {
+            "en": "Black Cards",
+            "de": "Fragekarten"
+        },
         "ui_default_player_name": {
             "en": "Player",
             "de": "Spieler"

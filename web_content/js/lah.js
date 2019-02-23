@@ -5,7 +5,9 @@
     const STAGE_JUDGING = "judging";
     const STAGE_ROUND_END = "round_end";
     const STAGE_GAME_END = "game_end";
-    const WS_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":3000/game";
+    const WS_PORT = 3000;
+    const WS_PLAY_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/play";
+    const WS_SPECTATE_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/spectate";
     const DEFAULT_LOCALE = "en";
 
     class Card {
@@ -122,6 +124,7 @@
     lah.lastRejectDesc = "";
     lah.auxPoints = 0;
     lah.discards = 0;
+    lah.serverInfo = null;
 
     let gameArea = null;
     let handArea = null;
@@ -140,7 +143,7 @@
     let btnPick = null;
     let playerList = null;
 
-    let ws = new LahClient(WS_URL, 10000);
+    let ws = new SuperiorWebSocket(WS_PLAY_URL, "fibonacci");
 
     // Sanitizes HTML content for card text
     function createContentHtml(str) {
@@ -670,6 +673,7 @@
         lah.localPlayerName = Cookies.get("name") || getUiString("ui_default_player_name");
         loadAccentColor();
         document.querySelector("#txt-username").value = lah.localPlayerName;
+        document.querySelector("#txt-join-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;
     }
 
@@ -1014,11 +1018,47 @@
         return null;
     }
 
-    lah.start = function () {
-        console.log("client started");
+    function refreshServerInfo() {
+        $.ajax({
+            dataType: "json",
+            url: "http://127.0.0.1/gameinfo",
+            success: data => {
+                console.log("server info received");
+                lah.serverInfo = data;
+                onServerInfoReceived();
+            },
+            error: (x, e) => setTimeout(() => refreshServerInfo(), 10000)
+        });
+    }
 
+    function onServerInfoReceived() {
+        let info = lah.serverInfo;
+        document.querySelector("#join-screen-server-name").textContent = info.server_name;
+        document.querySelector("#join-screen-player-limit .value").textContent = 
+            getUiString("ui_join_player_limit", info.min_players, info.current_player_count, info.max_players);
+        document.querySelector("#join-screen-pack-count .value").textContent = info.pack_info.length;
+        document.querySelector("#join-screen-white-card-count .value").textContent = info.white_card_count;
+        document.querySelector("#join-screen-black-card-count .value").textContent = info.black_card_count;
+    }
+
+    function onSpectateGameClicked() {
+        setPlayerName(document.querySelector("#txt-join-username").value);
+        ws.url = WS_SPECTATE_URL;
+        ws.connect();
+        hideModal("modal-join");
+    }
+
+    function onPlayGameClicked() {
+        setPlayerName(document.querySelector("#txt-join-username").value);
+        ws.url = WS_PLAY_URL;
+        ws.connect();
+        hideModal("modal-join");
+    }
+
+    lah.start = function () {
         // Populate saved options
         loadOptions();
+        refreshServerInfo();
 
         // Get game elements
         gameArea = document.getElementById("game");
@@ -1045,11 +1085,13 @@
         btnPlay.onclick = onPlayClicked;
         btnPick.onclick = onJudgePickClicked;
 
+        document.querySelector("#btn-play-game").onclick = onPlayGameClicked;
+        document.querySelector("#btn-spectate-game").onclick = onSpectateGameClicked;
+
         if ("WebSocket" in window) {
             ws.onclose = onConnectionClosed;
             ws.onopen = onConnectionOpened;
             ws.onmessage = onDataReceived;
-            ws.connect();
         } else {
             showModal("modal-no-ws");
         }

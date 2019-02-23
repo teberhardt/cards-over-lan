@@ -21,8 +21,9 @@ namespace CardsOverLan.Game
         private const string DefaultName = "Player";
 		private const int AutoPlayDelayMin = 2000;
 		private const int AutoPlayDelayMax = 6000;
-		private const int AutoJudgeDelayMin = 5000;
-		private const int AutoJudgeDelayMax = 8000;
+		private const int AutoJudgeDelayMin = 2000;
+        private const int AutoJudgeDelayIncrementMin = 1000;
+        private const int AutoJudgeDelayIncrementMax = 1300;
 
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
@@ -224,7 +225,7 @@ namespace CardsOverLan.Game
 		public async void AutoJudgeAsync()
 		{
 			if (!IsAutonomous) return;
-			await Task.Delay(_rng.Next(AutoJudgeDelayMin, AutoJudgeDelayMax + 1));
+			await Task.Delay(AutoJudgeDelayMin + _rng.Next(AutoJudgeDelayIncrementMin, AutoJudgeDelayIncrementMax + 1) * Game.CurrentBlackCard.PickCount);
 			int count = Game.GetRoundPlays().Count();
 			JudgeCards(_rng.Next(count));
 		}

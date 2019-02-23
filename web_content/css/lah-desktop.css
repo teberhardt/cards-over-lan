@@ -1014,7 +1014,7 @@ card[data-selection]::after {
 .lah-btn {
     outline: none;
     padding: 8pt 25pt;
-    background: var(--lah-btn-color) !important;
+    background: var(--btn-color) !important;
     color: var(--accent-fg) !important;
     border: 2px solid var(--accent-fg);
     border-radius: 6pt;
@@ -1037,18 +1037,12 @@ card[data-selection]::after {
     margin: 0 4pt;
 }
 
-.lah-btn:not(.disabled):hover {
+.lah-btn:not(.disabled):not(:disabled):hover {
     filter: brightness(1.1);
     cursor: pointer;
 }
 
-.lah-btn.lah-dark:not(.disabled):hover, .lah-dark .lah-btn:not(.disabled):hover {
-    border-color: #ccc;
-    color: #ccc;
-    cursor: pointer;
-}
-
-.lah-btn:not(.disabled):active {
+.lah-btn:not(.disabled):not(:disabled):active {
     transform: translate(0, 2px);
     /* border-bottom-width: 5px; */
 }
@@ -1058,24 +1052,30 @@ card[data-selection]::after {
     /* border-bottom-width: 3px; */
 }
 
-.lah-btn.disabled {
+.lah-btn.disabled, .lah-btn:disabled {
     opacity: .35;
+    cursor: default;
 }
 
 .lah-txtbox {
     padding: 6pt;
     outline: none;
-    border: 2px solid black;
+    border: 2px solid #444;
     border-radius: 4pt;
     font-size: 14pt;
+    height: 16pt;
     min-width: 16em;
 }
 
 .lah-label {
     display: block;
-    font-size: 14pt;
+    font-size: 13pt;
     margin: 4pt 1pt;
     color: #444;
+}
+
+.wide {
+    align-self: stretch;
 }
 
 #txt-accent-color {
@@ -1099,17 +1099,38 @@ card[data-selection]::after {
     --accent-bg: #eee;
 }
 
+.modal.opaque {
+    background: #1a1a1a;
+}
+
 .modal-dialog {
     background: #f6f6f6;  
+    display: flex;
+    flex-direction: column;
     position: relative;  
     padding: 20pt 24pt 16pt 24pt;
     border-radius: 6pt;
     max-width: 60%;
     min-width: 50%;
+    min-height: 300px;
+}
+
+.modal-dialog h1,
+.modal-dialog h2,
+.modal-dialog h3,
+.modal-dialog h4,
+.modal-dialog h5,
+.modal-dialog h6 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .modal-body {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    flex-shrink: 0;
 }
 
 .modal-nav {
@@ -1145,26 +1166,23 @@ card[data-selection]::after {
 .lah-vlist {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     width: 100%;
 }
 
-.lah-vlist > .lah-listitem {
+.lah-fill {
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.lah-vlist > .lah-listitem, .modal-body > .lah-listitem {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    margin: 4pt;
+    margin: 4pt 2pt;
     width: 100%;
 }
 
-.lah-vlist > .lah-separator {
-    margin: 8pt 4pt;
-}
-
-.lah-vlist > .lah-listend {
-    align-self: flex-end;
-    justify-self: flex-end;    
+.lah-vlist > .lah-gap, .modal-body > .lah-gap {
+    margin: 4pt 4pt;
 }
 
 .lah-hlist {
@@ -1172,8 +1190,17 @@ card[data-selection]::after {
     flex-direction: row;
 }
 
-.lah-align-end {
+.lah-push-end {
     justify-content: flex-end;
+}
+
+.lah-push-center {
+    justify-content: center;
+}
+
+.lah-stretch-items > * {
+    justify-self: stretch;
+    flex-grow: 1;
 }
 
 .lah-listitem > input[type="text"] {
@@ -1209,5 +1236,49 @@ card[data-selection]::after {
         opacity: 1;
         transform: translate(-50%, calc(-100% - 8pt));
     }
+}
+
+#join-screen-title {
+    margin: 4px 0;
+    text-align: center;
+}
+
+#join-screen-server-name {
+    margin: 4px;
+    font-size: 12pt;
+    color: #444;
+    text-align: center;
+}
+
+#join-stat-grid {
+    display: flex;
+    /* grid-template: [r-start] 1fr [r-end] / [c-start] 1fr [c1] 1fr [c2] 1fr  [c3] 1fr [c-end]; */
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 4px 0;
+    color: #333;
+}
+
+#join-stat-grid .server-stat {
+    display: block;
+    margin: 12px 6px;
+    padding: 16px 6px;
+}
+
+#join-stat-grid .server-stat .name {
+    display: block;
+    text-align: center;
+}
+
+#join-stat-grid .server-stat .value {
+    display: block;
+    font-size: 24pt;
+    text-align: center;
+    color: #454545;
+    font-weight: 700;
+}
+
+#join-controls > * {
+    flex-grow: 1;
 }
 }

@@ -35,11 +35,21 @@
     }
 
     disable = function(elementName) {
-        document.getElementById(elementName).classList.add("disabled");
+        let e = document.getElementById(elementName);
+        if(e.tagName == "INPUT" || e.tagName == "TEXTAREA") {
+            e.disabled = true;
+        } else {
+            e.classList.add("disabled");
+        }
     }
 
     enable = function(elementName) {
-        document.getElementById(elementName).classList.remove("disabled");
+        let e = document.getElementById(elementName);
+        if(e.tagName == "INPUT" || e.tagName == "TEXTAREA") {
+            e.disabled = false;
+        } else {
+            e.classList.remove("disabled");
+        }
     }
 
     let onTrackScroll = function(element) {

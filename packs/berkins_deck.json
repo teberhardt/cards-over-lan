@@ -2504,7 +2504,13 @@
             "flags": "s g gn gnm w"
         },
         {
-            "id": "w_crazyweirddream",
+            "id": "w_theperfectman",
+            "content": {
+                "en": "The perfect man."
+            }
+        },
+        {
+            "id": "b_crazyweirddream",
             "content": {
                 "en": "My dream last night was nuts! I was trapped in ________, had to fight off ________, then suddenly I was killed by ________!",
                 "de": "Mein letzter Traum war verrückt! Ich wurde in ________ gefangen, musste ________ abwehren, und dann wurde plötzlich von ________ getötet!"
@@ -3055,7 +3061,7 @@
         {
             "id": "b_newlawban",
             "content": {
-                "en": "In five years, a new law will be passed that bans _________.",
+                "en": "Five years from now, a new law will be passed that bans _________.",
                 "de": "In fünf Jahren wird ein neues Gesetz verabschiedet werden, das ________ verbietet."
             }
         }

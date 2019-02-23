@@ -104,7 +104,7 @@ namespace CardsOverLan
 		{
 			foreach (WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
 			{
-				_cookies[cookie.Name] = System.Web.HttpUtility.UrlDecode(cookie.Value);
+				_cookies[cookie.Name] = HttpUtility.UrlDecode(cookie.Value);
 			}
 		}
 
