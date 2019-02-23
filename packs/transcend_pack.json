@@ -216,14 +216,16 @@
             "content": {
                 "en": "As it turns out, the light at the end of the tunnel is really just ________.",
                 "de": "Es stellt sich heraus, dass das Licht am Ende des Tunnels eigentlich nur ________ ist."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_canyouseehim",
             "content": {
                 "en": "I swear I'm not crazy, doctor! Even now, I can see ________ and hear ________!",
                 "de": "Ich schwöre, ich bin nicht verrückt, Doktor! Schon jetzt kann ich ________ sehen und ________ hören!"
-            }
+            },
+            "pick": 2
         }
     ]
 }
