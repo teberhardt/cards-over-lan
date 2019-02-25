@@ -1,4 +1,5 @@
-(() => {
+((g) => {
+    "use strict";
     const DEFAULT_LOCALE = "en";
 
     let uiStrings = {
@@ -249,7 +250,7 @@
         })
     };
 
-    getUiString = function (key) {
+    g.getUiString = function (key) {
         let entry = uiStrings[key];
         if (!entry) return key;
         let lang = navigator.language;
@@ -274,4 +275,4 @@
             }
         }
     }
-})();
+})(this);

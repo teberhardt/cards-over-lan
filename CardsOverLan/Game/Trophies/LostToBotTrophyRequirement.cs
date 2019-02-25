@@ -8,6 +8,7 @@ namespace CardsOverLan.Game.Trophies
 	{
 		public override bool CheckPlayer(Player player)
 		{
+			if (player.IsAutonomous) return false;
 			var winners = player.Game.GetWinningPlayers().ToArray();
 			return !winners.Contains(player) && winners.Any(w => w.IsAutonomous);
 		}

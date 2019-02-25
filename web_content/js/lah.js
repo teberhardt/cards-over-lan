@@ -1,4 +1,5 @@
-(() => {
+((g) => {
+    "use strict";
     const IS_HTTPS = location.protocol === "https:";
     const STAGE_GAME_STARTING = "game_starting";
     const STAGE_PLAYING = "playing";
@@ -92,8 +93,8 @@
         return -1;
     }
 
-    if (typeof lah === "undefined") {
-        lah = {};
+    if (typeof g.lah === "undefined") {
+        var lah = g.lah = {};
     }
 
     lah.score = 0;
@@ -689,14 +690,14 @@
         });
     }
 
-    lah.judgeCards = function (playIndex) {
+    g.lah.judgeCards = function (playIndex) {
         sendMessage({
             "msg": "c_judgecards",
             "play_index": playIndex
         });
     }
 
-    applyOptions = function () {
+    g.applyOptions = function () {
         setPlayerName(document.querySelector("#txt-username").value);
         saveAccentColor();
         hideModal("modal-options");
@@ -970,14 +971,14 @@
         updateHandCardSelection();
     };
 
-    lah.upgradeCard = function(cardId) {
+    g.lah.upgradeCard = function(cardId) {
         sendMessage({
             msg: "c_upgradecard",
             card_id: cardId
         });
     }
 
-    lah.discardCard = function(cardId) {
+    g.lah.discardCard = function(cardId) {
         sendMessage({
             msg: "c_discardcard",
             card_id: cardId
@@ -1073,7 +1074,7 @@
         hideModal("modal-join");
     }
 
-    lah.start = function () {
+    g.lah.start = function () {
         // Populate saved options
         loadOptions();
         refreshServerInfo();
@@ -1114,4 +1115,4 @@
             showModal("modal-no-ws");
         }
     }
-})();                                                                                                                                                                                                                                                                    
+})(this);                                                                                                                                                                                                                                                                    
