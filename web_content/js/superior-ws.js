@@ -1,4 +1,5 @@
-(() => {
+((g) => {
+    "use strict";
     const TIME_A = 1;
     const TIME_B = 1;
     const MAX_RETRY_TIME = 30000;
@@ -9,7 +10,7 @@
     }
     let defaultTimeoutFunc = timeoutFuncs["fibonacci"];
 
-    SuperiorWebSocket = class {
+    g.SuperiorWebSocket = class {
         constructor(url, retryKind) {
             this._url = url;
             this._retryFunc = timeoutFuncs[retryKind] || defaultTimeoutFunc;
@@ -139,4 +140,4 @@
             }
         }
     }
-})();
+})(this);
