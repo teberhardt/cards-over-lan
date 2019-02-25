@@ -125,6 +125,7 @@
     lah.auxPoints = 0;
     lah.discards = 0;
     lah.serverInfo = null;
+    lah.spectating = false;
 
     let gameArea = null;
     let handArea = null;
@@ -1018,17 +1019,31 @@
         return null;
     }
 
-    function refreshServerInfo() {
+    function refreshServerInfo(failCount) {
+        if (failCount === undefined) {
+            failCount = 0;
+        }
+        const maxAttempts = 4;
         $.ajax({
             dataType: "json",
             url: "/gameinfo",
             success: data => {
-                console.log("server info received");
                 lah.serverInfo = data;
                 onServerInfoReceived();
             },
-            error: (x, e) => setTimeout(() => refreshServerInfo(), 10000)
+            error: (x, e) => {
+                let fail = failCount + 1;
+                if (fail >= maxAttempts) {
+                    onServerUnreachable();
+                } else {
+                    setTimeout(() => refreshServerInfo(fail), 1000);
+                }
+            }
         });
+    }
+
+    function onServerUnreachable() {
+        document.querySelector("#join-screen-server-name").textContent = getUiString("ui_server_unreachable");
     }
 
     function onServerInfoReceived() {
@@ -1043,6 +1058,8 @@
 
     function onSpectateGameClicked() {
         setPlayerName(document.querySelector("#txt-join-username").value);
+        lah.spectating = true;
+        gameArea.setClass("lah-spectating", true);
         ws.url = WS_SPECTATE_URL;
         ws.connect();
         hideModal("modal-join");
@@ -1050,6 +1067,7 @@
 
     function onPlayGameClicked() {
         setPlayerName(document.querySelector("#txt-join-username").value);
+        lah.spectating = false;
         ws.url = WS_PLAY_URL;
         ws.connect();
         hideModal("modal-join");

@@ -15,37 +15,23 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-	internal sealed class ClientConnection : WebSocketBehavior
+	internal sealed class PlayerConnection : GameConnectionBase
 	{
-		private const string REJECT_SERVER_FULL = "reject_server_full";
-		private const string REJECT_DUPLICATE = "reject_duplicate";
-
 		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
 		private readonly object _createDestroySync = new object();
 		private bool _removalNotified;
 		private Player _player;
 		private Thread _afkCheckThread;
-		private readonly Dictionary<string, string> _cookies;
 		private int _inactiveTime;
 		private readonly object _afkLock = new object();
-		private bool _isDuplicate;
-		private IPAddress _ip;
-
-		public CardGame Game { get; }
-		public CardGameServer Server { get; }
+		private bool _isRejectedDuplicate;
 		public Player Player => _player;
-		internal IPAddress Address => _ip;
 
-		public ClientConnection(CardGameServer server, CardGame game)
+		public PlayerConnection(CardGameServer server, CardGame game) : base(server, game)
 		{
-			Server = server;
-			Game = game;
-			_cookies = new Dictionary<string, string>();
 			_afkCheckThread = new Thread(AfkCheckThread);
 		}
-
-		public bool IsOpen => State == WebSocketState.Open;
 
 		private void UpdateActivityTime(int time)
 		{
@@ -93,25 +79,13 @@ namespace CardsOverLan
 			RegisterEvents();
 
 			SendClientInfoToPlayer();
-			SendPlayerListToPlayer();
-			SendAllCardsToPlayer();
+			SendPlayerList();
+			SendPackContent();
 			SendHandToPlayer();
-			SendGameStateToPlayer();
+			SendGameState();
 			SendAuxDataToPlayer();
 		}
-
-		private void LoadCookies()
-		{
-			foreach (WebSocketSharp.Net.Cookie cookie in Context.CookieCollection)
-			{
-				_cookies[cookie.Name] = HttpUtility.UrlDecode(cookie.Value);
-			}
-		}
-
-		private string GetCookie(string name)
-		{
-			return _cookies.TryGetValue(name, out var val) ? val : null;
-		}
+		
 
 		private void RegisterEvents()
 		{
@@ -140,7 +114,7 @@ namespace CardsOverLan
 
 		private void OnGamePlayersChanged()
 		{
-			SendPlayerListToPlayer();
+			SendPlayerList();
 		}
 
 		private void OnPlayerAuxDataChanged(Player player)
@@ -165,7 +139,7 @@ namespace CardsOverLan
 
 		private void OnGameStateChanged()
 		{
-			SendGameStateToPlayer();
+			SendGameState();
 		}
 
 		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
@@ -190,22 +164,6 @@ namespace CardsOverLan
 				blanks = _player.RemainingBlankCards,
 				hand = _player.GetCurrentHand().Select(c => c.ID),
 				discards = _player.Discards
-			});
-		}
-
-		private void SendPlayerListToPlayer()
-		{
-			if (!IsOpen) return;
-			SendMessageObject(new
-			{
-				msg = "s_players",
-				players = Game.GetPlayers().Select(p => new
-				{
-					name = HttpUtility.HtmlEncode(p.Name),
-					id = p.Id,
-					score = p.Score,
-					upgrade_points = p.Coins
-				})
 			});
 		}
 
@@ -240,70 +198,25 @@ namespace CardsOverLan
 			});
 		}
 
-		private void SendGameStateToPlayer()
-		{
-			SendMessageObject(new
-			{
-				msg = "s_gamestate",
-				stage = Game.Stage,
-				round = Game.Round,
-				black_card = Game.CurrentBlackCard?.ID,
-				pending_players = Game.GetPendingPlayers().Select(p => p.Id),
-				judge = Game.Judge?.Id ?? -1,
-				plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.ID)),
-				winning_play = Game.WinningPlayIndex,
-				winning_player = Game.RoundWinner?.Id ?? -1,
-				game_results = Game.Stage == GameStage.GameEnd
-					? new
-					{
-						winners = Game.GetWinningPlayers().Select(p => p.Id),
-						trophy_winners = Game.GetPlayers().Select(p => new
-						{
-							id = p.Id,
-							trophies = p.GetTrophies()
-						})
-					}
-					: null
-			});
-		}
-
-		private void SendRejectToPlayer(string rejectReason, string rejectDesc = "")
-		{
-			SendMessageObject(new
-			{
-				msg = "s_rejectclient",
-				reason = rejectReason,
-				desc = rejectDesc
-			});
-		}
-
 		protected override void OnOpen()
 		{
 			lock (_createDestroySync)
 			{
 				base.OnOpen();
-				_ip = Context.UserEndPoint.Address;
-
 
 				// Make sure player can actually join
 				if (Game.PlayerCount >= Game.Settings.MaxPlayers)
 				{
-					SendRejectToPlayer(REJECT_SERVER_FULL);
-					Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_SERVER_FULL);
+					Reject(RejectCodes.ServerFull);
 					return;
 				}
 				else if (!Server.TryAddToPool(this))
 				{
-					_isDuplicate = true;
-					if (!Game.Settings.AllowDuplicatePlayers)
-					{
-						SendRejectToPlayer(REJECT_DUPLICATE);
-						Context.WebSocket.Close(CloseStatusCode.Normal, REJECT_DUPLICATE);
-						return;
-					}
+					_isRejectedDuplicate = true;
+					Reject(RejectCodes.Duplicate);
+					return;
 				}
 
-				LoadCookies();
 				CreatePlayer();
 				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
 				_afkCheckThread.Start();
@@ -317,7 +230,7 @@ namespace CardsOverLan
 			{
 				base.OnClose(e);
 
-				if (!_isDuplicate)
+				if (!_isRejectedDuplicate)
 				{
 					Server.TryRemoveFromPool(this);
 				}
@@ -490,21 +403,6 @@ namespace CardsOverLan
 			}
 
 			return Game.GetCardById(id);
-		}
-
-		private void SendAllCardsToPlayer()
-		{
-			var response = new
-			{
-				msg = "s_allcards",
-				packs = Game.GetPacks()
-			};
-			SendMessageObject(response);
-		}
-
-		private void SendMessageObject(object o)
-		{
-			Send(JsonConvert.SerializeObject(o, Formatting.None));
 		}
 	}
 }

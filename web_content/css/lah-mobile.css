@@ -408,8 +408,9 @@
         background-color: var(--accent-ol);
     }
 
-    #status-area #myname {
+    #status-area #myname, #spectator-label {
         font-size: .75em;
+        margin-left: 2px;
     }
     
     #status-area #player-count:before {

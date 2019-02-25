@@ -15,33 +15,102 @@ namespace CardsOverLan
         private readonly WebSocketServer _ws;
         private readonly CardGame _game;
 		private bool _disposed = false;
-		private readonly HashSet<IPAddress> _clientIpPool = new HashSet<IPAddress>();
-        private HashSet<SpectatorConnection> _spectatorClients = new HashSet<SpectatorConnection>();
-        private readonly object _spectatorLock = new object();
+		private readonly HashList<SpectatorConnection> _spectators;
+		private readonly Dictionary<string, int> _clientIpPool = new Dictionary<string, int>();
+        private readonly object _clientPoolLock = new object();
+		private readonly object _spectatorLock = new object();
 
         public CardGameServer(CardGame game)
         {
             _game = game;
+			_spectators = new HashList<SpectatorConnection>();
             _ws = new WebSocketServer(WebSocketListenAddress);
-        }
+			_ws.AddWebSocketService(ServerPlayDir, () => new PlayerConnection(this, _game));
+			_ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, _game));
+		}
 
         public void Start()
         {
-            Console.WriteLine("Starting WebSocket services...");
-            _ws.AddWebSocketService(ServerPlayDir, () => new ClientConnection(this, _game));
-            _ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, _game));
+            Console.WriteLine("Starting WebSocket services...");            
             _ws.Start();
 			Console.WriteLine("WebSocket services online.");
         }
 
-		internal bool TryAddToPool(ClientConnection cc)
+		internal bool TryAddToPool(GameConnectionBase client)
 		{
-			return _clientIpPool.Add(cc.Address);
+			lock(_clientPoolLock)
+			{
+				var ip = client.GetIPAddress().ToString();
+				if (ip == null) return false; // I don't even know how this would happen, but handle it anyway
+
+				// Check if the IP is already in the pool
+				if (_clientIpPool.TryGetValue(ip, out int clientCount))
+				{
+					if (!_game.Settings.AllowDuplicatePlayers)
+					{
+						return false;
+					}
+
+					// Increase client count for IP
+					_clientIpPool[ip] = clientCount + 1;
+				}
+				else
+				{
+					_clientIpPool[ip] = 1;
+				}
+
+				return true;
+			}
 		}
 
-		internal bool TryRemoveFromPool(ClientConnection cc)
+		internal bool TryRemoveFromPool(GameConnectionBase client)
 		{
-			return _clientIpPool.Remove(cc.Address);
+			lock(_clientPoolLock)
+			{
+				var ip = client.GetIPAddress().ToString();
+				if (ip == null) return false;
+
+				if (_clientIpPool.TryGetValue(ip, out int clientCount))
+				{
+					if (clientCount <= 1)
+					{
+						_clientIpPool.Remove(ip);
+					}
+					else
+					{
+						_clientIpPool[ip] = clientCount - 1;
+					}
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		internal bool AddSpectator(SpectatorConnection client)
+		{
+			lock(_spectatorLock)
+			{
+				if (_spectators.Count >= _game.Settings.MaxSpectators)
+				{
+					return false;
+				}
+
+				return _spectators.Add(client);
+			}
+		}
+
+		internal bool RemoveSpectator(SpectatorConnection client)
+		{
+			lock (_spectatorLock)
+			{
+				if (_spectators.Count == 0)
+				{
+					return false;
+				}
+
+				return _spectators.Remove(client);
+			}
 		}
 
 		public void Stop()

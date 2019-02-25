@@ -1341,14 +1341,15 @@
         {
             "id": "w_tastyfetus",
             "content": {
-                "en": "An aborted fetus that looks oddly appetizing."
+                "en": "A really tasty abortion.",
+                "de": "Eine sehr leckere Abtreibung."
             },
             "flags": "db cn"
         },
         {
             "id": "w_nuclearslap",
             "content": {
-                "en": "A slap so hard that it shakes the ground."
+                "en": "A slap so hard it shakes the ground."
             },
             "flags": "v"
         },
@@ -2508,6 +2509,14 @@
             "content": {
                 "en": "The perfect man."
             }
+        },
+        {
+            "id": "w_grandmadustpussy",
+            "content": {
+                "en": "Eating out grandma's dusty old pussy.",
+                "de": "Omas staubige Muschi lecken."
+            },
+            "flags": "s g gn gnf ic"
         },
         {
             "id": "b_crazyweirddream",

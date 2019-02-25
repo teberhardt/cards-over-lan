@@ -33,17 +33,16 @@
             class="lah-btn lah-btn-small" />
     </nav>
     <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
-    <div id="game">
-        <div id="black-card-area"></div>
+    <div id="game">        
         <div id="status-area">
             <div id="status"></div>
-            <div id="myname" class="stat bare">--</div>
+            <div><span id="myname">--</span> <span id="spectator-label" class="spectator-only" data-ui-string="ui_spectating_label"></span></div>
             <div id="stat-list">
                 <div id="player-count" class="stat" data-localize-title="ui_player_count">--</div>
                 <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
                 <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
-                <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
-                <div id="coins" class="stat" title="Card Coins" data-localize-title="ui_aux_points">--</div>
+                <div id="score" class="stat player-only" title="Score" data-localize-title="ui_score">--</div>
+                <div id="coins" class="stat player-only" title="Card Coins" data-localize-title="ui_aux_points">--</div>
             </div>
         </div>
         <div id="player-list-area">
@@ -74,7 +73,7 @@
                     class="lah-btn" />
             </div>
         </div>
-        <div id="hand-area" class="fade fade-up">
+        <div id="hand-area" class="fade fade-up player-only">
             <div id="hand-cards-area" class="lah-card-area">
                 <div id="hand-cards-scroll-area" class="lah-card-container-outer">
                     <div id="hand-cards-container" class="lah-card-container-inner"></div>
@@ -85,6 +84,7 @@
                     class="lah-btn hidden" />
             </div>
         </div>
+        <div id="black-card-area"></div>
         <div id="game-end-screen" class="fade hidden">
             <div id="game-end-grid">
                 <div id="game-end-heading" data-ui-string="ui_game_results">
@@ -178,7 +178,7 @@
         <div class="modal-dialog">
             <div class="modal-body">
                 <h1 id="join-screen-title" data-ui-string="ui_game_title"></h1>
-                <p id="join-screen-server-name" data-ui-string="ui_loading"></p>
+                <p id="join-screen-server-name" data-ui-string="ui_loading_info"></p>
                 <hr/>
                 <div id="join-stat-grid">
                     <div class="server-stat" id="join-screen-player-limit">
@@ -208,7 +208,7 @@
                 <div class="lah-listitem">
                     <div class="lah-hlist" id="join-controls">
                         <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_play_game" id="btn-play-game" />
-                        <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_spectate_game" id="btn-spectate-game" disabled/>
+                        <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_spectate_game" id="btn-spectate-game"/>
                     </div>
                 </div>
             </div>

@@ -134,6 +134,10 @@ hr {
     opacity: 0;
 }
 
+#game.lah-spectating .player-only, #game:not(.lah-spectating) .spectator-only {
+    display: none !important;
+}
+
 .card-group {
     display: flex;
     flex-grow: 0;

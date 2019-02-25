@@ -6,9 +6,17 @@
             "en": "Cards Over LAN",
             "de": "Cards Over LAN"
         },
-        "ui_loading": {
-            "en": "Loading...",
-            "de": "Laden..."
+        "ui_loading_info": {
+            "en": "Loading info...",
+            "de": "Serverinfo wird geladen..."
+        },
+        "ui_server_unreachable": {
+            "en": "Can't reach server",
+            "de": "Server nicht erreichbar"
+        },
+        "ui_spectating_label": {
+            "en": "(Spectating)",
+            "de": "(Zuschauer)"
         },
         "ui_btn_play_game": {
             "en": "Join Game",

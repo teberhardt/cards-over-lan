@@ -16,6 +16,7 @@ namespace CardsOverLan
 		private const int DefaultHandSize = 10;
 		private const int DefaultMinPlayers = 3;
 		private const int DefaultMaxPlayers = 10;
+		private const int DefaultMaxSpectators = 10;
 		private const int MinMaxPlayers = 3;
 		private const int MinMinPlayers = 3;
 		private const int MinMaxPoints = 1;
@@ -48,9 +49,9 @@ namespace CardsOverLan
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
 		private int _botCount;
+		private int _maxSpectators;
 
-
-        [JsonProperty("server_name", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
+		[JsonProperty("server_name", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
         [DefaultValue(DefaultServerName)]
         public string ServerName { get; set; } = DefaultServerName;
 
@@ -72,6 +73,14 @@ namespace CardsOverLan
 		{
 			get => _maxPlayers;
 			set => _maxPlayers = value < MinMaxPlayers ? MinMaxPlayers : value;
+		}
+
+		[JsonProperty("max_spectators", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultMaxSpectators)]
+		public int MaxSpectators
+		{
+			get => _maxSpectators;
+			set => _maxSpectators = value < 0 ? 0 : value;
 		}
 
 		[JsonProperty("max_player_name_length", DefaultValueHandling = DefaultValueHandling.Populate)]
