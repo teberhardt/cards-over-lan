@@ -1081,6 +1081,9 @@
         background: #f6f6f6; 
         padding: 20pt 16pt;
         flex-grow: 1;
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
     }
     
     .modal-body {
@@ -1089,7 +1092,6 @@
         justify-content: flex-start;
         width: 100%;
         height: 100%;
-        /* margin-top: var(--modal-nav-height); */
     }
     
     .modal-nav {
@@ -1202,6 +1204,35 @@
         text-align: center;
         color: #454545;
         font-weight: 700;
+    }
+
+    #join-marquee {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 0;
+        align-self: stretch;
+        overflow: hidden;
+        height: 14pt;
+        padding: 2px;
+        font-size: 12pt;
+    }
+    
+    #join-marquee:before, #join-marquee:after {
+        content: attr(data-marquee-text);
+        flex-shrink: 0;
+        min-width: 100%;
+        font-size: 12pt;
+        color: #333;
+        padding-left: 2em;
+        padding-right: 6em;  
+        animation: join-marquee 14s linear 1s infinite;
+        box-sizing: content-box;
+    }
+
+    @keyframes join-marquee {    
+        to {
+            transform: translateX(-100%);
+        }
     }
 
     #join-controls {

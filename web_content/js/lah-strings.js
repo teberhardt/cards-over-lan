@@ -7,9 +7,53 @@
             "en": "Cards Over LAN",
             "de": "Cards Over LAN"
         },
+        "ui_feature_on": {
+            "en": "ON",
+            "de": "AN"
+        },
+        "ui_feature_off": {
+            "en": "OFF",
+            "de": "AUS"
+        },
+        "ui_join_mq_upgrades": {
+            "en": "Card Upgrades: {0}",
+            "de": "Kartenverbesserungen: {0}"
+        },
+        "ui_join_mq_perma_czar": {
+            "en": "Perma-Czar",
+            "de": "Permanenter Zar"
+        },
+        "ui_join_mq_hand_size": {
+            "en": "Hand Size: {0}",
+            "de": "Blattgröße: {0}"
+        },
+        "ui_join_mq_goal": {
+            "en": "Goal: {0}\u2606 / {1} rounds",
+            "de": "Ziel: {0}\u2606 / {1} Runden"
+        },
+        "ui_join_mq_bot_count": {
+            "en": "Bots: {0}",
+            "de": "Bots: {0}"
+        },
+        "ui_join_mq_bot_czars": {
+            "en": "Bot Czars: {0}",
+            "de": "Bot-Zaren: {0}"
+        },
+        "ui_join_mq_winner_czar": {
+            "en": "Winner Is Czar: {0}",
+            "de": "Rundensieger wird Zar: {0}"
+        },
+        "ui_join_mq_blanks": {
+            "en": "Blank Cards: {0}",
+            "de": "Leerkarten: {0}"
+        },
+        "ui_join_mq_discards": {
+            "en": "Discards: {0}",
+            "de": "Ablegungen: {0}"
+        },
         "ui_loading_info": {
-            "en": "Loading info...",
-            "de": "Serverinfo wird geladen..."
+            "en": "Fetching server info...",
+            "de": "Serverinfo wird abgerufen..."
         },
         "ui_server_unreachable": {
             "en": "Can't reach server",
@@ -113,7 +157,7 @@
         },
         "ui_discard_tooltip": {
             "en": "Discard ({0} left)",
-            "de": "Entfernen ({0} übrig)"
+            "de": "Ablegen ({0} übrig)"
         },
         "ui_pending_players": {
             "en": "Pending players",

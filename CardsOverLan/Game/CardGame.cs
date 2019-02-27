@@ -864,8 +864,8 @@ namespace CardsOverLan.Game
 			{
 				lock (_allPlayersSync)
 				{
-					// Check if any of the players have reached the winning score
-					if (_players.Any(p => p.Score >= Settings.MaxPoints))
+					// Check if any of the players have reached the winning score or max rounds are reached
+					if (_players.Any(p => p.Score >= Settings.MaxPoints) || (Settings.MaxRounds > 0 && Round >= Settings.MaxRounds))
 					{
 						EndGame();
 					}

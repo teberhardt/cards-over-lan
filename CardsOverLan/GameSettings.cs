@@ -33,6 +33,7 @@ namespace CardsOverLan
 		private const int DefaultAfkTimeSeconds = 300;
 		private const int DefaultAfkRecoveryTimeSeconds = 90;
 		private const int DefaultMaxPoints = 10;
+		private const int DefaultMaxRounds = 16;
 		private const int DefaultBlankCards = 0;
 		private const int DefaultBotCount = 0;
 		private const int DefaultDiscards = 5;
@@ -168,6 +169,10 @@ namespace CardsOverLan
 				_maxPoints = value < MinMaxPoints ? MinMaxPoints : value;
 			}
 		}
+
+		[JsonProperty("max_rounds", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultMaxRounds)]
+		public int MaxRounds { get; set; }
 
 		[JsonProperty("bot_count", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultBotCount)]

@@ -71,6 +71,7 @@ The settings.json file contains a number of properties that control how the serv
 |`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
 |`max_players`|Integer|Maximum number of players that the server can hold.|
 |`max_points`|Integer|Points required for a player to win the game.|
+|`max_rounds`|Integer|Maximum number of rounds before game ends.|
 |`max_spectators`|Integer|Maximum number of spectators allowed.|
 |`min_players`|Integer|Minimum required players in order for the game to start.|
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|

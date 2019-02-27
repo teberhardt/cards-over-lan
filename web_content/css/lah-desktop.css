@@ -1130,9 +1130,9 @@ card[data-selection]::after {
     position: relative;  
     padding: 20pt 24pt 16pt 24pt;
     border-radius: 6pt;
-    max-width: 60%;
-    min-width: 50%;
-    min-height: 300px;
+    width: 700px;
+    max-width: 700px;
+    min-height: 400px;
 }
 
 .modal-dialog h1,
@@ -1277,6 +1277,33 @@ card[data-selection]::after {
     justify-content: space-around;
     margin: 4px 0;
     color: #333;
+}
+
+#join-marquee {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    height: 14pt;
+    padding: 2px;
+    font-size: 12pt;
+}
+
+#join-marquee:before, #join-marquee:after {
+    content: attr(data-marquee-text);
+    flex-shrink: 0;
+    min-width: 100%;
+    font-size: 12pt;
+    color: #333;
+    padding-left: 2em;
+    padding-right: 6em;  
+    animation: join-marquee 12s linear 1s infinite;
+    box-sizing: content-box;
+}
+
+@keyframes join-marquee {    
+    to {
+        transform: translateX(-100%);
+    }
 }
 
 #join-stat-grid .server-stat {
