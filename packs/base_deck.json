@@ -1,6 +1,6 @@
 {
-    "id": "berkins_deck",
-    "name": "Berkin's Big Deck",
+    "id": "base_deck",
+    "name": "Cards Over LAN",
     "accent": "purple",
     "author": "Nicholas Fleck, Matthew Farstad, Jessica Fleck",
     "trophies": [
@@ -89,8 +89,7 @@
             "id": "w_tidepods",
             "content": {
                 "en": "Tide Pods.",
-                "de": "Tide Pods.",
-                "da-DK": "Tide Pods."
+                "de": "Tide Pods."
             }
         },
         {
@@ -175,8 +174,7 @@
         {
             "id": "w_acupuncture",
             "content": {
-                "en": "Overly enthusiastic acupuncture.",
-                "es-MX": "Acupuntura demasiado entusiasta."
+                "en": "Overly enthusiastic acupuncture."
             },
             "flags": "w i"
         },
@@ -561,7 +559,8 @@
         {
             "id": "w_mufasacorpse",
             "content": {
-                "en": "Mufasa's festering carcass."
+                "en": "Mufasa's festering carcass.",
+                "de": "Der verrotende Kadavar von Mufasa."
             },
             "flags": "fc an"
         },
@@ -576,7 +575,8 @@
         {
             "id": "w_interrogation",
             "content": {
-                "en": "Enhanced interrogation techniques."
+                "en": "Enhanced interrogation techniques.",
+                "de": "Verbesserte Verhörmethoden."
             },
             "flags": "v cr"
         },
@@ -638,7 +638,8 @@
         {
             "id": "w_newmystery",
             "content": {
-                "en": "The gang's newest mystery."
+                "en": "The gang's newest mystery.",
+                "de": "Das neuste Rätsel der Bande."
             }
         },
         {
@@ -743,7 +744,8 @@
         {
             "id": "w_buzzlightyear",
             "content": {
-                "en": "Buzz Lightyear to the rescue!"
+                "en": "Buzz Lightyear to the rescue!",
+                "de": "Buzz Lightyear zur Rettung!"
             },
             "flags": "fc"
         },
@@ -758,13 +760,15 @@
         {
             "id": "w_lostbrother",
             "content": {
-                "en": "My long-lost brother."
+                "en": "My long-lost brother.",
+                "de": "Mein lange vorschollener Bruder."
             }
         },
         {
             "id": "w_shitclap",
             "content": {
-                "en": "Shitting into your hands and clapping."
+                "en": "Shitting into your hands and clapping.",
+                "de": "In deine Hände scheißen und klatschen."
             },
             "flags": "w g fe"
         },
@@ -1538,7 +1542,7 @@
             "id": "w_infgauntlet",
             "content": {
                 "en": "The Infinity Gauntlet.",
-                "de": "Der Unendlichkeits&shy;fehdehandschuh."
+                "de": "Der Unendlichkeits&shy;handschuh."
             }
         },
         {
@@ -1571,9 +1575,9 @@
             }
         },
         {
-            "id": "w_foamass",
+            "id": "w_insulatedmouth",
             "content": {
-                "en": "Filling my mouth with expanding foam insulation."
+                "en": "Filling my mouth with foam insulation."
             },
             "flags": "w"
         },
@@ -1777,52 +1781,61 @@
         {
             "id": "w_sitsquish",
             "content": {
-                "en": "Hearing a squishing noise when you sit down."
+                "en": "Hearing a squishing noise when you sit down.",
+                "de": "Ein Quetschgeräusch beim Sitzen hören."
             },
             "flags": "g"
         },
         {
             "id": "w_maxabsorb",
             "content": {
-                "en": "Maximum absorption."
+                "en": "Maximum absorption.",
+                "de": "Maximale Absorption."
             }
         },
         {
             "id": "w_goodfistbump",
             "content": {
-                "en": "A victorious fistbump."
+                "en": "A victorious fistbump.",
+                "de": "Ein siegreicher Fauststoß."
             }
         },
         {
             "id": "w_cdlobster",
             "content": {
-                "en": "A cross-dressing lobster."
-            }
+                "en": "A cross-dressing lobster.",
+                "de": "Ein transvestischer Hummer."
+            },
+            "flags": "w"
         },
         {
             "id": "w_crabscuttle",
             "content": {
-                "en": "Scuttling away sideways like a crab."
+                "en": "Scuttling away sideways like a crab.",
+                "de": "Wie eine Krabbe seitlich davonhuschen."
             },
             "flags": "w"
         },
         {
             "id": "w_mlm",
             "content": {
-                "en": "Multi-level marketing."
+                "en": "Multi-level marketing.",
+                "de": "Multi-Level-Marketing."
             }
         },
         {
             "id": "w_goodmouthshit",
             "content": {
-                "en": "Shitting into my mouth like the good little dirty whore you are."
+                "en": "Shitting into my mouth like the good little dirty whore you are.",
+                "de": "In meinen Mund wie eine brave, dreckige Hure kacken."
             },
             "flags": "s fe xf"
         },
         {
             "id": "w_dadmonsterdong",
             "content": {
-                "en": "My dad's monster dong."
+                "en": "My dad's monster dong.",
+                "de": "Der Riesenschwanz meines Vaters."
             },
             "flags": "s gn gnm ic"
         },
@@ -1836,7 +1849,8 @@
         {
             "id": "w_forestautist",
             "content": {
-                "en": "Ditching your autistic son in the forest."
+                "en": "Ditching your autistic son in the forest.",
+                "de": "Deinen autistischen Sohn im Wald verlassen."
             },
             "flags": "ch ch_cr"
         },
@@ -1851,13 +1865,15 @@
         {
             "id": "w_suddenbigscream",
             "content": {
-                "en": "Breaking the silence with an ear-splitting, soul-shattering scream."
+                "en": "Breaking the silence with an ear-splitting, soul-shattering scream.",
+                "de": "Die Stille mit einem ohrbetäubenden, weltbewegenden Schrei brechen."
             }
         },
         {
             "id": "w_kidzboppeople",
             "content": {
-                "en": "The unholy miscreants who listen to Kidz Bop."
+                "en": "The unholy miscreants who listen to Kidz Bop.",
+                "de": "Die unheiligen Übeltäter, die sich Kidz Bop anhören."
             }
         },
         {
@@ -1887,7 +1903,8 @@
         {
             "id": "w_autotunedtween",
             "content": {
-                "en": "An autotuned tween \"singer\"."
+                "en": "An autotuned tween \"singer\".",
+                "de": "Ein automatisch getuntes Kind-\"Sänger\"."
             },
             "flags": "ch"
         },
@@ -1910,20 +1927,23 @@
         {
             "id": "w_pizzazz",
             "content": {
-                "en": "A little pizzazz."
+                "en": "A little pizzazz.",
+                "de": "Ein bisschen Pep."
             }
         },
         {
             "id": "w_naughtynaughtygirl",
             "content": {
-                "en": "A naughty, naughty girl."
+                "en": "A naughty, naughty girl.",
+                "de": "Eine böses, böses Mädel."
             },
             "flags": "s"
         },
         {
             "id": "w_taintsweat",
             "content": {
-                "en": "Taint sweat."
+                "en": "Taint sweat.",
+                "de": "Dammschweiß."
             },
             "flags": "gn"
         },
@@ -1931,26 +1951,29 @@
             "id": "w_blueberryporn",
             "content": {
                 "en": "Blueberry porn.",
-                "de": "Blaubeerenpornografie."
+                "de": "Blaubeeren&shy;pornografie."
             },
             "flags": "w x s"
         },
         {
             "id": "w_fornitedancelaw",
             "content": {
-                "en": "Copyrighted dance moves."
+                "en": "Copyrighted dance moves.",
+                "de": "Urheberrechtlich geschützte Tanzbewegungen."
             }
         },
         {
             "id": "w_perfectpreshumanear",
             "content": {
-                "en": "A perfectly preserved human ear."
+                "en": "A perfectly preserved human ear.",
+                "de": "Ein perfekt konserviertes menschliches Ohr."
             }
         },
         {
             "id": "w_gleamingthorax",
             "content": {
-                "en": "His gleaming thorax."
+                "en": "His gleaming thorax.",
+                "de": "Sein glänzender Thorax."
             },
             "flags": "w"
         },
@@ -1964,7 +1987,8 @@
         {
             "id": "w_livestockworship",
             "content": {
-                "en": "Livestock worshippers."
+                "en": "Livestock worshippers.",
+                "de": "Viehanbeter."
             },
             "flags": "w"
         },
@@ -2022,7 +2046,8 @@
         {
             "id": "w_bootycall",
             "content": {
-                "en": "A booty call."
+                "en": "A booty call.",
+                "de": "Ein Booty-Call."
             },
             "flags": "s"
         },
@@ -2065,7 +2090,8 @@
         {
             "id": "w_fancyrimjob",
             "content": {
-                "en": "Tongue-lashing the brown star."
+                "en": "Tongue-lashing the brown star.",
+                "de": "Den Arschloch leidenschaftlich lecken."
             },
             "flags": "s"
         },
@@ -2628,6 +2654,72 @@
             "flags": "g w"
         },
         {
+            "id": "w_kitchensinksludge",
+            "content": {
+                "en": "The thick, salty sludge in the kitchen sink drain.",
+                "de": "Der dicke, salzige Schlamm im Abfluss der Spüle."
+            },
+            "next_tier_id": "w_kitchensinksludgedrink",
+            "flags": "g"
+        },
+        {
+            "id": "w_kitchensinksludgedrink",
+            "content": {
+                "en": "Drinking the thick, salty sludge out of the kitchen sink drain.",
+                "de": "Den dicken, salzigen Schlamm aus dem Abfluss der Spüle trinken."
+            },
+            "tier_cost": 5,
+            "tier": 4,
+            "flags": "g"
+        },
+        {
+            "id": "w_evilsickfarts",
+            "content": {
+                "en": "Evil-smelling sick person farts.",
+                "de": "Stinkende Krankenfürze."
+            },
+            "flags": "g di"
+        },
+        {
+            "id": "w_littlesquirt",
+            "content": {
+                "en": "A little squirt.",
+                "de": "Ein kleiner Spritzer."
+            }
+        },
+        {
+            "id": "b_bakingtip",
+            "content": {
+                "en": "Quick Baking Tip:\nFor an extra moist cake, toss in a little bit of ________!",
+                "de": "Praktischer Back-Tipp:\nUm einen Kuchen extra feucht zu machen, kannst du ein wenig ________ dazugeben!"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_alotofthingsbut",
+            "content": {
+                "en": "I worry about a lot of things, but ________ isn't one of them.",
+                "de": "Ich mache mir über viele Dinge Sorgen, aber ________ ist keines davon."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_hitlerrealdeathcause",
+            "content": {
+                "en": "Historians have uncovered shocking new evidence that suggests Hitler actually met his untimely end from ________.",
+                "de": "Historiker haben schockierende neue Beweise aufgedeckt, die darauf hindeuten, dass Hitler tatsächlich von ________ getötet wurde."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_onemonthweightloss",
+            "content": {
+                "en": "I lost 30 pounds in 30 days, all thanks to ________!",
+                "de": "Ich habe in 30 Tagen 30 Pfund abgenommen, und das alles dank ________!"
+            },
+            "pick": 1
+        },
+        {
             "id": "b_causesofdeath",
             "content": {
                 "en": "________ is the second leading cause of death worldwide, right behind ________.",
@@ -2640,7 +2732,8 @@
             "content": {
                 "en": "Never underestimate a man with _________.",
                 "de": "Man sollte nie einen Mann mit _________ unterschätzen."
-            }
+            },
+            "pick": 1
         },
         {
             "id": "b_crazyweirddream",
@@ -3121,8 +3214,8 @@
         {
             "id": "b_scarredparents",
             "content": {
-                "en": "My parents were forever scarred when they walked in on me while I was _______.",
-                "de": "Meine Eltern wurden fürs Leben gezeichnet, als sie bei mir beim ________ hereingeplatzt haben."
+                "en": "My parents were scarred for life when they walked in on me while I was _______.",
+                "de": "Meine Eltern wurden fürs Leben gezeichnet, als sie mir beim ________ hereingeplatzt sind."
             },
             "pick": 1
         },
@@ -3151,7 +3244,8 @@
         {
             "id": "b_subtraction",
             "content": {
-                "en": "_______ - _______ = _______."
+                "en": "_______ - _______ = _______.",
+                "de": "_______ - _______ = _______."
             },
             "draw": 2,
             "pick": 3

@@ -277,7 +277,7 @@
         },
         "ui_trophies": {
             "en": "Trophies",
-            "de": "Errungenschaften"
+            "de": "Errungen\u00adschaften"
         },
         "ui_scoreboard_score": {
             "en": "Score",
@@ -285,7 +285,7 @@
         },
         "ui_scoreboard_trophies": {
             "en": "Trophies",
-            "de": "Errungenschaften"
+            "de": "Errungen\u00adschaften"
         },
         "ui_player_list_title": {
             "en": "Players",
