@@ -11,6 +11,11 @@
         --final-score-row-height: 22pt;
     }
 
+    html {
+        height: 100vh;
+        width: 100vw;
+    }
+
     body {
         background-color: var(--accent-bg);
         color: var(--accent-fg);
@@ -117,6 +122,7 @@
     }
     
     #game {
+        position: relative;
         max-width: 100vw;
         max-height: 100vh;
         min-width: 100vw;
@@ -549,6 +555,7 @@
     }
 
     #game-end-trophies-list {
+        position: relative;
         display: flex;
         max-width: 100%;
         flex-direction: row;
@@ -557,6 +564,19 @@
         overflow-y: hidden;
         overflow-x: auto;
         box-sizing: border-box;
+    }
+
+    #game-end-trophies-list:empty:before {
+        content: attr(data-emptymsg);
+        display: block;
+        height: 1em;
+        position: relative;
+        left: 50%;
+        top: 40%;
+        color: #eee;
+        opacity: .4;
+        font-size: 12pt;
+        transform: translate(-50%, -50%);
     }
 
     .trophy {
@@ -1004,6 +1024,7 @@
         border: 2px solid var(--btn-border-color);
         border-radius: 6pt;
         font-size: 22pt;
+        min-height: 44px;
     }
 
     /* themed controls */
@@ -1040,11 +1061,14 @@
     }
     
     .lah-txtbox {
-        padding: 6pt;
+        flex-shrink: 0;
+        height: 16pt;
+        min-height: 16pt;
         outline: none;
         border: 2px solid black;
         border-radius: 4pt;
         font-size: 14pt;
+        padding: 6pt;
     }
     
     .lah-label {
@@ -1052,6 +1076,7 @@
         font-size: 14pt;
         margin: 4pt 1pt;
         color: #444;
+        flex-shrink: 0;
     }
 
     .lah-fill {
@@ -1068,7 +1093,7 @@
     
     .modal {
         display: flex;
-        position: fixed;
+        position: absolute;
         color: #111;
         left: 0;
         top: 0;
@@ -1135,11 +1160,13 @@
     .lah-vlist > .lah-listitem, .modal-body > .lah-listitem {
         display: flex;
         flex-direction: column;
+        flex-shrink: 0;
         margin: 4pt;
         width: 100%;
     }
     
     .lah-vlist > .lah-gap {
+        flex-shrink: 0;
         margin: 4pt 4pt;
     }
     

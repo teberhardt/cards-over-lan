@@ -204,8 +204,8 @@
                 "de": "Veraltet"
             },
             "desc": {
-                "en": "You lost to a bot. A BOT.",
-                "de": "Du hast gegen einen Bot verloren. GEGEN EINEN BOT."
+                "en": "You lost to a bot.\nWait, really?",
+                "de": "Du hast gegen einen Bot verloren.\nWarte mal, wirklich?"
             },
             "requirements": [
                 {
@@ -268,10 +268,10 @@
         {
             "id": "trophy_incest",
             "name": {
-                "en": "Brotherly Love"
+                "en": "Sweet Home Alabama"
             },
             "desc": {
-                "en": "The gene pool is apparently just a puddle."
+                "en": "The gene pool is really just a puddle."
             },
             "requirements": [
                 {
@@ -282,23 +282,28 @@
             ]
         },
         {
-            "id": "trophy_alabama",
+            "id": "trophy_biblebelt",
             "name": {
                 "en": "Bible Belt"
             },
             "desc": {
-                "en": "Channel your inner redneck."
+                "en": "Preach the good word."
             },
             "requirements": [
                 {
                     "type": "card_proportion",
-                    "flags": ["re", "as", "ra"],
-                    "percent": 25
+                    "flags": ["re"],
+                    "percent": 10
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["as", "ra"],
+                    "percent": 15
                 },
                 {
                     "type": "card_proportion",
                     "flags": ["ic", "pd", "hp"],
-                    "percent": 25
+                    "percent": 15
                 }
             ]
         }

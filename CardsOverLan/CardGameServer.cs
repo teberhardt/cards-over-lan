@@ -36,7 +36,7 @@ namespace CardsOverLan
 			Console.WriteLine("WebSocket services online.");
         }
 
-		internal bool TryAddToPool(GameConnectionBase client)
+		internal bool TryAddToPool(ClientConnectionBase client)
 		{
 			lock(_clientPoolLock)
 			{
@@ -63,7 +63,7 @@ namespace CardsOverLan
 			}
 		}
 
-		internal bool TryRemoveFromPool(GameConnectionBase client)
+		internal bool TryRemoveFromPool(ClientConnectionBase client)
 		{
 			lock(_clientPoolLock)
 			{

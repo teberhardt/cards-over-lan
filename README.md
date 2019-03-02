@@ -39,7 +39,7 @@ To build the server, you need Visual Studio 2017 and .NET Framework 4.7.2.
 
 Open the `CardsOverLan` project in Visual Studio and build it.
 
-The build will contain copies of the `decks` and `web_content` folders.
+The build will contain copies of the `packs` and `web_content` folders.
 It also contains a `settings.json` file that contains the server settings. See below for how to configure this file.
 
 After building, run CardsOverLan.exe to start the server.
@@ -77,7 +77,7 @@ The settings.json file contains a number of properties that control how the serv
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
-|`use_packs`|Stringp[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
+|`use_packs`|String[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
 |`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner. Overridden by `bot_czars` and `perma_czar`.|
 
 

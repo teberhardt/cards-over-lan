@@ -103,7 +103,7 @@
                     <div id="game-end-trophies-heading" data-ui-string="ui_trophies">
                         Trophies
                     </div>
-                    <div id="game-end-trophies-list"></div>
+                    <div id="game-end-trophies-list" data-localize-data-emptymsg="ui_no_trophies"></div>
                 </div>
             </div>
         </div>
@@ -130,12 +130,12 @@
                 <h1 data-ui-string="ui_options">Options</h1>
                 <div class="lah-vlist">
                     <div class="lah-listitem">
-                        <label class="lah-label" data-ui-string="ui_nickname"></label>
+                        <label class="lah-label" for="txt-username" data-ui-string="ui_nickname"></label>
                         <input type="text" id="txt-username" class="lah-txtbox wide"
                             data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
                     </div>
                     <div class="lah-listitem">
-                        <label class="lah-label" data-ui-string="ui_accent_color"></label>
+                        <label class="lah-label" for="txt-accent-color" data-ui-string="ui_accent_color"></label>
                         <input type="text" id="txt-accent-color" class="lah-txtbox wide"
                             data-localize-placeholder="ui_accent_color_placeholder" autocomplete="off"
                             maxlength="250" />
@@ -198,11 +198,12 @@
                         <span class="name" data-ui-string="ui_white_card_count"></span>
                     </div>
                 </div>
+                <hr/>
                 <div id="join-marquee" data-marquee-text=""></div>
                 <hr/>
                 <div class="lah-gap"></div>
                 <div class="lah-listitem">
-                    <label class="lah-label" data-ui-string="ui_nickname"></label>
+                    <label class="lah-label" for="txt-join-username" data-ui-string="ui_nickname"></label>
                     <input type="text" id="txt-join-username" class="lah-txtbox wide"
                         data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
                 </div>

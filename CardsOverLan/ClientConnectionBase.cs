@@ -1,4 +1,5 @@
 ﻿using CardsOverLan.Game;
+using CardsOverLan.Game.ContractResolvers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,13 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-	internal abstract class GameConnectionBase : WebSocketBehavior
+	internal abstract class ClientConnectionBase : WebSocketBehavior
 	{
+		private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+		{
+			ContractResolver = ClientFacingContractResolver.Instance
+		};
+
 		private IPAddress _ip;
 		private readonly Dictionary<string, string> _cookies;
 
@@ -22,7 +28,7 @@ namespace CardsOverLan
 		public CardGame Game { get; }
 		public bool IsOpen => State == WebSocketSharp.WebSocketState.Open;
 
-		public GameConnectionBase(CardGameServer server, CardGame game)
+		public ClientConnectionBase(CardGameServer server, CardGame game)
 		{
 			Server = server;
 			Game = game;
@@ -122,7 +128,7 @@ namespace CardsOverLan
 
 		protected void SendMessageObject(object o)
 		{
-			Send(JsonConvert.SerializeObject(o, Formatting.None));
+			Send(JsonConvert.SerializeObject(o, Formatting.None, SerializerSettings));
 		}
 	}
 }

@@ -1056,6 +1056,7 @@
         document.querySelector("#join-screen-white-card-count .value").textContent = info.white_card_count;
         document.querySelector("#join-screen-black-card-count .value").textContent = info.black_card_count;
 
+        const mqSep = "\u00a0\u00a0\u2014\u00a0\u00a0";
         const onoff = b => getUiString(b ? "ui_feature_on" : "ui_feature_off");
         const zeroOff = x => x > 0 ? x.toString() : getUiString("ui_feature_off");
         var marqueeText = getUiString("ui_join_mq_goal", info.max_points, info.max_rounds)
@@ -1065,7 +1066,8 @@
         + mqSep + getUiString("ui_join_mq_bot_czars", onoff(info.bot_czars))
         + mqSep + (info.perma_czar ? getUiString("ui_join_mq_perma_czar") : getUiString("ui_join_mq_winner_czar", onoff(info.winner_czar)))
         + mqSep + getUiString("ui_join_mq_blanks", zeroOff(info.blank_cards))
-        + mqSep + getUiString("ui_join_mq_discards", zeroOff(info.discards));
+        + mqSep + getUiString("ui_join_mq_discards", zeroOff(info.discards))
+        + mqSep + getUiString("ui_join_mq_allow_skips", onoff(info.allow_skips));
         document.querySelector("#join-marquee").setAttribute("data-marquee-text", marqueeText);
     }
 

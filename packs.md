@@ -52,6 +52,7 @@ The JSON object format for a card is as follows:
         "en": "An example white card.",
         "de": "Eine weiße Beispielkarte."
     },
+    "type": "n",
     "tier": 0,
     "next_tier_id": "w_example_tier2",
     "tier_cost": 3,
@@ -65,12 +66,17 @@ The JSON object format for a card is as follows:
 |-------------|-----------|
 |`id`|The ID string used internally to identify the card. The `w_` and `b_` prefixes denote white and black cards respectively.|
 |`content`|Contains the localized card text, indexed by its locale.|
+|`type`| (Optional) The type of concept described by the card (e.g. noun)|
 |`tier`|(Optional) Tier of the card. Base tier will have a value of `0`, and higher tiers have higher values.|
 |`next_tier_id`|(Optional) The ID of the upgraded version of the card.|
 |`tier_cost`|(Optional) The cost of acquiring this card as an upgrade.|
 |`flags`|A string defining content flags for this card.|
 |`pick`|The number of blank spaces (black cards only).|
 |`draw`|The number of extra white cards drawn per player (black cards only).|
+
+#### Types
+
+
 
 ### Trophies
 

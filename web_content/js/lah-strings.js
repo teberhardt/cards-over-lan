@@ -19,6 +19,10 @@
             "en": "Card Upgrades: {0}",
             "de": "Kartenverbesserungen: {0}"
         },
+        "ui_join_mq_allow_skips": {
+            "en": "Allow Skipping Black Cards: {0}",
+            "de": "Überspringungen von Fragekarten erlauben: {0}"
+        },
         "ui_join_mq_perma_czar": {
             "en": "Perma-Czar",
             "de": "Permanenter Zar"
@@ -141,7 +145,7 @@
         },
         "ui_card_czar": {
             "en": "Card Czar",
-            "de": "Zar"
+            "de": "Kartenzar"
         },
         "ui_score": {
             "en": "Score",
@@ -201,7 +205,7 @@
         },
         "ui_you_are_czar": {
             "en": "You're the Card Czar.",
-            "de": "Du bist der Zar."
+            "de": "Du bist der Kartenzar."
         },
         "ui_sub_nobody": {
             "en": "Nobody",
@@ -209,7 +213,7 @@
         },
         "ui_x_is_czar": {
             "en": "{0} is the Card Czar.",
-            "de": "{0} ist der Zar."
+            "de": "{0} ist der Kartenzar."
         },
         "ui_winner_left_nobody_scores": {
             "en": "Round winner left. Nobody scores.",
@@ -239,6 +243,10 @@
             "en": "Game Over!",
             "de": "Spielende"
         },
+        "ui_no_trophies": {
+            "en": "None!",
+            "de": "Keine!"
+        },
         "ui_username_placeholder": {
             "en": "Who are you?",
             "de": "Wer bist du?"
@@ -260,7 +268,7 @@
             "de": "Akzentfarbe"
         },
         "ui_accent_color_placeholder": {
-            "en": "Type a color name",
+            "en": "Type a color name (e.g. \"dead babies\")",
             "de": "Farbename hier eingeben"
         },
         "ui_menu_title": {

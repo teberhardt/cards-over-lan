@@ -15,7 +15,7 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-	internal sealed class PlayerConnection : GameConnectionBase
+	internal sealed class PlayerConnection : ClientConnectionBase
 	{
 		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 

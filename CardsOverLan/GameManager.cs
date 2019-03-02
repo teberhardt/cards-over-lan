@@ -76,6 +76,8 @@ namespace CardsOverLan
 			Game.StageChanged += OnGameStageChanged;
 			Game.RoundEnded += OnGameRoundEnded;
 			Game.GameEnded += OnGameEnded;
+
+            UpdateTitle();
 		}
 
 		public object GetGameInfoObject()
@@ -98,6 +100,7 @@ namespace CardsOverLan
 				max_rounds = Game.Settings.MaxRounds,
 				blank_cards = Game.Settings.BlankCards,
 				discards = Game.Settings.Discards,
+                allow_skips = Game.Settings.AllowBlackCardSkips,
 				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name })
 			};
 		}

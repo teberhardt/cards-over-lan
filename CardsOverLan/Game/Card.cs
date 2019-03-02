@@ -8,17 +8,20 @@ using System.Runtime.Serialization;
 
 namespace CardsOverLan.Game
 {
+	[ClientObjectPolicy(ClientObjectPolicyType.OptIn)]
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     [JsonConverter(typeof(CardConverter))]
     public abstract class Card
     {
         protected const string DefaultLocale = "en";
 
+		[ClientFacing]
         [JsonProperty("content")]
         private readonly Dictionary<string, string> _content = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
 		private readonly List<string> _languageFamilies = new List<string>();
 
+		[ClientFacing]
         [JsonProperty("id")]
         public string ID { get; internal set; }
 

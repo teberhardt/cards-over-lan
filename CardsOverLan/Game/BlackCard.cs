@@ -8,6 +8,7 @@ namespace CardsOverLan.Game
 	{
 		private int _pickCount = 1;
 
+		[ClientFacing]
 		[JsonProperty("pick", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(1)]
 		public int PickCount
@@ -19,6 +20,7 @@ namespace CardsOverLan.Game
 			}
 		}
 
+		[ClientFacing]
 		[JsonProperty("draw", DefaultValueHandling = DefaultValueHandling.Populate)]
 		public int DrawCount { get; set; }
 

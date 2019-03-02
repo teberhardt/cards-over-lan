@@ -75,6 +75,6 @@ namespace CardsOverLan.Game
 
         public IEnumerable<Card> GetAllCards() => _cards.AsEnumerable();
 
-        public override string ToString() => $"{Id} ({_cards.Count} cards, {_trophies.Count} trophies)";
+        public override string ToString() => $"{Id} ({_blackCards.Count} black, {_whiteCards.Count} white, {_trophies.Count} trophies)";
     }
 }

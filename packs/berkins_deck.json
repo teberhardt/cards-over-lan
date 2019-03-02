@@ -31,14 +31,16 @@
                 "en": "A severed penis.",
                 "de": "Ein abgetrennter Penis."
             },
+            "type": "n",
             "flags": "gnm bg"
         },
         {
             "id": "w_couchfart",
             "content": {
                 "en": "Concentrated couch farts.",
-                "de": "Sofafurzkonzentrat."
+                "de": "Sofa&shy;furzkonzentrat."
             },
+            "type": "n",
             "flags": "g"
         },
         {
@@ -47,6 +49,7 @@
                 "en": "That one crusty sock.",
                 "de": "Diese eine verkrustete Socke."
             },
+            "type": "n",
             "flags": "g s"
         },
         {
@@ -55,6 +58,7 @@
                 "en": "A plastic bag full of wriggling thumbs.",
                 "de": "Eine Plastiktüte voller wackelnden Daumen."
             },
+            "type": "n",
             "flags": "g w"
         },
         {
@@ -211,14 +215,15 @@
             "id": "w_dickfungus",
             "content": {
                 "en": "Penile fungal infections.",
-                "de": "Penis-Pilzinfektionen."
+                "de": "Penis-Pilz&shy;infektionen."
             },
             "flags": "g w gnm"
         },
         {
             "id": "w_hornyelephant",
             "content": {
-                "en": "A ravenously horny elephant."
+                "en": "A ravenously horny elephant.",
+                "de": "Ein unersättlich geiler Elefant."
             },
             "flags": "an s"
         },
@@ -331,7 +336,7 @@
             "id": "w_chococysts",
             "content": {
                 "en": "Chocolate-covered sebaceous cysts.",
-                "de": "Schokoladenüberzogene Grießknoten."
+                "de": "Schokoladen&shy;überzogene Grießknoten."
             },
             "flags": "w g"
         },
@@ -409,7 +414,7 @@
             "id": "w_bigdadlube",
             "content": {
                 "en": "Your dad's gallon jug of anal lube.",
-                "de": "Der Anusgleitmittelkanister deines Vaters."
+                "de": "Der Anusgleitmittel&shy;kanister deines Vaters."
             },
             "flags": "s w"
         },
@@ -646,7 +651,8 @@
         {
             "id": "w_elmoass",
             "content": {
-                "en": "Elmo's gaping asshole."
+                "en": "Elmo's gaping asshole.",
+                "de": "Elmos klaffendes Arschloch."
             },
             "flags": "fc s"
         },
@@ -661,7 +667,8 @@
         {
             "id": "w_deathembrace",
             "content": {
-                "en": "The sweet embrace of death."
+                "en": "The sweet embrace of death.",
+                "de": "Die süße Umarmung des Todes."
             },
             "flags": "d"
         },
@@ -676,7 +683,8 @@
         {
             "id": "w_ancientciv",
             "content": {
-                "en": "An ancient underground civilization."
+                "en": "An ancient underground civilization.",
+                "de": "Eine alte unterirdische Zivilisation."
             }
         },
         {
@@ -727,7 +735,8 @@
         {
             "id": "w_dickwhistle",
             "content": {
-                "en": "Whistling out of your dick."
+                "en": "Whistling out of your dick.",
+                "de": "Aus dem Schwanz flüstern."
             },
             "flags": "w gnm"
         },
@@ -1019,7 +1028,8 @@
         {
             "id": "w_altuniverse",
             "content": {
-                "en": "An alternate universe."
+                "en": "An alternate universe.",
+                "de": "Ein alternatives Universum."
             }
         },
         {
@@ -1084,7 +1094,8 @@
         {
             "id": "w_spaghetti",
             "content": {
-                "en": "A steaming pile of spaghetti."
+                "en": "A steaming pile of spaghetti.",
+                "de": "Ein dampfender Haufen Spaghetti."
             }
         },
         {
@@ -1113,14 +1124,15 @@
             "id": "w_billymays",
             "content": {
                 "en": "BILLY MAYS HERE WITH AN AMAZING NEW PRODUCT!",
-                "de": "BILLY MAYS HIER MIT EINEM FANTASTISCHEN NEUEN PRODUKT!"
+                "de": "BILLY MAYS, HIER MIT EINEM FANTASTISCHEN NEUEN PRODUKT!"
             },
             "flags": "ce"
         },
         {
             "id": "w_mjfoxsurgery",
             "content": {
-                "en": "Michael J. Fox performing brain surgery."
+                "en": "Michael J. Fox performing brain surgery.",
+                "de": "Michael J. Fox beim Durchführen einer Gehirnoperation."
             },
             "flags": "ce di"
         },
@@ -1143,7 +1155,8 @@
         {
             "id": "w_youngman",
             "content": {
-                "en": "A handsome young man with a lovely smile."
+                "en": "A handsome young man with a lovely smile.",
+                "de": "Ein gut aussehender junger Mann mit einem schönen Lächeln."
             }
         },
         {
@@ -1225,7 +1238,7 @@
         {
             "id": "w_pressurewasher",
             "content": {
-                "en": "Sticking a pressure washer up your dick hole... for science!"
+                "en": "Sticking a pressure washer up your dick hole, for science!"
             },
             "flags": "xf gnm s"
         },
@@ -1239,7 +1252,8 @@
         {
             "id": "w_musclebear",
             "content": {
-                "en": "A smiling, anthropomorphic grizzly bear with bulging muscles and a piercing gaze."
+                "en": "A smiling, anthropomorphic bear with bulging muscles and a piercing gaze.",
+                "de": "Ein lächelnder, anthropomorpher Bär mit hervorgetretenen Muskeln und einem durchdringenden Blick."
             },
             "flags": "an w"
         },
@@ -1311,7 +1325,7 @@
             "id": "w_dollarmeat",
             "content": {
                 "en": "Dollar store meat.",
-                "de": "Dollarladenfleisch."
+                "de": "Dollarladen&shy;fleisch."
             },
             "flags": "g"
         },
@@ -1356,7 +1370,7 @@
         {
             "id": "w_prettyman",
             "content": {
-                "en": "A <i>very</i> attractive man with an amazingly toned ass."
+                "en": "A <i>really</i> attractive man with an incredibly toned ass."
             },
             "flags": "s"
         },
@@ -1484,7 +1498,8 @@
         {
             "id": "w_toothypug",
             "content": {
-                "en": "A pug with human teeth."
+                "en": "A pug with human teeth.",
+                "de": "Ein Mops mit menschlichen Zähnen."
             },
             "flags": "w an"
         },
@@ -1523,7 +1538,7 @@
             "id": "w_infgauntlet",
             "content": {
                 "en": "The Infinity Gauntlet.",
-                "de": "Der Unendlichkeitsfehdehandschuh."
+                "de": "Der Unendlichkeits&shy;fehdehandschuh."
             }
         },
         {
@@ -1650,7 +1665,8 @@
         {
             "id": "w_supermargin",
             "content": {
-                "en": "All the marginalized minorities combined together to form one unstoppable MEGA-Minority!"
+                "en": "All the marginalized minorities combined together to form one unstoppable MEGA-Minority!",
+                "de": "Alle marginalisierten Minderheiten verschmolzen zu einer unaufhaltsamen MEGA-Minderheit!"
             }
         },
         {
@@ -1740,7 +1756,7 @@
         {
             "id": "w_siliconeimplants",
             "content": {
-                "en": "Silicone-based implants."
+                "en": "Silicone implants."
             }
         },
         {
@@ -2019,8 +2035,8 @@
         {
             "id": "w_beanyboi",
             "content": {
-                "en": "Pouring beans into your child's waiting mouth.",
-                "de": "Bohnen im wartenden Mund deines Kindes gießen."
+                "en": "Pouring beans into my child's waiting mouth.",
+                "de": "Bohnen im wartenden Mund meines Kindes gießen."
             },
             "flags": "g w"
         },
@@ -2057,7 +2073,7 @@
             "id": "w_cumtoast",
             "content": {
                 "en": "Artisan cum toast.",
-                "de": "Kunsthandwerklicher Samentoast."
+                "de": "Kunst&shy;handwerklicher Samentoast."
             },
             "flags": "g s"
         },
@@ -2441,7 +2457,8 @@
         {
             "id": "w_mykatanathroughyou",
             "content": {
-                "en": "My katana slicing majestically through you."
+                "en": "My katana slicing majestically through you.",
+                "de": "Wie mein Katana dich majestätisch durchschneidet."
             },
             "flags": "mu d"
         },
@@ -2507,7 +2524,8 @@
         {
             "id": "w_theperfectman",
             "content": {
-                "en": "The perfect man."
+                "en": "The perfect man.",
+                "de": "Der perfekte Mann."
             }
         },
         {
@@ -2517,6 +2535,112 @@
                 "de": "Omas staubige Muschi lecken."
             },
             "flags": "s g gn gnf ic"
+        },
+        {
+            "id": "w_essoils",
+            "content": {
+                "en": "Essential oils.",
+                "de": "Ätherische Öle."
+            }
+        },
+        {
+            "id": "w_emojimovieforced",
+            "content": {
+                "en": "Being forced to watch <i>The Emoji Movie</i>.",
+                "de": "Gezwungen werden, <i>The Emoji Movie</i> anzuschauen."
+            }
+        },
+        {
+            "id": "w_spiderupnostril",
+            "content": {
+                "en": "A spider scampering up your nostril.",
+                "de": "Eine in dein Nasenloch flitzende Spinne."
+            },
+            "flags": "in"
+        },
+        {
+            "id": "w_stripclubfloorlick",
+            "content": {
+                "en": "Licking the floor at a strip club.",
+                "de": "Den Boden eines Stripclubs lecken."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_albinodick",
+            "content": {
+                "en": "A pasty white albino dick.",
+                "de": "Ein blasser, weißer Albinopenis."
+            },
+            "flags": "gn gnm"
+        },
+        {
+            "id": "w_entirebowlingball",
+            "content": {
+                "en": "This entire bowling ball.",
+                "de": "Diese ganze Bowlingkugel."
+            }
+        },
+        {
+            "id": "w_beersboobsbees",
+            "content": {
+                "en": "Beers, boobs, and beekeeping.",
+                "de": "Bier, Brüste und Bienenzucht."
+            }
+        },
+        {
+            "id": "w_10to12fap",
+            "content": {
+                "en": "Masturbating for 10 to 12 hours.",
+                "de": "10 bis 12 Stunden lang masturbieren."
+            },
+            "flags": "s"
+        },
+        {
+            "id": "w_theczar",
+            "content": {
+                "en": "The Card Czar.",
+                "de": "Der Kartenzar."
+            }
+        },
+        {
+            "id": "w_longdirtnails",
+            "content": {
+                "en": "Long, dirty fingernails.",
+                "de": "Lange, schmutzige Fingernägel."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_shrek",
+            "content": {
+                "en": "Shrek.",
+                "de": "Shrek."
+            },
+            "flags": "fc"
+        },
+        {
+            "id": "w_urethratoothpicks",
+            "content": {
+                "en": "Seeing how many toothpicks will fit in my urethra.",
+                "de": "Herausfinden, wie viele Zahnstocher in meinem Harnkanal passen können."
+            },
+            "flags": "g w"
+        },
+        {
+            "id": "b_causesofdeath",
+            "content": {
+                "en": "________ is the second leading cause of death worldwide, right behind ________.",
+                "de": "________ ist die zweithäufigste Todesursache weltweit, direkt nach ________."
+            },
+            "pick": 2
+        },
+        {
+            "id": "b_neverunderestimate",
+            "content": {
+                "en": "Never underestimate a man with _________.",
+                "de": "Man sollte nie einen Mann mit _________ unterschätzen."
+            }
         },
         {
             "id": "b_crazyweirddream",
@@ -2545,7 +2669,8 @@
         {
             "id": "b_nevergetsold",
             "content": {
-                "en": "________. It never gets old!"
+                "en": "__________.\nIt never gets old!",
+                "de": "__________.\nEs wird nie alt!"
             },
             "pick": 1
         },
@@ -2599,7 +2724,8 @@
         {
             "id": "b_conspiracycontroversy",
             "content": {
-                "en": "What's the latest craze in the conspiracy community?"
+                "en": "What's the latest craze in the conspiracy community?",
+                "de": "Was ist der letzte Schrei in der Verschwörungsgemeinschaft?"
             }
         },
         {
@@ -2612,7 +2738,8 @@
         {
             "id": "b_theydeserveit",
             "content": {
-                "en": "I don't care what anyone else thinks... anybody that's ________ deserves ________!"
+                "en": "I don't care what anyone else thinks! Anybody who's ________ deserves ________!",
+                "de": "Mir ist egal, was die anderen darüber denken! Jeder, der ________ ist, verdient ________!"
             },
             "pick": 2
         },
@@ -2698,7 +2825,8 @@
         {
             "id": "b_personalhero",
             "content": {
-                "en": "In my mind, anyone who's _______ is a damn hero."
+                "en": "In my mind, anyone who's _______ is a damn hero.",
+                "de": "Meiner Meinung nach ist jeder, der ________ ist, ist ein verdammter Held."
             }
         },
         {
@@ -2739,7 +2867,8 @@
         {
             "id": "b_frathazing",
             "content": {
-                "en": "As part of their initiation, my local fraternity chapter forces new members to eat _______."
+                "en": "As part of their initiation, my local fraternity chapter forces new members to eat _______.",
+                "de": "Als Teil ihrer Initiation zwingt meine örtliche Bruderschaft neue Mitglieder, ________ zu essen."
             }
         },
         {
@@ -2777,9 +2906,9 @@
             }
         },
         {
-            "id": "b_airplanehostage",
+            "id": "b_hostageescapetrick",
             "content": {
-                "en": "What's the one thing that could most likely save you in an airplane hijacking?"
+                "en": "What's the one thing that could most likely save you in a hostage situation?"
             }
         },
         {

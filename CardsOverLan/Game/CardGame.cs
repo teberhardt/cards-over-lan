@@ -819,14 +819,19 @@ namespace CardsOverLan.Game
             foreach(var player in _players)
             {
                 if (player.IsAsshole) continue;
+
                 foreach(var trophy in _trophies)
                 {
                     if (trophy.IsPlayerEligible(player))
                     {
-                        player.AddTrophy(trophy);
-                        Console.WriteLine($"{player} earned trophy: \"{trophy.Id}\"");
+                        player.AddTrophy(trophy);                        
                     }
                 }
+
+				foreach(var trophy in player.GetTrophies())
+				{
+					Console.WriteLine($"{player} earned trophy: \"{trophy.Id}\"");
+				}
             }
         }
 
@@ -937,6 +942,10 @@ namespace CardsOverLan.Game
 
 		private void RaisePlayerLeft(Player p, string reason)
 		{
+			if (Judge == p)
+			{
+				NextJudge();
+			}
 			PlayerLeft?.Invoke(p, reason);
 			OnPlayerCountChanged();
 		}

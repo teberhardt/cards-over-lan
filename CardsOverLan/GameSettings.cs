@@ -203,6 +203,10 @@ namespace CardsOverLan
 			set => _discards = value < MinDiscards ? MinDiscards : value;
 		}
 
+        [JsonProperty("allow_skips", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue(true)]
+        public bool AllowBlackCardSkips { get; set; } = true;
+
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}
 }

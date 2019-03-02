@@ -57,7 +57,7 @@
         const LAH_SCROLL_UP = "lah-scroll-up";
         const LAH_SCROLL_DOWN = "lah-scroll-down";
         const LAH_SCROLL_LEFT = "lah-scroll-left";
-        const LAH_SCROLL_RIGHT = "lah-scroll-right";
+        const LAH_SCROLL_RIGHT = "lah-scroll-right";        
 
         // Vertical scrolling
         let sy = element.scrollTop;
@@ -95,8 +95,6 @@
         let handler = () => onTrackScroll(element);
         element.addEventListener("scroll", handler);
         element.addEventListener("resize", handler);
-        element.addEventListener("change", handler);
-        element.addEventListener("loadmetadata", handler);
         onTrackScroll(element);
         element.isScrollTrackingEnabled = true;
     }

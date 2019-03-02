@@ -61,9 +61,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientIgnoreAttribute.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="GameConnectionBase.cs" />
+    <Compile Include="ClientConnectionBase.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="Game\ClientFacingAttribute.cs" />
+    <Compile Include="Game\ClientObjectPolicyAttribute.cs" />
+    <Compile Include="Game\ClientObjectPolicyType.cs" />
+    <Compile Include="Game\ContractResolvers\ClientFacingContractResolver.cs" />
     <Compile Include="Game\Converters\EnumNameConverter.cs" />
     <Compile Include="Game\Converters\TrophyRequirementConverter.cs" />
     <Compile Include="Game\GameStage.cs" />

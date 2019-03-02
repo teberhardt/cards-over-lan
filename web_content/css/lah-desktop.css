@@ -493,6 +493,7 @@ smaller {
 }
 
 #game-end-trophies-list {
+    position: relative;
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -501,6 +502,17 @@ smaller {
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
+}
+
+#game-end-trophies-list:empty:before {
+    content: attr(data-emptymsg);
+    color: #eee;
+    opacity: .75;
+    font-size: 12pt;
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
 }
 
 .trophy {

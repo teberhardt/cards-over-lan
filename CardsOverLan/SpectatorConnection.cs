@@ -11,7 +11,7 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-    internal sealed class SpectatorConnection : GameConnectionBase
+    internal sealed class SpectatorConnection : ClientConnectionBase
     {
 		private bool _isRejectedDuplicate;
 		private readonly object _createDestroyLock = new object();
