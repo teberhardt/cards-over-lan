@@ -485,7 +485,7 @@ namespace CardsOverLan.Game
 			lock (_allPlayersSync)
 			{
 				if (Stage != GameStage.RoundInProgress || _players.All(p => p.IsAfk)) return;
-				if (_players.All(p => p.IsSelectionValid || Judge == p || p.IsAfk) && !_players.All(p => p.IsAutonomous || p.IsAfk || p == Judge))
+				if (_players.All(p => p.IsSelectionValid || Judge == p || p.IsAfk) && !_players.All(p => p.IsAfk || p == Judge))
 				{
 					Stage = GameStage.JudgingCards;
 				}

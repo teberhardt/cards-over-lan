@@ -178,7 +178,7 @@
                 btnSkip.setAttribute("type", "button");
                 btnSkip.setAttribute("value", getUiString("ui_btn_skip"));
                 btnSkip.setAttribute("title", getUiString("ui_skip_tooltip"));
-                btnSkip.classList.add("btn-skip");
+                btnSkip.classList.add("btn-skip", "player-only");
                 btnSkip.addEventListener("click", e => lah.voteForSkip());
                 el.appendChild(btnSkip);
             }
