@@ -16,6 +16,7 @@ namespace CardsOverLan.Game
 	public delegate void GameStageChangedEventDelegate(in GameStage oldStage, in GameStage currentStage);
 	public delegate void RoundEndedEventDelegate(int round, Player roundWinner);
 	public delegate void GameEndedEventDelegate(Player[] winners);
+    public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
 
 	// TODO: Find some way to combine state updates
 	public sealed class CardGame
@@ -80,6 +81,7 @@ namespace CardsOverLan.Game
 
 		private readonly object _allPlayersSync = new object();
 		private readonly object _stageChangeLock = new object();
+        private readonly object _skipCheckLock = new object();
 
 		// Raised when player joins game
 		public event PlayerJoinedEventDelegate PlayerJoined;
@@ -97,6 +99,8 @@ namespace CardsOverLan.Game
 		public event RoundEndedEventDelegate RoundEnded;
         // Raised when game has ended
         public event GameEndedEventDelegate GameEnded;
+        // Raised when a black card is skipped
+        public event BlackCardSkippedEventDelegate BlackCardSkipped;
 
 		public CardGame(IEnumerable<Pack> packs, GameSettings settings)
 		{
@@ -196,8 +200,8 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
-				// Move to next black card
-				_blackCardIndex++;
+                // Move to next black card
+                NextBlackCard();
 
 				// Reset player selections
 				foreach (var player in _players)
@@ -228,6 +232,19 @@ namespace CardsOverLan.Game
 				GameEndTimeoutAsync();
 			}
 		}
+
+        private void NextBlackCard()
+        {   
+            if (_blackCardIndex >= _blackCards.Count - 1)
+            {
+                Shuffle(_blackCards);
+                _blackCardIndex = 0;
+            }
+            else
+            {
+                _blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+            }
+        }
 
 		private void NextJudge()
 		{
@@ -394,22 +411,9 @@ namespace CardsOverLan.Game
 				bool activeRound = false;
 				foreach (var player in _players.ToArray())
 				{
-					if (!player.IsSelectionValid && Judge != player && !player.IsAfk)
+					if (!player.IsSelectionValid && Judge != player)
 					{
 						yield return player;
-						activeRound = true;
-					}
-				}
-
-				// If everyone's away, everyone is pending.
-				if (!activeRound)
-				{
-					foreach (var player in _players.ToArray())
-					{
-						if (!player.IsSelectionValid && Judge != player)
-						{
-							yield return player;
-						}
 					}
 				}
 			}
@@ -481,7 +485,7 @@ namespace CardsOverLan.Game
 			lock (_allPlayersSync)
 			{
 				if (Stage != GameStage.RoundInProgress || _players.All(p => p.IsAfk)) return;
-				if (_players.All(p => p.IsSelectionValid || Judge == p || p.IsAfk))
+				if (_players.All(p => p.IsSelectionValid || Judge == p || p.IsAfk) && !_players.All(p => p.IsAutonomous || p.IsAfk || p == Judge))
 				{
 					Stage = GameStage.JudgingCards;
 				}
@@ -586,6 +590,50 @@ namespace CardsOverLan.Game
 			}
 		}
 
+        internal void UpdateSkipVotes()
+        {
+            lock(_allPlayersSync)              
+            {
+                lock(_skipCheckLock)
+                {
+                    if (Stage != GameStage.RoundInProgress) return;
+                    var cardToSkip = CurrentBlackCard;
+                    int eligibleSkipVoterCount = _players.Count(p => !p.IsAutonomous && !p.IsAfk && !p.IsAsshole);
+                    int numVoted = _players.Count(p => p.VotedForBlackCardSkip);
+
+                    if (numVoted > 0)
+                    {
+                        if (eligibleSkipVoterCount == 0 || numVoted * 100 / eligibleSkipVoterCount > 50)
+                        {
+                            foreach (var p in _players)
+                            {
+                                p.DiscardSelection();
+                            }
+                            NextBlackCard();
+                            RaiseStateChanged();
+                            RaiseBlackCardSkipped(cardToSkip, CurrentBlackCard);
+                            ClearSkipVotes();
+                            PromptAutoPlays();
+                        }
+                    }
+
+                    RaisePlayersChanged();
+                }
+            }
+        }
+
+        public void ClearSkipVotes()
+        {
+            lock(_allPlayersSync)
+            {
+                foreach(var player in _players)
+                {
+                    player.ClearBlackCardSkipVote();
+                }
+                RaisePlayersChanged();
+            }
+        }
+
 		/// <summary>
 		/// Clears the plays for the round and resets the winning play index.
 		/// </summary>
@@ -600,7 +648,7 @@ namespace CardsOverLan.Game
 			lock (_allPlayersSync)
 			{
 				_roundPlays.Clear();
-				_roundPlays.AddRange(_players.Where(p => p != Judge).Select(p => (p, p.GetSelectedCards().ToArray())));
+				_roundPlays.AddRange(_players.Where(p => p != Judge && p.IsSelectionValid).Select(p => (p, p.GetSelectedCards().ToArray())));
 				Shuffle(_roundPlays); // mitigate favoritism
 			}
 		}
@@ -782,6 +830,7 @@ namespace CardsOverLan.Game
 			switch (currentStage)
 			{
 				case GameStage.RoundInProgress:
+                    ClearSkipVotes();
 					ClearRoundPlays();
 					break;
 				case GameStage.JudgingCards:
@@ -953,6 +1002,8 @@ namespace CardsOverLan.Game
 		private void RaiseRoundEnded(int round, Player winner) => RoundEnded?.Invoke(round, winner);
 
 		private void RaiseStageChanged(in GameStage oldStage, in GameStage currentStage) => StageChanged?.Invoke(oldStage, currentStage);
+
+        private void RaiseBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard) => BlackCardSkipped?.Invoke(skippedCard, replacementCard);
 
 		#endregion
 	}

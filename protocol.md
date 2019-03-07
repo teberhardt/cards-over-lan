@@ -83,11 +83,21 @@ Sent by the user when they request to spend Aux Points to upgrade a card to a hi
 
 ### c_discardcard
 
-Send by the user when they request to discard a card in their hand.
+Sent by the user when they request to discard a card in their hand.
 
 ```json
     "msg": "c_discardcard",
     "card_id": "w_example"
+```
+
+### c_vote_skip
+
+Sent by the user when they vote to skip the current black card.
+
+```json
+{
+    "msg": "c_vote_skip"
+}
 ```
 
 ## Server messages
@@ -183,7 +193,10 @@ Sent by the server to provide clients with the current list of players and their
         {
             "name": "Berkin",
             "id": 123,
-            "score": 0,
+            "score": 2,
+            "upgrade_points": 1,
+            "voted_skip": false,
+            "idle": false
         }
     ]
 }
@@ -197,6 +210,19 @@ Provides auxiliary client data to a single player, such as auxiliary points.
 {
     "msg": "s_auxclientdata",
     "aux_points": 3
+}
+```
+
+
+### s_notify_skipped
+
+Informs a client that the previous black card was skipped.
+
+```json
+{
+    "msg": "s_notify_skipped",
+    "skipped_id": "b_oldcard",
+    "replacement_id": "b_newcard"
 }
 ```
 

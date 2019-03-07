@@ -125,7 +125,7 @@
     lah.lastRejectDesc = "";
     lah.auxPoints = 0;
     lah.discards = 0;
-    lah.serverInfo = null;
+    lah.serverInfo = {};
     lah.spectating = false;
 
     let gameArea = null;
@@ -163,7 +163,7 @@
     }
 
     // Make an HTMLElement from the specified Card object
-    function makeCardElement(card, showControls) {
+    function makeCardElement(card, options) {
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
         el.setAttribute("data-card", card.id);
@@ -172,58 +172,72 @@
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
-        // Upgrade/discard controls
-        if (showControls) {
-            // Upgrade controls
-            if (card.tier > 0) {
-                el.setAttribute("data-tier", card.tier);
-            }
-            if (card.nextTierId) {
-                let nextTierCard = lah.whiteCards[card.nextTierId];
-                el.setAttribute("data-upgrade", card.nextTierId);
-                el.setAttribute("data-upgrade-cost", (nextTierCard && nextTierCard.tierCost) || 0);
-
-                let btnUpgrade = document.createElement("div");
-                btnUpgrade.setClass("btn-upgrade", true);
-                let cost = nextTierCard.tierCost;
-                btnUpgrade.innerHTML = getUiString("ui_upgrade_button", cost);
-                btnUpgrade.addEventListener("mouseover", e => e.stopPropagation());
-                btnUpgrade.addEventListener("click", e => {
-                    if (lah.auxPoints < cost) {
-                        btnUpgrade.setClass("nope", true);
-                        setTimeout(() => {
-                            btnUpgrade.setClass("nope", false);
-                        }, 250);
-                    } else {
-                        lah.upgradeCard(card.id);
-                    }
-                    e.stopPropagation();
-                });
-
-                el.appendChild(btnUpgrade);
+        if (options !== undefined) {
+            if (card.type == "black" && options.showSkipControls === true) {
+                let btnSkip = document.createElement("input");
+                btnSkip.setAttribute("type", "button");
+                btnSkip.setAttribute("value", getUiString("ui_btn_skip"));
+                btnSkip.setAttribute("title", getUiString("ui_skip_tooltip"));
+                btnSkip.classList.add("btn-skip");
+                btnSkip.addEventListener("click", e => lah.voteForSkip());
+                el.appendChild(btnSkip);
             }
 
-            // Discard controls
-            if (lah.discards > 0) {
-                let btnDiscard = document.createElement("div");
-                btnDiscard.classList.add("btn-discard");
-                btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
-                btnDiscard.addEventListener("click", e => {
-                    e.stopPropagation();
-                    el.classList.add("disabled");
-                    el.classList.add("collapse");
-                    // Backup timeout in case browser doesn't support animationend event
-                    let timeoutToken = setTimeout(() => {
-                        lah.discardCard(card.id);
-                    }, 500);
-                    el.addEventListener("animationend", () => {
-                        clearTimeout(timeoutToken);
-                        lah.discardCard(card.id);
+            // Upgrade/discard controls
+            if (options.showHandControls === true) {
+                // Upgrade controls
+                if (card.tier > 0) {
+                    el.setAttribute("data-tier", card.tier);
+                }
+                if (card.nextTierId) {
+                    let nextTierCard = lah.whiteCards[card.nextTierId];
+                    el.setAttribute("data-upgrade", card.nextTierId);
+                    el.setAttribute("data-upgrade-cost", (nextTierCard && nextTierCard.tierCost) || 0);
+
+                    let btnUpgrade = document.createElement("div");
+                    btnUpgrade.setClass("btn-upgrade", true);
+                    let cost = nextTierCard.tierCost;
+                    btnUpgrade.innerHTML = getUiString("ui_upgrade_button", cost);
+                    btnUpgrade.addEventListener("mouseover", e => e.stopPropagation());
+                    btnUpgrade.addEventListener("click", e => {
+                        if (lah.auxPoints < cost) {
+                            btnUpgrade.setClass("nope", true);
+                            setTimeout(() => {
+                                btnUpgrade.setClass("nope", false);
+                            }, 250);
+                        } else {
+                            lah.upgradeCard(card.id);
+                        }
+                        e.stopPropagation();
                     });
-                });
-                el.appendChild(btnDiscard);
+
+                    el.appendChild(btnUpgrade);
+                }
+
+                // Discard controls
+                if (lah.discards > 0) {
+                    let btnDiscard = document.createElement("div");
+                    btnDiscard.classList.add("btn-discard");
+                    btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
+                    btnDiscard.addEventListener("click", e => {
+                        e.stopPropagation();
+                        el.classList.add("disabled");
+                        el.classList.add("collapse");
+                        // Backup timeout in case browser doesn't support animationend event
+                        let timeoutToken = setTimeout(() => {
+                            lah.discardCard(card.id);
+                        }, 500);
+                        el.addEventListener("animationend", () => {
+                            clearTimeout(timeoutToken);
+                            lah.discardCard(card.id);
+                        });
+                    });
+                    el.appendChild(btnDiscard);
+                }
             }
         }
+
+        
 
         // Pack info ribbon
         if (packInfo) {
@@ -311,6 +325,12 @@
         if (player.id == lah.localPlayerId) {
             e.classList.add("is-you");
         }
+        if (player.idle === true) {
+            e.classList.add("is-idle");
+        }
+        if (player.voted_skip === true) {
+            e.classList.add("voted-skip");
+        }
         if (lah.pendingPlayers.includes(player.id)) {
             e.classList.add("is-pending");
         }
@@ -318,6 +338,7 @@
         let colName = document.createElement("span");
         colName.classList.add("col-name");
         colName.innerText = player.name;
+        if (player.idle === true) colName.innerText += " (" + getUiString("ui_idle") + ")";
 
         let colScore = document.createElement("span");
         colScore.classList.add("col-score");
@@ -431,9 +452,16 @@
         "s_players": msg => {
             lah.playerList = msg.players;
             for(let p of msg.players) {
-                if (p.id == lah.localPlayerId && p.score != lah.score) {
-                    lah.score = p.score;
-                    onClientScoreChanged();
+                if (p.id == lah.localPlayerId) {
+                    if (p.score != lah.score) {
+                        lah.score = p.score;
+                        onClientScoreChanged();
+                    }
+                    let votedSkip = p.voted_skip === true;
+                    let btnSkip = document.querySelector(".btn-skip");
+                    gameArea.setClass("lah-voted-skip", votedSkip);
+                    btnSkip.disabled = votedSkip;
+                    btnSkip.setAttribute("value", getUiString(votedSkip ? "ui_btn_skip_confirmed": "ui_btn_skip"));
                     break;
                 }
             }
@@ -472,6 +500,9 @@
         "s_auxclientdata": msg => {
             lah.auxPoints = msg.aux_points;
             onAuxDataChanged();
+        },
+        "s_notify_skipped": msg => {
+            showBannerMessage(getUiString("ui_card_skipped_msg"));
         }
     };
 
@@ -550,7 +581,7 @@
             let card = lah.whiteCards[cardId];
             let id = cardId;
             if (card) {
-                let e = makeCardElement(card, true);
+                let e = makeCardElement(card, {showHandControls: true});
                 e.onclick = () => onHandCardClicked(id, e);
                 handCardsContainer.appendChild(e);
             }
@@ -571,7 +602,7 @@
         blackCardArea.killChildren();
         lah.currentBlackCard = lah.blackCards[cardId] || null;
         if (lah.currentBlackCard) {
-            let e = makeCardElement(lah.currentBlackCard);
+            let e = makeCardElement(lah.currentBlackCard, {showSkipControls: true});
             blackCardArea.appendChild(e);
         }
     }
@@ -982,6 +1013,12 @@
         sendMessage({
             msg: "c_discardcard",
             card_id: cardId
+        });
+    }
+
+    g.lah.voteForSkip = function() {
+        sendMessage({
+            msg: "c_vote_skip"
         });
     }
 

@@ -25,8 +25,10 @@
 }
 
 :root {
-    --card-width: 14rem;
-    --card-height: 19.58rem;
+    --card-scale: 1.8;
+    --card-width: calc(14vh * var(--card-scale));
+    --card-height: calc(19.58vh * var(--card-scale));
+    --card-font-size: 14.5pt;
     --card-border-radius: 14px;
     --card-padding: 1em;
     --navbar-height: 36pt;
@@ -143,9 +145,8 @@ smaller {
 }
 
 #player-list-wrapper {
-    width: 35%;
-    max-width: 400px;
-    min-width: 200px;
+    max-width: 350px;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -183,6 +184,16 @@ smaller {
 
 #player-list .player-list-entry.is-you {
     color: var(--accent-highlight);
+}
+
+
+#player-list .player-list-entry.is-idle .col-name {
+    color: var(--accent-idle);
+    font-style: oblique;
+}
+
+#player-list .player-list-entry.voted-skip .col-name {
+    color: var(--accent-skip);
 }
 
 .player-list-entry > * {
@@ -252,6 +263,7 @@ smaller {
     background: rgba(16, 16, 16, .75);
     cursor: default;
     backdrop-filter: blur(5px);
+    z-index: 20000;
 }
 
 #notify-banner-text {
@@ -622,34 +634,79 @@ smaller {
     flex-direction: row;
     align-content: center;
     justify-content: center;
+    z-index: 9999;
 }
 
 #game.lah-stage-judging.lah-judge #judge-controls-area {
     display: flex;
 }
 
-/* BLACK CARD AREA */
+/* PROMPT AREA */
 
-#black-card-area {
+#prompt-area {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 30pt 20pt;
     grid-row-start: r-start;
     grid-row-end: r-center;
     grid-column-start: c-start;
     grid-column-end: c-end;
 }
 
-.lah-stage-playing.lah-judge #black-card-area {
+#black-card-area {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+card > .btn-skip {
+    position: absolute;
+    display: inline-block;
+    bottom: -2.25em;
+    left: 50%;
+    font-size: 12pt;
+    line-height: 1.02em;
+    font-weight: 600;
+    height: 1em;
+    transform: translateX(-50%);
+    background: none;
+    outline: none;
+    color: var(--accent-fg);
+    border: 2px solid var(--accent-fg);
+    box-sizing: content-box;
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transition: opacity .1s ease;
+    opacity: .4;
+}
+
+#game:not(.lah-stage-playing) .btn-skip {
+    display: none;
+}
+
+card > .btn-skip:not(:disabled):hover {
+    border-color: var(--accent-fg);
+    opacity: 1;
+}
+
+.lah-voted-skip card > .btn-skip {
+    color: var(--accent-skip);
+    border-color: var(--accent-skip);
+}
+
+.lah-stage-playing.lah-judge #prompt-area {
     grid-row: r-start / r-end;
     grid-column: c-start / c-center;
     justify-content: flex-end;
     align-items: center;
 }
 
-.lah-stage-playing.lah-spectating #black-card-area {
+.lah-stage-playing.lah-spectating #prompt-area {
     grid-row: r-start / r-end;
     grid-column: c-start / c-end;
     justify-content: center;
@@ -657,7 +714,7 @@ smaller {
     transform: scale(1.5);
 }
 
-#game.lah-stage-judging #black-card-area {
+#game.lah-stage-judging #prompt-area {
     grid-row: r-start / r-center;
     grid-column: c-start / c-end;
     justify-content: center;
@@ -736,7 +793,7 @@ card {
     max-width: var(--card-width) !important;
     max-height: var(--card-height) !important;
     min-height: var(--card-height) !important;
-    font-size: 14.5pt;
+    font-size: var(--card-font-size);
     font-weight: 600
 }
 
@@ -1037,10 +1094,11 @@ card[data-selection]::after {
 }
 
 #hand-controls-area {
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     position: absolute;
     top: 0;
     left: 50%;
+    z-index: 9999;
 }
 
 .lah-btn {
@@ -1049,7 +1107,7 @@ card[data-selection]::after {
     background: var(--btn-color) !important;
     color: var(--accent-fg) !important;
     border: 2px solid var(--accent-fg);
-    border-radius: 6pt;
+    border-radius: 6px;
     font-size: 22pt;
     margin: 0 6pt;
 }

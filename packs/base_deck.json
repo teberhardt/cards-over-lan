@@ -461,7 +461,7 @@
             "id": "w_kidfreezer",
             "content": {
                 "en": "A freezer full of dead children.",
-                "de": "Ein Tiefkühlschrank voller toten Kinder."
+                "de": "Ein Tiefkühlschrank voller toter Kinder."
             },
             "flags": "w g mu d"
         },
@@ -935,7 +935,8 @@
         {
             "id": "w_naughtysanta",
             "content": {
-                "en": "Waking up to Santa naked in your bed."
+                "en": "Waking up to Santa naked in your bed.",
+                "de": "Neben dem nackten Weihnachtsmann aufwachen."
             },
             "flags": "s pd"
         },
@@ -1212,14 +1213,16 @@
         {
             "id": "w_shitfan",
             "content": {
-                "en": "Shit <i>literally</i> hitting a fan."
+                "en": "Shit literally hitting a fan.",
+                "de": "Scheiße, die eine Lüfter trifft."
             },
             "flags": "fe"
         },
         {
             "id": "w_earwaxballs",
             "content": {
-                "en": "Earwax gumballs."
+                "en": "Earwax gumballs.",
+                "de": "Ohrenschmalzkaugummikugeln."
             },
             "flags": "g"
         },
@@ -1242,7 +1245,8 @@
         {
             "id": "w_pressurewasher",
             "content": {
-                "en": "Sticking a pressure washer up your dick hole, for science!"
+                "en": "Sticking a pressure washer up your dick hole, for science!",
+                "de": "Einen Hochdruckreinigerschlauch in deine Penisöffnung reinstecken, für die Wissenschaft!"
             },
             "flags": "xf gnm s"
         },
@@ -1264,7 +1268,8 @@
         {
             "id": "w_colostomywine",
             "content": {
-                "en": "A full colostomy bag disguised as boxed wine."
+                "en": "A full colostomy bag disguised as boxed wine.",
+                "de": "Ein voller Stomabeutel, der als Kastenwein getarnt ist."
             },
             "flags": "g"
         },
@@ -1412,7 +1417,8 @@
         {
             "id": "w_loandefault",
             "content": {
-                "en": "Defaulting on student loans."
+                "en": "Defaulting on student loans.",
+                "de": "Im Verzug mit Studiendarlehen sein."
             }
         },
         {
@@ -1432,19 +1438,22 @@
         {
             "id": "w_eightdirtytalk",
             "content": {
-                "en": "Eighth-grade levels of dirty talk."
+                "en": "Eighth-grade levels of dirty talk.",
+                "de": "Unreife Vebalerotik."
             }
         },
         {
             "id": "w_uranus",
             "content": {
-                "en": "Uranus."
+                "en": "Uranus.",
+                "de": "Uranus."
             }
         },
         {
             "id": "w_smarterthan5g",
             "content": {
-                "en": "Actually being smarter than a fifth grader."
+                "en": "Actually being smarter than a fifth grader.",
+                "de": "Klüger als Kinder sein."
             }
         },
         {
@@ -1466,14 +1475,16 @@
         {
             "id": "w_angrytoilet",
             "content": {
-                "en": "An angry toilet ejecting gallons of sewage at incredible speed."
+                "en": "An angry toilet ejecting gallons of sewage at incredible speed.",
+                "de": "Eine tobende Toilette, die Abwasser mit erschreckendem Tempo auswirft."
             },
             "flags": "g"
         },
         {
             "id": "w_fatalfart",
             "content": {
-                "en": "Farting so hard that the blood vessels in your eyes burst."
+                "en": "Farting so hard that the blood vessels in your eyes burst.",
+                "de": "So schwer furzen, dass deine Augenadern brechen."
             },
             "flags": "g i"
         },
@@ -1488,7 +1499,8 @@
         {
             "id": "w_vaselinepig",
             "content": {
-                "en": "Rubbing an entire tub of Vaseline&trade; all over your body."
+                "en": "Rubbing an entire tub of Vaseline&trade; all over your body.",
+                "de": "Einen ganzen Becher Vaseline&trade; über deinen ganzen Körper reiben."
             }
         },
         {
@@ -1866,7 +1878,7 @@
             "id": "w_suddenbigscream",
             "content": {
                 "en": "Breaking the silence with an ear-splitting, soul-shattering scream.",
-                "de": "Die Stille mit einem ohrbetäubenden, weltbewegenden Schrei brechen."
+                "de": "Die Stille mit einem ohrenbetäubenden, weltbewegenden Schrei brechen."
             }
         },
         {
@@ -2688,6 +2700,87 @@
             }
         },
         {
+            "id": "w_bitofjesus",
+            "content": {
+                "en": "A little bit of Jesus.",
+                "de": "Ein bisschen Jesus."
+            },
+            "flags": "re"
+        },
+        {
+            "id": "w_brimwithmaggots",
+            "content": {
+                "en": "Absolutely brimming with maggots.",
+                "de": "Mit Maden absolut vollgestopft."
+            },
+            "flags": "in g"
+        },
+        {
+            "id": "w_gswchest",
+            "content": {
+                "en": "A gunshot wound to the chest.",
+                "de": "Eine Schusswunde in der Brust."
+            },
+            "flags": "v i"
+        },
+        {
+            "id": "w_vaccines",
+            "content": {
+                "en": "Vaccines.",
+                "de": "Impfungen."
+            }
+        },
+        {
+            "id": "w_howamistillalive",
+            "content": {
+                "en": "Somehow still being alive despite countless years of ongoing self-destructive behavior."
+            }
+        },
+        {
+            "id": "w_sexysandwich",
+            "content": {
+                "en": "Slowly eating a sandwich and moaning with pleasure after each bite.",
+                "de": "Langsam ein Sandwich essen und nach jedem Bissen mit Lust stöhnen."
+            }
+        },
+        {
+            "id": "w_mygenitals",
+            "content": {
+                "en": "My genitals.",
+                "de": "Meine Genitalien."
+            },
+            "flags": "gn"
+        },
+        {
+            "id": "w_yourgenitals",
+            "content": {
+                "en": "Your genitals.",
+                "de": "Deine Genitalien."
+            },
+            "flags": "gn"
+        },
+        {
+            "id": "w_handsomestboy",
+            "content": {
+                "en": "The handsomest boy.",
+                "de": "Der hübscheste junge Mann."
+            }
+        },
+        {
+            "id": "b_toocoolforbooze",
+            "content": {
+                "en": "Alcohol? Pffft, as if!\nThose of us here in the civilized world only drink ________."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_newhistorymonth",
+            "content": {
+                "en": "The President has just declared April to be \"________ History Month.\""
+            },
+            "pick": 1
+        },
+        {
             "id": "b_bakingtip",
             "content": {
                 "en": "Quick Baking Tip:\nFor an extra moist cake, toss in a little bit of ________!",
@@ -3103,10 +3196,10 @@
             "pick": 1
         },
         {
-            "id": "b_woody",
+            "id": "b_inmyboot",
             "content": {
-                "en": "There's ____ in my boot!",
-                "de": "Da ist ____ in meinem Stiefel!"
+                "en": "There's ________ in my boot!",
+                "de": "Da ist ________ in meinem Stiefel!"
             },
             "pick": 1
         },

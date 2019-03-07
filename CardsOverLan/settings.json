@@ -1,6 +1,6 @@
 ﻿{
 	"host": "http://localhost:80",
-	"server_name": "Berkin's Test Server",
+	"server_name": "Cards Over LAN",
 	"max_players": 15,
 	"min_players": 3,
 	"max_spectators": 10,
@@ -17,7 +17,7 @@
 	"max_rounds": 16,
 	"perma_czar": false,
 	"winner_czar": false,
-	"afk_time_seconds": 600,
+	"afk_time_seconds": 180,
 	"afk_recovery_time_seconds": 90,
 	"exclude_content": [],
 	"enable_trophies": true,

@@ -34,9 +34,15 @@ namespace CardsOverLan.Game
 		private int _discards;
 		private string _name = DefaultName;
 		private bool _afk;
+        private bool _votedForSkip;
 		private int _blankCardsRemaining;
 		private readonly object _blankCardLock = new object();
 		private readonly object _discardLock = new object();
+        private readonly object _skipVoteLock = new object();
+        private readonly object _botPlayDelayLock = new object();
+        private readonly object _botJudgeDelayLock = new object();
+        private uint _botPlayDelays = 0;
+        private uint _botJudgeDelays = 0;
 		private readonly Random _rng;
 
 		public event PlayerCardsChangedEventDelegate CardsChanged;
@@ -111,6 +117,8 @@ namespace CardsOverLan.Game
 
 		public bool IsAutonomous { get; set; }
 
+        public bool VotedForBlackCardSkip => _votedForSkip;
+
 		public int RemainingBlankCards => _blankCardsRemaining;
 
         public void AddTrophy(Trophy trophy)
@@ -165,6 +173,25 @@ namespace CardsOverLan.Game
 			}
 		}
 
+        public bool VoteSkipBlackCard()
+        {
+            lock(_skipVoteLock)
+            {
+                if (!Game.Settings.AllowBlackCardSkips || Game.Stage != GameStage.RoundInProgress || VotedForBlackCardSkip || IsAutonomous) return false;
+                _votedForSkip = true;
+                Game.UpdateSkipVotes();
+                return true;
+            }
+        }
+
+        public void ClearBlackCardSkipVote()
+        {
+            lock(_skipVoteLock)
+            {
+                _votedForSkip = false;
+            }
+        }
+
 		/// <summary>
 		/// Updates the player's selected cards to the specified cards and raises the <see cref="SelectionChanged"/> event.
 		/// </summary>
@@ -218,16 +245,38 @@ namespace CardsOverLan.Game
 		public async void AutoPlayAsync()
 		{
 			if (!IsAutonomous) return;
+            lock(_botPlayDelayLock)
+            {
+                _botPlayDelays++;
+            }
 			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
-			PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.PickCount));
+            lock(_botPlayDelayLock)
+            {
+                _botPlayDelays--;
+                if (_botPlayDelays == 0)
+                {
+			        PlayCards(GetCurrentHand().Take(Game.CurrentBlackCard.PickCount));
+                }
+            }
 		}
 
 		public async void AutoJudgeAsync()
 		{
 			if (!IsAutonomous) return;
+            lock(_botJudgeDelayLock)
+            {
+                _botJudgeDelays++;
+            }
 			await Task.Delay(AutoJudgeDelayMin + _rng.Next(AutoJudgeDelayIncrementMin, AutoJudgeDelayIncrementMax + 1) * Game.CurrentBlackCard.PickCount);
-			int count = Game.GetRoundPlays().Count();
-			JudgeCards(_rng.Next(count));
+            lock(_botJudgeDelayLock)
+            {
+                _botJudgeDelays--;
+                if (_botJudgeDelays == 0)
+                {
+			        int count = Game.GetRoundPlays().Count();
+			        JudgeCards(_rng.Next(count));
+                }
+            }
 		}
 
 		public bool JudgeCards(int winningPlayIndex)

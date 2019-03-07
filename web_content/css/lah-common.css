@@ -51,6 +51,8 @@
     --accent-btn-primary: #39f;
     --accent-btn-secondary: #f93;
     --accent-highlight: #094;
+    --accent-skip: #06c;
+    --accent-idle: #5a5a5a;
     --accent-group: rgba(0, 0, 0, .25);
     --accent-group-hover: rgba(0, 0, 0, .35);
     --main-bg-line: rgba(0, 0, 0, .0);
@@ -329,7 +331,9 @@ span.highlight {
 
 .ribbon[data-packaccent=red]:after {
     background: #800;
-}.ribbon[data-packaccent=orange]:after {
+}
+
+.ribbon[data-packaccent=orange]:after {
     background: #d70;
     color: #000 !important;
 }

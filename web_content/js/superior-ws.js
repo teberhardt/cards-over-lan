@@ -3,12 +3,12 @@
     const TIME_A = 1;
     const TIME_B = 1;
     const MAX_RETRY_TIME = 30000;
-    let clamp = (a, min, max) => a < min ? min : a > max ? max : a;
-    let timeoutFuncs = {
+    const clamp = (a, min, max) => a < min ? min : a > max ? max : a;
+    const timeoutFuncs = {
         "linear": (a, b) => clamp(b + 1, 0, MAX_RETRY_TIME),
         "fibonacci": (a, b) => clamp(a + b, 0, MAX_RETRY_TIME)
     }
-    let defaultTimeoutFunc = timeoutFuncs["fibonacci"];
+    const defaultTimeoutFunc = timeoutFuncs["fibonacci"];
 
     g.SuperiorWebSocket = class {
         constructor(url, retryKind) {

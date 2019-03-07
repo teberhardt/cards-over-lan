@@ -163,6 +163,10 @@
             "en": "Discard ({0} left)",
             "de": "Ablegen ({0} übrig)"
         },
+        "ui_skip_tooltip": {
+            "en": "Vote to skip black card",
+            "de": "Für Überspringung stimmen"
+        },
         "ui_pending_players": {
             "en": "Pending players",
             "de": "Ausstehende Spieler"
@@ -178,6 +182,18 @@
         "ui_btn_vote": {
             "en": "VOTE",
             "de": "WÄHLEN"
+        },
+        "ui_btn_skip": {
+            "en": "SKIP",
+            "de": "ÜBERSPRINGEN"
+        },
+        "ui_btn_skip_confirmed": {
+            "en": "VOTED TO SKIP",
+            "de": "GESTIMMT"
+        },
+        "ui_idle": {
+            "en": "idle",
+            "de": "untätig"
         },
         "ui_blank_card_prompt": {
             "en": "Write your card here.",
@@ -290,6 +306,10 @@
         "ui_player_list_title": {
             "en": "Players",
             "de": "Spielerliste"
+        },
+        "ui_card_skipped_msg": {
+            "en": "Black card skipped.",
+            "de": "Fragekarte übersprungen."
         }
     };
 

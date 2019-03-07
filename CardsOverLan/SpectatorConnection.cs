@@ -68,15 +68,22 @@ namespace CardsOverLan
 		{
 			Game.GameStateChanged += OnGameStateChanged;
 			Game.PlayersChanged += OnPlayersChanged;
+            Game.BlackCardSkipped += OnBlackCardSkipped;
 		}
 
 		private void UnsubscribeEvents()
 		{
 			Game.GameStateChanged -= OnGameStateChanged;
 			Game.PlayersChanged -= OnPlayersChanged;
+            Game.BlackCardSkipped -= OnBlackCardSkipped;
 		}
 
-		private void OnGameStateChanged()
+        private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+        {
+            SendSkipNotification(skippedCard.ID, replacementCard.ID);
+        }
+
+        private void OnGameStateChanged()
 		{
 			SendGameState();
 		}

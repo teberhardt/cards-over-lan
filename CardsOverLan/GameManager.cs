@@ -76,11 +76,17 @@ namespace CardsOverLan
 			Game.StageChanged += OnGameStageChanged;
 			Game.RoundEnded += OnGameRoundEnded;
 			Game.GameEnded += OnGameEnded;
+            Game.BlackCardSkipped += OnBlackCardSkipped;
 
             UpdateTitle();
 		}
 
-		public object GetGameInfoObject()
+        private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+        {
+            Console.WriteLine($"Black card skipped: {skippedCard.ID} -> {replacementCard.ID}");
+        }
+
+        public object GetGameInfoObject()
 		{
 			return new
 			{
