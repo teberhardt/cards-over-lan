@@ -222,7 +222,7 @@
     
     .lah-voted-skip card > .btn-skip {
         color: var(--accent-skip);
-        border-color: var(--accent-skip);
+        border-color: var(--accent-skip) !important;
     }
 
     .lah-stage-playing:not(.lah-judge) #prompt-area {

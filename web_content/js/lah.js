@@ -127,6 +127,7 @@
     lah.discards = 0;
     lah.serverInfo = {};
     lah.spectating = false;
+    lah.clientVotedSkip = false;
 
     let gameArea = null;
     let handArea = null;
@@ -179,7 +180,7 @@
                 btnSkip.setAttribute("value", getUiString("ui_btn_skip"));
                 btnSkip.setAttribute("title", getUiString("ui_skip_tooltip"));
                 btnSkip.classList.add("btn-skip", "player-only");
-                btnSkip.addEventListener("click", e => lah.voteForSkip());
+                btnSkip.addEventListener("click", e => lah.voteForSkip(!lah.clientVotedSkip));
                 el.appendChild(btnSkip);
             }
 
@@ -457,11 +458,12 @@
                         lah.score = p.score;
                         onClientScoreChanged();
                     }
-                    let votedSkip = p.voted_skip === true;
+                    lah.clientVotedSkip = p.voted_skip === true;
+                    gameArea.setClass("lah-voted-skip", lah.clientVotedSkip);
                     let btnSkip = document.querySelector(".btn-skip");
-                    gameArea.setClass("lah-voted-skip", votedSkip);
-                    btnSkip.disabled = votedSkip;
-                    btnSkip.setAttribute("value", getUiString(votedSkip ? "ui_btn_skip_confirmed": "ui_btn_skip"));
+                    if (btnSkip) {
+                        btnSkip.setAttribute("value", getUiString(lah.clientVotedSkip ? "ui_btn_skip_undo": "ui_btn_skip"));
+                    }
                     break;
                 }
             }
@@ -473,7 +475,6 @@
             setPlayerName(msg.player_name, true);
         },
         "s_hand": msg => {
-            let prevNumBlanks = lah.numBlanks;
             lah.playerHand = msg.hand;
             lah.numBlanks = msg.blanks;   
             lah.discards = msg.discards; 
@@ -1016,9 +1017,11 @@
         });
     }
 
-    g.lah.voteForSkip = function() {
+    g.lah.voteForSkip = function(voteState) {
+        console.log(voteState);
         sendMessage({
-            msg: "c_vote_skip"
+            msg: "c_vote_skip",
+            voted: voteState
         });
     }
 

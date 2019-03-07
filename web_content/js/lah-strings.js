@@ -189,9 +189,9 @@
             "en": "SKIP",
             "de": "ÜBERSPRINGEN"
         },
-        "ui_btn_skip_confirmed": {
-            "en": "VOTED TO SKIP",
-            "de": "GESTIMMT"
+        "ui_btn_skip_undo": {
+            "en": "UNDO SKIP VOTE",
+            "de": "NICHT ÜBERSPRINGEN"
         },
         "ui_idle": {
             "en": "idle",

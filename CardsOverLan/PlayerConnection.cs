@@ -374,7 +374,8 @@ namespace CardsOverLan
 				}
 				case "c_vote_skip":
 				{
-					Player.VoteSkipBlackCard();
+					bool voted = json["voted"]?.Value<bool>() ?? false;
+					Player.SetSkipVoteState(voted);
 					break;
 				}
 			}

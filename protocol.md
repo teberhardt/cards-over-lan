@@ -92,11 +92,12 @@ Sent by the user when they request to discard a card in their hand.
 
 ### c_vote_skip
 
-Sent by the user when they vote to skip the current black card.
+Sent by the user when they change their vote to skip the current black card.
 
 ```json
 {
-    "msg": "c_vote_skip"
+    "msg": "c_vote_skip",
+    "voted": true // sets vote status
 }
 ```
 

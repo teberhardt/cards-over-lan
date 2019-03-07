@@ -696,7 +696,7 @@ card > .btn-skip:not(:disabled):hover {
 
 .lah-voted-skip card > .btn-skip {
     color: var(--accent-skip);
-    border-color: var(--accent-skip);
+    border-color: var(--accent-skip) !important;
 }
 
 .lah-stage-playing.lah-judge #prompt-area {

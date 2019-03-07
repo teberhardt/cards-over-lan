@@ -631,7 +631,7 @@ namespace CardsOverLan.Game
 			{
 				foreach (var player in _players)
 				{
-					player.ClearBlackCardSkipVote();
+					player.ClearSkipVote();
 				}
 				RaisePlayersChanged();
 			}

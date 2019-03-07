@@ -173,18 +173,19 @@ namespace CardsOverLan.Game
 			}
 		}
 
-		public bool VoteSkipBlackCard()
+		public bool SetSkipVoteState(bool voted)
 		{
 			lock (_skipVoteLock)
 			{
-				if (!Game.Settings.AllowBlackCardSkips || Game.Stage != GameStage.RoundInProgress || VotedForBlackCardSkip || IsAutonomous) return false;
-				_votedForSkip = true;
+				if (!Game.Settings.AllowBlackCardSkips || Game.Stage != GameStage.RoundInProgress || IsAutonomous || voted == _votedForSkip) return false;
+				_votedForSkip = voted;
 				Game.UpdateSkipVotes();
+				Console.WriteLine(voted ? $"{this} voted to skip black card" : $"{this} withdrew skip vote");
 				return true;
 			}
 		}
 
-		public void ClearBlackCardSkipVote()
+		public void ClearSkipVote()
 		{
 			lock (_skipVoteLock)
 			{
