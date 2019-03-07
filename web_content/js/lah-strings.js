@@ -1,8 +1,10 @@
 ((g) => {
     "use strict";
     const DEFAULT_LOCALE = "en";
+    const VERSION_STRING = "v1.0.0b2";
 
     let uiStrings = {
+        "ui_version": VERSION_STRING,
         "ui_game_title": {
             "en": "Cards Over LAN",
             "de": "Cards Over LAN"
@@ -325,6 +327,7 @@
     g.getUiString = function (key) {
         let entry = uiStrings[key];
         if (!entry) return key;
+        if (typeof entry === "string") return entry;
         let lang = navigator.language;
         let fmtStr = entry[lang] || entry[lang.replace(/(.*)-[a-z0-9_\-]+/i, (m, p) => p)] || entry[DEFAULT_LOCALE] || Object.values(entry)[0];
         if (!fmtStr) return key;

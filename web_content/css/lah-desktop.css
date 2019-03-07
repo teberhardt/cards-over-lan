@@ -1328,6 +1328,14 @@ card[data-selection]::after {
     }
 }
 
+#join-version {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: 10pt;
+    opacity: .5;
+}
+
 #join-screen-title {
     margin: 4px 0;
     text-align: center;

@@ -1233,6 +1233,14 @@
         flex-grow: 1;
     }
 
+    #join-version {
+        position: absolute;
+        right: 12px;
+        top: 8px;
+        font-size: 8pt;
+        opacity: .45;
+    }
+
     #join-screen-title {
         margin: 4px 0;
         text-align: center;
