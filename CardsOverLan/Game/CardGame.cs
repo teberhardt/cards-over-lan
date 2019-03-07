@@ -812,6 +812,7 @@ namespace CardsOverLan.Game
 				}
 			}
 			OnPlayersChanged();
+			UpdateSkipVotes();
 			RaiseStateChanged();
 		}
 
