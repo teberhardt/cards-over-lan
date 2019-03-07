@@ -96,15 +96,15 @@ namespace CardsOverLan
 					id = p.Id,
 					score = p.Score,
 					upgrade_points = p.Coins,
-                    voted_skip = p.VotedForBlackCardSkip,
-                    idle = p.IsAfk
+					voted_skip = p.VotedForBlackCardSkip,
+					idle = p.IsAfk
 				})
 			});
 		}
 
 		protected void SendPackContent()
 		{
-            if (!IsOpen) return;
+			if (!IsOpen) return;
 			var response = new
 			{
 				msg = "s_allcards",
@@ -113,16 +113,16 @@ namespace CardsOverLan
 			SendMessageObject(response);
 		}
 
-        protected void SendSkipNotification(string skippedCardId, string replacementCardId)
-        {
-            if (!IsOpen) return;
-            SendMessageObject(new
-            {
-                msg = "s_notify_skipped",
-                skipped_id = skippedCardId,
-                replacement_id = replacementCardId
-            });
-        }
+		protected void SendSkipNotification(string skippedCardId, string replacementCardId)
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_notify_skipped",
+				skipped_id = skippedCardId,
+				replacement_id = replacementCardId
+			});
+		}
 
 		protected void SendRejection(string rejectReason, string rejectDesc = "")
 		{

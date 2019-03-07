@@ -16,7 +16,7 @@ namespace CardsOverLan.Game
 	public delegate void GameStageChangedEventDelegate(in GameStage oldStage, in GameStage currentStage);
 	public delegate void RoundEndedEventDelegate(int round, Player roundWinner);
 	public delegate void GameEndedEventDelegate(Player[] winners);
-    public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
+	public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
 
 	// TODO: Find some way to combine state updates
 	public sealed class CardGame
@@ -49,8 +49,8 @@ namespace CardsOverLan.Game
 		// All white cards in the game
 		private readonly HashList<WhiteCard> _whiteCards;
 
-        // All trophies in the game
-        private readonly HashList<Trophy> _trophies;
+		// All trophies in the game
+		private readonly HashList<Trophy> _trophies;
 
 		// All packs in the game
 		private readonly Pack[] _packs;
@@ -81,7 +81,7 @@ namespace CardsOverLan.Game
 
 		private readonly object _allPlayersSync = new object();
 		private readonly object _stageChangeLock = new object();
-        private readonly object _skipCheckLock = new object();
+		private readonly object _skipCheckLock = new object();
 
 		// Raised when player joins game
 		public event PlayerJoinedEventDelegate PlayerJoined;
@@ -97,10 +97,10 @@ namespace CardsOverLan.Game
 		public event GameStageChangedEventDelegate StageChanged;
 		// Raised when a round has ended
 		public event RoundEndedEventDelegate RoundEnded;
-        // Raised when game has ended
-        public event GameEndedEventDelegate GameEnded;
-        // Raised when a black card is skipped
-        public event BlackCardSkippedEventDelegate BlackCardSkipped;
+		// Raised when game has ended
+		public event GameEndedEventDelegate GameEnded;
+		// Raised when a black card is skipped
+		public event BlackCardSkippedEventDelegate BlackCardSkipped;
 
 		public CardGame(IEnumerable<Pack> packs, GameSettings settings)
 		{
@@ -113,14 +113,14 @@ namespace CardsOverLan.Game
 			_rng = new Random();
 			_cards = new Dictionary<string, Card>();
 			_roundPlays = new HashList<(Player, WhiteCard[])>();
-            _trophies = new HashList<Trophy>();
+			_trophies = new HashList<Trophy>();
 
 			_packs = packs
-                .Where(p => Settings.UsePacks == null || Settings.UsePacks.Length == 0 || Settings.UsePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase))
-                .ToArray();
+				.Where(p => Settings.UsePacks == null || Settings.UsePacks.Length == 0 || Settings.UsePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase))
+				.ToArray();
 
 			// Combine decks and remove duplicates
-			foreach (var card in _packs                
+			foreach (var card in _packs
 				.SelectMany(d => d.GetAllCards())
 				.Where(c => settings.RequiredLanguages?.Length == 0 || settings.RequiredLanguages.All(l => c.SupportsLanguage(l))))
 			{
@@ -136,14 +136,14 @@ namespace CardsOverLan.Game
 
 			_blackCards.AddRange(_cards.Values.OfType<BlackCard>().Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x))));
 			_whiteCards.AddRange(_cards.Values.OfType<WhiteCard>()
-                .Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x)))
-                .Where(c => Settings.UpgradesEnabled ? c.Tier <= 0 : String.IsNullOrEmpty(c.NextTierId)));
+				.Where(c => !Settings.ContentExclusions.Any(x => c.ContainsContentFlags(x)))
+				.Where(c => Settings.UpgradesEnabled ? c.Tier <= 0 : String.IsNullOrEmpty(c.NextTierId)));
 
-            // Combine trophies
-            foreach(var trophy in packs.SelectMany(p => p.GetTrophies()))
-            {
-                _trophies.Add(trophy);
-            }
+			// Combine trophies
+			foreach (var trophy in packs.SelectMany(p => p.GetTrophies()))
+			{
+				_trophies.Add(trophy);
+			}
 
 			ResetCards();
 			NextJudge();
@@ -200,8 +200,8 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
-                // Move to next black card
-                NextBlackCard();
+				// Move to next black card
+				NextBlackCard();
 
 				// Reset player selections
 				foreach (var player in _players)
@@ -233,18 +233,18 @@ namespace CardsOverLan.Game
 			}
 		}
 
-        private void NextBlackCard()
-        {   
-            if (_blackCardIndex >= _blackCards.Count - 1)
-            {
-                Shuffle(_blackCards);
-                _blackCardIndex = 0;
-            }
-            else
-            {
-                _blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
-            }
-        }
+		private void NextBlackCard()
+		{
+			if (_blackCardIndex >= _blackCards.Count - 1)
+			{
+				Shuffle(_blackCards);
+				_blackCardIndex = 0;
+			}
+			else
+			{
+				_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+			}
+		}
 
 		private void NextJudge()
 		{
@@ -304,7 +304,7 @@ namespace CardsOverLan.Game
 						return;
 					}
 
-                    if (_judgeIndex < 0) _judgeIndex = 0;
+					if (_judgeIndex < 0) _judgeIndex = 0;
 
 					// Make the next non-AFK person the judge.
 					for (int i = 1; i < n - 1; i++)
@@ -324,26 +324,26 @@ namespace CardsOverLan.Game
 
 		private void NewGame()
 		{
-            lock(_allPlayersSync)
-            {
-                // Reset scores
-                foreach(var p in _players)
-                {
+			lock (_allPlayersSync)
+			{
+				// Reset scores
+				foreach (var p in _players)
+				{
 					p.Discards = Settings.Discards;
-                    p.ResetAwards();
-                }
-                
-                // Clear play data
-			    ClearRoundPlays();
-                // Reset all cards
-			    ResetCards();
-                // Reset round
-			    _roundNum = 0;
-			    _judgeIndex = -1;
+					p.ResetAwards();
+				}
 
-			    Stage = GameStage.GameStarting;
-                RaisePlayersChanged();
-            }
+				// Clear play data
+				ClearRoundPlays();
+				// Reset all cards
+				ResetCards();
+				// Reset round
+				_roundNum = 0;
+				_judgeIndex = -1;
+
+				Stage = GameStage.GameStarting;
+				RaisePlayersChanged();
+			}
 		}
 
 		private void Shuffle<T>(HashList<T> list)
@@ -377,7 +377,7 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public IEnumerable<Pack> GetPacks()
 		{
-			foreach(var p in _packs)
+			foreach (var p in _packs)
 			{
 				yield return p;
 			}
@@ -552,6 +552,9 @@ namespace CardsOverLan.Game
 
 				// Add them to the player list
 				_players.Add(player);
+
+				if (Judge == null) NextJudge();
+
 				RaisePlayerJoined(player);
 				return player;
 			}
@@ -567,7 +570,7 @@ namespace CardsOverLan.Game
 		{
 			lock (_allPlayersSync)
 			{
-                if (player == null || !_players.Remove(player)) return false;                
+				if (player == null || !_players.Remove(player)) return false;
 
 				// Unsubscribe events
 				player.SelectionChanged -= OnPlayerSelectionChanged;
@@ -590,49 +593,49 @@ namespace CardsOverLan.Game
 			}
 		}
 
-        internal void UpdateSkipVotes()
-        {
-            lock(_allPlayersSync)              
-            {
-                lock(_skipCheckLock)
-                {
-                    if (Stage != GameStage.RoundInProgress) return;
-                    var cardToSkip = CurrentBlackCard;
-                    int eligibleSkipVoterCount = _players.Count(p => !p.IsAutonomous && !p.IsAfk && !p.IsAsshole);
-                    int numVoted = _players.Count(p => p.VotedForBlackCardSkip);
+		internal void UpdateSkipVotes()
+		{
+			lock (_allPlayersSync)
+			{
+				lock (_skipCheckLock)
+				{
+					if (Stage != GameStage.RoundInProgress) return;
+					var cardToSkip = CurrentBlackCard;
+					int eligibleSkipVoterCount = _players.Count(p => !p.IsAutonomous && !p.IsAfk && !p.IsAsshole);
+					int numVoted = _players.Count(p => p.VotedForBlackCardSkip);
 
-                    if (numVoted > 0)
-                    {
-                        if (eligibleSkipVoterCount == 0 || numVoted * 100 / eligibleSkipVoterCount > 50)
-                        {
-                            foreach (var p in _players)
-                            {
-                                p.DiscardSelection();
-                            }
-                            NextBlackCard();
-                            RaiseStateChanged();
-                            RaiseBlackCardSkipped(cardToSkip, CurrentBlackCard);
-                            ClearSkipVotes();
-                            PromptAutoPlays();
-                        }
-                    }
+					if (numVoted > 0)
+					{
+						if (eligibleSkipVoterCount == 0 || numVoted * 100 / eligibleSkipVoterCount > 50)
+						{
+							foreach (var p in _players)
+							{
+								p.DiscardSelection();
+							}
+							NextBlackCard();
+							RaiseStateChanged();
+							RaiseBlackCardSkipped(cardToSkip, CurrentBlackCard);
+							ClearSkipVotes();
+							PromptAutoPlays();
+						}
+					}
 
-                    RaisePlayersChanged();
-                }
-            }
-        }
+					RaisePlayersChanged();
+				}
+			}
+		}
 
-        public void ClearSkipVotes()
-        {
-            lock(_allPlayersSync)
-            {
-                foreach(var player in _players)
-                {
-                    player.ClearBlackCardSkipVote();
-                }
-                RaisePlayersChanged();
-            }
-        }
+		public void ClearSkipVotes()
+		{
+			lock (_allPlayersSync)
+			{
+				foreach (var player in _players)
+				{
+					player.ClearBlackCardSkipVote();
+				}
+				RaisePlayersChanged();
+			}
+		}
 
 		/// <summary>
 		/// Clears the plays for the round and resets the winning play index.
@@ -679,10 +682,10 @@ namespace CardsOverLan.Game
 			foreach (var card in _whiteCards) yield return card;
 		}
 
-        public WhiteCard GetNextTierCard(WhiteCard card)
-        {
-            return String.IsNullOrWhiteSpace(card.NextTierId) ? null : _cards.TryGetValue(card.NextTierId, out var tierCard) ? tierCard as WhiteCard : null;
-        }
+		public WhiteCard GetNextTierCard(WhiteCard card)
+		{
+			return String.IsNullOrWhiteSpace(card.NextTierId) ? null : _cards.TryGetValue(card.NextTierId, out var tierCard) ? tierCard as WhiteCard : null;
+		}
 
 		/// <summary>
 		/// Moves all the contents of the provided hashlist of white cards to the disacard pile.
@@ -695,11 +698,11 @@ namespace CardsOverLan.Game
 
 		private void PromptAutoPlays()
 		{
-			lock(_allPlayersSync)
+			lock (_allPlayersSync)
 			{
 				if (_players.Any(p => !p.IsAutonomous))
 				{
-					foreach(var p in _players.Where(p => p.IsAutonomous))
+					foreach (var p in _players.Where(p => p.IsAutonomous))
 					{
 						p.AutoPlayAsync();
 					}
@@ -830,7 +833,7 @@ namespace CardsOverLan.Game
 			switch (currentStage)
 			{
 				case GameStage.RoundInProgress:
-                    ClearSkipVotes();
+					ClearSkipVotes();
 					ClearRoundPlays();
 					break;
 				case GameStage.JudgingCards:
@@ -845,15 +848,15 @@ namespace CardsOverLan.Game
 					}
 					break;
 				case GameStage.GameEnd:
-                    AssignTrophies();
+					AssignTrophies();
 					GameEndTimeoutAsync();
 					break;
 				case GameStage.GameStarting:
-                    if (PlayerCount >= Settings.MinPlayers)
-                    {
-                        NewRound();
-                        return;
-                    }
+					if (PlayerCount >= Settings.MinPlayers)
+					{
+						NewRound();
+						return;
+					}
 					ClearRoundPlays();
 					break;
 			}
@@ -863,32 +866,32 @@ namespace CardsOverLan.Game
 			RaiseStateChanged();
 		}
 
-        private void AssignTrophies()
-        {
-            foreach(var player in _players)
-            {
-                if (player.IsAsshole) continue;
+		private void AssignTrophies()
+		{
+			foreach (var player in _players)
+			{
+				if (player.IsAsshole) continue;
 
-                foreach(var trophy in _trophies)
-                {
-                    if (trophy.IsPlayerEligible(player))
-                    {
-                        player.AddTrophy(trophy);                        
-                    }
-                }
+				foreach (var trophy in _trophies)
+				{
+					if (trophy.IsPlayerEligible(player))
+					{
+						player.AddTrophy(trophy);
+					}
+				}
 
-				foreach(var trophy in player.GetTrophies())
+				foreach (var trophy in player.GetTrophies())
 				{
 					Console.WriteLine($"{player} earned trophy: \"{trophy.Id}\"");
 				}
-            }
-        }
+			}
+		}
 
 		private void SaveRoundPlays()
 		{
-			lock(_allPlayersSync)
+			lock (_allPlayersSync)
 			{
-				foreach(var player in _players)
+				foreach (var player in _players)
 				{
 					player.SaveCurrentPlay(RoundWinner == player);
 				}
@@ -899,11 +902,11 @@ namespace CardsOverLan.Game
 		{
 			var winningPlayer = RoundWinner;
 			if (winningPlayer == null) return;
-            int tierBonus = _winningPlayIndex > -1 && _winningPlayIndex < _roundPlays.Count 
-                ? _roundPlays[_winningPlayIndex].Item2.Sum(c => c.Tier) 
-                : 0;
+			int tierBonus = _winningPlayIndex > -1 && _winningPlayIndex < _roundPlays.Count
+				? _roundPlays[_winningPlayIndex].Item2.Sum(c => c.Tier)
+				: 0;
 			winningPlayer.AddPoints(1 + tierBonus);
-            winningPlayer.AddAuxPoints(CurrentBlackCard.PickCount);
+			winningPlayer.AddAuxPoints(CurrentBlackCard.PickCount);
 		}
 
 		private async void RoundEndTimeoutAsync()
@@ -971,11 +974,11 @@ namespace CardsOverLan.Game
 			RaiseStateChanged();
 		}
 
-        #endregion
+		#endregion
 
-        #region Event Raisers
+		#region Event Raisers
 
-        private void RaiseGameEnded() => GameEnded?.Invoke(GetWinningPlayers().ToArray());
+		private void RaiseGameEnded() => GameEnded?.Invoke(GetWinningPlayers().ToArray());
 
 		private void RaiseRoundStarted() => RoundStarted?.Invoke();
 
@@ -991,10 +994,6 @@ namespace CardsOverLan.Game
 
 		private void RaisePlayerLeft(Player p, string reason)
 		{
-			if (Judge == p)
-			{
-				NextJudge();
-			}
 			PlayerLeft?.Invoke(p, reason);
 			OnPlayerCountChanged();
 		}
@@ -1003,7 +1002,7 @@ namespace CardsOverLan.Game
 
 		private void RaiseStageChanged(in GameStage oldStage, in GameStage currentStage) => StageChanged?.Invoke(oldStage, currentStage);
 
-        private void RaiseBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard) => BlackCardSkipped?.Invoke(skippedCard, replacementCard);
+		private void RaiseBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard) => BlackCardSkipped?.Invoke(skippedCard, replacementCard);
 
 		#endregion
 	}

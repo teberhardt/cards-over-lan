@@ -85,7 +85,7 @@ namespace CardsOverLan
 			SendGameState();
 			SendAuxDataToPlayer();
 		}
-		
+
 
 		private void RegisterEvents()
 		{
@@ -96,7 +96,7 @@ namespace CardsOverLan
 			Game.GameStateChanged += OnGameStateChanged;
 			Game.PlayersChanged += OnGamePlayersChanged;
 			Game.StageChanged += OnGameStageChanged;
-            Game.BlackCardSkipped += OnBlackCardSkipped;
+			Game.BlackCardSkipped += OnBlackCardSkipped;
 		}
 
 		private void UnregisterEvents()
@@ -111,15 +111,15 @@ namespace CardsOverLan
 			Game.GameStateChanged -= OnGameStateChanged;
 			Game.PlayersChanged -= OnGamePlayersChanged;
 			Game.StageChanged -= OnGameStageChanged;
-            Game.BlackCardSkipped -= OnBlackCardSkipped;
+			Game.BlackCardSkipped -= OnBlackCardSkipped;
 		}
 
-        private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
-        {
-            SendSkipNotification(skippedCard.ID, replacementCard.ID);
-        }
+		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+		{
+			SendSkipNotification(skippedCard.ID, replacementCard.ID);
+		}
 
-        private void OnGamePlayersChanged()
+		private void OnGamePlayersChanged()
 		{
 			SendPlayerList();
 		}
@@ -372,11 +372,11 @@ namespace CardsOverLan
 					Player.DiscardCard(requestedDiscardCard);
 					break;
 				}
-                case "c_vote_skip":
-                {
-                    Player.VoteSkipBlackCard();
-                    break;
-                }
+				case "c_vote_skip":
+				{
+					Player.VoteSkipBlackCard();
+					break;
+				}
 			}
 		}
 

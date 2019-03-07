@@ -11,8 +11,8 @@ using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
-    internal sealed class SpectatorConnection : ClientConnectionBase
-    {
+	internal sealed class SpectatorConnection : ClientConnectionBase
+	{
 		private bool _isRejectedDuplicate;
 		private readonly object _createDestroyLock = new object();
 
@@ -22,7 +22,7 @@ namespace CardsOverLan
 
 		protected override void OnOpen()
 		{
-			lock(_createDestroyLock)
+			lock (_createDestroyLock)
 			{
 				base.OnOpen();
 
@@ -50,7 +50,7 @@ namespace CardsOverLan
 
 		protected override void OnClose(CloseEventArgs e)
 		{
-			lock(_createDestroyLock)
+			lock (_createDestroyLock)
 			{
 				base.OnClose(e);
 
@@ -68,22 +68,22 @@ namespace CardsOverLan
 		{
 			Game.GameStateChanged += OnGameStateChanged;
 			Game.PlayersChanged += OnPlayersChanged;
-            Game.BlackCardSkipped += OnBlackCardSkipped;
+			Game.BlackCardSkipped += OnBlackCardSkipped;
 		}
 
 		private void UnsubscribeEvents()
 		{
 			Game.GameStateChanged -= OnGameStateChanged;
 			Game.PlayersChanged -= OnPlayersChanged;
-            Game.BlackCardSkipped -= OnBlackCardSkipped;
+			Game.BlackCardSkipped -= OnBlackCardSkipped;
 		}
 
-        private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
-        {
-            SendSkipNotification(skippedCard.ID, replacementCard.ID);
-        }
+		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+		{
+			SendSkipNotification(skippedCard.ID, replacementCard.ID);
+		}
 
-        private void OnGameStateChanged()
+		private void OnGameStateChanged()
 		{
 			SendGameState();
 		}

@@ -76,17 +76,17 @@ namespace CardsOverLan
 			Game.StageChanged += OnGameStageChanged;
 			Game.RoundEnded += OnGameRoundEnded;
 			Game.GameEnded += OnGameEnded;
-            Game.BlackCardSkipped += OnBlackCardSkipped;
+			Game.BlackCardSkipped += OnBlackCardSkipped;
 
-            UpdateTitle();
+			UpdateTitle();
 		}
 
-        private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
-        {
-            Console.WriteLine($"Black card skipped: {skippedCard.ID} -> {replacementCard.ID}");
-        }
+		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+		{
+			Console.WriteLine($"Black card skipped: {skippedCard.ID} -> {replacementCard.ID}");
+		}
 
-        public object GetGameInfoObject()
+		public object GetGameInfoObject()
 		{
 			return new
 			{
@@ -106,7 +106,7 @@ namespace CardsOverLan
 				max_rounds = Game.Settings.MaxRounds,
 				blank_cards = Game.Settings.BlankCards,
 				discards = Game.Settings.Discards,
-                allow_skips = Game.Settings.AllowBlackCardSkips,
+				allow_skips = Game.Settings.AllowBlackCardSkips,
 				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name })
 			};
 		}

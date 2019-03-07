@@ -45,9 +45,9 @@ namespace CardsOverLan
 			}
 		}
 
-        public override string ToString() => this[DefaultLocale];
+		public override string ToString() => this[DefaultLocale];
 
-        private sealed class Converter : JsonConverter
+		private sealed class Converter : JsonConverter
 		{
 			public override bool CanConvert(Type objectType)
 			{

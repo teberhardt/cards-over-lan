@@ -90,9 +90,9 @@ namespace CardsOverLan
 
 		public void RemoveAll(Predicate<T> match)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
-				foreach(var item in _list.ToArray())
+				foreach (var item in _list.ToArray())
 				{
 					if (match(item))
 					{
@@ -104,7 +104,7 @@ namespace CardsOverLan
 
 		public bool Swap(int indexA, int indexB)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				if (indexA < 0 || indexA >= Count || indexB < 0 || indexB >= Count) return false;
 				var temp = _list[indexA];
@@ -114,20 +114,20 @@ namespace CardsOverLan
 			}
 		}
 
-        public bool Replace(T original, T replacement)
-        {
-            lock(_editLock)
-            {
-                if (!Contains(original)) return false;
-                int index = IndexOf(original);
-                this[index] = replacement;
-                return true;
-            }
-        }
+		public bool Replace(T original, T replacement)
+		{
+			lock (_editLock)
+			{
+				if (!Contains(original)) return false;
+				int index = IndexOf(original);
+				this[index] = replacement;
+				return true;
+			}
+		}
 
 		public void Clear()
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				_hashSet.Clear();
 				_list.Clear();
@@ -136,7 +136,7 @@ namespace CardsOverLan
 
 		public void MoveTo(HashList<T> target)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				target.AddRange(this);
 				Clear();
@@ -155,7 +155,7 @@ namespace CardsOverLan
 
 		public void ExceptWith(IEnumerable<T> other)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				_hashSet.ExceptWith(other);
 				_list.RemoveAll(t => !_hashSet.Contains(t));
@@ -174,7 +174,7 @@ namespace CardsOverLan
 
 		public void Insert(int index, T item)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				if (_hashSet.Contains(item)) return;
 				_hashSet.Add(item);
@@ -184,7 +184,7 @@ namespace CardsOverLan
 
 		public void IntersectWith(IEnumerable<T> other)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				_hashSet.IntersectWith(other);
 				_list.RemoveAll(t => !_hashSet.Contains(t));
@@ -218,7 +218,7 @@ namespace CardsOverLan
 
 		public bool Remove(T item)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				if (!_hashSet.Remove(item)) return false;
 				_list.Remove(item);
@@ -228,7 +228,7 @@ namespace CardsOverLan
 
 		public void RemoveAt(int index)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				var t = _list[index];
 				_hashSet.Remove(t);
@@ -243,7 +243,7 @@ namespace CardsOverLan
 
 		public void SymmetricExceptWith(IEnumerable<T> other)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				_hashSet.SymmetricExceptWith(other);
 				_list.RemoveAll(t => !_hashSet.Contains(t));
@@ -260,10 +260,10 @@ namespace CardsOverLan
 
 		public void UnionWith(IEnumerable<T> other)
 		{
-			lock(_editLock)
+			lock (_editLock)
 			{
 				_hashSet.UnionWith(other);
-				foreach(var item in _hashSet)
+				foreach (var item in _hashSet)
 				{
 					if (!_list.Contains(item))
 					{
