@@ -2,7 +2,7 @@
 
 A Cards Against Humanity clone for hosting on your home network.
 
-![](https://i.imgur.com/8lON8ZR.gif)
+<p align="center"><img src="https://thumbs.gfycat.com/HealthyInformalGalapagoshawk-size_restricted.gif"><p>
 
 |**This software is a work-in-progress. It may be missing functionality or contain bugs.**|
 |---|
