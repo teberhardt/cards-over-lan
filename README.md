@@ -17,6 +17,8 @@ A Cards Against Humanity clone for hosting on your home network.
 * **Trophies** - At the end of each game, see what kind of awful each of your friends is.
 * **Bots** - Add fake players to your game that pick random cards but are probably still funnier than you.
 * **Card Upgrades** - Some cards may be "upgraded" by using Card Coins. You earn Card Coins with each round you win. They might have more uses later, or be removed entirely. Who knows what the future may hold?
+* **Skipping** - If you don't like the current black card, you can vote to skip it with the press of a button.
+* **Idle Detection** - If players are idle for a set amount of time, the server ignores them, allowing the game to continue without them.
 
 
 ## How it works
@@ -58,6 +60,7 @@ The settings.json file contains a number of properties that control how the serv
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
 |`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
+|`allow_skips`|Boolean|Specifies whether players are allowed to skip black cards.|
 |`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
