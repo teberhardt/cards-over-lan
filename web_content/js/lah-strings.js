@@ -167,7 +167,7 @@
         },
         "ui_skip_tooltip": {
             "en": "Vote to skip black card",
-            "de": "Für Überspringung stimmen"
+            "de": "Für Überspringung abstimmen"
         },
         "ui_pending_players": {
             "en": "Pending players",
