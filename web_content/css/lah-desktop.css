@@ -1406,4 +1406,29 @@ card[data-selection]::after {
 #join-controls > * {
     flex-grow: 1;
 }
+
+#fork-me {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 200px;
+    width: 200px;
+    font-size: 12pt;
+    overflow: hidden;
+}
+
+#fork-me-ribbon {
+    display: block;
+    content: "Fork me on GitHub!";
+    color: white;
+    background-color: #5a5a5a;
+    text-decoration: none;
+    width: 150%;
+    padding: 8px;
+    text-align: center;
+    font-weight: 400;
+    transform: translate(-25px, 50px) rotate(45deg);
+    text-shadow: 0 0 20px black;
+}
 }
