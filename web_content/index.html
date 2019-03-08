@@ -17,7 +17,7 @@
     <script src="js/lah-strings.js" defer></script>
     <script src="js/common-ui.js" defer></script>
     <script src="js/lah-ui.js" defer></script>
-    <script src="js/lah-ws.js"></script>
+    <script src="js/superior-ws.js"></script>
     <script src="js/lah.js"></script>
     <script src="js/incantate.js"></script>
 </head>
@@ -33,16 +33,16 @@
             class="lah-btn lah-btn-small" />
     </nav>
     <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
-    <div id="game">
-        <div id="black-card-area"></div>
+    <div id="game">        
         <div id="status-area">
             <div id="status"></div>
-            <div id="myname" class="stat bare">--</div>
+            <div><span id="myname">--</span> <span id="spectator-label" class="spectator-only" data-ui-string="ui_spectating_label"></span></div>
             <div id="stat-list">
                 <div id="player-count" class="stat" data-localize-title="ui_player_count">--</div>
                 <div id="pending-players" class="stat" data-localize-title="ui_pending_players">--</div>
                 <div id="czar" class="stat" title="Czar" data-localize-title="ui_card_czar">--</div>
-                <div id="score" class="stat" title="Score" data-localize-title="ui_score">--</div>
+                <div id="score" class="stat player-only" title="Score" data-localize-title="ui_score">--</div>
+                <div id="coins" class="stat player-only" title="Card Coins" data-localize-title="ui_aux_points">--</div>
             </div>
         </div>
         <div id="player-list-area">
@@ -54,15 +54,12 @@
         <div id="judge-message-area">
             <span id="judge-message-body"></span>
         </div>
-        <div id="judge-caption-area">
-            <span id="judge-caption"></span>
-        </div>
         <div id="judge-status-card-area">
             <div id="judge-status-card">
                 <span id="judge-status-card-text"></span>
             </div>
         </div>
-        <div id="play-area">
+        <div id="play-area" class="fade fade-zoom">
             <div class="lah-card-area">
                 <div id="play-cards-scroll-area" class="lah-card-container-outer">
                     <div id="play-cards-area" class="lah-card-container-inner"></div>
@@ -73,7 +70,7 @@
                     class="lah-btn" />
             </div>
         </div>
-        <div id="hand-area">
+        <div id="hand-area" class="fade fade-up player-only">
             <div id="hand-cards-area" class="lah-card-area">
                 <div id="hand-cards-scroll-area" class="lah-card-container-outer">
                     <div id="hand-cards-container" class="lah-card-container-inner"></div>
@@ -83,6 +80,9 @@
                 <input type="button" value="PLAY" data-localize-value="ui_btn_play" id="btn-play"
                     class="lah-btn hidden" />
             </div>
+        </div>
+        <div id="prompt-area">
+            <div id="black-card-area"></div>
         </div>
         <div id="game-end-screen" class="fade hidden">
             <div id="game-end-grid">
@@ -102,7 +102,7 @@
                     <div id="game-end-trophies-heading" data-ui-string="ui_trophies">
                         Trophies
                     </div>
-                    <div id="game-end-trophies-list"></div>
+                    <div id="game-end-trophies-list" data-localize-data-emptymsg="ui_no_trophies"></div>
                 </div>
             </div>
         </div>
@@ -129,19 +129,19 @@
                 <h1 data-ui-string="ui_options">Options</h1>
                 <div class="lah-vlist">
                     <div class="lah-listitem">
-                        <label class="lah-label" data-ui-string="ui_nickname"></label>
+                        <label class="lah-label" for="txt-username" data-ui-string="ui_nickname"></label>
                         <input type="text" id="txt-username" class="lah-txtbox wide"
                             data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
                     </div>
                     <div class="lah-listitem">
-                        <label class="lah-label" data-ui-string="ui_accent_color"></label>
+                        <label class="lah-label" for="txt-accent-color" data-ui-string="ui_accent_color"></label>
                         <input type="text" id="txt-accent-color" class="lah-txtbox wide"
                             data-localize-placeholder="ui_accent_color_placeholder" autocomplete="off"
                             maxlength="250" />
                     </div>
-                    <div class="lah-separator"></div>
+                    <div class="lah-gap"></div>
                     <div class="lah-listitem">
-                        <div class="lah-hlist lah-align-end">
+                        <div class="lah-hlist lah-push-end">
                             <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply"
                                 id="btn-options-apply" onclick="applyOptions()" />
                         </div>
@@ -157,6 +157,7 @@
             </div>
             <div class="modal-body">
                 <h1>About</h1>
+                <p>Cards Over LAN <span data-ui-string="ui_version"></span></p>
                 <p>This game is a clone of Cards Against Humanity.</p>
                 <p>
                     The original game is available for download or purchase at <a
@@ -173,6 +174,62 @@
             </div>
         </div>
     </div>
+    <div id="modal-join" class="modal fade opaque">
+        <div id="fork-me" class="desktop-only">
+            <a id="fork-me-ribbon" href="https://github.com/TheBerkin/cards-over-lan" target="_blank">Fork me on GitHub</a>
+        </div>
+        <div class="modal-dialog">
+            <span id="join-version" data-ui-string="ui_version"></span>
+            <div class="modal-body">
+                <h1 id="join-screen-title" data-ui-string="ui_game_title"></h1>
+                <p id="join-screen-server-name" data-ui-string="ui_loading_info"></p>
+                <hr/>
+                <div id="join-stat-grid">
+                    <div class="server-stat" id="join-screen-player-limit">
+                        <span class="value">--</span>
+                        <span class="name" data-ui-string="ui_player_limit"></span>
+                    </div>
+                    <div class="server-stat" id="join-screen-pack-count">
+                        <span class="value">--</span>
+                        <span class="name" data-ui-string="ui_pack_count"></span>
+                    </div>
+                    <div class="server-stat" id="join-screen-black-card-count">
+                            <span class="value">--</span>
+                            <span class="name" data-ui-string="ui_black_card_count"></span>
+                    </div>
+                    <div class="server-stat" id="join-screen-white-card-count">
+                        <span class="value">--</span>
+                        <span class="name" data-ui-string="ui_white_card_count"></span>
+                    </div>
+                </div>
+                <hr/>
+                <div id="join-marquee" data-marquee-text=""></div>
+                <hr/>
+                <div class="lah-gap"></div>
+                <div class="lah-listitem">
+                    <label class="lah-label" for="txt-join-username" data-ui-string="ui_nickname"></label>
+                    <input type="text" id="txt-join-username" class="lah-txtbox wide"
+                        data-localize-placeholder="ui_username_placeholder" autocomplete="off" />
+                </div>
+                <div class="lah-listitem">
+                    <div class="lah-hlist" id="join-controls">
+                        <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_play_game" id="btn-play-game" />
+                        <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_spectate_game" id="btn-spectate-game"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <noscript>
+        <div id="modal-noscript" class="modal opaque">
+            <div class="modal-dialog">
+                <div class="modal-body">
+                    <h1>JavaScript is disabled.</h1>
+                    <p>I think you know what to do.</p>
+                </div>
+            </div>
+        </div>
+    </noscript>
 </body>
 
 </html>

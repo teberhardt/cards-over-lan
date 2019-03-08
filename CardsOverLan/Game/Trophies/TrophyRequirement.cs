@@ -9,13 +9,13 @@ using CardsOverLan.Game.Converters;
 
 namespace CardsOverLan.Game.Trophies
 {
-    [JsonConverter(typeof(TrophyRequirementConverter))]
-    public abstract class TrophyRequirement
+	[JsonConverter(typeof(TrophyRequirementConverter))]
+	public abstract class TrophyRequirement
 	{
-        public TrophyRequirement()
-        {
-        }
+		public TrophyRequirement()
+		{
+		}
 
-        public abstract bool CheckPlayer(Player player);
-    }
+		public abstract bool CheckPlayer(Player player);
+	}
 }

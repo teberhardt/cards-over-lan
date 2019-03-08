@@ -2,9 +2,10 @@
 
 A Cards Against Humanity clone for hosting on your home network.
 
-![](https://i.imgur.com/8lON8ZR.gif)
+<p align="center"><img src="https://thumbs.gfycat.com/HealthyInformalGalapagoshawk-size_restricted.gif"><p>
 
-**This software is a work-in-progress. It may be missing functionality or contain bugs.**
+|**This software is a work-in-progress. It may be missing functionality or contain bugs.**|
+|---|
 
 
 ## Features
@@ -15,6 +16,9 @@ A Cards Against Humanity clone for hosting on your home network.
 * **Localizable Cards** - Cards can be written in multiple languages and your device will display them in your set browser language. This means you can even have many people playing on the same server in different languages.
 * **Trophies** - At the end of each game, see what kind of awful each of your friends is.
 * **Bots** - Add fake players to your game that pick random cards but are probably still funnier than you.
+* **Card Upgrades** - Some cards may be "upgraded" by using Card Coins. You earn Card Coins with each round you win. They might have more uses later, or be removed entirely. Who knows what the future may hold?
+* **Skipping** - If you don't like the current black card, you can vote to skip it with the press of a button.
+* **Idle Detection** - If players are idle for a set amount of time, the server ignores them, allowing the game to continue without them.
 
 
 ## How it works
@@ -37,7 +41,7 @@ To build the server, you need Visual Studio 2017 and .NET Framework 4.7.2.
 
 Open the `CardsOverLan` project in Visual Studio and build it.
 
-The build will contain copies of the `decks` and `web_content` folders.
+The build will contain copies of the `packs` and `web_content` folders.
 It also contains a `settings.json` file that contains the server settings. See below for how to configure this file.
 
 After building, run CardsOverLan.exe to start the server.
@@ -53,22 +57,31 @@ The settings.json file contains a number of properties that control how the serv
 
 |Property|Type|Description|
 |--------|----|-----------|
-|`host`|String|The URL and port that the server will be hosted on.|
-|`max_players`|Integer|Maximum number of players that the server can hold.|
-|`min_players`|Integer|Minimum required players in order for the game to start.|
-|`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
-|`hand_size`|Integer|Number of cards dealt to each player.|
-|`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
-|`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
-|`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
-|`max_points`|Integer|Points required for a player to win the game.|
-|`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
-|`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
 |`afk_recovery_time_seconds`|Integer|Number of seconds an AFK player must play within in order to not be AFK anymore.|
-|`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`afk_time_seconds`|Integer|Number of seconds a player can be idle before becoming AFK.|
+|`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
+|`allow_skips`|Boolean|Specifies whether players are allowed to skip black cards.|
+|`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
 |`bot_count`|Integer|Number of bots to add to the game.|
+|`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`bot_names`|String[]|List of names to assign to bots.|
+|`discards`|Integer|The number of discards allowed per player.|
+|`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
+|`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
+|`hand_size`|Integer|Number of cards dealt to each player.|
+|`host`|String|The URL and port that the server will be hosted on.|
+|`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
+|`max_players`|Integer|Maximum number of players that the server can hold.|
+|`max_points`|Integer|Points required for a player to win the game.|
+|`max_rounds`|Integer|Maximum number of rounds before game ends.|
+|`max_spectators`|Integer|Maximum number of spectators allowed.|
+|`min_players`|Integer|Minimum required players in order for the game to start.|
+|`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
+|`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
+|`use_packs`|String[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
+|`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner. Overridden by `bot_czars` and `perma_czar`.|
 
 
 ## FAQ
@@ -83,7 +96,7 @@ And those are great, there's nothing wrong with them. As mentioned above, this i
 
 ### Can I add my own cards?
 
-Yes, decks are written using a simple JSON format. Add them to the `decks` folder before starting up the server.
+Yes, decks are written using a simple JSON format. Add them to the `packs` folder before starting up the server.
 
 ### Can I host this on a public webserver?
 
@@ -99,7 +112,7 @@ No.
 
 ### There's a feature I want you to add.
 
-Submit an issue and we'll see what can be done.
+Please submit an issue detailing what you're looking for, and we can discuss.
 
 ### Why don't you include the CAH cards?
 
@@ -130,9 +143,9 @@ After saving your changes, relaunch the server and enjoy your ten-card deck!
 
 ### How can I contribute?
 
-The game isn't done and nothing is set in stone, so I'm reluctant to invite code contributions until the project is more mature.
+Regarding code contributions, I will have guidelines for this up soon.
 
-However, if you speak a language that isn't English and want to help me translate the cards, feel free to submit a pull request with your translations!
+If you speak a language that isn't English and want to help me translate the cards, feel free to submit a pull request with your translations!
 
 ## Legal
 

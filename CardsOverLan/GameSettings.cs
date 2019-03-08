@@ -12,10 +12,11 @@ namespace CardsOverLan
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public sealed class GameSettings
 	{
-        private const string DefaultServerName = "Cards Over LAN";
+		private const string DefaultServerName = "Cards Over LAN";
 		private const int DefaultHandSize = 10;
 		private const int DefaultMinPlayers = 3;
 		private const int DefaultMaxPlayers = 10;
+		private const int DefaultMaxSpectators = 10;
 		private const int MinMaxPlayers = 3;
 		private const int MinMinPlayers = 3;
 		private const int MinMaxPoints = 1;
@@ -25,14 +26,17 @@ namespace CardsOverLan
 		private const int MinAfkRecoveryTimeSeconds = 30;
 		private const int MinBlankCards = 0;
 		private const int MinBotCount = 0;
+		private const int MinDiscards = 0;
 
 		private const int DefaultRoundEndTimeout = 10000;
 		private const int DefaultGameEndTimeout = 30000;
 		private const int DefaultAfkTimeSeconds = 300;
 		private const int DefaultAfkRecoveryTimeSeconds = 90;
 		private const int DefaultMaxPoints = 10;
+		private const int DefaultMaxRounds = 16;
 		private const int DefaultBlankCards = 0;
 		private const int DefaultBotCount = 0;
+		private const int DefaultDiscards = 5;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -41,15 +45,16 @@ namespace CardsOverLan
 		private int _minPlayers = DefaultMinPlayers;
 		private int _roundEndTimeout = DefaultRoundEndTimeout;
 		private int _gameEndTimeout = DefaultGameEndTimeout;
+		private int _discards = DefaultDiscards;
 
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
 		private int _botCount;
+		private int _maxSpectators;
 
-
-        [JsonProperty("server_name", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
-        [DefaultValue(DefaultServerName)]
-        public string ServerName { get; set; } = DefaultServerName;
+		[JsonProperty("server_name", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
+		[DefaultValue(DefaultServerName)]
+		public string ServerName { get; set; } = DefaultServerName;
 
 		[JsonProperty("host", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue("http://localhost:80")]
@@ -71,6 +76,14 @@ namespace CardsOverLan
 			set => _maxPlayers = value < MinMaxPlayers ? MinMaxPlayers : value;
 		}
 
+		[JsonProperty("max_spectators", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultMaxSpectators)]
+		public int MaxSpectators
+		{
+			get => _maxSpectators;
+			set => _maxSpectators = value < 0 ? 0 : value;
+		}
+
 		[JsonProperty("max_player_name_length", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(48)]
 		public int MaxPlayerNameLength
@@ -78,6 +91,10 @@ namespace CardsOverLan
 			get => _maxNameLength;
 			set => _maxNameLength = value <= 0 ? 1 : value;
 		}
+
+		[JsonProperty("allow_duplicates", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(false)]
+		public bool AllowDuplicatePlayers { get; set; } = false;
 
 		[JsonProperty("hand_size", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(10)]
@@ -108,7 +125,7 @@ namespace CardsOverLan
 		public int GameEndTimeout
 		{
 			get => _gameEndTimeout;
-			set => _gameEndTimeout = value < MinGameEndTimeout ? MinGameEndTimeout : value;			
+			set => _gameEndTimeout = value < MinGameEndTimeout ? MinGameEndTimeout : value;
 		}
 
 		[JsonProperty("afk_time_seconds", DefaultValueHandling = DefaultValueHandling.Populate)]
@@ -131,8 +148,16 @@ namespace CardsOverLan
 		[DefaultValue(false)]
 		public bool PermanentCzar { get; set; }
 
-        [JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string[] ContentExclusions { get; set; } = new string[0];
+		[JsonProperty("bot_czars", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool AllowBotCzars { get; set; } = true;
+
+		[JsonProperty("winner_czar", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(false)]
+		public bool WinnerCzar { get; set; } = false;
+
+		[JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
+		public string[] ContentExclusions { get; set; } = new string[0];
 
 		[JsonProperty("max_points", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultMaxPoints)]
@@ -144,6 +169,10 @@ namespace CardsOverLan
 				_maxPoints = value < MinMaxPoints ? MinMaxPoints : value;
 			}
 		}
+
+		[JsonProperty("max_rounds", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultMaxRounds)]
+		public int MaxRounds { get; set; }
 
 		[JsonProperty("bot_count", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultBotCount)]
@@ -158,6 +187,25 @@ namespace CardsOverLan
 
 		[JsonProperty("require_languages", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string[] RequiredLanguages { get; set; } = new string[0];
+
+		[JsonProperty("use_packs", Required = Required.DisallowNull)]
+		public string[] UsePacks { get; set; } = new string[0];
+
+		[JsonProperty("enable_upgrades", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool UpgradesEnabled { get; set; } = true;
+
+		[JsonProperty("discards", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultDiscards)]
+		public int Discards
+		{
+			get => _discards;
+			set => _discards = value < MinDiscards ? MinDiscards : value;
+		}
+
+		[JsonProperty("allow_skips", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool AllowBlackCardSkips { get; set; } = true;
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

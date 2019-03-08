@@ -1,20 +1,27 @@
-(() => {
+((g) => {
+    "use strict";
     const IS_HTTPS = location.protocol === "https:";
     const STAGE_GAME_STARTING = "game_starting";
     const STAGE_PLAYING = "playing";
     const STAGE_JUDGING = "judging";
     const STAGE_ROUND_END = "round_end";
     const STAGE_GAME_END = "game_end";
-    const WS_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":3000/game";
+    const WS_PORT = 3000;
+    const WS_PLAY_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/play";
+    const WS_SPECTATE_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/spectate";
     const DEFAULT_LOCALE = "en";
 
     class Card {
-        constructor(type, id, content, blanks, pack) {
+        constructor(type, id, content, draw, pick, pack, tier, tierCost, nextTierId) {
             this._id = id;
             this._content = content;
             this._type = type;
-            this._blanks = blanks;
+            this._draw = draw;
+            this._pick = pick;
             this._pack = pack;
+            this._tier = tier;
+            this._tierCost = tierCost;
+            this._nextTierId = nextTierId;
         }
 
         get id() {
@@ -25,12 +32,28 @@
             return this._type;
         }
 
-        get blanks() {
-            return this._blanks;
+        get draw() {
+            return this._draw;
+        }
+
+        get pick() {
+            return this._pick;
         }
 
         get pack() {
             return this._pack;
+        }
+
+        get tier() {
+            return this._tier;
+        }
+
+        get tierCost() {
+            return this._tierCost;
+        }
+
+        get nextTierId() {
+            return this._nextTierId;
         }
 
         getContent(langCode) {
@@ -51,8 +74,12 @@
                 json["id"].startsWith("b_") ? "black" : "white",
                 json["id"],
                 json["content"],
-                json["blanks"] || 1,
-                json["pack"] || ""
+                json["draw"] || 0,
+                json["pick"] || 1,
+                json["pack"] || "",
+                json["tier"] || 0,
+                json["tier_cost"] || 0,
+                json["next_tier_id"] || ""
             );
         }
     }
@@ -66,8 +93,8 @@
         return -1;
     }
 
-    if (typeof lah === "undefined") {
-        lah = {};
+    if (typeof g.lah === "undefined") {
+        var lah = g.lah = {};
     }
 
     lah.score = 0;
@@ -96,6 +123,11 @@
     lah.gameResults = null;
     lah.lastRejectReason = "";
     lah.lastRejectDesc = "";
+    lah.auxPoints = 0;
+    lah.discards = 0;
+    lah.serverInfo = {};
+    lah.spectating = false;
+    lah.clientVotedSkip = false;
 
     let gameArea = null;
     let handArea = null;
@@ -114,7 +146,7 @@
     let btnPick = null;
     let playerList = null;
 
-    let ws = new LahClient(WS_URL, 10000);
+    let ws = new SuperiorWebSocket(WS_PLAY_URL, "fibonacci");
 
     // Sanitizes HTML content for card text
     function createContentHtml(str) {
@@ -132,20 +164,84 @@
     }
 
     // Make an HTMLElement from the specified Card object
-    function makeCardElement(card) {
+    function makeCardElement(card, options) {
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
+        el.setAttribute("data-card", card.id);
+        el.setAttribute(card.type, "");
 
         // Card text
         el.innerHTML = createContentHtml(card.getLocalContent());
 
-        el.setAttribute("data-card", card.id);
-        el.setAttribute(card.type, "");
+        if (options !== undefined) {
+            if (card.type == "black" && options.showSkipControls === true) {
+                let btnSkip = document.createElement("input");
+                btnSkip.setAttribute("type", "button");
+                btnSkip.setAttribute("value", getUiString("ui_btn_skip"));
+                btnSkip.setAttribute("title", getUiString("ui_skip_tooltip"));
+                btnSkip.classList.add("btn-skip", "player-only");
+                btnSkip.addEventListener("click", e => lah.voteForSkip(!lah.clientVotedSkip));
+                el.appendChild(btnSkip);
+            }
+
+            // Upgrade/discard controls
+            if (options.showHandControls === true) {
+                // Upgrade controls
+                if (card.tier > 0) {
+                    el.setAttribute("data-tier", card.tier);
+                }
+                if (card.nextTierId) {
+                    let nextTierCard = lah.whiteCards[card.nextTierId];
+                    el.setAttribute("data-upgrade", card.nextTierId);
+                    el.setAttribute("data-upgrade-cost", (nextTierCard && nextTierCard.tierCost) || 0);
+
+                    let btnUpgrade = document.createElement("div");
+                    btnUpgrade.setClass("btn-upgrade", true);
+                    let cost = nextTierCard.tierCost;
+                    btnUpgrade.innerHTML = getUiString("ui_upgrade_button", cost);
+                    btnUpgrade.addEventListener("mouseover", e => e.stopPropagation());
+                    btnUpgrade.addEventListener("click", e => {
+                        if (lah.auxPoints < cost) {
+                            btnUpgrade.setClass("nope", true);
+                            setTimeout(() => {
+                                btnUpgrade.setClass("nope", false);
+                            }, 250);
+                        } else {
+                            lah.upgradeCard(card.id);
+                        }
+                        e.stopPropagation();
+                    });
+
+                    el.appendChild(btnUpgrade);
+                }
+
+                // Discard controls
+                if (lah.discards > 0) {
+                    let btnDiscard = document.createElement("div");
+                    btnDiscard.classList.add("btn-discard");
+                    btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
+                    btnDiscard.addEventListener("click", e => {
+                        e.stopPropagation();
+                        el.classList.add("disabled");
+                        el.classList.add("collapse");
+                        // Backup timeout in case browser doesn't support animationend event
+                        let timeoutToken = setTimeout(() => {
+                            lah.discardCard(card.id);
+                        }, 500);
+                        el.addEventListener("animationend", () => {
+                            clearTimeout(timeoutToken);
+                            lah.discardCard(card.id);
+                        });
+                    });
+                    el.appendChild(btnDiscard);
+                }
+            }
+        }
+
+        
 
         // Pack info ribbon
         if (packInfo) {
-           
-            
             let ribbon = document.createElement("div");
             ribbon.classList.add("ribbon");
             ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
@@ -153,13 +249,24 @@
             el.appendChild(ribbon);
         }
 
+        // Add draw # if applicable
+        if (card.draw > 0) {
+            let divDraw = document.createElement("div");
+            divDraw.classList.add("draw");
+            let spanDrawNum = document.createElement("span");
+            spanDrawNum.classList.add("num");
+            spanDrawNum.innerText = card.draw.toString();
+            divDraw.appendChild(spanDrawNum);
+            el.appendChild(divDraw);
+        }
+
         // Add pick # if applicable
-        if (card.blanks > 1) {
+        if (card.pick > 1) {
             let divPick = document.createElement("div");
             divPick.classList.add("pick");
             let spanPickNum = document.createElement("span");
             spanPickNum.classList.add("num");
-            spanPickNum.innerText = card.blanks.toString();
+            spanPickNum.innerText = card.pick.toString();
             divPick.appendChild(spanPickNum);
             el.appendChild(divPick);
         }
@@ -219,6 +326,12 @@
         if (player.id == lah.localPlayerId) {
             e.classList.add("is-you");
         }
+        if (player.idle === true) {
+            e.classList.add("is-idle");
+        }
+        if (player.voted_skip === true) {
+            e.classList.add("voted-skip");
+        }
         if (lah.pendingPlayers.includes(player.id)) {
             e.classList.add("is-pending");
         }
@@ -226,6 +339,7 @@
         let colName = document.createElement("span");
         colName.classList.add("col-name");
         colName.innerText = player.name;
+        if (player.idle === true) colName.innerText += " (" + getUiString("ui_idle") + ")";
 
         let colScore = document.createElement("span");
         colScore.classList.add("col-score");
@@ -339,9 +453,17 @@
         "s_players": msg => {
             lah.playerList = msg.players;
             for(let p of msg.players) {
-                if (p.id == lah.localPlayerId && p.score != lah.score) {
-                    lah.score = p.score;
-                    onClientScoreChanged();
+                if (p.id == lah.localPlayerId) {
+                    if (p.score != lah.score) {
+                        lah.score = p.score;
+                        onClientScoreChanged();
+                    }
+                    lah.clientVotedSkip = p.voted_skip === true;
+                    gameArea.setClass("lah-voted-skip", lah.clientVotedSkip);
+                    let btnSkip = document.querySelector(".btn-skip");
+                    if (btnSkip) {
+                        btnSkip.setAttribute("value", getUiString(lah.clientVotedSkip ? "ui_btn_skip_undo": "ui_btn_skip"));
+                    }
                     break;
                 }
             }
@@ -353,9 +475,9 @@
             setPlayerName(msg.player_name, true);
         },
         "s_hand": msg => {
-            let prevNumBlanks = lah.numBlanks;
             lah.playerHand = msg.hand;
-            lah.numBlanks = msg.blanks;    
+            lah.numBlanks = msg.blanks;   
+            lah.discards = msg.discards; 
             if (lah.blankCards.length > msg.blanks) {
                 lah.blankCards.length = msg.blanks;
             } else if (lah.blankCards.length < msg.blanks) {
@@ -364,6 +486,7 @@
                 }
             }
             updateHandCardsArea();
+            updateHandCardSelection();
         },
         "s_cardsplayed": msg => {
             lah.clientPlayedCards = msg.selection;
@@ -374,6 +497,13 @@
             lah.lastRejectReason = msg.reason;
             lah.lastRejectDesc = msg.desc;
             console.log("Rejected by server: " + msg.reason);
+        },
+        "s_auxclientdata": msg => {
+            lah.auxPoints = msg.aux_points;
+            onAuxDataChanged();
+        },
+        "s_notify_skipped": msg => {
+            showBannerMessage(getUiString("ui_card_skipped_msg"));
         }
     };
 
@@ -452,7 +582,7 @@
             let card = lah.whiteCards[cardId];
             let id = cardId;
             if (card) {
-                let e = makeCardElement(card);
+                let e = makeCardElement(card, {showHandControls: true});
                 e.onclick = () => onHandCardClicked(id, e);
                 handCardsContainer.appendChild(e);
             }
@@ -473,7 +603,7 @@
         blackCardArea.killChildren();
         lah.currentBlackCard = lah.blackCards[cardId] || null;
         if (lah.currentBlackCard) {
-            let e = makeCardElement(lah.currentBlackCard);
+            let e = makeCardElement(lah.currentBlackCard, {showSkipControls: true});
             blackCardArea.appendChild(e);
         }
     }
@@ -504,13 +634,12 @@
         if (selectionContainsCard(cardId) || selectionContainsBlank(blankCardIndex)) {
             let removeIndex = lah.playerHandSelection.indexOfWhere(s => (cardId && s.id === cardId) || s.blankIndex === blankCardIndex);
             if (removeIndex >= 0) lah.playerHandSelection.splice(removeIndex, 1);
-            console.log(blankCardIndex);
         }
         // selecting
         else {
             // Make sure the selection is not too big
-            if (lah.playerHandSelection.length >= lah.currentBlackCard.blanks) {
-                lah.playerHandSelection.splice(0, lah.playerHandSelection.length - lah.currentBlackCard.blanks + 1);
+            if (lah.playerHandSelection.length >= lah.currentBlackCard.pick) {
+                lah.playerHandSelection.splice(0, lah.playerHandSelection.length - lah.currentBlackCard.pick + 1);
             }
             lah.playerHandSelection.push({id: cardId, blankIndex: blankCardIndex});
         }
@@ -530,6 +659,19 @@
         for (let el of cardElements) {
             el.removeAttribute("data-selection");
         }
+
+        let selectionDirty = false;
+        // Clear out any cards not in the hand
+        for(let selectedCard of [...lah.playerHandSelection]) {
+            if (selectedCard.blankIndex !== undefined) continue;
+            let index = lah.playerHand.indexOf(selectedCard.id);
+            if (index < 0) {
+                lah.playerHandSelection.splice(index, 1);
+                selectionDirty = true;
+            }
+        }
+
+        if (selectionDirty) onSelectionChanged();
 
         for (let i = 0; i < lah.playerHandSelection.length; i++) {
             let selection = lah.playerHandSelection[i];
@@ -565,6 +707,7 @@
         lah.localPlayerName = Cookies.get("name") || getUiString("ui_default_player_name");
         loadAccentColor();
         document.querySelector("#txt-username").value = lah.localPlayerName;
+        document.querySelector("#txt-join-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;
     }
 
@@ -579,14 +722,14 @@
         });
     }
 
-    lah.judgeCards = function (playIndex) {
+    g.lah.judgeCards = function (playIndex) {
         sendMessage({
             "msg": "c_judgecards",
             "play_index": playIndex
         });
     }
 
-    applyOptions = function () {
+    g.applyOptions = function () {
         setPlayerName(document.querySelector("#txt-username").value);
         saveAccentColor();
         hideModal("modal-options");
@@ -860,7 +1003,29 @@
         updateHandCardSelection();
     };
 
-    // Raised when the PICK button is clicked
+    g.lah.upgradeCard = function(cardId) {
+        sendMessage({
+            msg: "c_upgradecard",
+            card_id: cardId
+        });
+    }
+
+    g.lah.discardCard = function(cardId) {
+        sendMessage({
+            msg: "c_discardcard",
+            card_id: cardId
+        });
+    }
+
+    g.lah.voteForSkip = function(voteState) {
+        console.log(voteState);
+        sendMessage({
+            msg: "c_vote_skip",
+            voted: voteState
+        });
+    }
+
+    // Raised when the VOTE button is clicked
     function onJudgePickClicked() {
         lah.judgeCards(lah.selectedPlayIndex);
     }
@@ -870,8 +1035,12 @@
         document.querySelector("#myname").textContent = lah.localPlayerName;
     }
 
+    function onAuxDataChanged() {
+        document.querySelector("#stat-list #coins").textContent = lah.auxPoints.toString();
+    }
+
     function onSelectionChanged() {
-        setEnabled("btn-play", (lah.currentBlackCard && lah.playerHandSelection.length == lah.currentBlackCard.blanks));
+        setEnabled("btn-play", (lah.currentBlackCard && lah.playerHandSelection.length == lah.currentBlackCard.pick));
     }
 
     function onRoundChanged() {
@@ -891,11 +1060,78 @@
         return null;
     }
 
-    lah.start = function () {
-        console.log("client started");
+    function refreshServerInfo(failCount) {
+        if (failCount === undefined) {
+            failCount = 0;
+        }
+        const maxAttempts = 4;
+        $.ajax({
+            dataType: "json",
+            url: "/gameinfo",
+            success: data => {
+                lah.serverInfo = data;
+                onServerInfoReceived();
+            },
+            error: (x, e) => {
+                let fail = failCount + 1;
+                if (fail >= maxAttempts) {
+                    onServerUnreachable();
+                } else {
+                    setTimeout(() => refreshServerInfo(fail), 1000);
+                }
+            }
+        });
+    }
 
+    function onServerUnreachable() {
+        document.querySelector("#join-screen-server-name").textContent = getUiString("ui_server_unreachable");
+    }
+
+    function onServerInfoReceived() {
+        let info = lah.serverInfo;
+        document.querySelector("#join-screen-server-name").textContent = info.server_name;
+        document.querySelector("#join-screen-player-limit .value").textContent = 
+            getUiString("ui_join_player_limit", info.min_players, info.current_player_count, info.max_players);
+        document.querySelector("#join-screen-pack-count .value").textContent = info.pack_info.length;
+        document.querySelector("#join-screen-white-card-count .value").textContent = info.white_card_count;
+        document.querySelector("#join-screen-black-card-count .value").textContent = info.black_card_count;
+
+        const mqSep = "\u00a0\u00a0\u2014\u00a0\u00a0";
+        const onoff = b => getUiString(b ? "ui_feature_on" : "ui_feature_off");
+        const zeroOff = x => x > 0 ? x.toString() : getUiString("ui_feature_off");
+        var marqueeText = getUiString("ui_join_mq_goal", info.max_points, info.max_rounds)
+        + mqSep + getUiString("ui_join_mq_hand_size", info.hand_size)
+        + mqSep + getUiString("ui_join_mq_upgrades", onoff(info.upgrades_enabled))
+        + mqSep + getUiString("ui_join_mq_bot_count", zeroOff(info.bot_count))
+        + mqSep + getUiString("ui_join_mq_bot_czars", onoff(info.bot_czars))
+        + mqSep + (info.perma_czar ? getUiString("ui_join_mq_perma_czar") : getUiString("ui_join_mq_winner_czar", onoff(info.winner_czar)))
+        + mqSep + getUiString("ui_join_mq_blanks", zeroOff(info.blank_cards))
+        + mqSep + getUiString("ui_join_mq_discards", zeroOff(info.discards))
+        + mqSep + getUiString("ui_join_mq_allow_skips", onoff(info.allow_skips));
+        document.querySelector("#join-marquee").setAttribute("data-marquee-text", marqueeText);
+    }
+
+    function onSpectateGameClicked() {
+        setPlayerName(document.querySelector("#txt-join-username").value);
+        lah.spectating = true;
+        gameArea.setClass("lah-spectating", true);
+        ws.url = WS_SPECTATE_URL;
+        ws.connect();
+        hideModal("modal-join");
+    }
+
+    function onPlayGameClicked() {
+        setPlayerName(document.querySelector("#txt-join-username").value);
+        lah.spectating = false;
+        ws.url = WS_PLAY_URL;
+        ws.connect();
+        hideModal("modal-join");
+    }
+
+    g.lah.start = function () {
         // Populate saved options
         loadOptions();
+        refreshServerInfo();
 
         // Get game elements
         gameArea = document.getElementById("game");
@@ -922,13 +1158,15 @@
         btnPlay.onclick = onPlayClicked;
         btnPick.onclick = onJudgePickClicked;
 
+        document.querySelector("#btn-play-game").onclick = onPlayGameClicked;
+        document.querySelector("#btn-spectate-game").onclick = onSpectateGameClicked;
+
         if ("WebSocket" in window) {
             ws.onclose = onConnectionClosed;
             ws.onopen = onConnectionOpened;
             ws.onmessage = onDataReceived;
-            ws.connect();
         } else {
             showModal("modal-no-ws");
         }
     }
-})();                                                                                                                                                                                                                                                                    
+})(this);                                                                                                                                                                                                                                                                    

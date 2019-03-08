@@ -25,7 +25,7 @@ namespace CardsOverLan.Game.Trophies
 		{
 			int winCount = 0;
 			int playCount = 0;
-			foreach(var play in player.GetPreviousPlays())
+			foreach (var play in player.GetPreviousPlays())
 			{
 				playCount++;
 				if (play.Winning) winCount++;

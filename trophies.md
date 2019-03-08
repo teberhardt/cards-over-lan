@@ -160,7 +160,8 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`hp`|Homophobia/Transphobia.|
 |`i`|Injury.|
 |`ic`|Incest.|
-|`l`|Obscene language.|
+|`in`|Insects.|
+|`l`|Obscene/impolite language.|
 |`lgbt`|Relating to the LGBT community.|
 |`ma`|Misandry.|
 |`mg`|Misogyny.|
@@ -169,6 +170,7 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`nh`|Non-heterosexual sexual acts.|
 |`nu`|Nudity.|
 |`pd`|Pedophilia.|
+|`ra`|Racism.|
 |`re`|Religion or religious people.|
 |`s`|General sexual content flag.|
 |`su`|Suicide.|

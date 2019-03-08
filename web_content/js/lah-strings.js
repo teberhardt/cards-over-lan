@@ -1,7 +1,102 @@
-(() => {
+((g) => {
+    "use strict";
     const DEFAULT_LOCALE = "en";
+    const VERSION_STRING = "v1.0.0b2";
 
     let uiStrings = {
+        "ui_version": VERSION_STRING,
+        "ui_game_title": {
+            "en": "Cards Over LAN",
+            "de": "Cards Over LAN"
+        },
+        "ui_feature_on": {
+            "en": "ON",
+            "de": "AN"
+        },
+        "ui_feature_off": {
+            "en": "OFF",
+            "de": "AUS"
+        },
+        "ui_join_mq_upgrades": {
+            "en": "Card Upgrades: {0}",
+            "de": "Kartenverbesserungen: {0}"
+        },
+        "ui_join_mq_allow_skips": {
+            "en": "Allow Skipping Black Cards: {0}",
+            "de": "Überspringungen von Fragekarten erlauben: {0}"
+        },
+        "ui_join_mq_perma_czar": {
+            "en": "Perma-Czar",
+            "de": "Permanenter Zar"
+        },
+        "ui_join_mq_hand_size": {
+            "en": "Hand Size: {0}",
+            "de": "Blattgröße: {0}"
+        },
+        "ui_join_mq_goal": {
+            "en": "Goal: {0}\u2606 / {1} rounds",
+            "de": "Ziel: {0}\u2606 / {1} Runden"
+        },
+        "ui_join_mq_bot_count": {
+            "en": "Bots: {0}",
+            "de": "Bots: {0}"
+        },
+        "ui_join_mq_bot_czars": {
+            "en": "Bot Czars: {0}",
+            "de": "Bot-Zaren: {0}"
+        },
+        "ui_join_mq_winner_czar": {
+            "en": "Winner Is Czar: {0}",
+            "de": "Rundensieger wird Zar: {0}"
+        },
+        "ui_join_mq_blanks": {
+            "en": "Blank Cards: {0}",
+            "de": "Leerkarten: {0}"
+        },
+        "ui_join_mq_discards": {
+            "en": "Discards: {0}",
+            "de": "Ablegungen: {0}"
+        },
+        "ui_loading_info": {
+            "en": "Fetching server info...",
+            "de": "Serverinfo wird abgerufen..."
+        },
+        "ui_server_unreachable": {
+            "en": "Can't reach server",
+            "de": "Server nicht erreichbar"
+        },
+        "ui_spectating_label": {
+            "en": "(Spectating)",
+            "de": "(Zuschauer)"
+        },
+        "ui_btn_play_game": {
+            "en": "Join Game",
+            "de": "Spiel beitreten"
+        },
+        "ui_btn_spectate_game": {
+            "en": "Spectate",
+            "de": "Zuschauen"
+        },
+        "ui_join_player_limit": {
+            "en": "{1}/{2}",
+            "de": "{1}/{2}"
+        },
+        "ui_player_limit": {
+            "en": "Players",
+            "de": "Spieler"
+        },
+        "ui_pack_count": {
+            "en": "Packs",
+            "de": "Packe"
+        },
+        "ui_white_card_count": {
+            "en": "White Cards",
+            "de": "Antwortkarten"
+        },
+        "ui_black_card_count": {
+            "en": "Black Cards",
+            "de": "Fragekarten"
+        },
         "ui_default_player_name": {
             "en": "Player",
             "de": "Spieler"
@@ -26,6 +121,10 @@
             "en": "Server is full",
             "de": "Server ist voll"
         },
+        "ui_reject_duplicate": {
+            "en": "Duplicate player",
+            "de": "Duplizierter Spieler"
+        },
         "ui_waiting_for_players": {
             "en": "Waiting for more players",
             "de": "Warte auf weitere Spieler"
@@ -48,11 +147,27 @@
         },
         "ui_card_czar": {
             "en": "Card Czar",
-            "de": "Zar"
+            "de": "Kartenzar"
         },
         "ui_score": {
             "en": "Score",
             "de": "Punktzahl"
+        },
+        "ui_aux_points": {
+            "en": "Card Coins",
+            "de": "Kartenmünzen"
+        },
+        "ui_upgrade_button": {
+            "en": "Upgrade: {0}<span class='icon-coin'></span>",
+            "de": "Verbessern: {0}<span class='icon-coin'></span>"
+        },
+        "ui_discard_tooltip": {
+            "en": "Discard ({0} left)",
+            "de": "Ablegen ({0} übrig)"
+        },
+        "ui_skip_tooltip": {
+            "en": "Vote to skip black card",
+            "de": "Für Überspringung abstimmen"
         },
         "ui_pending_players": {
             "en": "Pending players",
@@ -69,6 +184,18 @@
         "ui_btn_vote": {
             "en": "VOTE",
             "de": "WÄHLEN"
+        },
+        "ui_btn_skip": {
+            "en": "SKIP",
+            "de": "ÜBERSPRINGEN"
+        },
+        "ui_btn_skip_undo": {
+            "en": "UNDO SKIP VOTE",
+            "de": "NICHT ÜBERSPRINGEN"
+        },
+        "ui_idle": {
+            "en": "idle",
+            "de": "untätig"
         },
         "ui_blank_card_prompt": {
             "en": "Write your card here.",
@@ -96,7 +223,7 @@
         },
         "ui_you_are_czar": {
             "en": "You're the Card Czar.",
-            "de": "Du bist der Zar."
+            "de": "Du bist der Kartenzar."
         },
         "ui_sub_nobody": {
             "en": "Nobody",
@@ -104,7 +231,7 @@
         },
         "ui_x_is_czar": {
             "en": "{0} is the Card Czar.",
-            "de": "{0} ist der Zar."
+            "de": "{0} ist der Kartenzar."
         },
         "ui_winner_left_nobody_scores": {
             "en": "Round winner left. Nobody scores.",
@@ -134,6 +261,10 @@
             "en": "Game Over!",
             "de": "Spielende"
         },
+        "ui_no_trophies": {
+            "en": "None!",
+            "de": "Keine!"
+        },
         "ui_username_placeholder": {
             "en": "Who are you?",
             "de": "Wer bist du?"
@@ -155,7 +286,7 @@
             "de": "Akzentfarbe"
         },
         "ui_accent_color_placeholder": {
-            "en": "Type a color name",
+            "en": "Type a color name (e.g. \"dead babies\")",
             "de": "Farbename hier eingeben"
         },
         "ui_menu_title": {
@@ -164,7 +295,7 @@
         },
         "ui_trophies": {
             "en": "Trophies",
-            "de": "Errungenschaften"
+            "de": "Errungen\u00adschaften"
         },
         "ui_scoreboard_score": {
             "en": "Score",
@@ -172,11 +303,15 @@
         },
         "ui_scoreboard_trophies": {
             "en": "Trophies",
-            "de": "Errungenschaften"
+            "de": "Errungen\u00adschaften"
         },
         "ui_player_list_title": {
             "en": "Players",
             "de": "Spielerliste"
+        },
+        "ui_card_skipped_msg": {
+            "en": "Black card skipped.",
+            "de": "Fragekarte übersprungen."
         }
     };
 
@@ -189,9 +324,10 @@
         })
     };
 
-    getUiString = function (key) {
+    g.getUiString = function (key) {
         let entry = uiStrings[key];
         if (!entry) return key;
+        if (typeof entry === "string") return entry;
         let lang = navigator.language;
         let fmtStr = entry[lang] || entry[lang.replace(/(.*)-[a-z0-9_\-]+/i, (m, p) => p)] || entry[DEFAULT_LOCALE] || Object.values(entry)[0];
         if (!fmtStr) return key;
@@ -214,4 +350,4 @@
             }
         }
     }
-})();
+})(this);

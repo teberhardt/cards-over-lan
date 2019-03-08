@@ -1,18 +1,19 @@
-(function() {
+(function(g) {
+    "use strict";
     let notifyBannerTimeoutToken = null;
     let banner = document.querySelector("#notify-banner");
     let bannerText = document.querySelector("#notify-banner-text");
     let txtAccentColor = document.querySelector("#txt-accent-color");
 
-    togglePlayerList = function() {
+    g.togglePlayerList = function() {
         document.querySelector("#player-list").toggleClass("closed");
     }
 
-    toggleMobileNav = function() {
+    g.toggleMobileNav = function() {
         document.querySelector("#navbar").toggleClass("mobile-hidden");
     }
 
-    toggleFullscreen = function() {
+    g.toggleFullscreen = function() {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         } else {
@@ -20,7 +21,7 @@
         }
     }
 
-    showBannerMessage = function(msg, seconds) {
+    g.showBannerMessage = function(msg, seconds) {
         bannerText.innerHTML = msg;
         banner.setClass("hidden", false);
         if (notifyBannerTimeoutToken !== null) {
@@ -70,7 +71,7 @@
         updateAccentColorFieldStyle();
     });
 
-    saveAccentColor = function() {
+    g.saveAccentColor = function() {
         let colorText = txtAccentColor.value;
         if (!colorText.trim()) {
             setAccentColor(null);
@@ -81,7 +82,7 @@
         Cookies.set("accent_bg", colorText.trim(), { expires: 365 });
     }
 
-    setAccentColor = function(color) {
+    g.setAccentColor = function(color) {
         document.body.style.setProperty("--accent-bg", color && color.toString());
         document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#ddd") || "#000");
         document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#ddd") || "transparent");
@@ -89,7 +90,7 @@
         document.body.style.setProperty("--accent-group-hover", color && (color.isBright() ? "rgba(0, 0, 0, .35)" : "rgba(255, 255, 255, .35)"));
     }
 
-    loadAccentColor = function() {
+    g.loadAccentColor = function() {
         let colorText = Cookies.get("accent_bg");
         let color = colorText && Incantate.getColor(colorText);
         txtAccentColor.value = colorText || "";
@@ -98,4 +99,4 @@
     }
 
     setLpIgnore();
-})();
+})(this);

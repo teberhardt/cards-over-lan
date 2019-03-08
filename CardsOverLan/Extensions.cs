@@ -26,7 +26,7 @@ namespace CardsOverLan
 
 			var sb = new StringBuilder();
 			int n = limit >= 0 ? Math.Min(limit, substrings.Length) : substrings.Length;
-			for(int i = 0; i < n; i++)
+			for (int i = 0; i < n; i++)
 			{
 				if (i > 0) sb.Append(separator);
 				sb.Append(substrings[i]);

@@ -1,0 +1,231 @@
+{
+    "id": "transcend_pack",
+    "name": "T\u0368\u036C\u0339r\u030B\u0328\u0325\u0348\u031Ea\u030F\u0350\u0307\u036A\u033E\u035B\u0356\u0318\u032D\u0354\u034E\u0319\u0317n\u036D\u0346\u0346\u033A\u0317\u0332\u0345s\u0336c\u0357\u0337e\u0367\u031D\u0318n\u036D\u030A\u0309\u0346\u033D\u0304\u0320\u0331\u0326\u0325\u031E\u033Cd\u030E\u0352\u0321\u0316\u0329\u0354\u031Fe\u0307\u034An\u0363\u0322\u0323\u032F\u0333\u0353\u0348c\u0314\u030C\u0342\u0348e\u0489\u0329\u032C\u0329\u031F\u031D\u0333 Pack",
+    "author": "Nicholas Fleck",
+    "accent": "transcend",
+    "cards": [
+        {
+            "id": "w_crybloodtears",
+            "content": {
+                "en": "Crying happy blood tears.",
+                "de": "Freudenbluttränen weinen."
+            },
+            "flags": "bg w"
+        },
+        {
+            "id": "w_lotsalsd",
+            "content": {
+                "en": "A lot of fucking LSD.",
+                "de": "Scheiße viel LSD."
+            },
+            "flags": "dr l"
+        },
+        {
+            "id": "w_nomorepain",
+            "content": {
+                "en": "No more pain.",
+                "de": "Keine Schmerzen mehr."
+            }
+        },
+        {
+            "id": "w_legman",
+            "content": {
+                "en": "The Leg-Man.",
+                "de": "Der Beinemann."
+            }
+        },
+        {
+            "id": "w_bigbeautbugwomen",
+            "content": {
+                "en": "Big, beautiful insect women.",
+                "de": "Große, schöne Insektfrauen."
+            },
+            "flags": "in"
+        },
+        {
+            "id": "w_cryptidjacques",
+            "content": {
+                "en": "Jacques, the Lonely Cryptid.",
+                "de": "Jacques, der Einsame Kryptid."
+            }
+        },
+        {
+            "id": "w_pa",
+            "content": {
+                "en": "Pennsylvania.",
+                "de": "Pennsylvania."
+            }
+        },
+        {
+            "id": "w_italiananus",
+            "content": {
+                "en": "A big Italian anus jam-packed with ravioli.",
+                "de": "Ein großer, mit Ravioli überfüllter italienischer Anus."
+            },
+            "flags": "fe ra"
+        },
+        {
+            "id": "w_him",
+            "content": {
+                "en": "Him.",
+                "de": "Er."
+            }
+        },
+        {
+            "id": "w_becomesolidsteel",
+            "content": {
+                "en": "Becoming a solid steel statue so that you can no longer be hurt.",
+                "de": "Eine solide Stahlstatue werden, damit man nicht mehr verletzt werden kann."
+            }
+        },
+        {
+            "id": "w_mytrueface",
+            "content": {
+                "en": "My true face.",
+                "de": "Mein wahres Gesicht."
+            }
+        },
+        {
+            "id": "w_keith",
+            "content": {
+                "en": "Keith.",
+                "de": "Keith."
+            }
+        },
+        {
+            "id": "w_calcium",
+            "content": {
+                "en": "Calcium.",
+                "de": "Kalk."
+            }
+        },
+        {
+            "id": "w_thevoid",
+            "content": {
+                "en": "The void.",
+                "de": "Das Void."
+            }
+        },
+        {
+            "id": "w_allthesestars",
+            "content": {
+                "en": "All these stars.",
+                "de": "All diese Sterne."
+            }
+        },
+        {
+            "id": "w_them",
+            "content": {
+                "en": "\"Them.\"",
+                "de": "\"Sie.\""
+            }
+        },
+        {
+            "id": "w_leavemortalcoil",
+            "content": {
+                "en": "Leaving this mortal coil, at long last.",
+                "de": "Die Mühsal des Irdischen endlich hinter sich lassen."
+            },
+            "flags": "d"
+        },
+        {
+            "id": "w_openinnereye",
+            "content": {
+                "en": "The opening of my inner eye.",
+                "de": "Das Öffnen meines dritten Auges."
+            }
+        },
+        {
+            "id": "w_unidentorganicmatter",
+            "content": {
+                "en": "Unidentified organic matter.",
+                "de": "Unbekanntes organisches Material."
+            }
+        },
+        {
+            "id": "w_oldstaircase",
+            "content": {
+                "en": "An old, rickety staircase that wasn't there before.",
+                "de": "Eine alte, klapprige Treppe, die vorher nicht da war."
+            }
+        },
+        {
+            "id": "w_ascending",
+            "content": {
+                "en": "Ascending.",
+                "de": "Aufsteigen."
+            }
+        },
+        {
+            "id": "w_e",
+            "content": {
+                "en": "e",
+                "de": "e"
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_goinggoinggoing",
+            "content": {
+                "en": "Going and going and going.",
+                "de": "Gehen und gehen und gehen."
+            }
+        },
+        {
+            "id": "w_jupiter",
+            "content": {
+                "en": "Jupiter.",
+                "de": "Jupiter."
+            }
+        },
+        {
+            "id": "w_eternity",
+            "content": {
+                "en": "Eternal anguish.",
+                "de": "Ewige Qual."
+            },
+            "flags": "to"
+        },
+        {
+            "id": "b_newhighpowerbelief",
+            "content": {
+                "en": "I never believed in a higher power until I experienced ________.",
+                "de": "Ich hatte nie an eine höhere Macht geglaubt, bis ich ________ erlebt habe."
+            },
+            "flags": "re",
+            "pick": 1
+        },
+        {
+            "id": "b_onlytranscendingthing",
+            "content": {
+                "en": "________ transcends all of time and space.",
+                "de": "________ transzendiert alle Zeit und Raum."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_centerofuniverse",
+            "content": {
+                "en": "What's at the center of the universe?",
+                "de": "Was liegt im Zentrum des Universums?"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_lightatendoftunnel",
+            "content": {
+                "en": "As it turns out, the light at the end of the tunnel is really just ________.",
+                "de": "Es stellt sich heraus, dass das Licht am Ende des Tunnels eigentlich nur ________ ist."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_canyouseehim",
+            "content": {
+                "en": "I swear I'm not crazy, doctor! Even now, I can see ________ and hear ________!",
+                "de": "Ich schwöre, ich bin nicht verrückt, Doktor! Schon jetzt kann ich ________ sehen und ________ hören!"
+            },
+            "pick": 2
+        }
+    ]
+}

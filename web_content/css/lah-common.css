@@ -6,6 +6,13 @@
 
 @font-face {
     font-family: "LAH";
+    src: url(/fonts/Roboto-Italic.ttf);
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "LAH";
     src: url(/fonts/Roboto-Medium.ttf);
     font-weight: 500;
 }
@@ -41,11 +48,15 @@
     --accent-bg: var(--default-accent-color);
     --accent-fg: #111;
     --accent-ol: transparent;
+    --accent-btn-primary: #39f;
+    --accent-btn-secondary: #f93;
     --accent-highlight: #094;
+    --accent-skip: #06c;
+    --accent-idle: #5a5a5a;
     --accent-group: rgba(0, 0, 0, .25);
     --accent-group-hover: rgba(0, 0, 0, .35);
     --main-bg-line: rgba(0, 0, 0, .0);
-    --btn-color: #eee;
+    --btn-color: rgba(0, 0, 0, .05);
 }
 
 ::-webkit-input-placeholder {
@@ -85,6 +96,15 @@
     font-weight: 700;
 }
 
+hr {
+    border: 0 solid rgba(0, 0, 0, .1);
+    border-bottom-width: 1px;
+    margin: 0.5em 8px;
+    flex-shrink: 0;
+    align-self: stretch;
+    height: 1px;
+}
+
 #score-area {
     display: none !important;
 }
@@ -116,6 +136,10 @@
     opacity: 0;
 }
 
+#game.lah-spectating .player-only, #game:not(.lah-spectating) .spectator-only {
+    display: none !important;
+}
+
 .card-group {
     display: flex;
     flex-grow: 0;
@@ -143,6 +167,11 @@ i.arrow-right {
 
 card {
     box-sizing: content-box;
+}
+
+card.disabled {
+    pointer-events: none !important;
+    opacity: .8;
 }
 
 span.highlight {
@@ -195,6 +224,14 @@ span.highlight {
     }
 }
 
+@keyframes collapse {
+    to {
+        transform: rotate(90deg) scale(0);
+        -webkit-transform: rotate(90deg) scale(0);
+        opacity: 0;
+    }
+}
+
 /* WIN SPIN ANIMATION */
 
 .lah-stage-round-end #play-cards-area .card-group.winner {
@@ -244,7 +281,15 @@ span.highlight {
 }
 
 .fade {
-    transition: opacity .3s, backdrop-filter .3s;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out;
+}
+
+.hidden.fade.fade-up {
+    transform: translateY(-10px);
+}
+
+.hidden.fade.fade-zoom {
+    transform: scale(1.03);
 }
 
 /* TROPHY IMAGES */
@@ -286,7 +331,9 @@ span.highlight {
 
 .ribbon[data-packaccent=red]:after {
     background: #800;
-}.ribbon[data-packaccent=orange]:after {
+}
+
+.ribbon[data-packaccent=orange]:after {
     background: #d70;
     color: #000 !important;
 }
@@ -384,4 +431,42 @@ card[black] .ribbon[data-packaccent=black]:after {
     background: #37d;
     color: #f81 !important;
     font-family: "Times New Roman", "LAH", sans-serif !important;
+}
+
+.ribbon[data-packaccent=transcend]:after {
+    background: #03f;
+    color: #f0f !important;
+    font-weight: 900 !important;
+}
+
+/* CARD TIER COLORS */
+
+#hand-area card[data-tier="1"] {
+    color: #7f4321;
+}
+
+#hand-area card[data-tier="2"] {
+    color: #777798;
+}
+
+#hand-area card[data-tier="3"] {
+    color: #cf6024;
+}
+
+#hand-area card[data-tier="4"] {
+    color: #bc0000;
+}
+
+/* BUTTON COLORS */
+
+.lah-btn.primary {
+    background-color: var(--accent-btn-primary) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.lah-btn.secondary {
+    background-color: var(--accent-btn-secondary) !important;
+    color: white !important;
+    border: none !important;
 }

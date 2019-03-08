@@ -4,11 +4,18 @@
     /* Cards have .715 w/h ratio */
 
     :root {
-        --card-width: 10.01rem;
-        --card-height: 14rem;
+        --card-scale: 2.25;
+        --card-width: calc(10vh * var(--card-scale));
+        --card-height: calc(14vh * var(--card-scale));
+        --card-font-size: 1.9vh;
         --card-border-radius: 14px;
         --card-padding: 1em;
         --final-score-row-height: 22pt;
+    }
+
+    html {
+        height: 100vh;
+        width: 100vw;
     }
 
     body {
@@ -19,6 +26,10 @@
         width: 100vw;
         height: 100vh;
         text-size-adjust: 100%;
+    }
+
+    .desktop-only {
+        display: none !important;
     }
     
     .disabled {
@@ -117,6 +128,7 @@
     }
     
     #game {
+        position: relative;
         max-width: 100vw;
         max-height: 100vh;
         min-width: 100vw;
@@ -161,32 +173,69 @@
         text-align: center;
     }
 
-    /* BLACK CARD AREA */
+    /* PROMPT AREA */
 
-    #black-card-area {
+    #prompt-area {
         grid-column: c-start / c-end;
         grid-row: r-start / r-center;
         display: flex;
         flex-direction: column;
         align-content: center;
         justify-content: flex-end;
-        position: relative;
         align-items: center;
     }
 
-    .lah-stage-playing:not(.lah-judge) #black-card-area card {
+    #black-card-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    card > .btn-skip {
+        position: absolute;
+        display: inline-block;
+        bottom: -2.5em;
+        left: 50%;
+        font-size: 12pt;
+        line-height: 1.02em;
+        font-weight: 600;
+        height: 1em;
+        transform: translateX(-50%);
+        background: none;
+        outline: none;
+        color: var(--accent-fg);
+        border: 2px solid var(--accent-fg);
+        box-sizing: content-box;
+        padding: 2px 8px;
+        border-radius: 3px;
+        text-rendering: optimizeSpeed;
+        -webkit-font-smoothing: subpixel-antialiased;
+        transition: opacity .1s ease;
+        opacity: .4;
+    }
+    
+    #game:not(.lah-stage-playing) .btn-skip {
+        display: none;
+    }
+    
+    card > .btn-skip:not(:disabled):hover {
+        border-color: var(--accent-fg);
+        opacity: 1;
+    }
+    
+    .lah-voted-skip card > .btn-skip {
+        color: var(--accent-skip);
+        border-color: var(--accent-skip) !important;
+    }
+
+    .lah-stage-playing:not(.lah-judge) #prompt-area {
        margin-bottom: 12pt; 
     }
 
-    .lah-stage-playing.lah-judge #black-card-area {
+    .lah-stage-playing.lah-judge #prompt-area {
         grid-row: r-start / r-center;
         grid-column: c-start / c-end;
-    }
-
-    .lah-stage-playing.lah-judge #black-card-area card {
-        grid-row: r-start / r-end;
-        grid-column: c-start / c-end;
-        transform: scale(1);
     }
 
     /* JUDGE STATUS & MESSAGE AREAS */
@@ -196,8 +245,8 @@
         grid-row: r-center / r-end;
         grid-column: c-start / c-end;
         justify-self: center;
-        align-self: flex-start;
-        font-size: 11pt !important;
+        align-self: center;
+        font-size: 14pt !important;
     }
 
     #judge-message-body, #judge-message-body * {
@@ -210,14 +259,14 @@
         flex-direction: row;
         grid-row: r-center / r-end;
         grid-column: c-start / c-end;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         transform: translateY(8pt);
+        margin: 16px;
         color: #888;
         pointer-events: none;
     }
 
-    #game.lah-stage-playing.lah-judge #judge-status-card-area,
     #game.lah-stage-playing.lah-judge #judge-message-area {
         display: flex;
     }
@@ -227,15 +276,16 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: var(--card-width);
-        height: var(--card-height);
+        --card-scale: .75;
+        width: calc(var(--card-width) * var(--card-scale));
+        height: calc(var(--card-height) * var(--card-scale));
         border-radius: var(--card-border-radius);
         border: 4px dashed #888;
         box-sizing: border-box;
     }
 
     #judge-status-card-text {
-        font-size: 64pt;
+        font-size: 36pt;
         font-weight: 600;
         text-align: center;
     }
@@ -408,8 +458,9 @@
         background-color: var(--accent-ol);
     }
 
-    #status-area #myname {
+    #status-area #myname, #spectator-label {
         font-size: .75em;
+        margin-left: 2px;
     }
     
     #status-area #player-count:before {
@@ -426,6 +477,10 @@
 
     #status-area #pending-players:before {
         background-image: url("/img/lah-pending.png");
+    }
+
+    #status-area #coins:before {
+        background-image: url("/img/lah-coin.png");
     }
 
     /* GAME OVER SCREEN / TROPHIES */
@@ -544,6 +599,7 @@
     }
 
     #game-end-trophies-list {
+        position: relative;
         display: flex;
         max-width: 100%;
         flex-direction: row;
@@ -552,6 +608,19 @@
         overflow-y: hidden;
         overflow-x: auto;
         box-sizing: border-box;
+    }
+
+    #game-end-trophies-list:empty:before {
+        content: attr(data-emptymsg);
+        display: block;
+        height: 1em;
+        position: relative;
+        left: 50%;
+        top: 40%;
+        color: #eee;
+        opacity: .4;
+        font-size: 12pt;
+        transform: translate(-50%, -50%);
     }
 
     .trophy {
@@ -705,7 +774,11 @@
         max-width: var(--card-width) !important;
         max-height: var(--card-height) !important;
         min-height: var(--card-height) !important;
-        font-size: 11pt;
+        font-size: var(--card-font-size);
+    }
+
+    card.collapse {
+        animation: collapse .35s ease-in-out !important;
     }
     
     card.placeholder {
@@ -728,16 +801,28 @@
     
     card .pick {
         position: absolute;
-        font-size: 0.75em;
-        right: 1.45rem;
-        bottom: 2rem;
+        font-size: .75em;
+        right: 1.75em;
+        bottom: 2em;
+    }
+
+    card .draw {
+        position: absolute;
+        font-size: .75em;
+        left: 3.5em;
+        bottom: 2em;
+        transition: opacity .35s;
     }
     
     card .pick::before {
         content: "PICK ";
     }
+
+    card .draw::before {
+        content: "DRAW ";
+    }
     
-    card .pick .num {
+    card .pick .num, card .draw .num {
         color: black;
         display: inline-block;
         text-align: center;
@@ -748,8 +833,8 @@
         border: 2px solid white;
         border-radius: 100%;
         padding: 1px 1px 1px 0px;
-        min-width: .9em;
-        height: .9em;
+        min-width: .8em;
+        height: .8em;
         white-space: nowrap;
         box-sizing: initial !important;
     }
@@ -812,6 +897,69 @@
         font-weight: 500;
     }
 
+    /* DISCARD BUTTONS */
+
+    card .btn-discard {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+        height: 24px;
+        width: 24px;
+        overflow: hidden;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        border-bottom-left-radius: 4px;
+        box-sizing: content-box;
+        opacity: .5;
+    }
+
+    card .btn-discard:after {
+        content: "\d7";
+    }
+
+    card .btn-discard:hover {
+        background-color: rgba(0, 0, 0, .075);
+    }
+
+    /* CARD UPGRADE BUTTONS */
+
+    card .btn-upgrade {
+        position: absolute;
+        left: 0;
+        top: -8pt;
+        font-size: 8pt;
+        min-width: 16pt;
+        border-radius: 6px;
+        border: 2px solid var(--accent-ol);
+        color: white;
+        background: black;
+        padding: 2px 3px;
+        z-index: 9999;
+        transition: background-color .4s;
+    }
+
+    card .btn-upgrade:hover {
+        background-color: #454545;
+    }
+
+    card .btn-upgrade.nope {
+        background-color: red;
+    }
+
+    .icon-coin {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background-image: url("/img/lah-coin-inv.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        transform: translateY(.15em);
+    }
+
+    /* BLANK CARDS */
+
     card[data-card="blank"] > .blank-card-text-container {
         pointer-events: auto !important;
         position: absolute;    
@@ -872,13 +1020,13 @@
         }
         to {
             opacity: 1;
-            transform: translate(-50%, calc(-100% - 8pt));
+            transform: translate(-50%, -60%);
         }
     }
     
     card[data-selection]::after {
         content: attr(data-selection);
-        transform: translate(-50%, calc(-100% - 8pt));
+        transform: translate(-50%, -60%);
         position: absolute;
         top: 0;
         left: 50%;
@@ -920,6 +1068,7 @@
         border: 2px solid var(--btn-border-color);
         border-radius: 6pt;
         font-size: 22pt;
+        min-height: 44px;
     }
 
     /* themed controls */
@@ -932,6 +1081,7 @@
     .lah-btn-small {
         font-size: 16pt;
         padding: 4pt 12pt;
+        margin: 4pt 4pt;
     }
     
     .lah-btn:not(.disabled):hover {
@@ -955,11 +1105,14 @@
     }
     
     .lah-txtbox {
-        padding: 6pt;
+        flex-shrink: 0;
+        height: 16pt;
+        min-height: 16pt;
         outline: none;
         border: 2px solid black;
         border-radius: 4pt;
         font-size: 14pt;
+        padding: 6pt;
     }
     
     .lah-label {
@@ -967,6 +1120,15 @@
         font-size: 14pt;
         margin: 4pt 1pt;
         color: #444;
+        flex-shrink: 0;
+    }
+
+    .lah-fill {
+        flex-grow: 1 !important;
+    }
+
+    .wide {
+        align-self: stretch;
     }
 
     #txt-accent-color {
@@ -975,7 +1137,7 @@
     
     .modal {
         display: flex;
-        position: fixed;
+        position: absolute;
         color: #111;
         left: 0;
         top: 0;
@@ -986,14 +1148,19 @@
     
     .modal-dialog {
         background: #f6f6f6; 
-        padding: 20pt 24pt;
+        padding: 20pt 16pt;
         flex-grow: 1;
+        max-width: 100vw;
+        max-height: 100vh;
+        box-sizing: border-box;
     }
     
     .modal-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
         height: 100%;
-        margin-top: var(--modal-nav-height);
     }
     
     .modal-nav {
@@ -1034,16 +1201,17 @@
         width: 100%;
     }
     
-    .lah-vlist > .lah-listitem {
+    .lah-vlist > .lah-listitem, .modal-body > .lah-listitem {
         display: flex;
         flex-direction: column;
-        flex-grow: 1;
+        flex-shrink: 0;
         margin: 4pt;
         width: 100%;
     }
     
-    .lah-vlist > .lah-separator {
-        margin: 8pt 4pt;
+    .lah-vlist > .lah-gap {
+        flex-shrink: 0;
+        margin: 4pt 4pt;
     }
     
     .lah-vlist > .lah-listend {
@@ -1059,8 +1227,99 @@
     .lah-align-end {
         justify-content: flex-end;
     }
+
+    .lah-stretch-items > * {
+        justify-self: stretch;
+        flex-grow: 1;
+    }
     
     .lah-listitem > input[type="text"] {
         flex-grow: 1;
+    }
+
+    #join-version {
+        position: absolute;
+        right: 12px;
+        top: 8px;
+        font-size: 8pt;
+        opacity: .45;
+    }
+
+    #join-screen-title {
+        margin: 4px 0;
+        text-align: center;
+    }
+    
+    #join-screen-server-name {
+        margin: 4px;
+        font-size: 12pt;
+        color: #444;
+        text-align: center;
+    }
+    
+    #join-stat-grid {
+        display: grid;
+        grid-template: [r-start] 1fr [r1] 1fr [r-end] / [c-start] 1fr [c1] 1fr [c-end];
+        margin: 4px 0;
+        color: #333;
+    }
+    
+    #join-stat-grid .server-stat {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 6px 6px;
+        padding: 2px 6px;
+    }
+    
+    #join-stat-grid .server-stat .name {
+        display: block;
+        text-align: center;
+    }
+    
+    #join-stat-grid .server-stat .value {
+        display: block;
+        font-size: 24pt;
+        text-align: center;
+        color: #454545;
+        font-weight: 700;
+    }
+
+    #join-marquee {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 0;
+        align-self: stretch;
+        overflow: hidden;
+        height: 14pt;
+        padding: 2px;
+        font-size: 12pt;
+    }
+    
+    #join-marquee:before, #join-marquee:after {
+        content: attr(data-marquee-text);
+        flex-shrink: 0;
+        min-width: 100%;
+        font-size: 12pt;
+        color: #333;
+        padding-left: 2em;
+        padding-right: 6em;  
+        animation: join-marquee 14s linear 1s infinite;
+        box-sizing: content-box;
+    }
+
+    @keyframes join-marquee {    
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    #join-controls {
+        flex-direction: column;
+        align-content: stretch;
+    }
+
+    #join-controls > .lah-btn {
+        margin: 4pt 0;
     }
 }
