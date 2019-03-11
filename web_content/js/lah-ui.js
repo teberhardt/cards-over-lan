@@ -4,6 +4,7 @@
     let banner = document.querySelector("#notify-banner");
     let bannerText = document.querySelector("#notify-banner-text");
     let txtAccentColor = document.querySelector("#txt-accent-color");
+    let txtChatMsg = document.querySelector("#txt-chat-msg");
 
     g.togglePlayerList = function() {
         document.querySelector("#player-list").toggleClass("closed");
@@ -54,6 +55,17 @@
         toggleFullscreen();
     });
 
+    // Mobile hamburger menu
+    document.querySelector("#btn-mobile-nav").addEventListener("click", e => {
+        toggleMobileNav();
+    })
+
+    // Apply options button
+    document.querySelector("#btn-options-apply").addEventListener("click", e => {
+        applyOptions();
+    })
+
+    // Accent color field
     let updateAccentColorFieldStyle = function() {
         let colorText = txtAccentColor.value;
         if (!colorText.trim()) {
@@ -71,6 +83,28 @@
         updateAccentColorFieldStyle();
     });
 
+
+    // Chat text box
+    document.addEventListener("keydown", e => {
+        if (document.activeElement === document.body && e.keyCode == 84) {
+            txtChatMsg.focus();
+            e.preventDefault();
+        }
+    });
+
+    txtChatMsg.addEventListener("keydown", e => {
+        if (e.keyCode == 13 && txtChatMsg.value.length > 0) {
+            lah.sendChatMessage(txtChatMsg.value);
+            txtChatMsg.value = "";
+        } else if (e.keyCode == 27) {
+            e.target.blur();
+        }
+    });
+
+    // Static button click events
+
+
+    // Accent color functions
     g.saveAccentColor = function() {
         let colorText = txtAccentColor.value;
         if (!colorText.trim()) {
@@ -83,7 +117,7 @@
     }
 
     g.setAccentColor = function(color) {
-        document.body.style.setProperty("--accent-bg", color && color.toString());
+        document.body.style.setProperty("--accent-bg", (color && color.toString()) || "var(--default-accent-color)");
         document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#ddd") || "#000");
         document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#ddd") || "transparent");
         document.body.style.setProperty("--accent-group", color && (color.isBright() ? "rgba(0, 0, 0, .25)" : "rgba(255, 255, 255, .25)"));

@@ -12,27 +12,26 @@
     <link rel="stylesheet" type="text/css" href="css/lah-desktop.css" />
     <link rel="stylesheet" type="text/css" href="css/lah-mobile.css" />
     <title>Cards Over LAN</title>
+    <script src="js/incantate.js"></script>
     <script src="js/js-cookie.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/lah-strings.js" defer></script>
     <script src="js/common-ui.js" defer></script>
     <script src="js/lah-ui.js" defer></script>
-    <script src="js/superior-ws.js"></script>
-    <script src="js/lah.js"></script>
-    <script src="js/incantate.js"></script>
+    <script src="js/superior-ws.js" defer></script>
+    <script src="js/lah.js" defer></script>
 </head>
 
-<body onload="lah.start()" class="preload">
+<body class="preload">
     <nav id="navbar" class="mobile-hidden">
         <h1 class="mobile-only nav-header" data-ui-string="ui_menu_title">Menu</h1>
-        <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small"
-            onclick="showModal('modal-about')" />
+        <input type="button" value="About" data-localize-value="ui_about" id="btn-about" class="lah-btn lah-btn-small" data-modal-show="modal-about" />
         <input type="button" value="Options" data-localize-value="ui_options" id="btn-options"
-            class="lah-btn lah-btn-small" onclick="showModal('modal-options')" />
+            class="lah-btn lah-btn-small" data-modal-show="modal-options" />
         <input type="button" value="Fullscreen" data-localize-value="ui_fullscreen" id="btn-fullscreen"
             class="lah-btn lah-btn-small" />
     </nav>
-    <div id="btn-mobile-nav" class="mobile-btn-menu" onclick="toggleMobileNav()"></div>
+    <div role="button" id="btn-mobile-nav" class="mobile-btn-menu"></div>
     <div id="game">        
         <div id="status-area">
             <div id="status"></div>
@@ -49,6 +48,15 @@
             <div id="player-list-wrapper">
                 <div id="player-list-title" data-ui-string="ui_player_list_title"></div>
                 <div id="player-list"></div>
+            </div>
+            <div id="player-chat-wrapper">
+                <div id="player-chat-title" data-ui-string="ui_chat_title"></div>
+                <div id="player-chat-messages-container">
+                    <div id="player-chat-messages"></div>
+                </div>
+                <div id="player-chat-input-wrapper" class="player-only">
+                    <input id="txt-chat-msg" type="text" autocomplete="off" data-localize-placeholder="ui_chat_msg_placeholder">
+                </div>
             </div>
         </div>
         <div id="judge-message-area">
@@ -143,7 +151,7 @@
                     <div class="lah-listitem">
                         <div class="lah-hlist lah-push-end">
                             <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_options_apply"
-                                id="btn-options-apply" onclick="applyOptions()" />
+                                id="btn-options-apply" />
                         </div>
                     </div>
                 </div>

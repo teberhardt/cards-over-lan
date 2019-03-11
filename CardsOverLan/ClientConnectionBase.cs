@@ -55,6 +55,13 @@ namespace CardsOverLan
 			base.OnOpen();
 			LoadCookies();
 			_ip = Context.UserEndPoint.Address;
+			Server.AddConnection(this);
+		}
+
+		protected override void OnClose(CloseEventArgs e)
+		{
+			base.OnClose(e);
+			Server.RemoveConnection(this);
 		}
 
 		protected void SendGameState()
@@ -81,6 +88,17 @@ namespace CardsOverLan
 						})
 					}
 					: null
+			});
+		}
+
+		internal void SendChatMessage(Player p, string message)
+		{
+			if (!IsOpen) return;
+			SendMessageObject(new
+			{
+				msg = "s_chat_msg",
+				author = p.Name,
+				body = message
 			});
 		}
 
@@ -140,7 +158,7 @@ namespace CardsOverLan
 			Context.WebSocket.Close(CloseStatusCode.Normal, rejectReason);
 		}
 
-		protected void SendMessageObject(object o)
+		protected virtual void SendMessageObject(object o)
 		{
 			Send(JsonConvert.SerializeObject(o, Formatting.None, SerializerSettings));
 		}

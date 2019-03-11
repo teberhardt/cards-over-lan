@@ -101,6 +101,17 @@ Sent by the user when they change their vote to skip the current black card.
 }
 ```
 
+### c_chat_msg
+
+Send by the user when they send a message in chat.
+
+```json
+{
+    "msg": "c_chat_msg",
+    "body": "AutoRodney sucks"
+}
+```
+
 ## Server messages
 
 ### s_allcards
@@ -289,3 +300,15 @@ After sending, the client is immediately disconnected.
 |`reject_server_full`|The server is full and cannot accept any more players.|
 |`reject_banned`|The server has banned the connecting client.|
 |`reject_duplicate`|The server has detected that the client is attempting to open more than one instance of the game.|
+
+### s_chat_msg
+
+Sent to clients when a new chat message is posted.
+
+```json
+{
+    "msg": "s_chat_msg",
+    "author": "Berkin",
+    "body": "Example text"
+}
+```

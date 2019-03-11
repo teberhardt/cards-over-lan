@@ -307,6 +307,16 @@ namespace CardsOverLan.Game
 			}
 		}
 
+		public void SetBlankCards(int numBlankCards)
+		{
+			lock(_blankCardLock)
+			{
+				if (numBlankCards < 0) return;
+				_blankCardsRemaining = numBlankCards;
+				RaiseCardsChanged();
+			}
+		}
+
 		internal void SaveCurrentPlay(bool winning)
 		{
 			var play = new RoundPlay(this, _selectedCards, Game.CurrentBlackCard)

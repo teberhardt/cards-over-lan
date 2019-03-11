@@ -2767,9 +2767,73 @@
             }
         },
         {
+            "id": "w_keeblerskewer",
+            "content": {
+                "en": "Impaling all of the Keebler elves onto a skewer."
+            },
+            "next_tier_id": "w_keeblerskewer2",
+            "flags": "fc mu cr"
+        },
+        {
+            "id": "w_keeblerskewer2",
+            "content": {
+                "en": "Impaling all of the Keebler elves onto my dick."
+            },
+            "tier": "3",
+            "tier_cost": "3",
+            "flags": "fc mu s cr"
+        },
+        {
+            "id": "w_libgenocide",
+            "content": {
+                "en": "Genociding the liberals."
+            },
+            "flags": "mu"
+        },
+        {
+            "id": "w_creamynerd",
+            "content": {
+                "en": "A creamy nerd."
+            }
+        },
+        {
+            "id": "w_hairyasshit",
+            "content": {
+                "en": "Being hairy as shit, all the way down to the asshole."
+            },
+            "flags": "l"
+        },
+        {
+            "id": "w_wild4gorilladick",
+            "content": {
+                "en": "Going bananas for some gorilla dick."
+            },
+            "flags": "s gn gnm an"
+        },
+        {
+            "id": "w_hoursofgersex",
+            "content": {
+                "en": "34 hours of geriatric sex."
+            },
+            "flags": "s"
+        },
+        {
+            "id": "b_weatherforecast",
+            "content": {
+                "en": "Today's forecast:\nPartly cloudy, a mild 70\u00b0, with a slight chance of _________ in the evening."
+            }
+        },
+        {
+            "id": "b_valuablelesson",
+            "content": {
+                "en": "If there's anything to be learned from ________, it's that ________ is never a good idea."
+            },
+            "pick": 2
+        },
+        {
             "id": "b_toocoolforbooze",
             "content": {
-                "en": "Alcohol? Pffft, as if!\nThose of us here in the civilized world only drink ________."
+                "en": "Alcohol? Pffft!\nThose of us here in the civilized world only drink ________."
             },
             "pick": 1
         },

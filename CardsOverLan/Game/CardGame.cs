@@ -192,6 +192,7 @@ namespace CardsOverLan.Game
 				{
 					if (!_players.Contains(player)) continue;
 					Deal(player);
+					player.SetBlankCards(Settings.BlankCards);
 				}
 			}
 		}
@@ -242,7 +243,18 @@ namespace CardsOverLan.Game
 			}
 			else
 			{
-				_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+				if (Settings.PickOneCardsOnly)
+				{
+					for(int i = 0; i < _blackCards.Count; i++)
+					{
+						_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+						if (_blackCards[_blackCardIndex].PickCount == 1) break;
+					}
+				}
+				else
+				{
+					_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+				}
 			}
 		}
 

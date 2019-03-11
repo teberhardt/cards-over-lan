@@ -87,7 +87,7 @@
         },
         "ui_pack_count": {
             "en": "Packs",
-            "de": "Packe"
+            "de": "Pack"
         },
         "ui_white_card_count": {
             "en": "White Cards",
@@ -308,6 +308,14 @@
         "ui_player_list_title": {
             "en": "Players",
             "de": "Spielerliste"
+        },
+        "ui_chat_title": {
+            "en": "Chat",
+            "de": "Chat"
+        },
+        "ui_chat_msg_placeholder": {
+            "en": "Type message here",
+            "de": "Nachricht hier tippen"
         },
         "ui_card_skipped_msg": {
             "en": "Black card skipped.",

@@ -378,6 +378,11 @@ namespace CardsOverLan
 					Player.SetSkipVoteState(voted);
 					break;
 				}
+				case "c_chat_msg":
+				{
+					Server.SendChatMessage(Player, json["body"].Value<string>());
+					break;
+				}
 			}
 		}
 
@@ -407,7 +412,7 @@ namespace CardsOverLan
 				// :)
 				if (xss)
 				{
-					Player.AddPoints(-69);
+					Player.AddPoints(-1337);
 					sanitizedContent = customContentXss;
 					Player.IsAsshole = true;
 				}
@@ -416,6 +421,14 @@ namespace CardsOverLan
 			}
 
 			return Game.GetCardById(id);
+		}
+
+		protected override void SendMessageObject(object o)
+		{
+			lock(_createDestroySync)
+			{
+				base.SendMessageObject(o);
+			}
 		}
 	}
 }

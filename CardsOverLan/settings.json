@@ -7,6 +7,7 @@
 	"max_player_name_length": 64,
 	"allow_duplicates": false,
 	"hand_size": 10,
+	"pick_one_only": false,
 	"blank_cards": 3,
 	"discards": 10,
 	"allow_skips": true,

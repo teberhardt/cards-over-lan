@@ -207,6 +207,10 @@ namespace CardsOverLan
 		[DefaultValue(true)]
 		public bool AllowBlackCardSkips { get; set; } = true;
 
+		[JsonProperty("pick_one_only", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(false)]
+		public bool PickOneCardsOnly { get; set; } = false;
+
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}
 }

@@ -155,6 +155,15 @@
         }
     }
 
+    // Register data-modal-show buttons
+    const modalShowButtons = document.querySelectorAll("input[type=button][data-modal-show]");
+    for(let btn of modalShowButtons) {
+        let modalName = btn.getAttribute("data-modal-show");
+        btn.addEventListener("click", e => {
+            showModal(modalName);
+        });
+    }
+
     // Remove preload class from body
     document.body.classList.remove("preload");
 })(this);

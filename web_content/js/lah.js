@@ -10,6 +10,7 @@
     const WS_PLAY_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/play";
     const WS_SPECTATE_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/spectate";
     const DEFAULT_LOCALE = "en";
+    const MAX_CHAT_MESSAGES = 100;
 
     class Card {
         constructor(type, id, content, draw, pick, pack, tier, tierCost, nextTierId) {
@@ -145,18 +146,41 @@
     let btnPlay = null;
     let btnPick = null;
     let playerList = null;
+    let playerChat = null;
 
     let ws = new SuperiorWebSocket(WS_PLAY_URL, "fibonacci");
 
     // Sanitizes HTML content for card text
     function createContentHtml(str) {
         return str
-            .replace(" & ", " &amp; ")
-            .replace("\'", "&apos;")
-            .replace("\"", "&quot;")
-            .replace("(", "&lpar;")
-            .replace(")", "&rpar;")
-            .replace(/[\n]/gm, "<br/>");
+            .replace(/\s&\s/g, " &amp; ")
+            .replace(/\'/g, "&apos;")
+            .replace(/\"/g, "&quot;")
+            .replace(/\(/g, "&lpar;")
+            .replace(/\)/g, "&rpar;")
+            .replace(/\n/g, "<br/>");
+    }
+
+    // fn(part, i, len)
+    function joinString(arr, fn) {
+        let s = "";
+        let n = arr.length;
+        for(let i = 0; i < n; i++) {
+            s += fn(arr[i], i, n);
+        }
+        return s;
+    }
+
+    function mdToHtml(str) {
+        return str
+        .replace(/\^\^(.+?)\^\^/g, (m, t) => mdToHtml(joinString(t.split(""), (p, i, n) => (i % 2 == 0 ? "<span class='juggle-a'>" : "<span class='juggle-b'>") + p + "</span>")))
+        .replace(/\^(.+?)\^/g, (m, t) => "<span class=\"bounce\">" + mdToHtml(t) + "</span>")
+        .replace(/\@\@(.+?)\@\@/g, (m, t) => "<span class=\"rage\">" + mdToHtml(t) + "</span>")
+        .replace(/\~\~(.+?)\~\~/g, (m, t) => "<strike>" + mdToHtml(t) + "</strike>")
+        .replace(/\*\*\*(.+?)\*\*\*/g, (m, t) => "<strong><em>" + mdToHtml(t) + "</em></strong>")
+        .replace(/\*\*(.+?)\*\*/g, (m, t) => "<strong>" + mdToHtml(t) + "</strong>")
+        .replace(/\*(.+?)\*/g, (m, t) => "<em>" + mdToHtml(t) + "</em>")
+        ;
     }
 
     function getLocalString(localizedStringObject) {
@@ -504,6 +528,9 @@
         },
         "s_notify_skipped": msg => {
             showBannerMessage(getUiString("ui_card_skipped_msg"));
+        },
+        "s_chat_msg": msg => {
+            onChatMessageReceived(msg.author, msg.body);
         }
     };
 
@@ -1025,6 +1052,46 @@
         });
     }
 
+    g.lah.sendChatMessage = function(msg) {
+        sendMessage({
+            msg: "c_chat_msg",
+            body: msg
+        });
+    }
+
+    function onChatMessageReceived(author, msg) {
+        let msgHtml = mdToHtml(msg);
+
+        if (!msgHtml || msgHtml.trim().length == 0) return;
+        let isChatAtBottom = playerChat.scrollHeight - playerChat.scrollTop - playerChat.offsetHeight < 1;
+
+        // Post new chat message
+        let el = document.createElement("div");
+        el.classList.add("chat-msg");
+        let elAuthor = document.createElement("div");
+        elAuthor.classList.add("chat-msg-author");
+        elAuthor.textContent = author;
+        let elBody = document.createElement("div");
+        elBody.classList.add("chat-msg-body");
+        elBody.innerHTML = msgHtml;
+        if (elBody.textContent.trim().length == 0) {
+            elBody.textContent = msg;
+        }
+        el.appendChild(elAuthor);
+        el.appendChild(elBody);
+        playerChat.appendChild(el);
+
+        // Scroll chat
+        if (isChatAtBottom) {
+            playerChat.scrollTop = playerChat.scrollHeight;
+        }
+
+        // Limit chat messages
+        while (playerChat.childNodes.length > MAX_CHAT_MESSAGES) {
+            playerChat.removeChild(playerChat.childNodes[0]);
+        }
+    }
+
     // Raised when the VOTE button is clicked
     function onJudgePickClicked() {
         lah.judgeCards(lah.selectedPlayIndex);
@@ -1150,6 +1217,7 @@
         gameEndScoreboardEntries = document.getElementById("game-end-scoreboard-entries");
         gameEndTrophiesList = document.getElementById("game-end-trophies-list");
         playerList = document.getElementById("player-list");
+        playerChat = document.getElementById("player-chat-messages");
 
         updateStatus();
         updateUiState();
@@ -1169,4 +1237,6 @@
             showModal("modal-no-ws");
         }
     }
+
+    lah.start();
 })(this);                                                                                                                                                                                                                                                                    
