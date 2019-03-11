@@ -1,7 +1,7 @@
 ((g) => {
     "use strict";
     const DEFAULT_LOCALE = "en";
-    const VERSION_STRING = "v1.0.0b2";
+    const VERSION_STRING = "v1.0.0b3";
 
     let uiStrings = {
         "ui_version": VERSION_STRING,
