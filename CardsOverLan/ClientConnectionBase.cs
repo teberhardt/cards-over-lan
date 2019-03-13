@@ -21,11 +21,14 @@ namespace CardsOverLan
 			ContractResolver = ClientFacingContractResolver.Instance
 		};
 
+		private const string DefaultLanguage = "en";
+
 		private IPAddress _ip;
 		private readonly Dictionary<string, string> _cookies;
 
 		public CardGameServer Server { get; }
 		public CardGame Game { get; }
+		public string ClientLanguage { get; private set; } = DefaultLanguage;
 		public bool IsOpen => State == WebSocketSharp.WebSocketState.Open;
 
 		public ClientConnectionBase(CardGameServer server, CardGame game)
@@ -35,9 +38,9 @@ namespace CardsOverLan
 			_cookies = new Dictionary<string, string>();
 		}
 
-		protected string GetCookie(string name)
+		protected string GetCookie(string name, string fallback = null)
 		{
-			return _cookies.TryGetValue(name, out var val) ? val : null;
+			return _cookies.TryGetValue(name, out var val) ? val : fallback;
 		}
 
 		public IPAddress GetIPAddress() => _ip;
@@ -55,6 +58,7 @@ namespace CardsOverLan
 			base.OnOpen();
 			LoadCookies();
 			_ip = Context.UserEndPoint.Address;
+			ClientLanguage = GetCookie("client_lang", "en");
 			Server.AddConnection(this);
 		}
 
@@ -160,6 +164,7 @@ namespace CardsOverLan
 
 		protected virtual void SendMessageObject(object o)
 		{
+			if (!IsOpen) return;
 			Send(JsonConvert.SerializeObject(o, Formatting.None, SerializerSettings));
 		}
 	}

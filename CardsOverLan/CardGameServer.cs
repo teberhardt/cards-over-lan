@@ -1,4 +1,6 @@
 ﻿using CardsOverLan.Game;
+using CardsOverLan.Game.Bots;
+using Rant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,23 +18,62 @@ namespace CardsOverLan
 		private const int PlayerMessageLengthLimit = 300;
 
 		private readonly WebSocketServer _ws;
-		private readonly CardGame _game;
 		private bool _disposed = false;
+		private readonly Random _rng;
+		private readonly RantEngine _rant;
 		private readonly HashList<SpectatorConnection> _spectators;
 		private readonly HashList<ClientConnectionBase> _connections;
 		private readonly Dictionary<string, int> _clientIpPool = new Dictionary<string, int>();
+		private readonly Taunt[] _botTaunts;
 		private readonly object _clientPoolLock = new object();
 		private readonly object _spectatorLock = new object();
 		private readonly object _connectionLock = new object();
 
+		public CardGame Game { get; }
+
 		public CardGameServer(CardGame game)
 		{
-			_game = game;
+			Game = game ?? throw new ArgumentNullException(nameof(game));
+			Game.RoundEnded += OnGameRoundEnded;
+			_rng = new Random(unchecked(Environment.TickCount * 7919));
+			_rant = new RantEngine();
 			_spectators = new HashList<SpectatorConnection>();
 			_connections = new HashList<ClientConnectionBase>();
+			_botTaunts = game.GetPacks().Select(p => p.GetTaunts()).SelectMany(t => t).ToArray();
 			_ws = new WebSocketServer(WebSocketListenAddress);
-			_ws.AddWebSocketService(ServerPlayDir, () => new PlayerConnection(this, _game));
-			_ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, _game));
+			_ws.AddWebSocketService(ServerPlayDir, () => new PlayerConnection(this, Game));
+			_ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, Game));
+		}
+
+		private void OnGameRoundEnded(int round, Player roundWinner, WhiteCard[] winningPlay)
+		{
+			if (Game.Settings.ChatEnabled && Game.Settings.BotTauntsEnabled && _botTaunts.Length > 0)
+			{
+				var bots = Game.GetPlayers().Where(p => p.IsAutonomous).ToArray();
+				if (bots.Length == 0) return;
+				var matchingTaunts = _botTaunts.Where(t => t.IsPlayEligible(winningPlay)).ToArray();
+				if (matchingTaunts.Length == 0) return;
+				int maxTauntPriority = matchingTaunts.Max(t => t.Priority);
+				var eligibleTaunts = matchingTaunts.Where(t => t.Priority == maxTauntPriority).ToArray();
+				foreach (var bot in bots)
+				{
+					if (bot == roundWinner) continue;
+					var activeTaunt = eligibleTaunts[_rng.Next(eligibleTaunts.Length)];
+					double tauntChance = ((activeTaunt.ResponseChance / bots.Length) + activeTaunt.ResponseChance) * 0.5;
+					if (_rng.NextDouble() <= tauntChance)
+					{
+						var responses = activeTaunt.GetResponses().ToArray();
+						BotTauntAsync(bot, responses[_rng.Next(responses.Length)], roundWinner);
+					}
+				}
+			}			
+		}
+
+		private void BotTauntAsync(Player botPlayer, LocalizedString taunt, Player winner)
+		{
+			var args = new RantProgramArgs();
+			args["winner_name"] = winner.Name;
+			SendChatMessage(botPlayer, taunt, args);
 		}
 
 		public void Start()
@@ -52,7 +93,7 @@ namespace CardsOverLan
 				// Check if the IP is already in the pool
 				if (_clientIpPool.TryGetValue(ip, out int clientCount))
 				{
-					if (!_game.Settings.AllowDuplicatePlayers)
+					if (!Game.Settings.AllowDuplicatePlayers)
 					{
 						return false;
 					}
@@ -97,7 +138,7 @@ namespace CardsOverLan
 		{
 			lock (_spectatorLock)
 			{
-				if (_spectators.Count >= _game.Settings.MaxSpectators)
+				if (_spectators.Count >= Game.Settings.MaxSpectators)
 				{
 					return false;
 				}
@@ -137,7 +178,7 @@ namespace CardsOverLan
 
 		public async void SendChatMessage(Player p, string message)
 		{
-			if (string.IsNullOrWhiteSpace(message)) return;
+			if (!Game.Settings.ChatEnabled || string.IsNullOrWhiteSpace(message)) return;
 			var cleanMessageString = new string(message.Trim().Truncate(PlayerMessageLengthLimit).Where(c => !Char.IsControl(c)).ToArray());
 			Console.WriteLine($"{p} says: \"{cleanMessageString}\"");
 			await Task.Run(() =>
@@ -150,6 +191,46 @@ namespace CardsOverLan
 					}
 				}
 			});
+		}
+
+		public void SendChatMessage(Player p, LocalizedString message, RantProgramArgs args)
+		{
+			if (!Game.Settings.ChatEnabled || message == null) return;			
+			int seed = _rng.Next();
+
+			async void send(ClientConnectionBase connection, Random rng)
+			{
+				await Task.Delay(rng.Next(1500, 3000));
+				RantProgram pgm;
+				try
+				{
+					pgm = RantProgram.CompileString(message[connection.ClientLanguage]);
+				}
+				catch(RantCompilerException ex)
+				{
+					Console.WriteLine($"Rant compiler error: {ex}");
+					return;
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine($"Rant compiler failure: {ex}");
+					return;
+				}
+				var output = _rant.Do(pgm, seed, args: args).Main.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (var msg in output)
+				{
+					int delay = rng.Next(750, 1100) + msg.Length * rng.Next(12, 18);
+					await Task.Delay(delay);
+					connection.SendChatMessage(p, msg);
+					Console.WriteLine($"{p} says: \"{msg}\"");
+				}
+			}
+
+			foreach (var connection in _connections.ToArray())
+			{
+				var rng = new Random(seed);
+				send(connection, rng);
+			}
 		}
 
 		public void Stop()

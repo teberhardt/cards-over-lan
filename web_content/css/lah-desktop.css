@@ -1,5 +1,6 @@
-/*DESKTOP*/
-@media only screen and (min-width: 771px){
+/* DESKTOP */
+@media only screen and (min-width: 771px)
+{
 
 ::-webkit-scrollbar {
     width: var(--scrollbar-width);
@@ -24,6 +25,11 @@
     background: #aaa;
 }
 
+* {
+    /* Use the non-ugly scrollbar for Firefox */
+    scrollbar-width: thin;
+}
+
 :root {
     --card-scale: 1.8;
     --card-width: calc(14vh * var(--card-scale));
@@ -34,6 +40,10 @@
     --navbar-height: 36pt;
     --final-score-row-height: 36pt;
     --scrollbar-width: 8px;
+}
+
+html {
+    overflow: hidden;
 }
 
 body {
@@ -124,8 +134,8 @@ smaller {
     min-height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-columns: [c-start] 50% [c-center] 50% [c-end];
-    grid-template-rows: [r-start] 50% [r-center] 50% [r-end];
+    grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end];
+    grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
 }
 
 /* PLAYER LIST AND CHAT */
@@ -314,6 +324,8 @@ smaller {
     cursor: text;
     font-size: 10pt;
     font-weight: 100;
+    word-wrap: break-word;
+    word-break: normal;
 }
 
 .chat-msg-body strong, .chat-msg-body strong * {
@@ -328,13 +340,13 @@ smaller {
     text-decoration: line-through;
 }
 
-.chat-msg-body span.juggle-a {
+.enable-anim-text .chat-msg-body span.juggle-a {
     display: inline-block;
     animation: chat-anim-juggle .5s ease infinite;
     white-space: pre-wrap;
 }
 
-.chat-msg-body span.juggle-b {
+.enable-anim-text .chat-msg-body span.juggle-b {
     display: inline-block;
     animation: chat-anim-juggle .5s ease infinite reverse;
     white-space: pre-wrap;
@@ -355,7 +367,7 @@ smaller {
     }
 }
 
-.chat-msg-body span.bounce {
+.enable-anim-text  .chat-msg-body span.bounce {
     display: inline-block;
     animation: chat-anim-bounce .4s ease infinite;
 }
@@ -371,7 +383,7 @@ smaller {
     }
 }
 
-.chat-msg-body span.rage {
+.enable-anim-text .chat-msg-body span.rage {
     display: inline-block;
     animation: chat-anim-rage .09s ease-in-out infinite;
 }
@@ -446,13 +458,12 @@ smaller {
 /* HAND AREA */
 
 #hand-area {
-    grid-row-start: r-center;
-    grid-row-end: r-end;
-    grid-column-start: 1;
-    grid-column-end: span c-end;
+    grid-row: r-start / r-end;
+    grid-column: c-start / c-end;
     display: flex;
     position: relative;
-    align-items: flex-end;
+    align-items: flex-end;   
+    overflow: hidden; 
 }
 
 #game.lah-stage-judging #hand-area {
@@ -462,8 +473,8 @@ smaller {
 #hand-cards-area {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
-
 
 #hand-cards-container {
     display: flex;
@@ -479,6 +490,14 @@ smaller {
 #hand-area:not(.disabled) card[white]:active:not(:focus-within) {
     box-shadow: 0 0 7pt 3pt rgba(0, 0, 0, .55);
     transform: translate(0, 1.75pt);
+}
+
+#hand-controls-area {
+    transform: translate(-50%, calc(-1 * var(--card-height) - 100% - 28px));
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 9999;
 }
 
 /* STATUS AREA */
@@ -765,7 +784,7 @@ smaller {
 /* PLAY AREA */
 
 #play-area {
-    grid-row-start: r-center;
+    grid-row-start: r-start;
     grid-row-end: r-end;
     grid-column-start: c-start;
     grid-column-end: c-end;
@@ -773,6 +792,7 @@ smaller {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow: hidden;
 }
 
 #play-cards-area {
@@ -781,6 +801,7 @@ smaller {
     align-items: center;
     justify-content: flex-start;
     overflow-x: auto;
+    padding-bottom: 32pt;
 }
 
 #game.lah-stage-judging.lah-judge #play-cards-area .card-group * {
@@ -791,14 +812,19 @@ smaller {
     overflow: visible;
 }
 
+#play-cards-scroll-area {
+    align-items: flex-end;
+    padding-bottom: 36pt;
+}
+
 /* JUDGE CONTROLS AREA */
 
 #judge-controls-area {
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-    transform: translate(0, -20pt);
+    bottom: 0;
+    transform: translate(0, calc(var(--card-height) * -1 - 24px - 100%));
     display: none;
     flex-direction: row;
     align-content: center;
@@ -1262,14 +1288,6 @@ card[data-selection]::after {
     z-index: 8000;
 }
 
-#hand-controls-area {
-    transform: translate(-50%, -30%);
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 9999;
-}
-
 .lah-btn {
     outline: none;
     padding: 8pt 25pt;
@@ -1331,6 +1349,47 @@ card[data-selection]::after {
     font-size: 13pt;
     margin: 4pt 1pt;
     color: #444;
+}
+
+input[type=checkbox].lah-checkbox {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+input[type=checkbox].lah-checkbox + label {
+    position: relative;
+    padding-left: 32px;
+}
+
+input[type=checkbox].lah-checkbox + label:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+input[type=checkbox].lah-checkbox:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: inline-block;
+    height: 8px;
+    width: 15px;
+    border: 0 solid black;
+    border-left-width: 3px;
+    border-bottom-width: 3px;
+    transform: rotate(-45deg) translate(-1px, 1px);
+    box-sizing: border-box;
 }
 
 .wide {
@@ -1600,4 +1659,30 @@ card[data-selection]::after {
     transform: translate(-25px, 50px) rotate(45deg);
     text-shadow: 0 0 20px black;
 }
+
+/* DESKTOP COMPACT */
+@media only screen and (min-aspect-ratio: 5/3)
+{
+
+/* GAME AREA */
+
+
+#game {
+    grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end sb-start] 330px [sb-end];
+    grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
+}
+
+#player-list-area {
+    grid-column: sb-start / sb-end;
+    grid-row: r-start / r-end;
+    margin-bottom: 12px;
+    border-left: 2px solid rgba(64, 64, 64, .2);
+}
+
+#player-list-wrapper {
+    flex-basis: 40%;
+}
+
+}
+
 }

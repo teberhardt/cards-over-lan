@@ -1,4 +1,5 @@
-﻿using CardsOverLan.Game.Converters;
+﻿using CardsOverLan.Game.Bots;
+using CardsOverLan.Game.Converters;
 using CardsOverLan.Game.Trophies;
 using Newtonsoft.Json;
 using System;
@@ -23,6 +24,9 @@ namespace CardsOverLan.Game
 		[JsonProperty("cards")]
 		private readonly List<Card> _cards;
 
+		[JsonProperty("taunts")]
+		private readonly List<Taunt> _taunts;
+
 		[JsonProperty("trophies")]
 		private readonly List<Trophy> _trophies;
 
@@ -43,6 +47,7 @@ namespace CardsOverLan.Game
 			_whiteCards = new Dictionary<string, WhiteCard>();
 			_cards = new List<Card>();
 			_trophies = new List<Trophy>();
+			_taunts = new List<Taunt>();
 		}
 
 		[OnDeserialized]
@@ -75,6 +80,8 @@ namespace CardsOverLan.Game
 
 		public IEnumerable<Card> GetAllCards() => _cards.AsEnumerable();
 
-		public override string ToString() => $"{Id} ({_blackCards.Count} black, {_whiteCards.Count} white, {_trophies.Count} trophies)";
+		public IEnumerable<Taunt> GetTaunts() => _taunts.AsEnumerable();
+
+		public override string ToString() => $"{Id}: {_cards.Count} ({_blackCards.Count}Q, {_whiteCards.Count}A) cards, {_trophies.Count} trophies, {_taunts.Count} taunts";
 	}
 }

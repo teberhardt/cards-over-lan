@@ -9,12 +9,14 @@
 	"hand_size": 10,
 	"pick_one_only": false,
 	"blank_cards": 3,
-	"discards": 10,
+	"discards": 15,
 	"allow_skips": true,
 	"enable_upgrades": true,
+	"enable_chat": true,
+	"enable_bot_taunts": true,
 	"round_end_timeout": 5000,
 	"game_end_timeout": 30000,
-	"max_points": 8,
+	"max_points": 10,
 	"max_rounds": 16,
 	"perma_czar": false,
 	"winner_czar": false,
@@ -30,5 +32,6 @@
 		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
 	"require_languages": ["en"],
-	"use_packs": []
+	"use_packs": [],
+	"exclude_packs": []
 }

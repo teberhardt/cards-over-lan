@@ -191,6 +191,9 @@ namespace CardsOverLan
 		[JsonProperty("use_packs", Required = Required.DisallowNull)]
 		public string[] UsePacks { get; set; } = new string[0];
 
+		[JsonProperty("exclude_packs", Required = Required.DisallowNull)]
+		public string[] ExcludePacks { get; set; } = new string[0];
+
 		[JsonProperty("enable_upgrades", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(true)]
 		public bool UpgradesEnabled { get; set; } = true;
@@ -210,6 +213,14 @@ namespace CardsOverLan
 		[JsonProperty("pick_one_only", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(false)]
 		public bool PickOneCardsOnly { get; set; } = false;
+
+		[JsonProperty("enable_chat", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool ChatEnabled { get; set; } = true;
+
+		[JsonProperty("enable_bot_taunts", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(true)]
+		public bool BotTauntsEnabled { get; set; } = true;
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

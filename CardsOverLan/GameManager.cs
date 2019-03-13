@@ -97,16 +97,17 @@ namespace CardsOverLan
 				hand_size = Settings.HandSize,
 				white_card_count = Game.WhiteCardCount,
 				black_card_count = Game.BlackCardCount,
-				upgrades_enabled = Game.Settings.UpgradesEnabled,
-				perma_czar = Game.Settings.PermanentCzar,
-				bot_czars = Game.Settings.AllowBotCzars,
-				bot_count = Game.Settings.BotCount,
-				winner_czar = Game.Settings.WinnerCzar,
-				max_points = Game.Settings.MaxPoints,
-				max_rounds = Game.Settings.MaxRounds,
-				blank_cards = Game.Settings.BlankCards,
-				discards = Game.Settings.Discards,
-				allow_skips = Game.Settings.AllowBlackCardSkips,
+				upgrades_enabled = Settings.UpgradesEnabled,
+				perma_czar = Settings.PermanentCzar,
+				bot_czars = Settings.AllowBotCzars,
+				bot_count = Settings.BotCount,
+				winner_czar = Settings.WinnerCzar,
+				max_points = Settings.MaxPoints,
+				max_rounds = Settings.MaxRounds,
+				blank_cards = Settings.BlankCards,
+				discards = Settings.Discards,
+				allow_skips = Settings.AllowBlackCardSkips,
+				chat_enabled = Settings.ChatEnabled,
 				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name })
 			};
 		}
@@ -116,7 +117,7 @@ namespace CardsOverLan
 			Console.WriteLine($"Game ended. Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 		}
 
-		private void OnGameRoundEnded(int round, Player roundWinner)
+		private void OnGameRoundEnded(int round, Player roundWinner, WhiteCard[] winningPlay)
 		{
 			Console.WriteLine($"Round {round} ended: {roundWinner?.ToString() ?? "Nobody"} wins!");
 		}

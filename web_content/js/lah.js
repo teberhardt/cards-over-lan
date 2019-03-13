@@ -173,7 +173,7 @@
 
     function mdToHtml(str) {
         return str
-        .replace(/\^\^(.+?)\^\^/g, (m, t) => mdToHtml(joinString(t.split(""), (p, i, n) => (i % 2 == 0 ? "<span class='juggle-a'>" : "<span class='juggle-b'>") + p + "</span>")))
+        .replace(/\^\^(.+?)\^\^/g, (m, t) => mdToHtml(joinString([...t], (p, i, n) => (i % 2 == 0 ? "<span class='juggle-a'>" : "<span class='juggle-b'>") + p + "</span>")))
         .replace(/\^(.+?)\^/g, (m, t) => "<span class=\"bounce\">" + mdToHtml(t) + "</span>")
         .replace(/\@\@(.+?)\@\@/g, (m, t) => "<span class=\"rage\">" + mdToHtml(t) + "</span>")
         .replace(/\~\~(.+?)\~\~/g, (m, t) => "<strike>" + mdToHtml(t) + "</strike>")
@@ -732,7 +732,7 @@
 
     function loadOptions() {
         lah.localPlayerName = Cookies.get("name") || getUiString("ui_default_player_name");
-        loadAccentColor();
+        gameui.loadDisplayPrefs();
         document.querySelector("#txt-username").value = lah.localPlayerName;
         document.querySelector("#txt-join-username").value = lah.localPlayerName;
         document.querySelector("#myname").textContent = lah.localPlayerName;
@@ -758,7 +758,11 @@
 
     g.applyOptions = function () {
         setPlayerName(document.querySelector("#txt-username").value);
-        saveAccentColor();
+        gameui.setDisplayPrefs({
+            "anim_text": document.querySelector("#chk-anim-text").checked,
+            "accent_color": document.querySelector("#txt-accent-color").value
+        });
+        gameui.saveDisplayPrefs();
         hideModal("modal-options");
         sendClientInfo();
     }
@@ -1174,7 +1178,8 @@
         + mqSep + (info.perma_czar ? getUiString("ui_join_mq_perma_czar") : getUiString("ui_join_mq_winner_czar", onoff(info.winner_czar)))
         + mqSep + getUiString("ui_join_mq_blanks", zeroOff(info.blank_cards))
         + mqSep + getUiString("ui_join_mq_discards", zeroOff(info.discards))
-        + mqSep + getUiString("ui_join_mq_allow_skips", onoff(info.allow_skips));
+        + mqSep + getUiString("ui_join_mq_allow_skips", onoff(info.allow_skips))
+        + mqSep + getUiString("ui_join_mq_chat", onoff(info.chat_enabled));
         document.querySelector("#join-marquee").setAttribute("data-marquee-text", marqueeText);
     }
 
@@ -1196,9 +1201,10 @@
     }
 
     g.lah.start = function () {
-        // Populate saved options
+        // Populate saved options, set language cookie
         loadOptions();
         refreshServerInfo();
+        Cookies.set("client_lang", navigator.language || "en");
 
         // Get game elements
         gameArea = document.getElementById("game");

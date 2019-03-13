@@ -86,6 +86,10 @@
     color: var(--placeholder-color);
 }
 
+::-moz-focus-inner {
+    border: 0;
+}  
+
 ::placeholder {
     /* Most modern browsers support this now. */
     color: var(--placeholder-color);
@@ -94,6 +98,8 @@
 * {
     font-family: "LAH", sans-serif !important;
     font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 hr {
@@ -145,7 +151,7 @@ hr {
     flex-grow: 0;
     background: var(--accent-group);
     padding: 3pt;
-    margin: 0 4pt;
+    margin: 4pt 4pt;
     border-radius: 8pt;
 }
 

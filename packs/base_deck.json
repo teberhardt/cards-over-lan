@@ -2744,14 +2744,6 @@
             }
         },
         {
-            "id": "w_mygenitals",
-            "content": {
-                "en": "My genitals.",
-                "de": "Meine Genitalien."
-            },
-            "flags": "gn"
-        },
-        {
             "id": "w_yourgenitals",
             "content": {
                 "en": "Your genitals.",
@@ -2816,6 +2808,13 @@
                 "en": "34 hours of geriatric sex."
             },
             "flags": "s"
+        },
+        {
+            "id": "b_nothingsayslike",
+            "content": {
+                "en": "Nothing says ________ like ________."
+            },
+            "pick": 2
         },
         {
             "id": "b_weatherforecast",

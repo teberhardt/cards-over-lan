@@ -57,6 +57,10 @@
             "en": "Discards: {0}",
             "de": "Ablegungen: {0}"
         },
+        "ui_join_mq_chat": {
+            "en": "Chat: {0}",
+            "de": "Chat: {0}"
+        },
         "ui_loading_info": {
             "en": "Fetching server info...",
             "de": "Serverinfo wird abgerufen..."
@@ -272,6 +276,10 @@
         "ui_nickname": {
             "en": "Nickname",
             "de": "Spitzname"
+        },
+        "ui_chk_anim_text": {
+            "en": "Chat text animations",
+            "de": "Chattext-Animationen"
         },
         "ui_options_apply": {
             "en": "Apply",

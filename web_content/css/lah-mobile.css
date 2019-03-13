@@ -135,8 +135,8 @@
         min-height: 100vh;
         overflow: hidden;
         display: grid;
-        grid-template-columns: [c-start] 100% [c-center] 0% [c-end];
-        grid-template-rows: [r-start] 50% [r-center] 50% [r-end];
+        grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end];
+        grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
     }
 
     /* PLAYER LIST */
@@ -298,6 +298,7 @@
         display: flex;
         position: relative;
         align-items: flex-end;
+        overflow: hidden;
     }
 
     /* PLAY AREA */
@@ -307,7 +308,8 @@
         grid-column: c-start / c-end;
         position: relative;  
         display: flex;
-        align-items: center;      
+        align-items: center;   
+        overflow: hidden;   
     }
 
     .lah-stage-judging.lah-judge #play-cards-area {
@@ -686,7 +688,20 @@
     }
 
     #hand-cards-area {     
+        
+    }
+
+    #hand-cards-container {
+        padding: 32pt 8pt;
         margin-bottom: 28pt;
+    }
+
+    #hand-cards-container > card:last-child {
+        margin-right: 0;
+    }
+
+    #hand-cards-container > card:first-child {
+        margin-left: 0;
     }
 
     .lah-scroll-left::before, .lah-scroll-right::after {
@@ -739,18 +754,6 @@
         to {
             transform: translate(2pt, -50%); 
         }
-    }
-
-    #hand-cards-container {
-        padding: 32pt 8pt;
-    }
-
-    #hand-cards-container > card:last-child {
-        margin-right: 0;
-    }
-
-    #hand-cards-container > card:first-child {
-        margin-left: 0;
     }
     
     /* CARD STYLES */

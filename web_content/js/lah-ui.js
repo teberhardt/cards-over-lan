@@ -5,6 +5,13 @@
     let bannerText = document.querySelector("#notify-banner-text");
     let txtAccentColor = document.querySelector("#txt-accent-color");
     let txtChatMsg = document.querySelector("#txt-chat-msg");
+    let chkAnimText = document.querySelector("#chk-anim-text");
+
+    g.gameui = {};
+    g.gameui.displayPrefs = {
+        "anim_text": true,
+        "accent_color": ""
+    };
 
     g.togglePlayerList = function() {
         document.querySelector("#player-list").toggleClass("closed");
@@ -104,32 +111,42 @@
     // Static button click events
 
 
-    // Accent color functions
-    g.saveAccentColor = function() {
-        let colorText = txtAccentColor.value;
-        if (!colorText.trim()) {
-            setAccentColor(null);
-        } else {
-            let color = Incantate.getColor(colorText);
-            setAccentColor(color);
-        }
-        Cookies.set("accent_bg", colorText.trim(), { expires: 365 });
+    // Display preferences
+    
+    g.gameui.loadDisplayPrefs = function() {
+        gameui.displayPrefs["anim_text"] = (Cookies.get("anim_text") || "true") == "true";
+        gameui.displayPrefs["accent_color"] = Cookies.get("accent_color") || "";
+        gameui.setDisplayPrefs();
     }
 
-    g.setAccentColor = function(color) {
+    g.gameui.setDisplayPrefs = function(options) {
+        // Apply new options
+        if (options && typeof options === "object") {
+            console.log(options);
+            for(let key of Object.keys(options)) {
+                if (gameui.displayPrefs[key] === undefined) continue;
+                gameui.displayPrefs[key] = options[key];
+            }
+        }
+        // Display animated text
+        document.body.setClass("enable-anim-text", gameui.displayPrefs["anim_text"]);
+        chkAnimText.checked = gameui.displayPrefs["anim_text"];
+        // Accent color
+        let colorText = gameui.displayPrefs["accent_color"].trim();
+        let color = colorText && Incantate.getColor(colorText);
         document.body.style.setProperty("--accent-bg", (color && color.toString()) || "var(--default-accent-color)");
         document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#ddd") || "#000");
         document.body.style.setProperty("--accent-ol", color && (color.isBright() ? "transparent" : "#ddd") || "transparent");
         document.body.style.setProperty("--accent-group", color && (color.isBright() ? "rgba(0, 0, 0, .25)" : "rgba(255, 255, 255, .25)"));
         document.body.style.setProperty("--accent-group-hover", color && (color.isBright() ? "rgba(0, 0, 0, .35)" : "rgba(255, 255, 255, .35)"));
-    }
-
-    g.loadAccentColor = function() {
-        let colorText = Cookies.get("accent_bg");
-        let color = colorText && Incantate.getColor(colorText);
         txtAccentColor.value = colorText || "";
         updateAccentColorFieldStyle();
-        setAccentColor(color);
+    }
+
+    g.gameui.saveDisplayPrefs = function() {
+        for(let key of Object.keys(gameui.displayPrefs)) {
+            Cookies.set(key, gameui.displayPrefs[key], { expires: 365 });
+        }
     }
 
     setLpIgnore();

@@ -66,8 +66,12 @@ The settings.json file contains a number of properties that control how the serv
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`bot_names`|String[]|List of names to assign to bots.|
 |`discards`|Integer|The number of discards allowed per player.|
+|`enable_bot_taunts`|Boolean|Specifies whether bot taunts are enabled. Overridden by `enable_chat`.|
+|`enable_chat`|Boolean|Specifies whether in-game chat is enabled.|
 |`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
+|`enable_trophies`|Boolean|Specifies whether players can earn trophies.|
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
+|`exclude_packs`|String[]|Array of pack IDs. Forces the server to not load any packs in this array. Overrides any included packs in `use_packs`.|
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
 |`host`|String|The URL and port that the server will be hosted on.|
