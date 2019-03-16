@@ -17,8 +17,8 @@
                     "de": "Was für ein Monster bist du?"
                 },
                 {
-                    "en": "Brb, calling CPS...",
-                    "de": "Moment, ich rufe das Jugendamt an..."
+                    "en": "{{B|b}rb}{,\\s|}calling {(4)CPS|^^CPS^^|@@CPS@@}{...|}",
+                    "de": "{M|m}oment, ich rufe das Jugendamt an..."
                 }
             ]
         },
@@ -39,6 +39,20 @@
             ]
         },
         {
+            "trigger_content": ["re"],
+            "response_chance": 0.7,
+            "priority": 1,
+            "responses": [
+                {
+                    "en": "\uD83D\uDE4F",
+                    "de": "\uD83D\uDE4F"
+                },
+                {
+                    "en": "{B|b}less"
+                }
+            ]
+        },
+        {
             "trigger_content": ["g"],
             "response_chance": 0.5,
             "priority": 2,
@@ -48,7 +62,7 @@
                     "de": "{[in:winner_name] was|{W|w}as} zur Hölle?"
                 },
                 {
-                    "en": "{w|W}hat the actual fuck{|...|.}",
+                    "en": "{w|W}hat the {|actual\\s}{(3)fuck|**fuck**|@@fuck@@}{(2)|\\s[in:winner_name]}{|...|.}",
                     "de": "{W|w}as zur Hölle{(3)|\\s[in:winner_name]}{?|}"
                 },
                 {
@@ -60,19 +74,20 @@
                     "de": "{(6)Du hast|{Dieser Typ|[in:winner_name]} hat} {(3)ernste\\s|}Probleme{(4) | \\n{{i|I}m Ernst{.|} }"
                 },
                 {
-                    "en": "{(10){R|r}eady {(5)to|2} {(5)puke|vomit}|{R|r}eady2{(5)puke|vomit|barf}}",
+                    "en": "{(10){{R|r}eady|{g|G}oing} {(5)to|2} {(5)puke|vomit}|{{R|r}eady|{G|g}oing}2{(5)puke|vomit|barf}}",
                     "de": "{B|b}in kurz davor zu kotzen"
                 },
                 {
-                    "en": "{(5)Y|y}ou make me sick{(3)|.|!}",
+                    "en": "{(5)Y|y}ou make me {sick|SICK}{(3)|.}",
                     "de": "{D|d}u machst mich krank{|.|!}"
                 },
                 {
-                    "en": "{T|t}hat's {|{really|fucking|really fucking}\\s}{nasty|gross|disgusting}{|\\s{af|as {hell|fuck}}}{|.}",
+                    "en": "{T|t}hat's {(2)|real{|ly}\\s}{|fuckin{|g}\\s}{nasty|gross|disgusting}{|\\s{af|as {hell|fuck|shit}}}{|.}",
                     "de": "{D|d}as ist{|\\s{einfach|verdammt|wirklich}} ekelhaft{.|}"
                 },
                 {
-                    "en": "{ew|Ew|EW}{(3)|.}{|(5){why|WHY}}"
+                    "en": "{ew|Ew|EW}{(3)|.}{(5)|{\\n|\\s}{why|WHY}}",
+                    "de": "{I|i}gitt{(3)|(2).|...|!}{(5)|{\\n|\\s}[case:{none|first|upper}]warum{(4)|?|??}}"
                 },
                 {
                     "en": "{{(3)o|O}mg|{o|O}h my god}",
@@ -86,7 +101,7 @@
         },
         {
             "trigger_content": ["w"],
-            "response_chance": 0.4,
+            "response_chance": 0.5,
             "priority": 1,
             "responses": [
                 {
@@ -108,11 +123,15 @@
                 {
                     "en": "[case:{first|none|(.3)lower}]{I am|I{(3)'|}m} {(3)|{very|quite}\\s}uncomfortable{(4)|.}",
                     "de": "[case:{first|none|(.3)lower}]ich fühle mich {|{sehr|ziemlich}\\s}unbehaglich{(4)|.}"
+                },
+                {
+                    "en": "{(3)|...}[r:[n:2;5]{?}",
+                    "de": "{(3)|...}[r:[n:2;5]{?}"
                 }
             ]
         },
         {
-            "trigger_content": ["d"],
+            "trigger_content": ["d", "mu"],
             "priority": 1,
             "response_chance": 0.5,
             "responses": [

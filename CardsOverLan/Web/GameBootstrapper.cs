@@ -9,10 +9,12 @@ namespace CardsOverLan.Web
 	{
 		public GameBootstrapper()
 		{
+			MimeTypes.AddType(".svg", "image/svg+xml");
 		}
 
 		protected override void ConfigureConventions(NancyConventions nancyConventions)
 		{
+			nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("packs", "./packs", ".jpg", ".png", ".svg"));
 			nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "./web_content"));
 			base.ConfigureConventions(nancyConventions);
 		}
@@ -23,21 +25,11 @@ namespace CardsOverLan.Web
 			pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
 			{
 				ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
-								.WithHeader("Access-Control-Allow-Methods", "POST,GET")
-								.WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type")
-								.WithHeader("Content-Security-Policy", @"default-src 'self'; script-src-attr 'self' data:; connect-src *");
+							.WithHeader("Access-Control-Allow-Methods", "POST,GET")
+							.WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type")
+							.WithHeader("Content-Security-Policy", @"default-src 'self'; script-src-attr 'self'; connect-src *; img-src 'self' data:; style-src 'self' 'unsafe-inline'");
 
 			});
-		}
-
-		//protected override IRootPathProvider RootPathProvider => new CustomRootPathProvider();
-
-		private sealed class CustomRootPathProvider : IRootPathProvider
-		{
-			public string GetRootPath()
-			{
-				return "./web_content";
-			}
-		}
+		}		
 	}
 }

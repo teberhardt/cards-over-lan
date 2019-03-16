@@ -78,9 +78,7 @@ namespace CardsOverLan
 
 		public void Start()
 		{
-			Console.WriteLine("Starting WebSocket services...");
 			_ws.Start();
-			Console.WriteLine("WebSocket services online.");
 		}
 
 		internal bool TryAddToPool(ClientConnectionBase client)
@@ -241,7 +239,10 @@ namespace CardsOverLan
 		public void Dispose()
 		{
 			if (_disposed) return;
-
+			if (_ws.IsListening)
+			{
+				Stop();
+			}
 			_disposed = true;
 		}
 	}

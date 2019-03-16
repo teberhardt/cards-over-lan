@@ -56,7 +56,7 @@ namespace CardsOverLan
 
 			Game = new CardGame(_packs, Settings);
 
-			Console.WriteLine("\n========= GAME STARTING =========\n");
+			Console.WriteLine("\n=========== GAME INFO ===========\n");
 			Console.WriteLine($"Player limit: [{Settings.MinPlayers}, {Settings.MaxPlayers}]");
 			Console.WriteLine($"Hand size: {Settings.HandSize}");
 			Console.WriteLine($"Perma-Czar: {Settings.PermanentCzar}");
@@ -83,7 +83,7 @@ namespace CardsOverLan
 
 		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
 		{
-			Console.WriteLine($"Black card skipped: {skippedCard.ID} -> {replacementCard.ID}");
+			Console.WriteLine($"SKIPPED BLACK CARD: {skippedCard.ID} -> {replacementCard.ID}");
 		}
 
 		public object GetGameInfoObject()
@@ -114,7 +114,7 @@ namespace CardsOverLan
 
 		private void OnGameEnded(Player[] winners)
 		{
-			Console.WriteLine($"Game ended. Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
+			Console.WriteLine($"GAME OVER: Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 		}
 
 		private void OnGameRoundEnded(int round, Player roundWinner, WhiteCard[] winningPlay)
@@ -124,14 +124,14 @@ namespace CardsOverLan
 
 		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
 		{
-			Console.WriteLine($"Stage changed: {oldStage} -> {currentStage}");
+			Console.WriteLine($"STAGE CHANGE: {oldStage} -> {currentStage}");
 		}
 
 		private void OnGameRoundStarted()
 		{
 			Console.WriteLine($"ROUND {Game.Round}:");
-			Console.WriteLine($"Current black card: {Game.CurrentBlackCard} (draw {Game.CurrentBlackCard.DrawCount}, pick {Game.CurrentBlackCard.PickCount})");
-			Console.WriteLine($"Judge is {Game.Judge}");
+			Console.WriteLine($"BLACK CARD: {Game.CurrentBlackCard} (draw {Game.CurrentBlackCard.DrawCount}, pick {Game.CurrentBlackCard.PickCount})");
+			Console.WriteLine($"CARD CZAR: {Game.Judge}");
 		}
 
 		private void OnGameStateChanged()

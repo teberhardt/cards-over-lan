@@ -20,6 +20,6 @@ namespace CardsOverLan.Game
 		[DefaultValue("")]
 		public string NextTierId { get; set; } = "";
 
-		public override string ToString() => GetContent(CultureInfo.CurrentCulture.IetfLanguageTag) ?? GetContent(DefaultLocale) ?? "???";
+		public override string ToString() => ID ?? "???";
 	}
 }

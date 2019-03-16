@@ -30,12 +30,38 @@ namespace CardsOverLan
 			using (var host = new NancyHost(new Uri(mgr.Settings.Host), new GameBootstrapper(), hostCfg))
 			using (var gameServer = new CardGameServer(mgr.Game))
 			{
-				gameServer.Start();
-				host.Start();
-				Console.WriteLine($"Hosting on {mgr.Settings.Host}");
+				// Start game server
+				try
+				{
+					Console.Write("Starting WebSocket server... ");
+					gameServer.Start();
+					Console.WriteLine("Done.");
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine();
+					Console.WriteLine($"Failed to start WebSocket server: \n{ex.Message}");
+					return;
+				}
+
+				// Start webserver
+				try
+				{
+					Console.Write("Starting webserver... ");
+					host.Start();
+					Console.WriteLine("Done.");
+					Console.WriteLine($"Ready. Hosting on: {mgr.Settings.Host}");
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine();
+					Console.WriteLine($"Failed to start webserver: \n{ex.Message}");
+					return;
+				}
+
+
 				Console.ReadLine();
 				Console.WriteLine("Stopping...");
-				gameServer.Stop();
 			}
 		}
 	}

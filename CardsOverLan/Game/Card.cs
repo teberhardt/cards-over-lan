@@ -82,5 +82,7 @@ namespace CardsOverLan.Game
 			}
 			return true;
 		}
+
+		public override string ToString() => ID;
 	}
 }

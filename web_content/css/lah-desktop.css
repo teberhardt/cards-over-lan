@@ -1076,7 +1076,7 @@ card .ribbon:after {
     height: 60px;
     content: attr(data-packname);
     font-size: 11pt;    
-    background-color: black;
+    background-color: #444;
     background-size: 100%;
     padding: 8px 15px;
     text-align: left;
@@ -1085,15 +1085,17 @@ card .ribbon:after {
     transition: transform .2s, color .2s, background-size .2s;
     border-left: none !important;
     background-clip: padding-box;
+    background-repeat: repeat-x;
 }
 
-card .ribbon:not(:hover):after {
+card[data-packid] .ribbon:not(:hover):after {
     color: rgba(0,0,0,0) !important;
 }
 
 card .ribbon:hover:after {
     color: #fff;
     transform: rotate(0deg) translateY(-10px);
+    background-size: 10%;
 }
 
 card .ribbon:hover ~ .pick, card .ribbon:hover ~ .draw {

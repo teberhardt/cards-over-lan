@@ -38,8 +38,11 @@ namespace CardsOverLan.Game
 		[DefaultValue(DefaultId)]
 		public string Id { get; private set; } = DefaultId;
 
-		[JsonProperty("accent", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-		public string Accent { get; private set; }
+		[JsonProperty("accent_color", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AccentColor { get; private set; }
+
+		[JsonProperty("accent_background", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AccentBackground { get; private set; }
 
 		public Pack()
 		{

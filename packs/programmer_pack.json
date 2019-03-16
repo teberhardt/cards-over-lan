@@ -1,7 +1,8 @@
 {
     "id": "programmer_pack",
     "name": "Programmer Pack",
-    "accent": "vs",
+    "accent_background": "#865FC5",
+    "accent_color": "white",
     "author": "Nicholas Fleck, Tamme Schichler",
     "cards": [
         {

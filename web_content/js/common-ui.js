@@ -145,6 +145,12 @@
         }
     }
 
+    if (!CSSStyleSheet.prototype.clearRules) CSSStyleSheet.prototype.clearRules = function() {
+        while(this.cssRules.length) {
+            this.deleteRule(0);
+        }
+    }
+
     // Register modal close buttons
     const modals = document.getElementsByClassName("modal");
     for (let modal of modals) {

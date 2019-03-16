@@ -192,6 +192,7 @@
         let el = document.createElement("card");
         let packInfo = lah.packMetadata[card.pack];
         el.setAttribute("data-card", card.id);
+        if (packInfo) el.setAttribute("data-packid", packInfo.id);
         el.setAttribute(card.type, "");
 
         // Card text
@@ -262,14 +263,11 @@
             }
         }
 
-        
-
         // Pack info ribbon
         if (packInfo) {
             let ribbon = document.createElement("div");
             ribbon.classList.add("ribbon");
             ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
-            ribbon.setAttribute("data-packaccent", (packInfo && packInfo.accent) || "black");
             el.appendChild(ribbon);
         }
 
@@ -437,7 +435,8 @@
                 lah.packMetadata[packData.id] = {
                     id: packData.id,
                     name: packData.name,
-                    accent: packData.accent || "black"
+                    accent_color: packData.accent_color,
+                    accent_background: packData.accent_background
                 };
                 packData.cards.forEach(cardData => {
                     cardData.pack = packData.id;
@@ -449,6 +448,7 @@
                     }
                 });
             });
+            updatePackStyles();
         },
         "s_gamestate": msg => {
             let roundChanged = lah.round !== msg.round;
@@ -1093,6 +1093,19 @@
         // Limit chat messages
         while (playerChat.childNodes.length > MAX_CHAT_MESSAGES) {
             playerChat.removeChild(playerChat.childNodes[0]);
+        }
+    }
+
+    function updatePackStyles() {
+        let elPackStyles = document.querySelector("#card-styles");
+        let packStyles = elPackStyles.sheet;
+        packStyles.clearRules();
+        for(let packId of Object.keys(lah.packMetadata)) {
+            let pack = lah.packMetadata[packId];
+            packStyles.insertRule("card[data-packid=\'" + pack.id + "\'] .ribbon:after {}", 0);
+            let rule = packStyles.cssRules[0];
+            if (pack.accent_color) rule.style.setProperty("color", pack.accent_color, "important");
+            if (pack.accent_background) rule.style.setProperty("background", pack.accent_background, "important");
         }
     }
 

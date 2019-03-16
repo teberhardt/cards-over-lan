@@ -16,7 +16,8 @@ Aside from the contents, there are a number of required and optional metadata fi
     "id": "example_pack",
     "name": "Example Pack",
     "author": "Nicholas Fleck",
-    "accent": "red",
+    "accent_color": "white",
+    "accent_background": "#333",
     "license": "",
     "license_url": "",
     "cards": [],
@@ -31,15 +32,10 @@ Aside from the contents, there are a number of required and optional metadata fi
 |`id`|**(Required)** A unique ID string used internally to identify the pack.|
 |`name`|**(Required)** The display name which will be used to to identify the pack to users. This string is also displayed on card ribbons.|
 |`author`|A comma-separated list of contributing authors to this pack.|
-|`accent`|The name of the accent to use for card ribbons.|
+|`accent_color`|A CSS value defining the text `color` property of the card accent ribbon.|
+|`accent_background`|A CSS value defining the `background` property of the card accent ribbon.|
 |`license`|A display name for the license applied to this pack.|
 |`license_url`|A URL pointing to the full license text for this pack.|
-
-#### Accents
-
-Accents are used to style the pack name ribbon at the bottom of each card.
-
-Valid accent names are: `white`, `black`, `red`, `orange`, `yellow`, `green`, `blue`, `lightblue`, `turquoise`, `navy`, `purple`, `pink`, `brown`, `limegreen`, `rainbow`
 
 ### Cards
 
@@ -80,3 +76,4 @@ The JSON object format for a card is as follows:
 
 ### Trophies
 
+### Taunts

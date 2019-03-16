@@ -231,7 +231,6 @@ namespace CardsOverLan.Game
 			lock (_allPlayersSync)
 			{
 				Stage = GameStage.GameEnd;
-				GameEndTimeoutAsync();
 			}
 		}
 
@@ -788,7 +787,7 @@ namespace CardsOverLan.Game
 		{
 			if (Stage == GameStage.RoundInProgress && player.IsSelectionValid)
 			{
-				Console.WriteLine($"{player} selected: {selection.Select(c => c.IsCustom ? $"(Custom) {c.GetContent("en-US")}" : c.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
+				Console.WriteLine($"{player} selected: {selection.Select(c => c.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 				CheckRoundPlays();
 				Deal(player);
 				RaiseStateChanged();
@@ -857,6 +856,7 @@ namespace CardsOverLan.Game
 				case GameStage.GameEnd:
 					AssignTrophies();
 					GameEndTimeoutAsync();
+					RaiseGameEnded();
 					break;
 				case GameStage.GameStarting:
 					if (PlayerCount >= Settings.MinPlayers)
