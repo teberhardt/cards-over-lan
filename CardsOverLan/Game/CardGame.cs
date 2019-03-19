@@ -265,6 +265,7 @@ namespace CardsOverLan.Game
 				var judge = Judge;
 				int n = PlayerCount;
 				var assholes = _players.Select((p, i) => (index: i, player: p)).Where(t => t.player.IsAsshole).ToArray();
+				var roundWinner = RoundWinner;
 
 				// If nobody's home, it's simple; nobody is the judge. Goodbye.
 				if (n == 0)
@@ -310,9 +311,9 @@ namespace CardsOverLan.Game
 					}
 
 					// If winner_czar is enabled, choose the round winner
-					if (Settings.WinnerCzar && _winningPlayIndex > -1 && (Settings.AllowBotCzars || !RoundWinner.IsAutonomous))
+					if (Settings.WinnerCzar && roundWinner != null && _players.Contains(roundWinner) && (Settings.AllowBotCzars || !RoundWinner.IsAutonomous))
 					{
-						_judgeIndex = _players.IndexOf(RoundWinner);
+						_judgeIndex = _players.IndexOf(roundWinner);
 						return;
 					}
 

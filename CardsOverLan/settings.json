@@ -9,6 +9,7 @@
 	"hand_size": 10,
 	"pick_one_only": false,
 	"blank_cards": 3,
+	"max_blank_card_length": 150,
 	"discards": 15,
 	"allow_skips": true,
 	"enable_upgrades": true,
@@ -31,6 +32,16 @@
 		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
 		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
+	"bot_config": {
+		"play_min_base_delay": 3000,
+		"play_max_base_delay": 10000,
+		"play_min_per_card_delay": 3000,
+		"play_max_per_card_delay": 4000,
+		"judge_min_per_play_delay": 3000,
+		"judge_max_per_play_delay": 5500,
+		"judge_min_per_card_delay": 2000,
+		"judge_max_per_card_delay": 3000
+	},
 	"require_languages": ["en"],
 	"use_packs": [],
 	"exclude_packs": []

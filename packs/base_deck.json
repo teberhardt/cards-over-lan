@@ -2490,7 +2490,8 @@
         {
             "id": "w_cripplingdepression",
             "content": {
-                "en": "Crippling depression."
+                "en": "Crippling depression.",
+                "de": "Lähmende Depressionen."
             },
             "flags": "di"
         },
@@ -2816,7 +2817,8 @@
         {
             "id": "w_pissbreath",
             "content": {
-                "en": "Piss breath."
+                "en": "Piss breath.",
+                "de": "Pissatem."
             },
             "flags": "g"
         },
@@ -2829,20 +2831,23 @@
         {
             "id": "w_catlitterymayo",
             "content": {
-                "en": "A spoon of mayonnaise rolled in cat litter."
+                "en": "A spoon of mayonnaise rolled in cat litter.",
+                "de": "Ein in Katzenstreu gerollter Löffel Mayonnaise."
             },
             "flags": "g"
         },
         {
             "id": "w_affirmaction",
             "content": {
-                "en": "Affirmative action."
+                "en": "Affirmative action.",
+                "de": "Positive Diskriminierung."
             }
         },
         {
             "id": "w_serialkilled",
             "content": {
-                "en": "Getting serial killed."
+                "en": "Getting serial killed.",
+                "de": "Seriengemordet werden."
             },
             "flags": "d mu"
         },
@@ -2863,7 +2868,8 @@
         {
             "id": "w_mafia",
             "content": {
-                "en": "The mafia."
+                "en": "The mafia.",
+                "de": "Die Mafia."
             }
         },
         {
@@ -2884,14 +2890,16 @@
         {
             "id": "w_spunksmell",
             "content": {
-                "en": "The characteristic odor of semen."
+                "en": "The characteristic odor of semen.",
+                "de": "Der charakteristische Geruch von Samen."
             },
             "flags": "g"
         },
         {
             "id": "w_mygoodchina",
             "content": {
-                "en": "<i>Ruining</i> my good china!"
+                "en": "<i>Ruining</i> my good china!",
+                "de": "Mein gutes Porzellan ruinieren!"
             }
         },
         {
@@ -2910,7 +2918,8 @@
         {
             "id": "w_gamers",
             "content": {
-                "en": "Gamers."
+                "en": "Gamers.",
+                "de": "Gamer."
             }
         },
         {
@@ -2929,27 +2938,45 @@
         {
             "id": "w_sleekhair",
             "content": {
-                "en": "Sleek, luxurious hair."
+                "en": "Sleek, luxurious hair.",
+                "de": "Geschmeidiges, luxuriöses Haar."
             }
         },
         {
             "id": "w_grandmacameltoe",
             "content": {
-                "en": "Grandma's cameltoe."
+                "en": "Grandma's cameltoe.",
+                "de": "Omas Cameltoe."
             },
             "flags": "gn gnf"
         },
         {
             "id": "w_hamhelper",
             "content": {
-                "en": "Hamburger Helper."
+                "en": "Hamburger Helper.",
+                "de": "Hamburger Helper."
             }
         },
         {
             "id": "w_scalpfootball",
             "content": {
-                "en": "A football made of human scalps."
+                "en": "A football made of human scalps.",
+                "de": "Ein Football aus menschlichen Kopfhäuten."
             }
+        },
+        {
+            "id": "w_robloxporn",
+            "content": {
+                "en": "ROBLOX porn.",
+                "de": "ROBLOX-Pornos."
+            }
+        },
+        {
+            "id": "w_innocentkids",
+            "content": {
+                "en": "Innocent children."
+            },
+            "flags": "ch"
         },
         {
             "id": "b_notmuchdiffreally",
@@ -3709,7 +3736,7 @@
             "id": "b_dnatestresults",
             "content": {
                 "en": "My DNA test results came back... Turns out I'm 25% ________!",
-                "de": "Ich habe meine DNA-Test-Ergebnisse bekommen... Es stellt sich heraus, dass ich 25% ________ bin!"
+                "de": "Ich habe meine DNA-Test-Ergebnisse bekommen... Wie sich herausstellt bin ich zu 25% ________!"
             },
             "pick": 1
         }

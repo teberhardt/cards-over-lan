@@ -54,8 +54,8 @@ namespace CardsOverLan
 					bool afk = _inactiveTime == 0;
 					if (Player.IsAfk != afk)
 					{
-						bool isAfkEligible = (!Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress)
-							|| (Game.Judge == Player && (Game.Stage == GameStage.RoundInProgress || Game.Stage == GameStage.JudgingCards));
+						bool isAfkEligible = (Game.Judge == Player && (Game.Stage == GameStage.JudgingCards)) 
+							|| (Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress);
 						if (afk && isAfkEligible)
 						{
 							Player.IsAfk = true;
@@ -152,13 +152,13 @@ namespace CardsOverLan
 		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
 		{
 			// Players who were waiting for a game to start aren't exactly AFK
-			if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
-			{
-				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-			}
-			else if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
+			if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
 			{
 				UpdateActivityTime(Game.Settings.AfkRecoveryTimeSeconds);
+			}
+			else if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
+			{
+				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
 			}
 		}
 
@@ -390,7 +390,6 @@ namespace CardsOverLan
 		{
 			const string customFlag = "custom:";
 			const string customContentXss = "Trying to hack a card game, of all things.";
-			const int maxCustomTextLength = 72;
 
 			var idTrimmed = id?.Trim();
 			if (String.IsNullOrWhiteSpace(idTrimmed)) return null;
@@ -405,7 +404,7 @@ namespace CardsOverLan
 				bool xss = false;
 				var sanitizedContent = StringUtilities.SanitizeClientString(
 					customContent,
-					maxCustomTextLength,
+					Game.Settings.MaxBlankCardLength,
 					ref xss,
 					c => !Char.IsControl(c) && (Char.IsLetterOrDigit(c) || AllowedCustomCardChars.Contains(c)));
 

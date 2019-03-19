@@ -176,6 +176,14 @@ smaller {
     opacity: .7;
 }
 
+#game.chat-disabled #player-chat-wrapper {
+    display: none !important;
+}
+
+#game.chat-disabled #player-list-wrapper {
+    flex-basis: 100%;
+}
+
 #player-list {
     display: flex;
     flex-direction: column;
@@ -383,6 +391,26 @@ smaller {
     }
 }
 
+.enable-anim-text  .chat-msg-body span.tilt {
+    display: inline-block;
+    animation: chat-anim-tilt .5s linear infinite;
+    white-space: pre-wrap;
+}
+
+@keyframes chat-anim-tilt {
+    0% {
+        transform: rotate(-20deg);
+    }
+
+    50% {
+        transform: rotate(20deg);
+    }
+
+    100% {
+        transform: rotate(-20deg);
+    }
+}
+
 .enable-anim-text .chat-msg-body span.rage {
     display: inline-block;
     animation: chat-anim-rage .09s ease-in-out infinite;
@@ -443,7 +471,6 @@ smaller {
     padding: 12pt;
     background: rgba(16, 16, 16, .75);
     cursor: default;
-    backdrop-filter: blur(5px);
     z-index: 2000000;
 }
 

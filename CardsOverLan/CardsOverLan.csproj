@@ -68,6 +68,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="ClientConnectionBase.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="Game\Bots\BotConfiguration.cs" />
     <Compile Include="Game\Bots\Taunt.cs" />
     <Compile Include="Game\ClientFacingAttribute.cs" />
     <Compile Include="Game\ClientObjectPolicyAttribute.cs" />
@@ -103,8 +104,8 @@
     <Compile Include="Game\RoundPlay.cs" />
     <Compile Include="RejectCodes.cs" />
     <Compile Include="SpectatorConnection.cs" />
-    <Compile Include="Web\IndexModule.cs" />
-    <Compile Include="Web\GameBootstrapper.cs" />
+    <Compile Include="Web\WebappModule.cs" />
+    <Compile Include="Web\WebappBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

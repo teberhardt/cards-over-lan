@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CardsOverLan.Game.Bots;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,7 @@ namespace CardsOverLan
 		private const int DefaultBlankCards = 0;
 		private const int DefaultBotCount = 0;
 		private const int DefaultDiscards = 5;
+		private const int DefaultMaxBlankCardLength = 140;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -46,6 +48,7 @@ namespace CardsOverLan
 		private int _roundEndTimeout = DefaultRoundEndTimeout;
 		private int _gameEndTimeout = DefaultGameEndTimeout;
 		private int _discards = DefaultDiscards;
+		private int _maxBlankCardLength = DefaultMaxBlankCardLength;
 
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
@@ -221,6 +224,17 @@ namespace CardsOverLan
 		[JsonProperty("enable_bot_taunts", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(true)]
 		public bool BotTauntsEnabled { get; set; } = true;
+
+		[JsonProperty("bot_config", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.DisallowNull)]
+		public BotConfiguration BotConfig { get; set; } = new BotConfiguration();
+
+		[JsonProperty("max_blank_card_length", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(DefaultMaxBlankCardLength)]
+		public int MaxBlankCardLength
+		{
+			get => _maxBlankCardLength;
+			set => _maxBlankCardLength = value <= 0 ? 1 : value;
+		}
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

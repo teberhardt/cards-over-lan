@@ -174,6 +174,7 @@
     function mdToHtml(str) {
         return str
         .replace(/\^\^(.+?)\^\^/g, (m, t) => mdToHtml(joinString([...t], (p, i, n) => (i % 2 == 0 ? "<span class='juggle-a'>" : "<span class='juggle-b'>") + p + "</span>")))
+        .replace(/\/\/(.+?)\/\//g, (m, t) => mdToHtml(joinString([...t], (p, i, n) => "<span class='tilt'>" + p + "</span>")))
         .replace(/\^(.+?)\^/g, (m, t) => "<span class=\"bounce\">" + mdToHtml(t) + "</span>")
         .replace(/\@\@(.+?)\@\@/g, (m, t) => "<span class=\"rage\">" + mdToHtml(t) + "</span>")
         .replace(/\~\~(.+?)\~\~/g, (m, t) => "<strike>" + mdToHtml(t) + "</strike>")
@@ -782,6 +783,7 @@
     // Raised when connection opens
     function onConnectionOpened() {
         console.log("connected");
+        refreshServerInfo();
     }
 
     // Raised when the websocket receives a message
@@ -1149,20 +1151,20 @@
             failCount = 0;
         }
         const maxAttempts = 4;
-        $.ajax({
-            dataType: "json",
-            url: "/gameinfo",
-            success: data => {
-                lah.serverInfo = data;
-                onServerInfoReceived();
-            },
-            error: (x, e) => {
-                let fail = failCount + 1;
-                if (fail >= maxAttempts) {
-                    onServerUnreachable();
-                } else {
-                    setTimeout(() => refreshServerInfo(fail), 1000);
-                }
+        fetch("/gameinfo", {
+            "method": "GET"
+        }).then(response => {
+            return response.json();            
+        }).then(json => {
+            lah.serverInfo = json;
+            onServerInfoReceived();
+        }).catch(err => {
+            console.log("Failed to retrieve server info: \"" + err + "\"");
+            let fail = failCount + 1;
+            if (fail >= maxAttempts) {
+                onServerUnreachable();
+            } else {
+                setTimeout(() => refreshServerInfo(fail), 1000);
             }
         });
     }
@@ -1173,6 +1175,7 @@
 
     function onServerInfoReceived() {
         let info = lah.serverInfo;
+        document.querySelector("#game").setClass("chat-disabled", !info.chat_enabled);
         document.querySelector("#join-screen-server-name").textContent = info.server_name;
         document.querySelector("#join-screen-player-limit .value").textContent = 
             getUiString("ui_join_player_limit", info.min_players, info.current_player_count, info.max_players);

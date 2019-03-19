@@ -75,6 +75,7 @@ The settings.json file contains a number of properties that control how the serv
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
 |`host`|String|The URL and port that the server will be hosted on.|
+|`max_blank_card_length`|Integer|Maximum number of characters allowed in blank cards.|
 |`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
 |`max_players`|Integer|Maximum number of players that the server can hold.|
 |`max_points`|Integer|Points required for a player to win the game.|

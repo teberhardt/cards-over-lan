@@ -19,11 +19,6 @@ namespace CardsOverLan.Game
 	public sealed class Player
 	{
 		private const string DefaultName = "Player";
-		private const int AutoPlayDelayMin = 2000;
-		private const int AutoPlayDelayMax = 6000;
-		private const int AutoJudgeDelayMin = 2000;
-		private const int AutoJudgeDelayIncrementMin = 1000;
-		private const int AutoJudgeDelayIncrementMax = 1300;
 
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
@@ -250,7 +245,11 @@ namespace CardsOverLan.Game
 			{
 				_botPlayDelays++;
 			}
-			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
+			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var cfg = Game.Settings.BotConfig;
+			int delayBase = _rng.Next(cfg.PlayMinBaseDelay, cfg.PlayMaxBaseDelay + 1);
+			int delayCards = _rng.Next(cfg.PlayMinPerCardDelay * pickCount, cfg.PlayMaxPerCardDelay * pickCount + 1);
+			await Task.Delay(delayBase + delayCards);
 			lock (_botPlayDelayLock)
 			{
 				_botPlayDelays--;
@@ -268,14 +267,18 @@ namespace CardsOverLan.Game
 			{
 				_botJudgeDelays++;
 			}
-			await Task.Delay(AutoJudgeDelayMin + _rng.Next(AutoJudgeDelayIncrementMin, AutoJudgeDelayIncrementMax + 1) * Game.CurrentBlackCard.PickCount);
+			int playCount = Game.GetRoundPlays().Count();
+			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var cfg = Game.Settings.BotConfig;
+			int delayCards = _rng.Next(cfg.JudgeMinPerCardDelay * pickCount, cfg.JudgeMaxPerCardDelay * pickCount + 1);
+			int delayPlays = _rng.Next(cfg.JudgeMinPerPlayDelay * playCount, cfg.JudgeMaxPerPlayDelay * playCount + 1);
+			await Task.Delay(delayCards + delayPlays);
 			lock (_botJudgeDelayLock)
 			{
 				_botJudgeDelays--;
 				if (_botJudgeDelays == 0)
-				{
-					int count = Game.GetRoundPlays().Count();
-					JudgeCards(_rng.Next(count));
+				{					
+					JudgeCards(_rng.Next(playCount));
 				}
 			}
 		}

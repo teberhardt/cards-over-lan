@@ -42,15 +42,21 @@
         - `@@TEXT@@` - Angry text!
         - `^Text^` - Bouncing text!
         - `^^Text^^` - Jiggling text?
+        - `//Text//` - Tilting text!
         - Should I add more?
     - Enable with `enable_chat` setting.
 - ADD: (Webapp) Option to enable/disable animated text
 - ADD: (Server) Added Content Security Policy
 - ADD: Bot taunts
     - Enable with `enable_bot_taunts` setting.
-- ADD: `exclude_packs` setting
+- ADD: (Server) `exclude_packs` setting
+- ADD: (Server) `max_blank_card_length` setting
+
+- CHANGE: (Webapp) Refresh server info on websocket connection/reconnection
 
 - FIX: (Webapp) Wonky layout issues on Firefox. Might still be mildly wonky.
 - FIX: (Server) Occasional deadlock when accessing player list with many clients
+
+- REMOVE: jQuery
 
 - WONTFIX: Edge incompatability. They don't even support `for ... of` loops yet. Get with the times, Edge.

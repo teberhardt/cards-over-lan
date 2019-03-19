@@ -27,7 +27,7 @@ namespace CardsOverLan
 				}
 			};
 
-			using (var host = new NancyHost(new Uri(mgr.Settings.Host), new GameBootstrapper(), hostCfg))
+			using (var host = new NancyHost(new Uri(mgr.Settings.Host), new WebappBootstrapper(), hostCfg))
 			using (var gameServer = new CardGameServer(mgr.Game))
 			{
 				// Start game server

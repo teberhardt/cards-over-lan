@@ -136,12 +136,6 @@ hr {
     transition: none !important;
 }
 
-.hidden:not(.fade) {
-    display: none !important;
-    pointer-events: none;
-    opacity: 0;
-}
-
 #game.lah-spectating .player-only, #game:not(.lah-spectating) .spectator-only {
     display: none !important;
 }
@@ -270,24 +264,38 @@ span.highlight {
 /* SHOW/HIDE FADING */
 
 @keyframes fade-out {
-    to {        
-        display: none !important;
+    99% {
+        visibility: visible !important;
     }
+    100% {        
+        visibility: collapse !important;
+    }
+}
+
+@keyframes fade-in {
+    99% {
+        visibility: collapse !important;
+    }
+    100% {        
+        visibility: visible !important;
+    }
+}
+
+.hidden:not(.fade) {
+    display: none !important;
+    pointer-events: none;
+    opacity: 0;
 }
 
 .hidden.fade {
     opacity: 0;
+    visibility: collapse;
     pointer-events: none;
-    animation-name: fade-out;
-    animation-duration: .3s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: 1;
-    animation-timing-function: step-start;
-    backdrop-filter: none !important;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-end;  
 }
 
 .fade {
-    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-start;
 }
 
 .hidden.fade.fade-up {

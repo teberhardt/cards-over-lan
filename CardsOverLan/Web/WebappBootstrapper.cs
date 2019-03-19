@@ -5,9 +5,9 @@ using Nancy.TinyIoc;
 
 namespace CardsOverLan.Web
 {
-	internal sealed class GameBootstrapper : DefaultNancyBootstrapper
+	internal sealed class WebappBootstrapper : DefaultNancyBootstrapper
 	{
-		public GameBootstrapper()
+		public WebappBootstrapper()
 		{
 			MimeTypes.AddType(".svg", "image/svg+xml");
 		}
