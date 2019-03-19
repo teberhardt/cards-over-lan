@@ -62,6 +62,7 @@ The settings.json file contains a number of properties that control how the serv
 |`allow_duplicates`|Boolean|Specifies whether to allow multiple clients from the same IP address.|
 |`allow_skips`|Boolean|Specifies whether players are allowed to skip black cards.|
 |`blank_cards`|Integer|Number of blank cards given to each player. These are not counted by `hand_size`.|
+|`bot_config`|Object|Configures bot behavior. **See below.**|
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`bot_names`|String[]|List of names to assign to bots.|
@@ -87,6 +88,21 @@ The settings.json file contains a number of properties that control how the serv
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
 |`use_packs`|String[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
 |`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner. Overridden by `bot_czars` and `perma_czar`.|
+
+#### bot_config
+
+All `delay` properties are in milliseconds.
+
+|Property|Type|Description|
+|--------|----|-----------|
+|`play_min_base_delay`|Integer|Minimum baseline delay before bot plays.|
+|`play_max_base_delay`|Integer|Maximum baseline delay before bot plays.|
+|`play_min_per_card_delay`|Integer|Minimum additional delay per card played.|
+|`play_max_per_card_delay`|Integer|Maximum additional delay per card played.|
+|`judge_min_per_play_delay`|Integer|Minimum delay per play before bot picks winner.|
+|`judge_max_per_play_delay`|Integer|Maximum delay per play before bot picks winner.|
+|`judge_min_per_card_delay`|Integer|Minimum additional delay per card before bot picks winner.|
+|`judge_max_per_card_delay`|Integer|Maximum additional delay per card before bot picks winner.|
 
 
 ## FAQ

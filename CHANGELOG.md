@@ -51,6 +51,8 @@
     - Enable with `enable_bot_taunts` setting.
 - ADD: (Server) `exclude_packs` setting
 - ADD: (Server) `max_blank_card_length` setting
+- ADD: (Server) `bot_config` setting
+    - Exposes various settings for controlling how bots behave
 
 - CHANGE: (Webapp) Refresh server info on websocket connection/reconnection
 
