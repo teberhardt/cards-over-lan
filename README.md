@@ -111,9 +111,26 @@ All `delay` properties are in milliseconds.
 
 I was bored and wanted a fun project to work on over winter break.
 
-### But we already have things like PYX, Azala, etc.  Why another one?
+### There's already PYX, Azala, Cardcast, etc. Why another one?
 
-And those are great, there's nothing wrong with them. As mentioned above, this is just a project I did for fun and decided was worth sharing.
+They're all good, and each of them has different strengths. Below is a (non-exhaustive) comparison table:
+
+|                   |PYX|Azala|Cards Over LAN|
+|-------------------|:-:|:---:|:------------:|
+|Mobile version     |❌|✔️|✔️|
+|Self-Hosting       |✔️|❌|✔️|
+|Offline Play       |❌|❌|✔️|
+|Discards           |❌|✔️|✔️|
+|Chat               |✔️*|✔️|✔️|
+|Blank Cards        |✔️*|✔️|✔️|
+|Localization       |❌|❌|✔️|
+|Bots               |❌|✔️|✔️|
+|Black card skipping|❌|✔️|✔️|
+|Trophies           |❌|❌|✔️|
+|Multiple games     |✔️|✔️|❌|
+|License            |BSD 2-Clause|Closed Source|MIT|
+
+_*Chat and blank cards only available in third-party PYX servers._
 
 ### Can I add my own cards?
 
