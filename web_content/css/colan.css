@@ -1,3 +1,7 @@
+@import "colan-desktop.css" only screen and (min-width: 771px);
+
+@import "colan-mobile.css" only screen and (max-width: 770px);
+
 @font-face {
     font-family: "LAH";
     src: url(/fonts/Roboto-Regular.ttf);

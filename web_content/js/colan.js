@@ -1216,7 +1216,7 @@
         hideModal("modal-join");
     }
 
-    g.lah.start = function () {
+    function startGame() {
         // Populate saved options, set language cookie
         loadOptions();
         refreshServerInfo();
@@ -1260,5 +1260,19 @@
         }
     }
 
-    lah.start();
-})(this);                                                                                                                                                                                                                                                                    
+    g.lah.load = function () {
+        return new Promise(function(resolve, reject) {
+            loadStringResources("/etc/strings.json")
+            .then(() => {
+                startGame();
+                resolve();
+            })
+            .catch(err => {
+                console.error(err);
+                reject(err);
+            });
+        });
+    }
+
+    lah.load();
+})(this);
