@@ -200,11 +200,11 @@ namespace CardsOverLan.Game
 
 		private void NewRound()
 		{
+			// Move to next black card
+			NextBlackCard();
+
 			lock (_allPlayersSync)
 			{
-				// Move to next black card
-				NextBlackCard();
-
 				// Reset player selections
 				foreach (var player in _players)
 				{
@@ -212,18 +212,19 @@ namespace CardsOverLan.Game
 					Deal(player, CurrentBlackCard.DrawCount);
 				}
 
-				// Move to next judge
-				NextJudge();
-
-				// Move to next round
-				_roundNum++;
-
-				// Change stage
-				Stage = GameStage.RoundInProgress;
-
-				// Raise round started event
-				RaiseRoundStarted();
 			}
+
+			// Move to next judge
+			NextJudge();
+
+			// Move to next round
+			_roundNum++;
+
+			// Change stage
+			Stage = GameStage.RoundInProgress;
+
+			// Raise round started event
+			RaiseRoundStarted();
 		}
 
 		private void EndGame()

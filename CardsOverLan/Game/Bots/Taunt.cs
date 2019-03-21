@@ -23,6 +23,10 @@ namespace CardsOverLan.Game.Bots
 		[DefaultValue(1.0)]
 		public double ResponseChance { get; set; } = 1.0;
 
+		[JsonProperty("trigger_event", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate, Required = Required.DisallowNull)]
+		[DefaultValue("")]
+		public string TriggerEvent { get; set; } = "";
+
 		[JsonProperty("priority", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue(1)]
 		public int Priority { get; set; } = 1;

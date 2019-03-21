@@ -2965,6 +2965,19 @@
             }
         },
         {
+            "id": "w_feelblessed",
+            "content": {
+                "en": "Feeling blessed."
+            },
+            "flags": "re"
+        },
+        {
+            "id": "w_puckerup",
+            "content": {
+                "en": "Puckering up."
+            }
+        },
+        {
             "id": "w_robloxporn",
             "content": {
                 "en": "ROBLOX porn.",
@@ -2975,6 +2988,110 @@
             "id": "w_innocentkids",
             "content": {
                 "en": "Innocent children."
+            },
+            "flags": "ch"
+        },
+        {
+            "id": "w_bongshit",
+            "content": {
+                "en": "Shitting in a bong and taking a fat rip."
+            },
+            "flags": "dr g fe"
+        },
+        {
+            "id": "w_somuchblood",
+            "content": {
+                "en": "So much blood.",
+                "de": "So viel Blut."
+            }
+        },
+        {
+            "id": "w_teeth",
+            "content": {
+                "en": "Teeth.",
+                "de": "Zähne."
+            }
+        },
+        {
+            "id": "w_wood",
+            "content": {
+                "en": "Wood.",
+                "de": "Holz."
+            }
+        },
+        {
+            "id": "w_ornatecockstatues",
+            "content": {
+                "en": "Ornate cock statues."
+            },
+            "flags": "gn gnm"
+        },
+        {
+            "id": "w_nastystache",
+            "content": {
+                "en": "A gross mustache."
+            }
+        },
+        {
+            "id": "w_fingertoeswitch",
+            "content": {
+                "en": "Having toes on your hands and fingers on your feet.",
+                "de": "Zehen an den Handen und Finger an den Füßen haben."
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_besuchagoodboy",
+            "content": {
+                "en": "Being such a good boy."
+            }
+        },
+        {
+            "id": "w_lynchmob",
+            "content": {
+                "en": "A lynch mob."
+            },
+            "flags": "mu v"
+        },
+        {
+            "id": "w_numsfortum",
+            "content": {
+                "en": "Num-nums for my tum-tum!"
+            }
+        },
+        {
+            "id": "w_yourgarbopinions",
+            "content": {
+                "en": "Your garbage opinions.",
+                "de": "Deine beschissenen Meinungen."
+            }
+        },
+        {
+            "id": "w_beprego",
+            "content": {
+                "en": "Being pregnant.",
+                "de": "Schwanger sein."
+            }
+        },
+        {
+            "id": "w_guybehindyou",
+            "content": {
+                "en": "The guy right behind you.",
+                "de": "Der Typ direkt hinter dir."
+            }
+        },
+        {
+            "id": "w_jarofevils",
+            "content": {
+                "en": "A jar of pickle juice, semen, and breadcrumbs."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_onemorekid",
+            "content": {
+                "en": "Having another child.",
+                "de": "Ein weiteres Kind haben."
             },
             "flags": "ch"
         },

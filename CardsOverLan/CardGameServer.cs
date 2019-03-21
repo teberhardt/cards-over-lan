@@ -1,6 +1,7 @@
 ﻿using CardsOverLan.Game;
 using CardsOverLan.Game.Bots;
 using Rant;
+using Rant.Core.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace CardsOverLan
 		{
 			Game = game ?? throw new ArgumentNullException(nameof(game));
 			Game.RoundEnded += OnGameRoundEnded;
+			Game.GameEnded += OnGameEnded;
 			_rng = new Random(unchecked(Environment.TickCount * 7919));
 			_rant = new RantEngine();
 			_spectators = new HashList<SpectatorConnection>();
@@ -45,35 +47,87 @@ namespace CardsOverLan
 			_ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, Game));
 		}
 
+		private void OnGameEnded(Player[] winners)
+		{
+			TriggerBotTaunts(null,
+				bot => EnumerateEventTaunts(bot, "game_end", b => true));
+		}
+
 		private void OnGameRoundEnded(int round, Player roundWinner, WhiteCard[] winningPlay)
+		{
+			var czar = Game.Judge;			
+
+			var args = new
+			{
+				winner = roundWinner.Name
+			};
+
+			TriggerBotTaunts(args,
+				bot => EnumerateCardTaunts(bot, czar, round, roundWinner, winningPlay),
+				bot => EnumerateEventTaunts(bot, "lost_round", b => b != roundWinner && b != czar));
+		}
+
+		private IEnumerable<Taunt> EnumerateEventTaunts(Player bot, string eventName, Func<Player, bool> botPredicate)
+		{
+			if (!botPredicate(bot)) yield break;
+			foreach(var taunt in _botTaunts.Where(t => t.TriggerEvent == eventName))
+			{
+				yield return taunt;
+			}
+		}
+
+		private IEnumerable<Taunt> EnumerateCardTaunts(Player bot, Player czar, int round, Player roundWinner, WhiteCard[] winningPlay)
+		{
+			if (bot == roundWinner || bot == czar) yield break;
+			foreach(var taunt in _botTaunts.Where(t => t.IsPlayEligible(winningPlay)))
+			{
+				yield return taunt;
+			}
+		}
+
+		private void TriggerBotTaunts(object args, params Func<Player, IEnumerable<Taunt>>[] tauntSelectors)
 		{
 			if (Game.Settings.ChatEnabled && Game.Settings.BotTauntsEnabled && _botTaunts.Length > 0)
 			{
 				var bots = Game.GetPlayers().Where(p => p.IsAutonomous).ToArray();
 				if (bots.Length == 0) return;
-				var matchingTaunts = _botTaunts.Where(t => t.IsPlayEligible(winningPlay)).ToArray();
-				if (matchingTaunts.Length == 0) return;
-				int maxTauntPriority = matchingTaunts.Max(t => t.Priority);
-				var eligibleTaunts = matchingTaunts.Where(t => t.Priority == maxTauntPriority).ToArray();
+
+				var matchingTaunts = new HashList<Taunt>();
+
 				foreach (var bot in bots)
 				{
-					if (bot == roundWinner) continue;
-					var activeTaunt = eligibleTaunts[_rng.Next(eligibleTaunts.Length)];
-					double tauntChance = ((activeTaunt.ResponseChance / bots.Length) + activeTaunt.ResponseChance) * 0.5;
-					if (_rng.NextDouble() <= tauntChance)
-					{
-						var responses = activeTaunt.GetResponses().ToArray();
-						BotTauntAsync(bot, responses[_rng.Next(responses.Length)], roundWinner);
-					}
+					matchingTaunts.Clear();					
+
+					matchingTaunts.AddRange(tauntSelectors.SelectMany(selector => selector(bot)));
+
+					BotSelectTaunt(bot, bots.Length, matchingTaunts, args);
 				}
 			}			
 		}
 
-		private void BotTauntAsync(Player botPlayer, LocalizedString taunt, Player winner)
+		private void BotSelectTaunt(Player botPlayer, int botCount, HashList<Taunt> matchingTaunts, object args)
 		{
-			var args = new RantProgramArgs();
-			args["winner_name"] = winner.Name;
-			SendChatMessage(botPlayer, taunt, args);
+			// Skip this bot if there are no matches
+			if (matchingTaunts.Count == 0) return;
+
+			// Get highest priority in taunt matches
+			int maxTauntPriority = matchingTaunts.Max(t => t.Priority);
+
+			// Get taunts matching highest priority
+			var eligibleCardTaunts = matchingTaunts.Where(t => t.Priority == maxTauntPriority).ToArray();
+
+			// Select a taunt
+			var activeTaunt = eligibleCardTaunts[_rng.Next(eligibleCardTaunts.Length)];
+
+			// Calculate probability
+			double tauntChance = ((activeTaunt.ResponseChance / botCount) + activeTaunt.ResponseChance) * 0.5;
+
+			// Check against probability and send message
+			if (_rng.NextDouble() <= tauntChance)
+			{
+				var responses = activeTaunt.GetResponses().ToArray();
+				SendBotChatMessage(botPlayer, responses[_rng.Next(responses.Length)], RantProgramArgs.CreateFrom(args));
+			}
 		}
 
 		public void Start()
@@ -160,7 +214,7 @@ namespace CardsOverLan
 
 		internal bool AddConnection(ClientConnectionBase connection)
 		{
-			lock(_connectionLock)
+			lock (_connectionLock)
 			{
 				return _connections.Add(connection);
 			}
@@ -168,7 +222,7 @@ namespace CardsOverLan
 
 		internal bool RemoveConnection(ClientConnectionBase connection)
 		{
-			lock(_connectionLock)
+			lock (_connectionLock)
 			{
 				return _connections.Remove(connection);
 			}
@@ -181,9 +235,9 @@ namespace CardsOverLan
 			Console.WriteLine($"{p} says: \"{cleanMessageString}\"");
 			await Task.Run(() =>
 			{
-				lock(_connectionLock)
+				lock (_connectionLock)
 				{
-					foreach(var connection in _connections)
+					foreach (var connection in _connections)
 					{
 						connection.SendChatMessage(p, cleanMessageString);
 					}
@@ -191,10 +245,11 @@ namespace CardsOverLan
 			});
 		}
 
-		public void SendChatMessage(Player p, LocalizedString message, RantProgramArgs args)
+		public void SendBotChatMessage(Player p, LocalizedString message, RantProgramArgs args)
 		{
-			if (!Game.Settings.ChatEnabled || message == null) return;			
+			if (!Game.Settings.ChatEnabled || message == null) return;
 			int seed = _rng.Next();
+			var cfg = Game.Settings.BotConfig;
 
 			async void send(ClientConnectionBase connection, Random rng)
 			{
@@ -203,24 +258,25 @@ namespace CardsOverLan
 				try
 				{
 					pgm = RantProgram.CompileString(message[connection.ClientLanguage]);
+					var output = _rant.Do(pgm, seed: seed, charLimit: 0, timeout: -1, args: args).Main.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+					foreach (var msg in output)
+					{
+						int delay = rng.Next(cfg.MinTypingDelay, cfg.MaxTypingDelay + 1) 
+							+ msg.Length * rng.Next(cfg.MinTypingInterval, cfg.MaxTypingInterval + 1);
+						await Task.Delay(delay);
+						connection.SendChatMessage(p, msg);
+						Console.WriteLine($"{p} says: \"{msg}\"");
+					}
 				}
-				catch(RantCompilerException ex)
+				catch (RantCompilerException ex)
 				{
 					Console.WriteLine($"Rant compiler error: {ex}");
 					return;
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
-					Console.WriteLine($"Rant compiler failure: {ex}");
+					Console.WriteLine($"Rant failure: {ex}");
 					return;
-				}
-				var output = _rant.Do(pgm, seed, args: args).Main.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-				foreach (var msg in output)
-				{
-					int delay = rng.Next(750, 1100) + msg.Length * rng.Next(12, 18);
-					await Task.Delay(delay);
-					connection.SendChatMessage(p, msg);
-					Console.WriteLine($"{p} says: \"{msg}\"");
 				}
 			}
 

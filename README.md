@@ -103,7 +103,8 @@ All `delay` properties are in milliseconds.
 |`judge_max_per_play_delay`|Integer|Maximum delay per play before bot picks winner.|
 |`judge_min_per_card_delay`|Integer|Minimum additional delay per card before bot picks winner.|
 |`judge_max_per_card_delay`|Integer|Maximum additional delay per card before bot picks winner.|
-
+|`min_typing_interval`|Integer|Minimum interval between keystrokes when typing chat messages.|
+|`max_typing_interval`|Ingeger|Maximum interval between keystrokes when typing chat messages.|
 
 ## FAQ
 
