@@ -23,7 +23,7 @@ namespace CardsOverLan
 
 		private const string DefaultLanguage = "en";
 
-		private IPAddress _ip;
+		private string _ip = string.Empty;
 		private readonly Dictionary<string, string> _cookies;
 
 		public CardGameServer Server { get; }
@@ -43,7 +43,7 @@ namespace CardsOverLan
 			return _cookies.TryGetValue(name, out var val) ? val : fallback;
 		}
 
-		public IPAddress GetIPAddress() => _ip;
+		public string GetIPAddress() => _ip;
 
 		private void LoadCookies()
 		{
@@ -57,9 +57,29 @@ namespace CardsOverLan
 		{
 			base.OnOpen();
 			LoadCookies();
-			_ip = Context.UserEndPoint.Address;
-			ClientLanguage = GetCookie("client_lang", "en");
-			Server.AddConnection(this);
+
+			var xForwardedFor = Context.Headers["X-Forwarded-For"] ?? String.Empty;
+			var forwardedAddresses = xForwardedFor.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+			_ip = forwardedAddresses.Length > 0 ? forwardedAddresses[0].ToLowerInvariant() : Context.UserEndPoint.Address.ToString();
+
+			// Kick duplicates
+			if (!Game.Settings.AllowDuplicatePlayers && Server.IsIpConnected(_ip))
+			{
+				Reject("reject_duplicate");
+				return;
+			}
+
+			// Verify password
+			if (String.IsNullOrEmpty(Game.Settings.ServerPassword) || GetCookie("game_password") == Game.Settings.ServerPassword)
+			{
+				ClientLanguage = GetCookie("client_lang", "en");
+				Server.AddConnection(this);				
+			}
+			else
+			{
+				Reject("reject_bad_password");
+				return;
+			}
 		}
 
 		protected override void OnClose(CloseEventArgs e)

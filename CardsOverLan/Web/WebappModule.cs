@@ -8,7 +8,7 @@ namespace CardsOverLan.Web
 		public WebappModule() : base("")
 		{
 			Get["/gameinfo"] = p => Response.AsText(JsonConvert.SerializeObject(GameManager.Instance.GetGameInfoObject(), Formatting.None), "application/json");
-			Get["/"] = p => Response.AsFile($"./web_content/index.html", "text/html");
+			Get["/"] = p => Response.AsFile($"{GameManager.Instance.Settings.WebRoot}/index.html", "text/html");
 		}
 	}
 }

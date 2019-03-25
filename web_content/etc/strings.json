@@ -124,6 +124,10 @@
         "en": "Duplicate player",
         "de": "Duplizierter Spieler"
     },
+    "ui_reject_bad_password": {
+        "en": "Wrong password",
+        "de": "Passwort ungültig"
+    },
     "ui_waiting_for_players": {
         "en": "Waiting for more players",
         "de": "Warte auf weitere Spieler"
@@ -272,9 +276,21 @@
         "en": "Nickname",
         "de": "Spitzname"
     },
+    "ui_game_password": {
+        "en": "Password",
+        "de": "Passwort"
+    },
+    "ui_game_password_placeholder": {
+        "en": "Enter game password, if required",
+        "de": "Spielpasswort eingeben, wenn benötigt"
+    },
     "ui_chk_anim_text": {
         "en": "Chat text animations",
         "de": "Chattext-Animationen"
+    },
+    "ui_chk_notifications": {
+        "en": "Enable notifications",
+        "de": "Benachrichtigungen aktivieren"
     },
     "ui_options_apply": {
         "en": "Apply",
@@ -323,5 +339,15 @@
     "ui_card_skipped_msg": {
         "en": "Black card skipped.",
         "de": "Fragekarte übersprungen."
+    },
+    "ui_notify_round_start": {
+        "en": "Round {0} has begun.",
+        "de": "Runde {0} hat begonnen."
+    },
+    "ui_notify_player_judging": {
+        "en": "Cards are being judged."
+    },
+    "ui_notify_czar_judging": {
+        "en": "You're up. Choose the winning play."
     }
 }

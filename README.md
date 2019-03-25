@@ -66,16 +66,19 @@ The settings.json file contains a number of properties that control how the serv
 |`bot_count`|Integer|Number of bots to add to the game.|
 |`bot_czars`|Boolean|Specifies whether to allow bots to be Card Czars.|
 |`bot_names`|String[]|List of names to assign to bots.|
+|`client_ws_port`|Integer|Sets the client-facing port of the WebSocket server that they will connect to. Useful if hosting behind a reverse proxy.|
 |`discards`|Integer|The number of discards allowed per player.|
+|`enable_afk`|Boolean|Specifies whether AFK timers are enabled.|
 |`enable_bot_taunts`|Boolean|Specifies whether bot taunts are enabled. Overridden by `enable_chat`.|
 |`enable_chat`|Boolean|Specifies whether in-game chat is enabled.|
+|`enable_idle_kick`|Boolean|Specifies whether idle kicking is enabled.|
 |`enable_upgrades`|Boolean|Specifies whether cards can be upgraded. Disabling this feature will fully upgrade all cards.|
 |`enable_trophies`|Boolean|Specifies whether players can earn trophies.|
 |`exclude_content`|String[]|Array with content flag strings to exclude cards by. Use this to filter out specific types of cards.|
 |`exclude_packs`|String[]|Array of pack IDs. Forces the server to not load any packs in this array. Overrides any included packs in `use_packs`.|
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
-|`host`|String|The URL and port that the server will be hosted on.|
+|`host_url`|String|The endpoint that the webserver will listen on.|
 |`max_blank_card_length`|Integer|Maximum number of characters allowed in blank cards.|
 |`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
 |`max_players`|Integer|Maximum number of players that the server can hold.|
@@ -84,9 +87,14 @@ The settings.json file contains a number of properties that control how the serv
 |`max_spectators`|Integer|Maximum number of spectators allowed.|
 |`min_players`|Integer|Minimum required players in order for the game to start.|
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
+|`pick_one_only`|Boolean|Specifies whether to prevent black cards with multiple blanks from being drawn.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
+|`server_name`|String|The server name displayed in on the join screen.|
+|`server_password`|String|The password to the server. Leave blank to disable.|
 |`use_packs`|String[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
+|`web_root`|String|The path to the webapp directory. Leave blank to default to `./web_content`.|
+|`ws_url`|String|The endpoint that the game's WebSocket server will listen on.|
 |`winner_czar`|Boolean|When set to `true`, the Card Czar will always be the previous round winner. Overridden by `bot_czars` and `perma_czar`.|
 
 #### bot_config

@@ -108,7 +108,8 @@ namespace CardsOverLan
 				discards = Settings.Discards,
 				allow_skips = Settings.AllowBlackCardSkips,
 				chat_enabled = Settings.ChatEnabled,
-				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name })
+				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name }),
+				game_port = Settings.ClientWebSocketPort
 			};
 		}
 

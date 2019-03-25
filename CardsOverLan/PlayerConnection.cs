@@ -22,41 +22,55 @@ namespace CardsOverLan
 		private readonly object _createDestroySync = new object();
 		private bool _removalNotified;
 		private Player _player;
-		private Thread _afkCheckThread;
-		private int _inactiveTime;
+		private Thread _idleCheckThread;
+		private int _inactiveTime, _afkTime;
+		private bool _afkRecovery = false;
 		private readonly object _afkLock = new object();
 		private bool _isRejectedDuplicate;
 		public Player Player => _player;
 
 		public PlayerConnection(CardGameServer server, CardGame game) : base(server, game)
 		{
-			_afkCheckThread = new Thread(AfkCheckThread);
+			_idleCheckThread = new Thread(IdleCheckThread);
 		}
 
-		private void UpdateActivityTime(int time)
+		private void ResetIdleTime(bool afkOnly)
 		{
 			lock (_afkLock)
 			{
-				if (Player != null && time > 0)
-				{
-					Player.IsAfk = false;
-				}
-				_inactiveTime = time;
+				_afkTime = 0;
+				if (!afkOnly) _inactiveTime = 0;
 			}
 		}
 
-		private void AfkCheckThread()
+		private void SetAfkState(bool idle)
+		{
+			if (Player != null)
+			{
+				Player.IsAfk = idle;
+			}
+		}
+
+		private void IdleCheckThread()
 		{
 			while (IsOpen)
 			{
 				lock (_afkLock)
 				{
-					bool afk = _inactiveTime == 0;
-					if (Player.IsAfk != afk)
+					bool isAfkEligible = 
+						(Game.Judge == Player && (Game.Stage == GameStage.JudgingCards))
+						|| (Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress);
+					bool shouldKick = _inactiveTime >= Game.Settings.IdleKickTimeSeconds;
+					bool afk = _afkRecovery ? _afkTime >= Game.Settings.AfkRecoveryTimeSeconds : _afkTime >= Game.Settings.AfkTimeSeconds;
+
+					if (shouldKick && isAfkEligible && Game.Settings.IdleKickEnabled)
 					{
-						bool isAfkEligible = (Game.Judge == Player && (Game.Stage == GameStage.JudgingCards)) 
-							|| (Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress);
-						if (afk && isAfkEligible)
+						Reject("reject_afk", $"Inactive {Game.Settings.IdleKickTimeSeconds}s");
+						continue;
+					}
+					else if (Player.IsAfk != afk)
+					{
+						if (afk && isAfkEligible && Game.Settings.AfkEnabled)
 						{
 							Player.IsAfk = true;
 							Console.WriteLine($"{Player} is AFK (inactive for {Game.Settings.AfkTimeSeconds}s)");
@@ -68,7 +82,8 @@ namespace CardsOverLan
 					}
 				}
 				Thread.Sleep(1000);
-				_inactiveTime = _inactiveTime > 0 ? _inactiveTime - 1 : 0;
+				_inactiveTime = _inactiveTime < int.MaxValue ? _inactiveTime + 1 : int.MaxValue;
+				_afkTime = _afkTime < int.MaxValue ? _afkTime + 1 : int.MaxValue;
 			}
 		}
 
@@ -154,11 +169,15 @@ namespace CardsOverLan
 			// Players who were waiting for a game to start aren't exactly AFK
 			if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
 			{
-				UpdateActivityTime(Game.Settings.AfkRecoveryTimeSeconds);
+				_afkRecovery = true;
+				SetAfkState(false);
+				ResetIdleTime(true);
 			}
 			else if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
 			{
-				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+				_afkRecovery = false;
+				SetAfkState(false);
+				ResetIdleTime(true);
 			}
 		}
 
@@ -211,22 +230,23 @@ namespace CardsOverLan
 			{
 				base.OnOpen();
 
+				if (!IsOpen) return;
+
 				// Make sure player can actually join
 				if (Game.PlayerCount >= Game.Settings.MaxPlayers)
 				{
 					Reject(RejectCodes.ServerFull);
 					return;
 				}
-				else if (!Server.TryAddToPool(this))
-				{
-					_isRejectedDuplicate = true;
-					Reject(RejectCodes.Duplicate);
-					return;
-				}
 
 				CreatePlayer();
-				UpdateActivityTime(Game.Settings.AfkTimeSeconds);
-				_afkCheckThread.Start();
+
+				if (Game.Settings.AfkEnabled || Game.Settings.IdleKickEnabled)
+				{
+					ResetIdleTime(false);
+					_idleCheckThread.Start();
+				}
+
 				Console.WriteLine($"{Player} ({GetIPAddress()}) connected");
 			}
 		}
@@ -235,12 +255,7 @@ namespace CardsOverLan
 		{
 			lock (_createDestroySync)
 			{
-				base.OnClose(e);
-
-				if (!_isRejectedDuplicate)
-				{
-					Server.TryRemoveFromPool(this);
-				}
+				base.OnClose(e);				
 
 				UnregisterEvents();
 
@@ -338,7 +353,7 @@ namespace CardsOverLan
 							}
 						}
 					}
-					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_playcards":
@@ -349,7 +364,7 @@ namespace CardsOverLan
 
 					if (cardArray == null) break;
 					Player.PlayCards(cardArray);
-					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_judgecards":
@@ -357,30 +372,34 @@ namespace CardsOverLan
 					var winningPlayIndex = json["play_index"]?.Value<int>() ?? -1;
 					if (winningPlayIndex < 0) break;
 					Player.JudgeCards(winningPlayIndex);
-					UpdateActivityTime(Game.Settings.AfkTimeSeconds);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_upgradecard":
 				{
 					var requestedUpgradeCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
 					Player.UpgradeCard(requestedUpgradeCard);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_discardcard":
 				{
 					var requestedDiscardCard = Game.GetCardById(json["card_id"]?.Value<string>()) as WhiteCard;
 					Player.DiscardCard(requestedDiscardCard);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_vote_skip":
 				{
 					bool voted = json["voted"]?.Value<bool>() ?? false;
 					Player.SetSkipVoteState(voted);
+					ResetIdleTime(false);
 					break;
 				}
 				case "c_chat_msg":
 				{
 					Server.SendChatMessage(Player, json["body"].Value<string>());
+					ResetIdleTime(false);
 					break;
 				}
 			}

@@ -104,6 +104,7 @@
     <Compile Include="Game\RoundPlay.cs" />
     <Compile Include="RejectCodes.cs" />
     <Compile Include="SpectatorConnection.cs" />
+    <Compile Include="Tally.cs" />
     <Compile Include="Web\WebappModule.cs" />
     <Compile Include="Web\WebappBootstrapper.cs" />
   </ItemGroup>

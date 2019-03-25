@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace CardsOverLan
 {
@@ -17,17 +18,22 @@ namespace CardsOverLan
 			GameManager.Load();
 
 			var mgr = GameManager.Instance;
+			var mre = new ManualResetEventSlim(false);
+
+			Console.TreatControlCAsInput = false;
+			Console.CancelKeyPress += (sender, e) => mre.Set();
 
 			var hostCfg = new HostConfiguration
 			{
 				RewriteLocalhost = true,
+				EnableClientCertificates = true,	
 				UrlReservations = new UrlReservations()
 				{
 					CreateAutomatically = true
 				}
 			};
 
-			using (var host = new NancyHost(new Uri(mgr.Settings.Host), new WebappBootstrapper(), hostCfg))
+			using (var host = new NancyHost(new Uri(mgr.Settings.HostUrl), new WebappBootstrapper(mgr.Settings.WebRoot), hostCfg))
 			using (var gameServer = new CardGameServer(mgr.Game))
 			{
 				// Start game server
@@ -50,7 +56,7 @@ namespace CardsOverLan
 					Console.Write("Starting webserver... ");
 					host.Start();
 					Console.WriteLine("Done.");
-					Console.WriteLine($"Ready. Hosting on: {mgr.Settings.Host}");
+					Console.WriteLine($"Ready. Hosting on: {mgr.Settings.HostUrl}");
 				}
 				catch(Exception ex)
 				{
@@ -59,9 +65,7 @@ namespace CardsOverLan
 					return;
 				}
 
-
-				Console.ReadLine();
-				Console.WriteLine("Stopping...");
+				mre.Wait();
 			}
 		}
 	}

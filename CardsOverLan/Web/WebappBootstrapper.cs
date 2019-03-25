@@ -7,15 +7,18 @@ namespace CardsOverLan.Web
 {
 	internal sealed class WebappBootstrapper : DefaultNancyBootstrapper
 	{
-		public WebappBootstrapper()
+		public string WebRoot { get; }
+
+		public WebappBootstrapper(string webRoot)
 		{
+			WebRoot = webRoot;
 			MimeTypes.AddType(".svg", "image/svg+xml");
 		}
 
 		protected override void ConfigureConventions(NancyConventions nancyConventions)
 		{
 			nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("packs", "./packs", ".jpg", ".png", ".svg"));
-			nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "./web_content"));
+			nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", WebRoot));
 			base.ConfigureConventions(nancyConventions);
 		}
 

@@ -7,7 +7,7 @@
     let fmt = function (format) {
         var args = Array.prototype.slice.call(arguments, 1);
         return format.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'
+            return typeof args[number] != "undefined"
                 ? args[number]
                 : match;
         })
@@ -54,8 +54,7 @@
                 resolve();
             })
             .catch(error => {
-                let errMsg = "Failed to load string resources: " + error;
-                reject(errMsg);
+                reject(error);
             });
         });
     }

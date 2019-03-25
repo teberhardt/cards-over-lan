@@ -25,6 +25,7 @@ namespace CardsOverLan
 		private const int MinGameEndTimeout = 10000;
 		private const int MinAfkTimeSeconds = 30;
 		private const int MinAfkRecoveryTimeSeconds = 30;
+		private const int MinIdleKickTimeSeconds = 60;
 		private const int MinBlankCards = 0;
 		private const int MinBotCount = 0;
 		private const int MinDiscards = 0;
@@ -32,6 +33,7 @@ namespace CardsOverLan
 		private const int DefaultRoundEndTimeout = 10000;
 		private const int DefaultGameEndTimeout = 30000;
 		private const int DefaultAfkTimeSeconds = 300;
+		private const int DefaultIdleKickTimeSeconds = 480;
 		private const int DefaultAfkRecoveryTimeSeconds = 90;
 		private const int DefaultMaxPoints = 10;
 		private const int DefaultMaxRounds = 16;
@@ -52,6 +54,7 @@ namespace CardsOverLan
 
 		private int _afkTimeSeconds = DefaultAfkTimeSeconds;
 		private int _afkRecoveryTimeSeconds = DefaultAfkRecoveryTimeSeconds;
+		private int _idleKickTimeSeconds = DefaultIdleKickTimeSeconds;
 		private int _botCount;
 		private int _maxSpectators;
 
@@ -59,9 +62,25 @@ namespace CardsOverLan
 		[DefaultValue(DefaultServerName)]
 		public string ServerName { get; set; } = DefaultServerName;
 
-		[JsonProperty("host", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[JsonProperty("host_url", DefaultValueHandling = DefaultValueHandling.Populate, Required = Required.Always)]
 		[DefaultValue("http://localhost:80")]
-		public string Host { get; set; }
+		public string HostUrl { get; set; }
+
+		[JsonProperty("web_root", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue("./web_content")]
+		public string WebRoot { get; set; }
+
+		[JsonProperty("client_ws_port", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(3000)]
+		public int ClientWebSocketPort { get; set; } = 3000;
+
+		[JsonProperty("ws_url", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue("ws://0.0.0.0:3000")]
+		public string WebSocketUrl { get; set; }
+
+		[JsonProperty("server_password", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue("")]
+		public string ServerPassword { get; set; } = "";
 
 		[JsonProperty("min_players", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultMinPlayers)]
@@ -146,6 +165,22 @@ namespace CardsOverLan
 			get => _afkRecoveryTimeSeconds;
 			set => _afkRecoveryTimeSeconds = value < MinAfkRecoveryTimeSeconds ? MinAfkRecoveryTimeSeconds : value;
 		}
+
+		[JsonProperty("idle_kick_time_seconds", DefaultValueHandling = DefaultValueHandling.Populate)]
+		[DefaultValue(DefaultAfkRecoveryTimeSeconds)]
+		public int IdleKickTimeSeconds
+		{
+			get => _idleKickTimeSeconds;
+			set => _idleKickTimeSeconds = value < MinIdleKickTimeSeconds ? MinIdleKickTimeSeconds : value;
+		}
+
+		[JsonProperty("enable_afk", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(true)]
+		public bool AfkEnabled { get; set; } = true;
+
+		[JsonProperty("enable_idle_kick", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(true)]
+		public bool IdleKickEnabled { get; set; } = true;
 
 		[JsonProperty("perma_czar", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(false)]

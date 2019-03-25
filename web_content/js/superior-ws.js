@@ -33,12 +33,12 @@
             if (this._userOnOpen) this._userOnOpen();
         };
     
-        _onClose() {
+        _onClose(e) {
             this._isOpen = false;
             this._ws = null;
             if (this._userOnClose) this._userOnClose();
     
-            if (!this._manualClose) {
+            if (this._manualClose !== true && e.code !== 1000 && e.code !== 1001) {
                 this._startRetry();
             }
         }
@@ -56,7 +56,7 @@
             this._ws = new WebSocket(this._url);
             this._ws.onerror = (error) => cl._onError(error);
             this._ws.onopen = () => cl._onOpen();
-            this._ws.onclose = () => cl._onClose();
+            this._ws.onclose = (e) => cl._onClose(e);
             this._ws.onmessage = (msg) => cl._onMessage(msg);
         }
     

@@ -1,16 +1,28 @@
 ((g) => {
     "use strict";
+
+    // Constants
     const IS_HTTPS = location.protocol === "https:";
     const STAGE_GAME_STARTING = "game_starting";
     const STAGE_PLAYING = "playing";
     const STAGE_JUDGING = "judging";
     const STAGE_ROUND_END = "round_end";
     const STAGE_GAME_END = "game_end";
-    const WS_PORT = 3000;
-    const WS_PLAY_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/play";
-    const WS_SPECTATE_URL = (IS_HTTPS ? "wss://" : "ws://") + document.domain + ":" + WS_PORT + "/spectate";
+    const WS_DEFAULT_PORT = 3000;
+    const DOMAIN = document.domain;
+    const WS_PROTOCOL = IS_HTTPS ? "wss://" : "ws://";
     const DEFAULT_LOCALE = "en";
     const MAX_CHAT_MESSAGES = 100;
+
+    // DOM function aliases
+    const elem = document.querySelector.bind(document);
+    const elems = document.querySelectorAll.bind(document);
+    const make = document.createElement.bind(document);
+    const div = () => document.createElement("div");
+    const span = () => document.createElement("span");
+
+    // Promise helpers
+    Promise.delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     class Card {
         constructor(type, id, content, draw, pick, pack, tier, tierCost, nextTierId) {
@@ -130,25 +142,25 @@
     lah.spectating = false;
     lah.clientVotedSkip = false;
 
-    let gameArea = null;
-    let handArea = null;
-    let handCardsContainer = null;
-    let handCardsScrollArea = null;
-    let playArea = null;
-    let playCardsArea = null;
-    let playCardsScrollArea = null;
-    let blackCardArea = null;
-    let judgeStatusCardText = null;
-    let judgeMessageBody = null;
-    let gameEndScreen = null;
-    let gameEndScoreboardEntries = null;
-    let gameEndTrophiesList = null;
-    let btnPlay = null;
-    let btnPick = null;
-    let playerList = null;
-    let playerChat = null;
+    let gameArea;
+    let handArea;
+    let handCardsContainer;
+    let handCardsScrollArea;
+    let playArea;
+    let playCardsArea;
+    let playCardsScrollArea;
+    let blackCardArea;
+    let judgeStatusCardText;
+    let judgeMessageBody;
+    let gameEndScreen;
+    let gameEndScoreboardEntries;
+    let gameEndTrophiesList;
+    let btnPlay;
+    let btnPick;
+    let playerList;
+    let playerChat;
 
-    let ws = new SuperiorWebSocket(WS_PLAY_URL, "fibonacci");
+    let ws = new SuperiorWebSocket(null, "fibonacci");
 
     // Sanitizes HTML content for card text
     function createContentHtml(str) {
@@ -190,7 +202,7 @@
 
     // Make an HTMLElement from the specified Card object
     function makeCardElement(card, options) {
-        let el = document.createElement("card");
+        let el = make("card");
         let packInfo = lah.packMetadata[card.pack];
         el.setAttribute("data-card", card.id);
         if (packInfo) el.setAttribute("data-packid", packInfo.id);
@@ -201,7 +213,7 @@
 
         if (options !== undefined) {
             if (card.type == "black" && options.showSkipControls === true) {
-                let btnSkip = document.createElement("input");
+                let btnSkip = make("input");
                 btnSkip.setAttribute("type", "button");
                 btnSkip.setAttribute("value", getUiString("ui_btn_skip"));
                 btnSkip.setAttribute("title", getUiString("ui_skip_tooltip"));
@@ -221,7 +233,7 @@
                     el.setAttribute("data-upgrade", card.nextTierId);
                     el.setAttribute("data-upgrade-cost", (nextTierCard && nextTierCard.tierCost) || 0);
 
-                    let btnUpgrade = document.createElement("div");
+                    let btnUpgrade = div();
                     btnUpgrade.setClass("btn-upgrade", true);
                     let cost = nextTierCard.tierCost;
                     btnUpgrade.innerHTML = getUiString("ui_upgrade_button", cost);
@@ -243,7 +255,7 @@
 
                 // Discard controls
                 if (lah.discards > 0) {
-                    let btnDiscard = document.createElement("div");
+                    let btnDiscard = div();
                     btnDiscard.classList.add("btn-discard");
                     btnDiscard.setAttribute("title", getUiString("ui_discard_tooltip", lah.discards));
                     btnDiscard.addEventListener("click", e => {
@@ -266,7 +278,7 @@
 
         // Pack info ribbon
         if (packInfo) {
-            let ribbon = document.createElement("div");
+            let ribbon = div();
             ribbon.classList.add("ribbon");
             ribbon.setAttribute("data-packname", (packInfo && packInfo.name) || "");
             el.appendChild(ribbon);
@@ -274,9 +286,9 @@
 
         // Add draw # if applicable
         if (card.draw > 0) {
-            let divDraw = document.createElement("div");
+            let divDraw = div();
             divDraw.classList.add("draw");
-            let spanDrawNum = document.createElement("span");
+            let spanDrawNum = make("span");
             spanDrawNum.classList.add("num");
             spanDrawNum.innerText = card.draw.toString();
             divDraw.appendChild(spanDrawNum);
@@ -285,9 +297,9 @@
 
         // Add pick # if applicable
         if (card.pick > 1) {
-            let divPick = document.createElement("div");
+            let divPick = div();
             divPick.classList.add("pick");
-            let spanPickNum = document.createElement("span");
+            let spanPickNum = make("span");
             spanPickNum.classList.add("num");
             spanPickNum.innerText = card.pick.toString();
             divPick.appendChild(spanPickNum);
@@ -299,16 +311,16 @@
 
     // Make an HTMLElement representing a blank card
     function makeBlankCardElement(index) {
-        let el = document.createElement("card");
+        let el = make("card");
         el.setAttribute("data-card", "blank");
         el.setAttribute("data-blank-index", index !== undefined ? index : -1);
         el.setAttribute("white", "");
 
         // Create textarea container
-        let txtAreaDiv = document.createElement("div");
+        let txtAreaDiv = div();
         txtAreaDiv.classList.add("blank-card-text-container");
         // Create textarea
-        let txtArea = document.createElement("textarea");
+        let txtArea = make("textarea");
         txtArea.setAttribute("aria-label", "Custom card text");
         txtArea.setAttribute("wrap", "hard");
         txtArea.setAttribute("placeholder", getUiString("ui_blank_card_prompt"));
@@ -333,7 +345,7 @@
         // Add the container to the card
         el.appendChild(txtAreaDiv);
 
-        let logo = document.createElement("div");
+        let logo = div();
         logo.classList.add("logo");
         logo.setAttribute("aria-hidden", "true");
         el.appendChild(logo);
@@ -341,7 +353,7 @@
     }
 
     function makePlayerListElement(player) {
-        let e = document.createElement("div");
+        let e = div();
         e.classList.add("player-list-entry");
         if (lah.currentJudgeId === player.id) {
             e.classList.add("is-judge");
@@ -359,12 +371,12 @@
             e.classList.add("is-pending");
         }
 
-        let colName = document.createElement("span");
+        let colName = make("span");
         colName.classList.add("col-name");
         colName.innerText = player.name;
         if (player.idle === true) colName.innerText += " (" + getUiString("ui_idle") + ")";
 
-        let colScore = document.createElement("span");
+        let colScore = make("span");
         colScore.classList.add("col-score");
         colScore.innerText = player.score.toString();
 
@@ -379,7 +391,7 @@
 
         let trophyInfo = lah.gameResults.trophy_winners.find(w => w.id == player.id);
 
-        let e = document.createElement("div");
+        let e = div();
         e.classList.add("scoreboard-entry");
         if (isWinner) {
             e.classList.add("winner");
@@ -388,17 +400,17 @@
             e.classList.add("is-you");
         }
 
-        let eNameCol = document.createElement("div");
+        let eNameCol = div();
         eNameCol.classList.add("text", "name");
         eNameCol.setAttribute("data-text", player.name);
         e.appendChild(eNameCol);
 
-        let eScoreCol = document.createElement("div");
+        let eScoreCol = div();
         eScoreCol.classList.add("text", "score");
         eScoreCol.setAttribute("data-text", player.score.toString());
         e.appendChild(eScoreCol);
 
-        let eTrophiesCol = document.createElement("div");
+        let eTrophiesCol = div();
         eTrophiesCol.classList.add("trophies", "text");
         eTrophiesCol.setAttribute("data-text", (trophyInfo && trophyInfo.trophies.length) || "0");
         e.appendChild(eTrophiesCol);
@@ -407,7 +419,7 @@
     }
 
     function makeTrophyElement(trophyData) {
-        let e = document.createElement("div");
+        let e = div();
         e.classList.add("trophy");
         let trophyName = getLocalString(trophyData.name);
         let trophyDesc = getLocalString(trophyData.desc);
@@ -415,7 +427,7 @@
         e.setAttribute("data-trophy-name", trophyName);
         e.setAttribute("data-trophy-desc", trophyDesc);
         e.setAttribute("data-trophy-id", trophyId);
-        let eIcon = document.createElement("div");
+        let eIcon = div();
         eIcon.classList.add("trophy-icon");
         e.appendChild(eIcon);
 
@@ -485,7 +497,7 @@
                     }
                     lah.clientVotedSkip = p.voted_skip === true;
                     gameArea.setClass("lah-voted-skip", lah.clientVotedSkip);
-                    let btnSkip = document.querySelector(".btn-skip");
+                    let btnSkip = elem(".btn-skip");
                     if (btnSkip) {
                         btnSkip.setAttribute("value", getUiString(lah.clientVotedSkip ? "ui_btn_skip_undo": "ui_btn_skip"));
                     }
@@ -563,7 +575,7 @@
                 {
                     let i = 0;
                     for (let play of lah.roundPlays) {
-                        let groupElement = document.createElement("div");
+                        let groupElement = div();
                         groupElement.classList.add("card-group");
                         groupElement.setAttribute("data-play-index", i);
                         let playIndex = i;
@@ -582,7 +594,7 @@
                     let i = 0;
                     for (let play of lah.roundPlays) {
                         if (i == lah.winningPlayIndex) {
-                            let groupElement = document.createElement("div");
+                            let groupElement = div();
                             groupElement.classList.add("card-group");
                             groupElement.setAttribute("data-play-index", i);
                             groupElement.classList.add("winner");
@@ -734,9 +746,9 @@
     function loadOptions() {
         lah.localPlayerName = Cookies.get("name") || getUiString("ui_default_player_name");
         gameui.loadDisplayPrefs();
-        document.querySelector("#txt-username").value = lah.localPlayerName;
-        document.querySelector("#txt-join-username").value = lah.localPlayerName;
-        document.querySelector("#myname").textContent = lah.localPlayerName;
+        elem("#txt-username").value = lah.localPlayerName;
+        elem("#txt-join-username").value = lah.localPlayerName;
+        elem("#myname").textContent = lah.localPlayerName;
     }
 
     // Sends c_clientinfo message to the server
@@ -758,10 +770,11 @@
     }
 
     g.applyOptions = function () {
-        setPlayerName(document.querySelector("#txt-username").value);
+        setPlayerName(elem("#txt-username").value);
         gameui.setDisplayPrefs({
-            "anim_text": document.querySelector("#chk-anim-text").checked,
-            "accent_color": document.querySelector("#txt-accent-color").value
+            "anim_text": elem("#chk-anim-text").checked,
+            "accent_color": elem("#txt-accent-color").value,
+            "display_notifications": elem("#chk-notifications").checked
         });
         gameui.saveDisplayPrefs();
         hideModal("modal-options");
@@ -798,7 +811,7 @@
     };
 
     function onPlayerListChanged() {
-        document.querySelector("#player-count").textContent = lah.playerList.length;
+        elem("#player-count").textContent = lah.playerList.length;
         populatePlayerList();
     }
 
@@ -831,7 +844,7 @@
                 btnPlay.setVisible(lah.isWaitingOnPlayer);
                 handArea.setVisible(lah.isWaitingOnPlayer && !lah.isClientJudge);
                 playArea.setVisible(!lah.isWaitingOnPlayer && !lah.isClientJudge);
-                document.querySelector("#pending-players").textContent = lah.pendingPlayers.length.toString();
+                elem("#pending-players").textContent = lah.pendingPlayers.length.toString();
                 if (lah.isClientJudge) {
                     judgeStatusCardText.innerHTML = pendingPlayerCount.toString();
                     if (pendingPlayerCount > 3) {
@@ -941,7 +954,7 @@
             }
         }        
         let judge = getPlayer(lah.currentJudgeId);
-        document.querySelector("#czar").textContent = (judge && judge.name) || "--";
+        elem("#czar").textContent = (judge && judge.name) || "--";
     }
 
     // Sets the status bar text to a string determined by the local game state
@@ -987,33 +1000,43 @@
     function onStageChanged(stage) {
         switch (stage) {
             case STAGE_PLAYING:
-                {
-                    if (lah.isClientJudge) {
-                        showBannerMessage(getUiString("ui_round_num", lah.round) + "<br/><small>" + getUiString("ui_you_are_czar") + "</small>");
-                    } else {
-                        let judge = lah.playerList.find(p => p.id == lah.currentJudgeId);
-                        let judgeName = (judge && judge.name) || getUiString("ui_sub_nobody");
-                        showBannerMessage(getUiString("ui_round_num", lah.round) + "<br><small>" + getUiString("ui_x_is_czar", judgeName) + "</small>");
-                    }
-                    break;
+            {
+                if (lah.isClientJudge) {
+                    showBannerMessage(getUiString("ui_round_num", lah.round) + "<br/><small>" + getUiString("ui_you_are_czar") + "</small>");
+                    gameui.notify(getUiString("ui_game_title"), getUiString("ui_notify_round_start", lah.round) + "\n" + getUiString("ui_you_are_czar"));
+                } else {
+                    let judge = lah.playerList.find(p => p.id == lah.currentJudgeId);
+                    let judgeName = (judge && judge.name) || getUiString("ui_sub_nobody");
+                    showBannerMessage(getUiString("ui_round_num", lah.round) + "<br><small>" + getUiString("ui_x_is_czar", judgeName) + "</small>");
+                    gameui.notify(getUiString("ui_game_title"), getUiString("ui_notify_round_start", lah.round) + "\n" + getUiString("ui_x_is_czar", judgeName));
                 }
+                break;
+            }
+            case STAGE_JUDGING:
+            {
+                gameui.notify(getUiString("ui_game_title"), getUiString(lah.isClientJudge ? "ui_notify_czar_judging" : "ui_notify_player_judging"));
+                break;
+            }
             case STAGE_ROUND_END:
-                {
-                    if (lah.winningPlayerId == lah.localPlayerId) {
-                        showBannerMessage(getUiString("ui_you_win_round"), 3);
+            {
+                let roundEndMsg;
+                if (lah.winningPlayerId == lah.localPlayerId) {
+                    roundEndMsg = getUiString("ui_you_win_round");                    
+                } else {
+                    let winningPlayer = lah.playerList.find(p => p.id == lah.winningPlayerId);
+                    if (winningPlayer) {
+                        roundEndMsg = getUiString("ui_x_wins_round", winningPlayer.name);
                     } else {
-                        let winningPlayer = lah.playerList.find(p => p.id == lah.winningPlayerId);
-                        if (winningPlayer) {
-                            showBannerMessage(getUiString("ui_x_wins_round", winningPlayer.name), 3);
-                        } else {
-                            showBannerMessage(getUiString("ui_winner_left_nobody_scores"), 3);
-                        }
+                        roundEndMsg = getUiString("ui_winner_left_nobody_scores");
                     }
                 }
+                showBannerMessage(roundEndMsg, 3);
+                gameui.notify(getUiString("ui_game_title"), roundEndMsg);
+            }
             case STAGE_GAME_END:
-                {
-                    populateGameEndScoreboard();   
-                }
+            {
+                populateGameEndScoreboard();   
+            }
         }
     }
 
@@ -1072,12 +1095,12 @@
         let isChatAtBottom = playerChat.scrollHeight - playerChat.scrollTop - playerChat.offsetHeight < 1;
 
         // Post new chat message
-        let el = document.createElement("div");
+        let el = div();
         el.classList.add("chat-msg");
-        let elAuthor = document.createElement("div");
+        let elAuthor = div();
         elAuthor.classList.add("chat-msg-author");
         elAuthor.textContent = author;
-        let elBody = document.createElement("div");
+        let elBody = div();
         elBody.classList.add("chat-msg-body");
         elBody.innerHTML = msgHtml;
         if (elBody.textContent.trim().length == 0) {
@@ -1099,7 +1122,7 @@
     }
 
     function updatePackStyles() {
-        let elPackStyles = document.querySelector("#card-styles");
+        let elPackStyles = elem("#card-styles");
         let packStyles = elPackStyles.sheet;
         packStyles.clearRules();
         for(let packId of Object.keys(lah.packMetadata)) {
@@ -1117,12 +1140,12 @@
     }
 
     function onPlayerNameChanged() {
-        document.querySelector("#txt-username").value = lah.localPlayerName;
-        document.querySelector("#myname").textContent = lah.localPlayerName;
+        elem("#txt-username").value = lah.localPlayerName;
+        elem("#myname").textContent = lah.localPlayerName;
     }
 
     function onAuxDataChanged() {
-        document.querySelector("#stat-list #coins").textContent = lah.auxPoints.toString();
+        elem("#stat-list #coins").textContent = lah.auxPoints.toString();
     }
 
     function onSelectionChanged() {
@@ -1138,7 +1161,7 @@
     }
 
     function onClientScoreChanged() {
-        document.querySelector("#score").textContent = lah.score.toString();
+        elem("#score").textContent = lah.score.toString();
     }
 
     window.onbeforeunload = function (e) {
@@ -1146,42 +1169,43 @@
         return null;
     }
 
-    function refreshServerInfo(failCount) {
-        if (failCount === undefined) {
-            failCount = 0;
-        }
+    async function refreshServerInfo() {
         const maxAttempts = 4;
-        fetch("/gameinfo", {
-            "method": "GET"
-        }).then(response => {
-            return response.json();            
-        }).then(json => {
-            lah.serverInfo = json;
-            onServerInfoReceived();
-        }).catch(err => {
-            console.log("Failed to retrieve server info: \"" + err + "\"");
-            let fail = failCount + 1;
-            if (fail >= maxAttempts) {
-                onServerUnreachable();
-            } else {
-                setTimeout(() => refreshServerInfo(fail), 1000);
+        const retryDelay = 1000;
+
+        for(let i = 0; i < maxAttempts; i++) {
+            try {
+                let response = await fetch("/gameinfo", {"method": "GET"});
+                if (response.ok) {
+                    lah.serverInfo = await response.json();
+                    onServerInfoReceived();
+                    return;
+                } else {
+                    console.log("Failed to retrieve server info: \"" + response.statusText + "\"");
+                }
+            } catch (err) {
+                console.log("Failed to retrieve server info: \"" + err + "\"");
             }
-        });
+
+            await Promise.delay(retryDelay);
+        }
+        
+        onServerUnreachable();
     }
 
     function onServerUnreachable() {
-        document.querySelector("#join-screen-server-name").textContent = getUiString("ui_server_unreachable");
+        elem("#join-screen-server-name").textContent = getUiString("ui_server_unreachable");
     }
 
     function onServerInfoReceived() {
         let info = lah.serverInfo;
-        document.querySelector("#game").setClass("chat-disabled", !info.chat_enabled);
-        document.querySelector("#join-screen-server-name").textContent = info.server_name;
-        document.querySelector("#join-screen-player-limit .value").textContent = 
+        elem("#game").setClass("chat-disabled", !info.chat_enabled);
+        elem("#join-screen-server-name").textContent = info.server_name;
+        elem("#join-screen-player-limit .value").textContent = 
             getUiString("ui_join_player_limit", info.min_players, info.current_player_count, info.max_players);
-        document.querySelector("#join-screen-pack-count .value").textContent = info.pack_info.length;
-        document.querySelector("#join-screen-white-card-count .value").textContent = info.white_card_count;
-        document.querySelector("#join-screen-black-card-count .value").textContent = info.black_card_count;
+        elem("#join-screen-pack-count .value").textContent = info.pack_info.length;
+        elem("#join-screen-white-card-count .value").textContent = info.white_card_count;
+        elem("#join-screen-black-card-count .value").textContent = info.black_card_count;
 
         const mqSep = "\u00a0\u00a0\u2014\u00a0\u00a0";
         const onoff = b => getUiString(b ? "ui_feature_on" : "ui_feature_off");
@@ -1196,50 +1220,51 @@
         + mqSep + getUiString("ui_join_mq_discards", zeroOff(info.discards))
         + mqSep + getUiString("ui_join_mq_allow_skips", onoff(info.allow_skips))
         + mqSep + getUiString("ui_join_mq_chat", onoff(info.chat_enabled));
-        document.querySelector("#join-marquee").setAttribute("data-marquee-text", marqueeText);
+        elem("#join-marquee").setAttribute("data-marquee-text", marqueeText);
     }
 
     function onSpectateGameClicked() {
-        setPlayerName(document.querySelector("#txt-join-username").value);
+        setPlayerName(elem("#txt-join-username").value);
+        Cookies.set("game_password", elem("#txt-join-password").value, {expires: 1});
         lah.spectating = true;
         gameArea.setClass("lah-spectating", true);
-        ws.url = WS_SPECTATE_URL;
+        ws.url = WS_PROTOCOL + DOMAIN + ":" + (lah.serverInfo.game_port || WS_DEFAULT_PORT) + "/spectate";
         ws.connect();
         hideModal("modal-join");
     }
 
     function onPlayGameClicked() {
-        setPlayerName(document.querySelector("#txt-join-username").value);
+        setPlayerName(elem("#txt-join-username").value);
+        Cookies.set("game_password", elem("#txt-join-password").value, {expires: 1});
         lah.spectating = false;
-        ws.url = WS_PLAY_URL;
+        ws.url = WS_PROTOCOL + DOMAIN + ":" + (lah.serverInfo.game_port || WS_DEFAULT_PORT) + "/play";
         ws.connect();
         hideModal("modal-join");
     }
 
     function startGame() {
-        // Populate saved options, set language cookie
-        loadOptions();
+        // Populate saved options, set language cookie        
         refreshServerInfo();
-        Cookies.set("client_lang", navigator.language || "en");
+        Cookies.set("client_lang", navigator.language || DEFAULT_LOCALE);
 
         // Get game elements
-        gameArea = document.getElementById("game");
-        handCardsContainer = document.getElementById("hand-cards-container");
-        handCardsScrollArea = document.getElementById("hand-cards-scroll-area");
-        handArea = document.getElementById("hand-area");
-        playCardsArea = document.getElementById("play-cards-area");
-        playCardsScrollArea = document.getElementById("play-cards-scroll-area");
-        playArea = document.getElementById("play-area");
-        btnPlay = document.getElementById("btn-play");
-        btnPick = document.getElementById("btn-judge-pick");
-        blackCardArea = document.getElementById("black-card-area");
-        judgeStatusCardText = document.getElementById("judge-status-card-text");
-        judgeMessageBody = document.getElementById("judge-message-body");
-        gameEndScreen = document.getElementById("game-end-screen");
-        gameEndScoreboardEntries = document.getElementById("game-end-scoreboard-entries");
-        gameEndTrophiesList = document.getElementById("game-end-trophies-list");
-        playerList = document.getElementById("player-list");
-        playerChat = document.getElementById("player-chat-messages");
+        gameArea = elem("#game");
+        handCardsContainer = elem("#hand-cards-container");
+        handCardsScrollArea = elem("#hand-cards-scroll-area");
+        handArea = elem("#hand-area");
+        playCardsArea = elem("#play-cards-area");
+        playCardsScrollArea = elem("#play-cards-scroll-area");
+        playArea = elem("#play-area");
+        btnPlay = elem("#btn-play");
+        btnPick = elem("#btn-judge-pick");
+        blackCardArea = elem("#black-card-area");
+        judgeStatusCardText = elem("#judge-status-card-text");
+        judgeMessageBody = elem("#judge-message-body");
+        gameEndScreen = elem("#game-end-screen");
+        gameEndScoreboardEntries = elem("#game-end-scoreboard-entries");
+        gameEndTrophiesList = elem("#game-end-trophies-list");
+        playerList = elem("#player-list");
+        playerChat = elem("#player-chat-messages");
 
         updateStatus();
         updateUiState();
@@ -1248,8 +1273,8 @@
         btnPlay.onclick = onPlayClicked;
         btnPick.onclick = onJudgePickClicked;
 
-        document.querySelector("#btn-play-game").onclick = onPlayGameClicked;
-        document.querySelector("#btn-spectate-game").onclick = onSpectateGameClicked;
+        elem("#btn-play-game").onclick = onPlayGameClicked;
+        elem("#btn-spectate-game").onclick = onSpectateGameClicked;
 
         if ("WebSocket" in window) {
             ws.onclose = onConnectionClosed;
@@ -1260,18 +1285,15 @@
         }
     }
 
-    g.lah.load = function () {
-        return new Promise(function(resolve, reject) {
-            loadStringResources("/etc/strings.json")
-            .then(() => {
-                startGame();
-                resolve();
-            })
-            .catch(err => {
-                console.error(err);
-                reject(err);
-            });
-        });
+    g.lah.load = async function() {
+        try {
+            await loadStringResources("/etc/strings.json");
+        } catch (reason) {
+            console.error("Failed to load game resources: " + reason);
+        }
+        loadOptions();
+        await refreshServerInfo();
+        startGame();
     }
 
     lah.load();

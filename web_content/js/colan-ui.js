@@ -1,16 +1,23 @@
 (function(g) {
     "use strict";
+
+    const DISPLAY_PREF_ACCENT_COLOR = "accent_color";
+    const DISPLAY_PREF_ANIM_TEXT = "anim_text";
+    const DISPLAY_PREF_NOTIFICATIONS = "display_notifications";
+
     let notifyBannerTimeoutToken = null;
     let banner = document.querySelector("#notify-banner");
     let bannerText = document.querySelector("#notify-banner-text");
     let txtAccentColor = document.querySelector("#txt-accent-color");
     let txtChatMsg = document.querySelector("#txt-chat-msg");
     let chkAnimText = document.querySelector("#chk-anim-text");
+    let chkNotifications = document.querySelector("#chk-notifications");
 
     g.gameui = {};
     g.gameui.displayPrefs = {
         "anim_text": true,
-        "accent_color": ""
+        "accent_color": "",
+        "display_notifications": false
     };
 
     g.togglePlayerList = function() {
@@ -114,25 +121,41 @@
     // Display preferences
     
     g.gameui.loadDisplayPrefs = function() {
-        gameui.displayPrefs["anim_text"] = (Cookies.get("anim_text") || "true") == "true";
-        gameui.displayPrefs["accent_color"] = Cookies.get("accent_color") || "";
+        gameui.displayPrefs[DISPLAY_PREF_ANIM_TEXT] = (Cookies.get(DISPLAY_PREF_ANIM_TEXT) || "true") == "true";
+        gameui.displayPrefs[DISPLAY_PREF_ACCENT_COLOR] = Cookies.get(DISPLAY_PREF_ACCENT_COLOR) || "";
+        gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] = (Cookies.get(DISPLAY_PREF_NOTIFICATIONS) || "false") == "false";
         gameui.setDisplayPrefs();
+    }
+
+    g.gameui.notify = function(title, body) {
+        if (!document.hasFocus() && gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] === true) {
+            let notif = new Notification(title, {body: body});
+        }
     }
 
     g.gameui.setDisplayPrefs = function(options) {
         // Apply new options
         if (options && typeof options === "object") {
-            console.log(options);
             for(let key of Object.keys(options)) {
                 if (gameui.displayPrefs[key] === undefined) continue;
                 gameui.displayPrefs[key] = options[key];
             }
         }
+        // Request notification permission
+        if (gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] === true) {
+            Notification.requestPermission().then(result => {
+                if (result !== "granted") {
+                    gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] = false;
+                }
+            });
+        }
+        chkNotifications.checked = gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS];
+
         // Display animated text
-        document.body.setClass("enable-anim-text", gameui.displayPrefs["anim_text"]);
-        chkAnimText.checked = gameui.displayPrefs["anim_text"];
+        document.body.setClass("enable-anim-text", gameui.displayPrefs[DISPLAY_PREF_ANIM_TEXT]);
+        chkAnimText.checked = gameui.displayPrefs[DISPLAY_PREF_ANIM_TEXT];
         // Accent color
-        let colorText = gameui.displayPrefs["accent_color"].trim();
+        let colorText = gameui.displayPrefs[DISPLAY_PREF_ACCENT_COLOR].trim();
         let color = colorText && Incantate.getColor(colorText);
         document.body.style.setProperty("--accent-bg", (color && color.toString()) || "var(--default-accent-color)");
         document.body.style.setProperty("--accent-fg", color && (color.isBright() ? "#000" : "#ddd") || "#000");

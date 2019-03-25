@@ -3096,6 +3096,89 @@
             "flags": "ch"
         },
         {
+            "id": "w_benotpedo",
+            "content": {
+                "en": "Not being a pedophile."
+            },
+            "flags": "pd"
+        },
+        {
+            "id": "w_faceinbrickwall",
+            "content": {
+                "en": "Smashing my face into a brick wall."
+            },
+            "flags": "v sh i"
+        },
+        {
+            "id": "w_pigmenhorde",
+            "content": {
+                "en": "A frothing horde of angry pig-men."
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_howfastcanshego",
+            "content": {
+                "en": "Seeing how fast this baby can go."
+            }
+        },
+        {
+            "id": "w_collision100",
+            "content": {
+                "en": "A head-on collision at 100mph."
+            },
+            "flags": "i"
+        },
+        {
+            "id": "w_imafather",
+            "content": {
+                "en": "Finding out you're a father.",
+                "de": "Herausfinden, dass du ein Vater bist."
+            }
+        },
+        {
+            "id": "w_wrinklywindowman",
+            "content": {
+                "en": "The emaciated, wrinkled corpse of a man standing outside my window."
+            },
+            "flags": "w ww"
+        },
+        {
+            "id": "w_byemcafee",
+            "content": {
+                "en": "Uninstalling McAfee AntiVirus.",
+                "de": "McAfee AntiVirus deinstallieren."
+            }
+        },
+        {
+            "id": "w_daddiaperfetish",
+            "content": {
+                "en": "Dad's diaper fetish."
+            },
+            "flags": "xf g"
+        },
+        {
+            "id": "w_whiteface",
+            "content": {
+                "en": "Whiteface."
+            },
+            "flags": "ra"
+        },
+        {
+            "id": "w_munging",
+            "content": {
+                "en": "Munging."
+            },
+            "flags": "g gg s xf dg w"
+        },
+        {
+            "id": "w_bitogenocide",
+            "content": {
+                "en": "A little bit of genocide."
+            },
+            "flags": "mu"
+        },
+        {
             "id": "b_notmuchdiffreally",
             "content": {
                 "en": "When you really think about it, ________ isn't too different from ________."

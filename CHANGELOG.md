@@ -46,6 +46,7 @@
         - Should I add more?
     - Enable with `enable_chat` setting.
 - ADD: (Webapp) Option to enable/disable animated text
+- ADD: (Webapp) Notifications
 - ADD: (Server) Added Content Security Policy
 - ADD: Bot taunts
     - Enable with `enable_bot_taunts` setting.
@@ -53,11 +54,15 @@
 - ADD: (Server) `max_blank_card_length` setting
 - ADD: (Server) `bot_config` setting
     - Exposes various settings for controlling how bots behave
+- ADD: (Server) Server password support
+- ADD: (Server) Customizable HTTP and WS endpoints
+- ADD: (Server) Client idle kick
 
 - CHANGE: (Webapp) Refresh server info on websocket connection/reconnection
 
 - FIX: (Webapp) Wonky layout issues on Firefox. Might still be mildly wonky.
 - FIX: (Server) Occasional deadlock when accessing player list with many clients
+- FIX: (Server) Faulty duplicate prevention
 
 - REMOVE: jQuery
 

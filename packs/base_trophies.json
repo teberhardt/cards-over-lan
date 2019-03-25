@@ -113,6 +113,8 @@
                 "en": "Awarded only to a true master of dick jokes. The highest honor anyone can ever receive.",
                 "de": "Nur an den wahren Meistern der Schwanzwitze verliehen. Die höchste Ehre, die man je erhalten kann."
             },
+            "trophy_class": "dick",
+            "trophy_grade": 4,
             "requirements": [
                 {
                     "type": "card_proportion",
@@ -271,7 +273,7 @@
                 "en": "Sweet Home Alabama"
             },
             "desc": {
-                "en": "The gene pool is really just a puddle."
+                "en": "Drain the gene pool."
             },
             "requirements": [
                 {
@@ -298,12 +300,28 @@
                 {
                     "type": "card_proportion",
                     "flags": ["as", "ra"],
-                    "percent": 15
+                    "percent": 10
                 },
                 {
                     "type": "card_proportion",
                     "flags": ["ic", "pd", "hp"],
-                    "percent": 15
+                    "percent": 10
+                }
+            ]
+        },
+        {
+            "id": "trophy_racist",
+            "name": {
+                "en": "That's Racist!"
+            },
+            "desc": {
+                "en": "With that attitude, you could run for president!"
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["ra"],
+                    "percent": 20
                 }
             ]
         }

@@ -153,7 +153,8 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`dr`|Drugs/Drug usage.|
 |`fc`|Fictional characters.|
 |`fe`|Feces.|
-|`g`|Generally regarded as disgusting.|
+|`g`|Generally regarded as disgusting, but not necessarily harmful.|
+|`gg`|Unusually and extremely disgusting. May cause harm, disease, sickness, or mental trauma.|
 |`gn`|Genitalia.|
 |`gnf`|Female genitalia.|
 |`gnm`|Male genitalia.|
@@ -173,10 +174,12 @@ Additional flags not on this list may also be used (e.g. for implementing a spec
 |`ra`|Racism.|
 |`re`|Religion or religious people.|
 |`s`|General sexual content flag.|
+|`sh`|Self-harm.|
 |`su`|Suicide.|
 |`t`|Terrorism/Terroristic threats.|
 |`to`|Torture.|
 |`v`|General violence flag.|
 |`w`|Generally regarded as weird or unsettling.|
+|`ww`|Creepy, horror-inducing, or terrifying.|
 |`x`|Pornography.|
 |`xf`|Unusual or extreme fetishes (e.g. genital torture, scat, vomit).|

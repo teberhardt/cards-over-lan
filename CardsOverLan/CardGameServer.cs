@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
 
@@ -13,7 +14,6 @@ namespace CardsOverLan
 {
 	public sealed class CardGameServer : IDisposable
 	{
-		private const string WebSocketListenAddress = "ws://0.0.0.0:3000";
 		private const string ServerPlayDir = "/play";
 		private const string ServerSpectateDir = "/spectate";
 		private const int PlayerMessageLengthLimit = 300;
@@ -24,7 +24,7 @@ namespace CardsOverLan
 		private readonly RantEngine _rant;
 		private readonly HashList<SpectatorConnection> _spectators;
 		private readonly HashList<ClientConnectionBase> _connections;
-		private readonly Dictionary<string, int> _clientIpPool = new Dictionary<string, int>();
+		private readonly Tally<string, ClientConnectionBase> _addressTally;
 		private readonly Taunt[] _botTaunts;
 		private readonly object _clientPoolLock = new object();
 		private readonly object _spectatorLock = new object();
@@ -41,8 +41,9 @@ namespace CardsOverLan
 			_rant = new RantEngine();
 			_spectators = new HashList<SpectatorConnection>();
 			_connections = new HashList<ClientConnectionBase>();
+			_addressTally = new Tally<string, ClientConnectionBase>();
 			_botTaunts = game.GetPacks().Select(p => p.GetTaunts()).SelectMany(t => t).ToArray();
-			_ws = new WebSocketServer(WebSocketListenAddress);
+			_ws = new WebSocketServer(game.Settings.WebSocketUrl);
 			_ws.AddWebSocketService(ServerPlayDir, () => new PlayerConnection(this, Game));
 			_ws.AddWebSocketService(ServerSpectateDir, () => new SpectatorConnection(this, Game));
 		}
@@ -135,55 +136,9 @@ namespace CardsOverLan
 			_ws.Start();
 		}
 
-		internal bool TryAddToPool(ClientConnectionBase client)
+		internal bool IsIpConnected(string ip)
 		{
-			lock (_clientPoolLock)
-			{
-				var ip = client.GetIPAddress().ToString();
-				if (ip == null) return false; // I don't even know how this would happen, but handle it anyway
-
-				// Check if the IP is already in the pool
-				if (_clientIpPool.TryGetValue(ip, out int clientCount))
-				{
-					if (!Game.Settings.AllowDuplicatePlayers)
-					{
-						return false;
-					}
-
-					// Increase client count for IP
-					_clientIpPool[ip] = clientCount + 1;
-				}
-				else
-				{
-					_clientIpPool[ip] = 1;
-				}
-
-				return true;
-			}
-		}
-
-		internal bool TryRemoveFromPool(ClientConnectionBase client)
-		{
-			lock (_clientPoolLock)
-			{
-				var ip = client.GetIPAddress().ToString();
-				if (ip == null) return false;
-
-				if (_clientIpPool.TryGetValue(ip, out int clientCount))
-				{
-					if (clientCount <= 1)
-					{
-						_clientIpPool.Remove(ip);
-					}
-					else
-					{
-						_clientIpPool[ip] = clientCount - 1;
-					}
-					return true;
-				}
-
-				return false;
-			}
+			return _addressTally.HasKey(ip);
 		}
 
 		internal bool AddSpectator(SpectatorConnection client)
@@ -216,7 +171,7 @@ namespace CardsOverLan
 		{
 			lock (_connectionLock)
 			{
-				return _connections.Add(connection);
+				return _addressTally.AddTally(connection.GetIPAddress(), connection) && _connections.Add(connection);
 			}
 		}
 
@@ -224,7 +179,7 @@ namespace CardsOverLan
 		{
 			lock (_connectionLock)
 			{
-				return _connections.Remove(connection);
+				return _addressTally.RemoveTally(connection.GetIPAddress(), connection) && _connections.Remove(connection);
 			}
 		}
 
