@@ -10,11 +10,7 @@
     },
     "ui_cookie_notice": {
         "en": "This website uses browser cookies to store user preferences (e.g. nickname and display settings) and to provide localized content. You consent to these cookies if you continue to use this website.",
-        "de": "Diese Website benutzt Cookies, um Benutzereinstellungen (z.B. Spitzname und Erscheinungsbildeinstellungen) zu speichern und Inhalte zu lokalisieren. Sie erklären sich mit diesen Cookies einverstanden, indem Sie diese Website weiterhin zu benutzen."
-    },
-    "ui_btn_accept_cookies": {
-        "en": "I AGREE!",
-        "de": "ICH STIMME ZU!"
+        "de": "Diese Website benutzt Cookies, um Benutzereinstellungen (z.B. Spitzname und Erscheinungsbildeinstellungen) zu speichern und Inhalte zu lokalisieren. Sie erklären sich mit diesen Cookies einverstanden, indem Sie diese Website weiterhin benutzen."
     },
     "ui_feature_on": {
         "en": "ON",

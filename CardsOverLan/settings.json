@@ -1,42 +1,48 @@
 ﻿{
+	/* WEBSERVER SETTINGS */
 	"host_url": "http://localhost:80",
 	"ws_url": "ws://0.0.0.0:3000",
 	"client_ws_port": 3000,
 	"web_root": "./web_content",
+	"allow_duplicates": false,
+
+	/* GENERAL GAME SETTINGS */
 	"server_name": "Cards Over LAN",
 	"server_password": "",
 	"max_players": 20,
 	"min_players": 3,
 	"max_spectators": 10,
 	"max_player_name_length": 64,
-	"allow_duplicates": false,
+	"max_blank_card_length": 150,
 	"hand_size": 10,
 	"pick_one_only": false,
 	"blank_cards": 3,
-	"max_blank_card_length": 150,
 	"discards": 15,
 	"allow_skips": true,
 	"enable_upgrades": true,
-	"enable_chat": true,
-	"enable_bot_taunts": true,
+	"enable_chat": true,	
 	"enable_afk": true,
 	"enable_idle_kick": true,
-	"enable_trophies": true,
-	"enable_analytics": true,
-	"round_end_timeout": 5000,
-	"game_end_timeout": 30000,
+	"enable_trophies": true,	
 	"max_points": 8,
 	"max_rounds": 16,
 	"perma_czar": false,
 	"winner_czar": true,
+	"round_end_timeout": 5000,
+	"game_end_timeout": 30000,
 	"afk_recovery_time_seconds": 60,
 	"afk_time_seconds": 90,
 	"idle_kick_time_seconds": 180,
+
+	/* CONTENT SETTINGS */
 	"exclude_content": [],
 	"exclude_packs": [],
 	"require_languages": ["en"],
 	"use_packs": [],
+
+	/* BOT SETTINGS */
 	"bot_count": 2,
+	"enable_bot_taunts": true,
 	"bot_czars": false,
 	"bot_names": [
 		"AutoRodney", "AutoJavier", "AutoDixon", "AutoJanet", 
@@ -57,5 +63,8 @@
 		"min_typing_delay": 750,
 		"max_typing_delay": 2000
 	},
+
+	/* ANALYTICS SETTINGS */
+	"enable_analytics": true,
 	"analytics_path": "./data/colan_analytics.db"
 }
