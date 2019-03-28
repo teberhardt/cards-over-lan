@@ -359,7 +359,7 @@ namespace CardsOverLan
 				case "c_playcards":
 				{
 					var cardArray = (json["cards"] as JArray)?
-						.Select(v => GetCardFromId(v.Value<string>()))?
+						.Select(v => Game.GetCardById(v.Value<string>()))?
 						.OfType<WhiteCard>()?.ToArray();
 
 					if (cardArray == null) break;
@@ -403,42 +403,6 @@ namespace CardsOverLan
 					break;
 				}
 			}
-		}
-
-		private Card GetCardFromId(string id)
-		{
-			const string customFlag = "custom:";
-			const string customContentXss = "Trying to hack a card game, of all things.";
-
-			var idTrimmed = id?.Trim();
-			if (String.IsNullOrWhiteSpace(idTrimmed)) return null;
-
-			// Is it a custom card?
-			if (id.StartsWith(customFlag))
-			{
-				var customContent = idTrimmed.Substring(customFlag.Length).Trim();
-				if (customContent.Length == 0) return null;
-
-				// Make sure there's nothing sketchy in the card text.
-				bool xss = false;
-				var sanitizedContent = StringUtilities.SanitizeClientString(
-					customContent,
-					Game.Settings.MaxBlankCardLength,
-					ref xss,
-					c => !Char.IsControl(c) && (Char.IsLetterOrDigit(c) || AllowedCustomCardChars.Contains(c)));
-
-				// :)
-				if (xss)
-				{
-					Player.AddPoints(-1337);
-					sanitizedContent = customContentXss;
-					Player.IsAsshole = true;
-				}
-
-				return Card.CreateCustom(sanitizedContent);
-			}
-
-			return Game.GetCardById(id);
 		}
 
 		protected override void SendMessageObject(object o)

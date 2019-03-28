@@ -54,7 +54,7 @@ namespace CardsOverLan
 				bot => EnumerateEventTaunts(bot, "game_end", b => true));
 		}
 
-		private void OnGameRoundEnded(int round, Player roundWinner, WhiteCard[] winningPlay)
+		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
 		{
 			var czar = Game.Judge;			
 

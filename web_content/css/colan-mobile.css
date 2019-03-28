@@ -1137,6 +1137,7 @@ card[data-selection]::after {
 
 .modal {
     display: flex;
+    flex-direction: column;
     position: absolute;
     color: #111;
     left: 0;
@@ -1206,7 +1207,6 @@ card[data-selection]::after {
     flex-direction: column;
     flex-shrink: 0;
     margin: 4pt;
-    width: 100%;
 }
 
 .lah-vlist > .lah-gap {
@@ -1235,6 +1235,45 @@ card[data-selection]::after {
 
 .lah-listitem > input[type="text"] {
     flex-grow: 1;
+}
+
+#cookie-notice {
+    position: sticky;
+    top: 0;
+    height: auto;
+    padding: 1em 1em;
+    background: black;  
+    color: white; 
+    z-index: 99999999; 
+}
+
+#cookie-notice > p {
+    font-size: 12pt;
+    font-weight: 400;
+    margin: 6px auto;
+}
+
+#cookie-notice > h1 {
+    text-align: center;
+    font-size: 18pt;
+    font-weight: 600;
+    margin: 6px 6px;
+}
+
+#cookie-notice > input[type=button].closer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14pt;
+    line-height: 1em;
+    color: white;
+    width: 1em;
+    height: 1em;
+    outline: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
 #join-version {

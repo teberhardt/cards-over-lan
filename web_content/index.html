@@ -27,7 +27,7 @@
         <input type="button" data-localize-value="ui_options" id="btn-options" class="lah-btn lah-btn-small" data-modal-show="modal-options" />
         <input type="button" data-localize-value="ui_fullscreen" id="btn-fullscreen" class="lah-btn lah-btn-small" />
     </nav>
-    <div role="button" id="btn-mobile-nav" class="mobile-btn-menu"></div>
+    <div role="button" id="btn-mobile-nav" class="mobile-btn-menu"></div>    
     <div id="game">        
         <div id="status-area">
             <div id="status"></div>
@@ -187,9 +187,14 @@
         <div id="fork-me" class="desktop-only">
             <a id="fork-me-ribbon" href="https://github.com/TheBerkin/cards-over-lan" target="_blank">Fork me on GitHub</a>
         </div>
-        <div class="modal-dialog">
+        <div id="cookie-notice" class="hidden closable">
+            <h1 data-ui-string="ui_cookie_notice_title"></h1>
+            <p data-ui-string="ui_cookie_notice"></p>
+            <input class="closer" type="button" value="&times;" />
+        </div>
+        <div class="modal-dialog">            
             <span id="join-version" data-ui-string="ui_version"></span>
-            <div class="modal-body">
+            <div class="modal-body">                
                 <h1 id="join-screen-title" data-ui-string="ui_game_title"></h1>
                 <p id="join-screen-server-name" data-ui-string="ui_loading_info"></p>
                 <hr/>
@@ -230,8 +235,8 @@
                         <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_play_game" id="btn-play-game" />
                         <input type="button" class="lah-btn lah-btn-small" data-localize-value="ui_btn_spectate_game" id="btn-spectate-game"/>
                     </div>
-                </div>
-            </div>
+                </div>                
+            </div>    
         </div>
     </div>
     <noscript>

@@ -1,4 +1,5 @@
-﻿using CardsOverLan.Game.Trophies;
+﻿using CardsOverLan.Analytics;
+using CardsOverLan.Game.Trophies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -211,9 +212,26 @@ namespace CardsOverLan.Game
 			_hand.RemoveRange(cards);
 			_selectedCards.Clear();
 			_selectedCards.AddRange(cardArray);
+
+			// Record card usages
+			RecordPlayedCards(cardArray);
+
 			RaiseCardsChanged();
 			RaiseSelectionChanged();
 			return true;
+		}
+
+		private async void RecordPlayedCards(WhiteCard[] cards)
+		{
+			if (IsAutonomous) return;
+			await Task.Run(() =>
+			{
+				foreach (var card in cards)
+				{
+					if (card.IsCustom) continue;
+					AnalyticsManager.Instance.RecordCardUseAsync(card);
+				}
+			});
 		}
 
 		public bool UpgradeCard(WhiteCard card)
@@ -235,6 +253,7 @@ namespace CardsOverLan.Game
 			_hand.Remove(card);
 			Game.Deal(this);
 			RaiseCardsChanged();
+			AnalyticsManager.Instance.RecordDiscardAsync(card);
 			return true;
 		}
 

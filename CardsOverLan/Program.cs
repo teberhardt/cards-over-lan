@@ -1,4 +1,5 @@
-﻿using CardsOverLan.Game;
+﻿using CardsOverLan.Analytics;
+using CardsOverLan.Game;
 using CardsOverLan.Game.Converters;
 using CardsOverLan.Web;
 using Nancy.Hosting.Self;
@@ -36,6 +37,12 @@ namespace CardsOverLan
 			using (var host = new NancyHost(new Uri(mgr.Settings.HostUrl), new WebappBootstrapper(mgr.Settings.WebRoot), hostCfg))
 			using (var gameServer = new CardGameServer(mgr.Game))
 			{
+				// Start analytics
+				if (mgr.Settings.AnalyticsEnabled)
+				{
+					AnalyticsManager.Instance.Start(mgr.Settings.AnalyticsPath);
+				}
+
 				// Start game server
 				try
 				{
@@ -66,6 +73,9 @@ namespace CardsOverLan
 				}
 
 				mre.Wait();
+
+				// Close analytics
+				AnalyticsManager.Instance.Stop();
 			}
 		}
 	}

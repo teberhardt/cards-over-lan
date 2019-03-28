@@ -121,9 +121,9 @@
     // Display preferences
     
     g.gameui.loadDisplayPrefs = function() {
-        gameui.displayPrefs[DISPLAY_PREF_ANIM_TEXT] = (Cookies.get(DISPLAY_PREF_ANIM_TEXT) || "true") == "true";
-        gameui.displayPrefs[DISPLAY_PREF_ACCENT_COLOR] = Cookies.get(DISPLAY_PREF_ACCENT_COLOR) || "";
-        gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] = (Cookies.get(DISPLAY_PREF_NOTIFICATIONS) || "false") == "false";
+        gameui.displayPrefs[DISPLAY_PREF_ANIM_TEXT] = (localStorage.getItem(DISPLAY_PREF_ANIM_TEXT) || "true") == "true";
+        gameui.displayPrefs[DISPLAY_PREF_ACCENT_COLOR] = localStorage.getItem(DISPLAY_PREF_ACCENT_COLOR) || "";
+        gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS] = (localStorage.getItem(DISPLAY_PREF_NOTIFICATIONS) || "false") == "true";
         gameui.setDisplayPrefs();
     }
 
@@ -149,6 +149,7 @@
                 }
             });
         }
+
         chkNotifications.checked = gameui.displayPrefs[DISPLAY_PREF_NOTIFICATIONS];
 
         // Display animated text
@@ -168,7 +169,7 @@
 
     g.gameui.saveDisplayPrefs = function() {
         for(let key of Object.keys(gameui.displayPrefs)) {
-            Cookies.set(key, gameui.displayPrefs[key], { expires: 365 });
+            localStorage.setItem(key, gameui.displayPrefs[key]);
         }
     }
 

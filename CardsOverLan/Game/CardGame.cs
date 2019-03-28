@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace CardsOverLan.Game
 {
@@ -14,7 +15,7 @@ namespace CardsOverLan.Game
 	public delegate void GameStateChangedEventDelegate();
 	public delegate void RoundStartedEventDelegate();
 	public delegate void GameStageChangedEventDelegate(in GameStage oldStage, in GameStage currentStage);
-	public delegate void RoundEndedEventDelegate(int round, Player roundWinner, WhiteCard[] winningPlay);
+	public delegate void RoundEndedEventDelegate(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay);
 	public delegate void GameEndedEventDelegate(Player[] winners);
 	public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
 
@@ -502,6 +503,23 @@ namespace CardsOverLan.Game
 		public Card GetCardById(string id)
 		{
 			if (String.IsNullOrWhiteSpace(id)) return null;
+			const string customCardPrefix = "custom_";
+
+			if (id.StartsWith(customCardPrefix))
+			{
+				var customCardBase64Text = id.Substring(customCardPrefix.Length);
+				try
+				{
+					var customCardText = Encoding.UTF8.GetString(Convert.FromBase64String(customCardBase64Text)).Trim().Truncate(Settings.MaxBlankCardLength);
+					return WhiteCard.CreateCustom(customCardText);
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine($"Could not parse custom card '{id}': {ex.Message}");
+					return null;
+				}
+			}
+
 			return _cards.TryGetValue(id, out var card) ? card : null;
 		}
 
@@ -961,8 +979,9 @@ namespace CardsOverLan.Game
 		{
 			if (!player.CanJudgeCards || winningPlayIndex < 0 || winningPlayIndex >= _roundPlays.Count) return;
 			_winningPlayIndex = winningPlayIndex;
+			var blackCard = CurrentBlackCard;
 			Stage = GameStage.RoundEnd;
-			RaiseRoundEnded(Round, RoundWinner, _roundPlays[winningPlayIndex].Item2.ToArray());
+			RaiseRoundEnded(Round, blackCard, player, RoundWinner, _roundPlays[winningPlayIndex].Item2.ToArray());
 		}
 
 		private void OnPlayerNameChanged(Player player, string name)
@@ -1009,7 +1028,7 @@ namespace CardsOverLan.Game
 			OnPlayerCountChanged();
 		}
 
-		private void RaiseRoundEnded(int round, Player winner, WhiteCard[] winningPlay) => RoundEnded?.Invoke(round, winner, winningPlay);
+		private void RaiseRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player winner, WhiteCard[] winningPlay) => RoundEnded?.Invoke(round, blackCard, roundJudge, winner, winningPlay);
 
 		private void RaiseStageChanged(in GameStage oldStage, in GameStage currentStage) => StageChanged?.Invoke(oldStage, currentStage);
 

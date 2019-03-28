@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace CardsOverLan.Game
 {
@@ -15,6 +16,8 @@ namespace CardsOverLan.Game
 	{
 		protected const string DefaultLocale = "en";
 
+		private string _id;
+
 		[ClientFacing]
 		[JsonProperty("content")]
 		private readonly Dictionary<string, string> _content = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
@@ -23,7 +26,18 @@ namespace CardsOverLan.Game
 
 		[ClientFacing]
 		[JsonProperty("id")]
-		public string ID { get; internal set; }
+		public string ID
+		{
+			get => _id;
+			set
+			{
+				if (String.IsNullOrWhiteSpace(value))
+					throw new ArgumentException("Card ID cannot be null nor empty.");
+				if (!value.All(c => c == '_' || Char.IsLetterOrDigit(c) || c == '/' || c == '+' || c == '='))
+					throw new ArgumentException("Card IDs can only contain underscores, alphanumeric charactrs, and those allowed by Base64.");
+				_id = value;
+			}
+		}
 
 		public Pack Owner { get; internal set; }
 
@@ -47,9 +61,11 @@ namespace CardsOverLan.Game
 		public static WhiteCard CreateCustom(string content)
 		{
 			if (String.IsNullOrWhiteSpace(content)) return null;
+			var contentBytes = Encoding.UTF8.GetBytes(content);
+			var base64ContentText = Convert.ToBase64String(contentBytes);
 			var card = new WhiteCard
 			{
-				ID = $"custom: {content}",
+				ID = $"custom_{base64ContentText}",
 				IsCustom = true
 			};
 			card.AddContent(DefaultLocale, content);
@@ -83,6 +99,6 @@ namespace CardsOverLan.Game
 			return true;
 		}
 
-		public override string ToString() => ID;
+		public override string ToString() => IsCustom ? "(custom)" : ID;
 	}
 }

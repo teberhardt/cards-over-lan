@@ -1,4 +1,8 @@
 ﻿{
+	"host_url": "http://localhost:80",
+	"ws_url": "ws://0.0.0.0:3000",
+	"client_ws_port": 3000,
+	"web_root": "./web_content",
 	"server_name": "Cards Over LAN",
 	"server_password": "",
 	"max_players": 20,
@@ -17,8 +21,11 @@
 	"enable_bot_taunts": true,
 	"enable_afk": true,
 	"enable_idle_kick": true,
+	"enable_trophies": true,
+	"enable_analytics": true,
 	"round_end_timeout": 5000,
 	"game_end_timeout": 30000,
+	"max_points": 8,
 	"max_rounds": 16,
 	"perma_czar": false,
 	"winner_czar": true,
@@ -26,12 +33,14 @@
 	"afk_time_seconds": 90,
 	"idle_kick_time_seconds": 180,
 	"exclude_content": [],
-	"enable_trophies": true,
+	"exclude_packs": [],
+	"require_languages": ["en"],
+	"use_packs": [],
 	"bot_count": 2,
 	"bot_czars": false,
 	"bot_names": [
 		"AutoRodney", "AutoJavier", "AutoDixon", "AutoJanet", 
-		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
+		"AutoBob", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
 		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
 	"bot_config": {
@@ -48,7 +57,5 @@
 		"min_typing_delay": 750,
 		"max_typing_delay": 2000
 	},
-	"require_languages": ["en"],
-	"use_packs": [],
-	"exclude_packs": []
+	"analytics_path": "./data/colan_analytics.db"
 }

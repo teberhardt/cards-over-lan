@@ -47,6 +47,7 @@
     - Enable with `enable_chat` setting.
 - ADD: (Webapp) Option to enable/disable animated text
 - ADD: (Webapp) Notifications
+- ADD: (Webapp) Cookie notification
 - ADD: (Server) Added Content Security Policy
 - ADD: Bot taunts
     - Enable with `enable_bot_taunts` setting.
@@ -57,8 +58,10 @@
 - ADD: (Server) Server password support
 - ADD: (Server) Customizable HTTP and WS endpoints
 - ADD: (Server) Client idle kick
+- ADD: (Server) Gameplay analytics
 
 - CHANGE: (Webapp) Refresh server info on websocket connection/reconnection
+- CHANGE: (Webapp) Moved display prefs to local storage
 
 - FIX: (Webapp) Wonky layout issues on Firefox. Might still be mildly wonky.
 - FIX: (Server) Occasional deadlock when accessing player list with many clients

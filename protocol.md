@@ -25,7 +25,7 @@ ID strings must follow the following conventions:
 * Non-custom IDs may only contain alphanumeric characters and underscores.
 * White card IDs start with `w_`.
 * Black card IDs start with `b_`.
-* Custom card IDs start with `custom:` followed by the card text.
+* Custom card IDs start with `custom_` followed by the card text encoded from UTF8 to Base64.
 
 ## Client messages
 

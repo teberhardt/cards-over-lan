@@ -21,6 +21,15 @@
     const div = () => document.createElement("div");
     const span = () => document.createElement("span");
 
+    // Base64 helper functions
+    function base64Encode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (m, p) => String.fromCharCode("0x" + p)));
+    }
+
+    function base64Decode(str) {
+        return decodeURIComponent(atob(str).split("").map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)).join(""));
+    }
+
     // Promise helpers
     Promise.delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -548,10 +557,17 @@
     };
 
     function getRoundCardFromId(cardId) {
-        let customMatch = cardId.match(/^\s*custom:\s*(.*)\s*$/m);
+        let customMatch = cardId.match(/^\s*custom_\s*(.*)\s*$/m);
         let card = null;
         if (customMatch) {
-            card = new Card("white", cardId, {"en": customMatch[1] || "???"});
+            let customCardDecodedText;
+            try {
+                customCardDecodedText = base64Decode(customMatch[1]);
+            } catch (err) {
+                console.error("Failed to parse custom card '" + customMatch[1] + "': " + err);
+                customCardDecodedText = "ERROR";
+            }
+            card = new Card("white", cardId, {"en": customCardDecodedText || "???"});
         } else {
             card = lah.whiteCards[cardId];
         }
@@ -1048,7 +1064,8 @@
                 if (s.id) {
                     return s.id;
                 } else if (s.blankIndex !== undefined && s.blankIndex >= 0 && s.blankIndex < lah.numBlanks) {
-                    return "custom: " + lah.blankCards[s.blankIndex];
+                    let customCardId = "custom_" + base64Encode(lah.blankCards[s.blankIndex]);
+                    return customCardId;
                 } else {
                     return null;
                 }
@@ -1074,7 +1091,6 @@
     }
 
     g.lah.voteForSkip = function(voteState) {
-        console.log(voteState);
         sendMessage({
             msg: "c_vote_skip",
             voted: voteState
@@ -1223,29 +1239,43 @@
         elem("#join-marquee").setAttribute("data-marquee-text", marqueeText);
     }
 
-    function onSpectateGameClicked() {
+    function connectToGame(path, isSpectator) {
         setPlayerName(elem("#txt-join-username").value);
-        Cookies.set("game_password", elem("#txt-join-password").value, {expires: 1});
-        lah.spectating = true;
-        gameArea.setClass("lah-spectating", true);
-        ws.url = WS_PROTOCOL + DOMAIN + ":" + (lah.serverInfo.game_port || WS_DEFAULT_PORT) + "/spectate";
+        Cookies.set("cookie_consent", 1, { expires: 365 });
+        Cookies.set("game_password", elem("#txt-join-password").value);
+        Cookies.set("client_lang", navigator.language || DEFAULT_LOCALE);
+        lah.spectating = !!isSpectator;  
+        gameArea.setClass("lah-spectating", !!isSpectator);   
+        ws.url = WS_PROTOCOL + DOMAIN + ":" + (lah.serverInfo.game_port || WS_DEFAULT_PORT) + path;
         ws.connect();
         hideModal("modal-join");
+    }
+
+    function onSpectateGameClicked() {                   
+        connectToGame("/spectate", true);
     }
 
     function onPlayGameClicked() {
-        setPlayerName(elem("#txt-join-username").value);
-        Cookies.set("game_password", elem("#txt-join-password").value, {expires: 1});
-        lah.spectating = false;
-        ws.url = WS_PROTOCOL + DOMAIN + ":" + (lah.serverInfo.game_port || WS_DEFAULT_PORT) + "/play";
-        ws.connect();
-        hideModal("modal-join");
+        connectToGame("/play");
     }
 
-    function startGame() {
-        // Populate saved options, set language cookie        
+    async function loadGame() {
+        // Check if user has already agreed to cookies
+        if (Cookies.get("cookie_consent")) {
+            loadOptions();
+        } else {
+            elem("#cookie-notice").setClass("hidden", false);
+        }
+
+        // Load string resources
+        try {
+            await loadStringResources("/etc/strings.json");
+        } catch (reason) {
+            console.error("Failed to load game resources: " + reason);
+        }
+
+        // Fetch server info
         refreshServerInfo();
-        Cookies.set("client_lang", navigator.language || DEFAULT_LOCALE);
 
         // Get game elements
         gameArea = elem("#game");
@@ -1285,16 +1315,5 @@
         }
     }
 
-    g.lah.load = async function() {
-        try {
-            await loadStringResources("/etc/strings.json");
-        } catch (reason) {
-            console.error("Failed to load game resources: " + reason);
-        }
-        loadOptions();
-        await refreshServerInfo();
-        startGame();
-    }
-
-    lah.load();
+    loadGame();
 })(this);

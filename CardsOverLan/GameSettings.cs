@@ -14,6 +14,7 @@ namespace CardsOverLan
 	public sealed class GameSettings
 	{
 		private const string DefaultServerName = "Cards Over LAN";
+		private const string DefaultAnalyticsPath = "./data/colan_analytics.db";
 		private const int DefaultHandSize = 10;
 		private const int DefaultMinPlayers = 3;
 		private const int DefaultMaxPlayers = 10;
@@ -81,6 +82,14 @@ namespace CardsOverLan
 		[JsonProperty("server_password", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue("")]
 		public string ServerPassword { get; set; } = "";
+
+		[JsonProperty("enable_analytics", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(true)]
+		public bool AnalyticsEnabled { get; set; } = true;
+
+		[JsonProperty("analytics_path", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(DefaultAnalyticsPath)]
+		public string AnalyticsPath { get; set; } = DefaultAnalyticsPath;
 
 		[JsonProperty("min_players", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultMinPlayers)]

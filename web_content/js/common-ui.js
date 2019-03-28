@@ -156,6 +156,16 @@
         }
     }
 
+    // Register closables
+    const closables = elems(".closable");
+    for(let closable of closables) {
+        let closer = closable.querySelector(".closer");
+        if (closer) {
+            let target = closable;
+            closer.addEventListener("click", () => target.setClass("hidden", true));
+        }
+    }
+
     // Register modal close buttons
     const modals = elems(".modal");
     for (let modal of modals) {

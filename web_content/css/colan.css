@@ -376,3 +376,7 @@ span.highlight {
     color: white !important;
     border: none !important;
 }
+
+.lah-inv {
+    --accent-fg: white;
+}
