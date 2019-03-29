@@ -557,7 +557,6 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public Player CreatePlayer(string name = null, bool bot = false)
 		{
-
 			var player = new Player(this, CreatePlayerId());
 			player.Name = CreatePlayerName(name, player);
 			if (bot) player.IsAutonomous = true;
@@ -584,7 +583,6 @@ namespace CardsOverLan.Game
 
 			RaisePlayerJoined(player);
 			return player;
-
 		}
 
 		/// <summary>
@@ -674,6 +672,9 @@ namespace CardsOverLan.Game
 			_winningPlayIndex = -1;
 		}
 
+		/// <summary>
+		/// Collects selected cards from players and adds them to the round plays.
+		/// </summary>
 		private void PopulateRoundPlays()
 		{
 			_roundPlays.Clear();

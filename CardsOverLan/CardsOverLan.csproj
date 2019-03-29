@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Analytics\AnalyticsManager.cs" />
     <Compile Include="Analytics\CardFrequencyRecord.cs" />
+    <Compile Include="Analytics\StringFrequencyRecord.cs" />
     <Compile Include="Analytics\WinningPlayRecord.cs" />
     <Compile Include="ClientIgnoreAttribute.cs" />
     <Compile Include="Extensions.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="RejectCodes.cs" />
     <Compile Include="SpectatorConnection.cs" />
     <Compile Include="Tally.cs" />
+    <Compile Include="Web\NotFoundStatusHandler.cs" />
     <Compile Include="Web\WebappModule.cs" />
     <Compile Include="Web\WebappBootstrapper.cs" />
   </ItemGroup>

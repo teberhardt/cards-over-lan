@@ -300,6 +300,8 @@ After sending, the client is immediately disconnected.
 |`reject_server_full`|The server is full and cannot accept any more players.|
 |`reject_banned`|The server has banned the connecting client.|
 |`reject_duplicate`|The server has detected that the client is attempting to open more than one instance of the game.|
+|`reject_afk`|The server has disconnected the client due to an extended period of inactivity.|
+|`reject_bad_password`|The server has rejected the client because they provided the wrong password.|
 
 ### s_chat_msg
 

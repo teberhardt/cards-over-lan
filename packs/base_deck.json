@@ -3181,7 +3181,52 @@
         {
             "id": "w_wholethingofvodka",
             "content": {
-                "en": "This whole thing of vodka."
+                "en": "This whole thing of vodka.",
+                "de": "Diese ganze Flasche Wodka."
+            }
+        },
+        {
+            "id": "w_drphil",
+            "content": {
+                "en": "Dr. Phil.",
+                "de": "Dr. Phil."
+            },
+            "flags": "ce"
+        },
+        {
+            "id": "w_collateraldamage",
+            "content": {
+                "en": "Collateral damage."
+            }
+        },
+        {
+            "id": "w_exceedsmymouth",
+            "content": {
+                "en": "More than my mouth can fit."
+            }
+        },
+        {
+            "id": "w_laxatives",
+            "content": {
+                "en": "Laxatives."
+            }
+        },
+        {
+            "id": "w_newkindofmeat",
+            "content": {
+                "en": "A new kind of meat."
+            }
+        },
+        {
+            "id": "w_tornadocomingthisway",
+            "content": {
+                "en": "A tornado headed right this way."
+            }
+        },
+        {
+            "id": "w_partialcremation",
+            "content": {
+                "en": "A patrial cremation."
             }
         },
         {

@@ -17,6 +17,7 @@ namespace CardsOverLan.Analytics
 		private const string DiscardsTableName = "cards_discarded";
 		private const string WinningPlaysTableName = "winning_plays";
 		private const string SkippedBlackCardsTableName = "skipped_black_cards";
+		private const string ReferersTableName = "referers";
 
 		private LiteDatabase _db;
 		private readonly object _dbLock = new object();
@@ -64,6 +65,39 @@ namespace CardsOverLan.Analytics
 		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
 		{
 			RecordWinningPlay(blackCard, winningPlay, roundJudge.IsAutonomous, roundWinner.IsAutonomous);
+		}
+
+		public async void RecordReferer(string referer)
+		{
+			if (!IsActive) return;
+			await Task.Run(() =>
+			{
+				lock(_dbLock)
+				{
+					try
+					{	
+						var table = _db.GetCollection<StringFrequencyRecord>(ReferersTableName);
+						var record = table.FindById(referer);
+						if (record == null)
+						{
+							record = new StringFrequencyRecord
+							{
+								Value = referer,
+								Count = 0
+							};
+							table.Insert(record);
+						}
+						record.Count++;
+						table.Update(record);
+
+						table.EnsureIndex(r => r.Value);
+					}
+					catch(Exception ex)
+					{
+						Console.WriteLine($"Failed to record referer in DB: {ex.Message}");
+					}
+				}
+			});
 		}
 
 		public async void RecordBlackCardSkip(BlackCard card)

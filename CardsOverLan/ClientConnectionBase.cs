@@ -1,4 +1,5 @@
-﻿using CardsOverLan.Game;
+﻿using CardsOverLan.Analytics;
+using CardsOverLan.Game;
 using CardsOverLan.Game.ContractResolvers;
 using Newtonsoft.Json;
 using System;
@@ -58,6 +59,7 @@ namespace CardsOverLan
 			base.OnOpen();
 			LoadCookies();
 
+			// Get the client's original IP
 			var xForwardedFor = Context.Headers["X-Forwarded-For"] ?? String.Empty;
 			var forwardedAddresses = xForwardedFor.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
 			_ip = forwardedAddresses.Length > 0 ? forwardedAddresses[0].ToLowerInvariant() : Context.UserEndPoint.Address.ToString();

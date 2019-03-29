@@ -36,37 +36,50 @@
 
 ## 1.0.0b3
 
-- ADD: (Webapp) In-game chat
+### Webapp
+
+- ADD: In-game chat
     - Supports basic Markdown (bold, italic, strikethrough)
     - Custom Mardown for animated text
         - `@@TEXT@@` - Angry text!
         - `^Text^` - Bouncing text!
         - `^^Text^^` - Jiggling text?
         - `//Text//` - Tilting text!
-        - Should I add more?
+        - Parsing is pretty naive, and doesn't always nest well. May improve later.
     - Enable with `enable_chat` setting.
-- ADD: (Webapp) Option to enable/disable animated text
-- ADD: (Webapp) Notifications
-- ADD: (Webapp) Cookie notification
-- ADD: (Server) Added Content Security Policy
-- ADD: Bot taunts
-    - Enable with `enable_bot_taunts` setting.
-- ADD: (Server) `exclude_packs` setting
-- ADD: (Server) `max_blank_card_length` setting
-- ADD: (Server) `bot_config` setting
-    - Exposes various settings for controlling how bots behave
-- ADD: (Server) Server password support
-- ADD: (Server) Customizable HTTP and WS endpoints
-- ADD: (Server) Client idle kick
-- ADD: (Server) Gameplay analytics
+- ADD: Option to enable/disable animated text
+- ADD: Notifications
+    - You can turn them off in the game options.
+- ADD: Cookie notification
+- ADD: 404 page
+- ADD: Content Security Policy
 
-- CHANGE: (Webapp) Refresh server info on websocket connection/reconnection
-- CHANGE: (Webapp) Moved display prefs to local storage
+- CHANGE: Refresh server info on websocket connection/reconnection
+- CHANGE: Moved display prefs to local storage instead of cookies
 
-- FIX: (Webapp) Wonky layout issues on Firefox. Might still be mildly wonky.
-- FIX: (Server) Occasional deadlock when accessing player list with many clients
-- FIX: (Server) Faulty duplicate prevention
+- FIX: Wonky layout issues on Firefox. Might still be mildly wonky.
 
 - REMOVE: jQuery
 
-- WONTFIX: Edge incompatability. They don't even support `for ... of` loops yet. Get with the times, Edge.
+- WONTFIX: Edge incompatibility. Edge still doesn't support `for ... of` loops and I'm not about to rewrite half my code to accommodate for that.
+
+### Server
+
+- ADD: Bot taunts
+    - Enable with `enable_bot_taunts` setting.
+    - Fully moddable!
+- ADD: `exclude_packs` setting to blacklist packs
+- ADD: `use_packs` setting to whitelist packs
+- ADD: `max_blank_card_length` setting
+- ADD: `bot_config` setting
+- ADD: Server password support
+- ADD: Customizable HTTP and WS endpoints
+- ADD: Configurable client-side WebSocket port
+    - Configure with `client_ws_port` setting.
+- ADD: Client idle kick
+    - Enable with `enable_idle_kick` setting.
+- ADD: Gameplay analytics. 
+    - Pretty basic right now, might add more stuff later.
+
+- FIX: Occasional deadlock when accessing player list with many clients
+- FIX: Faulty duplicate prevention

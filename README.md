@@ -112,7 +112,7 @@ All `delay` properties are in milliseconds.
 |`judge_min_per_card_delay`|Integer|Minimum additional delay per card before bot picks winner.|
 |`judge_max_per_card_delay`|Integer|Maximum additional delay per card before bot picks winner.|
 |`min_typing_interval`|Integer|Minimum interval between keystrokes when typing chat messages.|
-|`max_typing_interval`|Ingeger|Maximum interval between keystrokes when typing chat messages.|
+|`max_typing_interval`|Integer|Maximum interval between keystrokes when typing chat messages.|
 
 ## FAQ
 
@@ -124,20 +124,20 @@ I was bored and wanted a fun project to work on over winter break.
 
 They're all good, and each of them has different strengths. Below is a (non-exhaustive) comparison table:
 
-|                   |PYX|Azala|Cards Over LAN|
-|-------------------|:-:|:---:|:------------:|
-|Mobile version     |❌|✔️|✔️|
-|Self-Hosting       |✔️|❌|✔️|
-|Offline Play       |❌|❌|✔️|
-|Discards           |❌|✔️|✔️|
-|Chat               |✔️*|✔️|✔️|
-|Blank Cards        |✔️*|✔️|✔️|
-|Localization       |❌|❌|✔️|
-|Bots               |❌|✔️|✔️|
-|Black card skipping|❌|✔️|✔️|
-|Trophies           |❌|❌|✔️|
-|Multiple games     |✔️|✔️|❌|
-|License            |BSD 2-Clause|Closed Source|MIT|
+|                       |PYX|Azala|Cards Over LAN|
+|-----------------------|:-:|:---:|:------------:|
+|**Mobile version**     |❌|✔️|✔️|
+|**Self-Hosting**       |✔️|❌|✔️|
+|**Offline Play**       |❌|❌|✔️|
+|**Discards**           |❌|✔️|✔️|
+|**Chat**               |✔️*|✔️|✔️|
+|**Blank Cards**        |✔️*|✔️|✔️|
+|**Localization**       |❌|❌|✔️|
+|**Bots**               |❌|✔️|✔️|
+|**Black card skipping**|❌|✔️|✔️|
+|**Trophies**           |❌|❌|✔️|
+|**Multiple games**     |✔️|✔️|❌|
+|**License**            |BSD 2-Clause|Closed Source|MIT|
 
 _*Chat and blank cards only available in third-party PYX servers._
 
