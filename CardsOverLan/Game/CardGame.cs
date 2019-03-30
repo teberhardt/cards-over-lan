@@ -220,15 +220,24 @@ namespace CardsOverLan.Game
 			// Move to next black card
 			NextBlackCard();
 
+			// Reset player selections
 			lock (_playerListLock)
-			{
-				// Reset player selections
+			{	
 				foreach (var player in _players)
 				{
 					player.DiscardSelection();
 					Deal(player, CurrentBlackCard.DrawCount);
 				}
 
+			}
+
+			// Reset preserve selections
+			lock(_preserveLock)
+			{
+				foreach(var preserve in _preservedPlayers)
+				{
+					preserve.DiscardSelection();
+				}
 			}
 
 			// Move to next judge
