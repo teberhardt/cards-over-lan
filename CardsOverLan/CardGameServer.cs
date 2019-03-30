@@ -1,12 +1,9 @@
 ﻿using CardsOverLan.Game;
 using CardsOverLan.Game.Bots;
 using Rant;
-using Rant.Core.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
 

@@ -519,6 +519,8 @@
             lah.localPlayerId = msg.player_id;
             onClientScoreChanged();
             setPlayerName(msg.player_name, true);
+            // Set token cookie
+            Cookies.set("player_token", msg.player_token.toString().trim());
         },
         "s_hand": msg => {
             lah.playerHand = msg.hand;

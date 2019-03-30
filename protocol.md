@@ -275,7 +275,8 @@ Contains information that identifies a client. Sent by server when the player ch
 {
     "msg": "s_clientinfo",
     "player_id": 123,
-    "player_name": "Berkin"
+    "player_name": "Berkin",
+    "player_token": "XXXXXXXX"
 }
 ```
 

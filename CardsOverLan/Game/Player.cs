@@ -49,10 +49,11 @@ namespace CardsOverLan.Game
 		public event PlayerAfkChangedEventDelegate AfkChanged;
 		public event PlayerAuxDataChangedEventDelegate AuxDataChanged;
 
-		internal Player(CardGame game, int id)
+		internal Player(CardGame game, int id, string token = "")
 		{
 			Game = game;
 			Id = id;
+			Token = token ?? "";
 			_hand = new HashList<WhiteCard>();
 			_selectedCards = new HashList<WhiteCard>();
 			_prevPlays = new List<RoundPlay>();
@@ -69,6 +70,8 @@ namespace CardsOverLan.Game
 				RaiseNameChanged(value);
 			}
 		}
+
+		public string Token { get; }
 
 		public CardGame Game { get; }
 
@@ -487,5 +490,7 @@ namespace CardsOverLan.Game
 		public int HandSize => _hand.Count;
 
 		public override string ToString() => $"{Name} (#{Id})";
+
+		public override int GetHashCode() => Token.GetHashCode() ^ Id.GetHashCode();
 	}
 }

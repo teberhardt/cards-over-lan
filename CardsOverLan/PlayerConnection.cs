@@ -89,7 +89,7 @@ namespace CardsOverLan
 
 		private void CreatePlayer()
 		{
-			_player = Game.CreatePlayer(GetCookie("name"));
+			_player = Game.CreatePlayer(GetCookie("name"), false, GetCookie("player_token"));
 
 			RegisterEvents();
 
@@ -200,7 +200,8 @@ namespace CardsOverLan
 			{
 				msg = "s_clientinfo",
 				player_id = Player.Id,
-				player_name = Player.Name
+				player_name = Player.Name,
+				player_token = Player.Token
 			});
 		}
 
@@ -304,7 +305,9 @@ namespace CardsOverLan
 					}
 				}
 
-				if (Game.RemovePlayer(Player, closeReason))
+				bool shouldPreserve = !IsRejected;
+
+				if (Game.RemovePlayer(Player, closeReason, shouldPreserve))
 				{
 					Console.WriteLine($"{Player} disconnected: {closeReason} (code {e.Code})");
 				}

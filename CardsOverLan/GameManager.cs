@@ -66,6 +66,11 @@ namespace CardsOverLan
 			Console.WriteLine($"Max Rounds: {Settings.MaxRounds}");
 			Console.WriteLine($"Upgrades enabled: {Settings.UpgradesEnabled}");
 			Console.WriteLine($"Allow duplicate players: {Settings.AllowDuplicatePlayers}");
+			Console.WriteLine($"Player Preserves: {Settings.PlayerPreserveEnabled}");
+			if (Settings.PlayerPreserveEnabled)
+			{
+				Console.WriteLine($"Player Preserve Time: {Settings.PlayerPreserveTimeSeconds}s");
+			}
 			Console.WriteLine($"Cards: {Game.BlackCardCount + Game.WhiteCardCount} ({Game.WhiteCardCount}x white, {Game.BlackCardCount}x black)");
 			Console.WriteLine();
 			Console.WriteLine($"Packs:\n{Game.GetPacks().Select(d => $"        [{d}]").Aggregate((c, n) => $"{c}\n{n}")}");

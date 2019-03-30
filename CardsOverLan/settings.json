@@ -34,6 +34,10 @@
 	"afk_time_seconds": 90,
 	"idle_kick_time_seconds": 180,
 
+	/* PLAYER PRESERVES */
+	"enable_player_preserve": true,
+	"player_preserve_time": 30,
+
 	/* CONTENT SETTINGS */
 	"exclude_content": [],
 	"exclude_packs": [],

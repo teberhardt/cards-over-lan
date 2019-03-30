@@ -26,7 +26,9 @@ namespace CardsOverLan
 
 		private string _ip = string.Empty;
 		private readonly Dictionary<string, string> _cookies;
+		private bool _rejected;
 
+		public bool IsRejected => _rejected;
 		public CardGameServer Server { get; }
 		public CardGame Game { get; }
 		public string ClientLanguage { get; private set; } = DefaultLanguage;
@@ -180,6 +182,7 @@ namespace CardsOverLan
 
 		protected void Reject(string rejectReason, string rejectDesc = "")
 		{
+			_rejected = true;
 			SendRejection(rejectReason, rejectDesc);
 			Context.WebSocket.Close(CloseStatusCode.Normal, rejectReason);
 		}

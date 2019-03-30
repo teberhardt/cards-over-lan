@@ -42,6 +42,7 @@ namespace CardsOverLan
 		private const int DefaultBotCount = 0;
 		private const int DefaultDiscards = 5;
 		private const int DefaultMaxBlankCardLength = 140;
+		private const int DefaultPlayerPreserveTimeSeconds = 30;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -279,6 +280,14 @@ namespace CardsOverLan
 			get => _maxBlankCardLength;
 			set => _maxBlankCardLength = value <= 0 ? 1 : value;
 		}
+
+		[JsonProperty("enable_player_preserve", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(true)]
+		public bool PlayerPreserveEnabled { get; set; } = true;
+
+		[JsonProperty("player_preserve_time", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(DefaultPlayerPreserveTimeSeconds)]
+		public int PlayerPreserveTimeSeconds { get; set; } = DefaultPlayerPreserveTimeSeconds;
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

@@ -91,6 +91,7 @@
     <Compile Include="Game\CardGame.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\NameAttribute.cs" />
+    <Compile Include="Game\PlayerTokenGenerator.cs" />
     <Compile Include="Game\StringUtilities.cs" />
     <Compile Include="Game\Trophies\AllTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\AnyTrophyRequirement.cs" />
