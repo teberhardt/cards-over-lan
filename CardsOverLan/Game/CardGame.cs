@@ -622,6 +622,11 @@ namespace CardsOverLan.Game
 			if (player == null)
 			{
 				player = new Player(this, CreatePlayerId(), _tokenGen.CreateToken());
+
+				// Give them some cards
+				Deal(player, CurrentBlackCard?.DrawCount ?? 0);
+				player.AddBlankCards(Settings.BlankCards);
+				player.Discards = Settings.Discards;
 			}
 
 			player.Name = CreatePlayerName(name, player);
@@ -633,11 +638,6 @@ namespace CardsOverLan.Game
 			player.JudgedCards += OnPlayerJudgedCards;
 			player.ScoreChanged += OnPlayerScoreChanged;
 			player.AfkChanged += OnPlayerAfkChanged;
-
-			// Give them some cards
-			Deal(player, CurrentBlackCard?.DrawCount ?? 0);
-			player.AddBlankCards(Settings.BlankCards);
-			player.Discards = Settings.Discards;
 
 			lock (_playerListLock)
 			{

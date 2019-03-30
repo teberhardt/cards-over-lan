@@ -80,6 +80,8 @@
     - Enable with `enable_idle_kick` setting.
 - ADD: Gameplay analytics. 
     - Pretty basic right now, might add more stuff later.
+- ADD: Player Preserves
+    - Players who lose connection and reconnect within a set time limit will have their points/cards restored.
 
 - FIX: Occasional deadlock when accessing player list with many clients
 - FIX: Faulty duplicate prevention
