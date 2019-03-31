@@ -2,11 +2,12 @@
 
 A Cards Against Humanity clone for hosting on your home network.
 
+[Official Discord Server](https://discord.gg/VsZkprN)
+
 <p align="center"><img src="https://thumbs.gfycat.com/HealthyInformalGalapagoshawk-size_restricted.gif"><p>
 
-|**This software is a work-in-progress. It may be missing functionality or contain bugs.**|
+|**This software is a work-in-progress. It may contain bugs.**|
 |---|
-
 
 ## Features
 
@@ -19,6 +20,7 @@ A Cards Against Humanity clone for hosting on your home network.
 * **Card Upgrades** - Some cards may be "upgraded" by using Card Coins. You earn Card Coins with each round you win. They might have more uses later, or be removed entirely. Who knows what the future may hold?
 * **Skipping** - If you don't like the current black card, you can vote to skip it with the press of a button.
 * **Idle Detection** - If players are idle for a set amount of time, the server ignores them, allowing the game to continue without them.
+* **Player Preserves** - If a player loses connection, they can reconnect within a certain time limit without losing their cards/points.
 
 
 ## How it works
@@ -99,7 +101,7 @@ The settings.json file contains a number of properties that control how the serv
 
 #### bot_config
 
-All `delay` properties are in milliseconds.
+All time properties are in milliseconds.
 
 |Property|Type|Description|
 |--------|----|-----------|
@@ -120,26 +122,29 @@ All `delay` properties are in milliseconds.
 
 I was bored and wanted a fun project to work on over winter break.
 
-### There's already PYX, Azala, Cardcast, etc. Why another one?
+### There's already PYX, Azala, Cardcast, etc. Why should I use your thing?
 
-They're all good, and each of them has different strengths. Below is a (non-exhaustive) comparison table:
+They're all good in their own way, and each of them has different strengths. Below is a (non-exhaustive) comparison table:
 
-|                       |PYX|Azala|Cards Over LAN|
-|-----------------------|:-:|:---:|:------------:|
-|**Mobile version**     |❌|✔️|✔️|
-|**Self-Hosting**       |✔️|❌|✔️|
-|**Offline Play**       |❌|❌|✔️|
-|**Discards**           |❌|✔️|✔️|
-|**Chat**               |✔️*|✔️|✔️|
-|**Blank Cards**        |✔️*|✔️|✔️|
-|**Localization**       |❌|❌|✔️|
-|**Bots**               |❌|✔️|✔️|
-|**Black card skipping**|❌|✔️|✔️|
-|**Trophies**           |❌|❌|✔️|
-|**Multiple games**     |✔️|✔️|❌|
-|**License**            |BSD 2-Clause|Closed Source|MIT|
+|                       |PYX|Azala|Cardcast|Cards Over LAN|
+|-----------------------|:-:|:---:|:------:|:------------:|
+|**Desktop support**    |✔️️️|✔️|❌|✔️|
+|**Mobile support**     |❌|✔️|✔️|✔️|
+|**Self-hosting**       |✔️|❌|✔️|✔️|
+|**Offline play**       |❌|❌|❌²|✔️|
+|**Discards**           |❌|✔️|❌|✔️|
+|**Chat**               |✔️¹|✔️|❌|✔️|
+|**Blank cards**        |✔️¹|✔️|❌|✔️|
+|**Localization**       |❌|❌|❌|✔️|
+|**Bots**               |❌|✔️|✔️|✔️|
+|**Black card skipping**|❌|✔️|❌|✔️|
+|**Trophies**           |❌|❌|❌|✔️|
+|**Multiple games**     |✔️|✔️|❌|❌|
+|**License**            |BSD 2-Clause|Closed Source|Closed Source|MIT|
 
-_*Chat and blank cards only available in third-party PYX servers._
+_¹ Chat and blank cards only available in third-party PYX servers._
+
+_² Internet connection required to download Cardcast decks._
 
 ### Can I add my own cards?
 
@@ -147,31 +152,32 @@ Yes, decks are written using a simple JSON format. Add them to the `packs` folde
 
 ### Can I host this on a public webserver?
 
-I really don't recommend it. It's only designed to host one game at a time. It also doesn't support HTTPS at the moment, so frankly that would be a pretty unwise thing to do.
+Yes! I recommend hosting behind a reverse proxy such as Nginx or Apache.
+Although the game server doesn't directly support HTTPS, you can forward HTTPS traffic to it using a load balancer or similar.
 
-### Your webdev skills suck! I could do so much better!
+### You suck at webdev! I could do this much better!
 
 Isn't that the great thing about open source software?
 
-### You should use React/Angular/Bootstrap/etc.
+### You should use React/Angular/Bootstrap/Vue/etc.
 
 No.
 
 ### There's a feature I want you to add.
 
-Please submit an issue detailing what you're looking for, and we can discuss.
+Please submit an issue detailing what you're looking for.
 
 ### Why don't you include the CAH cards?
 
 CAH is licensed under a CC BY-NC-SA 2.0 license.
-If I distributed my software with their IP included, I would have to place all of my code under that same license. Since Creative Commons is not designed for software,
-it's much easier for everyone if I decouple the CAH content from the game.
+This means that I cannot distribute my software with their IP included without placing all of my code under that same license. Since Creative Commons is not designed for software,
+it simplifies things greatly to decouple the CAH cards from the game.
 
-If you want the CAH cards in the game, see [this repo](https://github.com/cardsoverlan/cah-packs).
+If you want the CAH cards, you can get the packs [here](https://github.com/cardsoverlan/cah-packs).
 
 ### Can I filter out cards that mortally offend me?
 
-Use the `exclude_content` property in settings.json.
+You can use the `exclude_content` property in your settings for this.
 
 Example: if you hate all violence and sexual content, you can do this to exclude any cards mentioning such things:
 

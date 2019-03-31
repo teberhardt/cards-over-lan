@@ -485,8 +485,8 @@
         {
             "id": "w_loudporn",
             "content": {
-                "en": "Watching porn but forgetting to plug in your headphones.",
-                "de": "Pornos anschauen, aber vergessen, deinen Kopfhörer einzustecken."
+                "en": "Watching porn but forgetting to plug in my headphones.",
+                "de": "Pornos anschauen, aber vergessen, meinen Kopfhörer einzustecken."
             },
             "flags": "x"
         },
@@ -1312,7 +1312,7 @@
             "id": "w_salivaglass",
             "content": {
                 "en": "A warm glass of spit.",
-                "de": "Ein warmes Glas Speichel."
+                "de": "Ein warmes Glas Spucke."
             },
             "flags": "g"
         },
@@ -3174,7 +3174,8 @@
         {
             "id": "w_bitogenocide",
             "content": {
-                "en": "A little bit of genocide."
+                "en": "A little bit of genocide.",
+                "de": "Ein bisschen Völkermord."
             },
             "flags": "mu"
         },
@@ -3208,7 +3209,8 @@
         {
             "id": "w_laxatives",
             "content": {
-                "en": "Laxatives."
+                "en": "Laxatives.",
+                "de": "Abführmittel."
             }
         },
         {
@@ -3226,7 +3228,20 @@
         {
             "id": "w_partialcremation",
             "content": {
-                "en": "A patrial cremation."
+                "en": "A partial cremation."
+            }
+        },
+        {
+            "id": "w_russiandolls",
+            "content": {
+                "en": "Russian nesting dolls."
+            }
+        },
+        {
+            "id": "w_schnitzel",
+            "content": {
+                "en": "Schnitzel.",
+                "de": "Schnitzel."
             }
         },
         {

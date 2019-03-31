@@ -668,6 +668,8 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public bool RemovePlayer(Player player, string reason, bool shouldPreserve = true)
 		{
+			bool isRemovedPlayerJudge = Judge == player;
+
 			lock (_playerListLock)
 			{
 				if (player == null || !_players.Remove(player)) return false;
@@ -689,7 +691,7 @@ namespace CardsOverLan.Game
 				player.DiscardSelection();
 			}
 
-			if (Judge == player)
+			if (isRemovedPlayerJudge)
 			{
 				NextJudge();
 			}

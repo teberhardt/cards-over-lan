@@ -85,3 +85,4 @@
 
 - FIX: Occasional deadlock when accessing player list with many clients
 - FIX: Faulty duplicate prevention
+- FIX: Disappearing czar bug (fingers crossed)
