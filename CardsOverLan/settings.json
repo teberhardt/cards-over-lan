@@ -9,7 +9,7 @@
 	/* GENERAL GAME SETTINGS */
 	"server_name": "Cards Over LAN",
 	"server_password": "",
-	"max_players": 20,
+	"max_players": 10,
 	"min_players": 3,
 	"max_spectators": 10,
 	"max_player_name_length": 64,
@@ -45,7 +45,7 @@
 	"use_packs": [],
 
 	/* BOT SETTINGS */
-	"bot_count": 2,
+	"bot_count": 1,
 	"enable_bot_taunts": true,
 	"bot_czars": false,
 	"bot_names": [
