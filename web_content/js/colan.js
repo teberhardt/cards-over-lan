@@ -994,7 +994,8 @@
                 if (lah.isClientJudge) {
                     setStatusText(getUiString("ui_choose_best_play"));
                 } else {
-                    setStatusText(getUiString("ui_czar_deciding"));
+                    let judge = getPlayer(lah.currentJudgeId);
+                    setStatusText(getUiString("ui_czar_deciding", (judge && judge.name) || "???"));
                 }
                 break;
             case STAGE_ROUND_END:

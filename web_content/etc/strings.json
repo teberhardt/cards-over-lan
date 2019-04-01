@@ -136,6 +136,10 @@
         "en": "Wrong password",
         "de": "Passwort ungültig"
     },
+    "ui_reject_afk": {
+        "en": "Idle timeout",
+        "de": "Untätigkeits-Timeout"
+    },
     "ui_waiting_for_players": {
         "en": "Waiting for more players",
         "de": "Warte auf weitere Spieler"
@@ -217,8 +221,8 @@
         "de": "Wähle die beste Antwort aus."
     },
     "ui_czar_deciding": {
-        "en": "Card Czar is deciding...",
-        "de": "Der Zar entscheidet sich..."
+        "en": "{0} is picking a winner...",
+        "de": "{0} wählt einen Rundensieger..."
     },
     "ui_nobody_wins_round": {
         "en": "Nobody wins the round.",

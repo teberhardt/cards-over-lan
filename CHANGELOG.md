@@ -53,6 +53,7 @@
 - ADD: Cookie notification
 - ADD: 404 page
 - ADD: Content Security Policy
+- ADD: New logo
 
 - CHANGE: Refresh server info on websocket connection/reconnection
 - CHANGE: Moved display prefs to local storage instead of cookies

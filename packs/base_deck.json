@@ -3245,6 +3245,13 @@
             }
         },
         {
+            "id": "w_sextapeforall",
+            "content": {
+                "en": "Our sex tape being played in front of everyone."
+            },
+            "flags": "s"
+        },
+        {
             "id": "b_notmuchdiffreally",
             "content": {
                 "en": "When you really think about it, ________ isn't too different from ________."
@@ -3636,7 +3643,7 @@
             "id": "b_aftersex",
             "content": {
                 "en": "After sex, my favorite thing to do is ________.",
-                "de": "Nach dem Sex ist meine Lieblingsbeschäftigung ________."
+                "de": "Nach dem Sex ist meine Lieblings&shy;beschäftigung ________."
             },
             "pick": 1
         },

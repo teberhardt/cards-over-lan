@@ -1,4 +1,4 @@
-# Cards Over LAN
+![Cards Over LAN logo](https://i.imgur.com/97o7ZO4.png)
 
 A Cards Against Humanity clone for hosting on your home network.
 
