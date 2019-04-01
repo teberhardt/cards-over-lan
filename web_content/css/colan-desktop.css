@@ -1,9 +1,6 @@
-/*DESKTOP*/
-@media only screen and (min-width: 771px){
-
 ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {
@@ -24,6 +21,11 @@
     background: #aaa;
 }
 
+* {
+    /* Use the non-ugly scrollbar for Firefox */
+    scrollbar-width: thin;
+}
+
 :root {
     --card-scale: 1.8;
     --card-width: calc(14vh * var(--card-scale));
@@ -33,6 +35,11 @@
     --card-padding: 1em;
     --navbar-height: 36pt;
     --final-score-row-height: 36pt;
+    --scrollbar-width: 8px;
+}
+
+html {
+    overflow: hidden;
 }
 
 body {
@@ -123,11 +130,56 @@ smaller {
     min-height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-columns: [c-start] 50% [c-center] 50% [c-end];
-    grid-template-rows: [r-start] 50% [r-center] 50% [r-end];
+    grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end];
+    grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
 }
 
-/* PLAYER LIST */
+/* COOKIE NOTICE */
+
+#cookie-notice {
+    position: fixed;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    right: 0;
+    background: black;
+    color: white;
+    border-top: 1px solid white;
+    z-index: 99999999;
+    padding: .5em 1.5em;
+}
+
+#cookie-notice > p {
+    font-size: 12pt;
+    font-weight: 400;
+    width: 50%;
+    margin: 6px auto;
+}
+
+#cookie-notice > h1 {
+    text-align: center;
+    font-size: 18pt;
+    font-weight: 600;
+    margin: 6px 6px;
+}
+
+#cookie-notice > input[type=button].closer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14pt;
+    line-height: 1em;
+    color: white;
+    width: 1em;
+    height: 1em;
+    outline: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+/* PLAYER LIST AND CHAT */
 
 #player-list-area {
     grid-row: r-start / r-center;
@@ -138,6 +190,12 @@ smaller {
     position: relative;
     margin: calc(var(--navbar-height) + 10pt) 10pt 0 0;
     cursor: default;
+    box-sizing: border-box;
+    padding-bottom: -50px;
+}
+
+#player-list-area > * {
+    z-index: 99999;
 }
 
 .lah-spectating #player-list-area {
@@ -149,23 +207,32 @@ smaller {
     min-width: 300px;
     display: flex;
     flex-direction: column;
+    flex-basis: 50%;
+    flex-shrink: 0;
     align-items: stretch;
     transition: opacity .3s;
 }
 
-#player-list-wrapper:not(:hover) {
+#player-list-wrapper:not(:hover), #player-chat-wrapper:not(:hover) {
     opacity: .7;
+}
+
+#game.chat-disabled #player-chat-wrapper {
+    display: none !important;
+}
+
+#game.chat-disabled #player-list-wrapper {
+    flex-basis: 100%;
 }
 
 #player-list {
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     align-items: stretch;
     overflow-y: auto;
 }
 
-#player-list-title {
+#player-list-title, #player-chat-title {
     font-size: 1em;
     font-weight: 600;
     margin: 0 3pt 2pt 0;
@@ -177,7 +244,7 @@ smaller {
     display: grid;
     flex-shrink: 0;
     grid-template-rows: [r-start] 1fr [r-end];
-    grid-template-columns: [c-start] 1fr [c-center] 32pt [c-end];
+    grid-template-columns: [c-start] 1fr [c-center] 4em [c-end];
     padding: 3pt 0;
     margin-right: 3pt;
 }
@@ -246,6 +313,189 @@ smaller {
     font-weight: 500;
 }
 
+#player-chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-grow: 8;
+    flex-shrink: 1;
+    width: 300px;
+    transition: opacity .3s
+}
+
+#player-chat-messages-container {
+    flex-grow: 1;
+    position: relative;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+#player-chat-messages-container:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: var(--scrollbar-width);
+    height: 24px;
+    display: block;
+    background: linear-gradient(to bottom, var(--accent-bg), transparent);
+    z-index: 9999;
+}
+
+#player-chat-messages {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#player-chat-messages .chat-msg:first-child {
+    margin-top: auto;
+}
+
+.chat-msg {
+    margin-left: 4px;
+    font-weight: 300;
+}
+
+.chat-msg-author {
+    font-size: 10pt;
+    margin: 2px 0;
+    font-weight: 700;
+}
+
+.chat-msg-body, .chat-msg-body * {
+    cursor: text;
+    font-size: 10pt;
+    font-weight: 100;
+    word-wrap: break-word;
+    word-break: normal;
+}
+
+.chat-msg-body strong, .chat-msg-body strong * {
+    font-weight: 900 !important;
+}
+
+.chat-msg-body em, .chat-msg-body em * {
+    font-style: oblique;
+}
+
+.chat-msg-body strike, .chat-msg-body strike * {
+    text-decoration: line-through;
+}
+
+.enable-anim-text .chat-msg-body span.juggle-a {
+    display: inline-block;
+    animation: chat-anim-juggle .5s ease infinite;
+    white-space: pre-wrap;
+}
+
+.enable-anim-text .chat-msg-body span.juggle-b {
+    display: inline-block;
+    animation: chat-anim-juggle .5s ease infinite reverse;
+    white-space: pre-wrap;
+}
+
+@keyframes chat-anim-juggle {
+    0% {
+        transform: none;
+    }
+    25% {
+        transform: translateY(-1px);
+    }
+    50% {
+        transform: none;
+    }
+    75% {
+        transform: translateY(1px);
+    }
+}
+
+.enable-anim-text  .chat-msg-body span.bounce {
+    display: inline-block;
+    animation: chat-anim-bounce .4s ease infinite;
+}
+
+@keyframes chat-anim-bounce {
+    50% {
+        transform: translateY(-3px);
+        animation-timing-function: ease-in;
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.enable-anim-text  .chat-msg-body span.tilt {
+    display: inline-block;
+    animation: chat-anim-tilt .5s linear infinite;
+    white-space: pre-wrap;
+}
+
+@keyframes chat-anim-tilt {
+    0% {
+        transform: rotate(-20deg);
+    }
+
+    50% {
+        transform: rotate(20deg);
+    }
+
+    100% {
+        transform: rotate(-20deg);
+    }
+}
+
+.enable-anim-text .chat-msg-body span.rage {
+    display: inline-block;
+    animation: chat-anim-rage .09s ease-in-out infinite;
+}
+
+@keyframes chat-anim-rage {
+    0% {
+        transform: translateY(3px) rotate(1deg);
+    }
+    25% {
+        transform: none;
+    }
+    50% {
+        transform: translateY(3px) rotate(-1deg);
+    }
+
+    75% {
+        transform: none;
+    }
+}
+
+#player-chat-input-wrapper {
+    flex-shrink: 1;
+}
+
+#txt-chat-msg {
+    background: none;
+    color: var(--accent-fg);
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #9a9a9a;
+    padding: 4px;
+    margin: 0;
+    width: 100%;
+    height: 1.8em;
+    font-weight: 300;
+    box-sizing: border-box;
+    transition: border-color .2s ease, border-width .2s ease;
+}
+
+#txt-chat-msg:focus {
+    border-color: var(--accent-fg);
+}
+
 /* NOTIFICATION BANNER */
 
 #notify-banner {
@@ -262,8 +512,7 @@ smaller {
     padding: 12pt;
     background: rgba(16, 16, 16, .75);
     cursor: default;
-    backdrop-filter: blur(5px);
-    z-index: 20000;
+    z-index: 2000000;
 }
 
 #notify-banner-text {
@@ -277,13 +526,12 @@ smaller {
 /* HAND AREA */
 
 #hand-area {
-    grid-row-start: r-center;
-    grid-row-end: r-end;
-    grid-column-start: 1;
-    grid-column-end: span c-end;
+    grid-row: r-start / r-end;
+    grid-column: c-start / c-end;
     display: flex;
     position: relative;
-    align-items: flex-end;
+    align-items: flex-end;   
+    overflow: hidden; 
 }
 
 #game.lah-stage-judging #hand-area {
@@ -293,8 +541,8 @@ smaller {
 #hand-cards-area {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
-
 
 #hand-cards-container {
     display: flex;
@@ -310,6 +558,14 @@ smaller {
 #hand-area:not(.disabled) card[white]:active:not(:focus-within) {
     box-shadow: 0 0 7pt 3pt rgba(0, 0, 0, .55);
     transform: translate(0, 1.75pt);
+}
+
+#hand-controls-area {
+    transform: translate(-50%, calc(-1 * var(--card-height) - 100% - 28px));
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 9999;
 }
 
 /* STATUS AREA */
@@ -596,7 +852,7 @@ smaller {
 /* PLAY AREA */
 
 #play-area {
-    grid-row-start: r-center;
+    grid-row-start: r-start;
     grid-row-end: r-end;
     grid-column-start: c-start;
     grid-column-end: c-end;
@@ -604,6 +860,7 @@ smaller {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow: hidden;
 }
 
 #play-cards-area {
@@ -612,6 +869,7 @@ smaller {
     align-items: center;
     justify-content: flex-start;
     overflow-x: auto;
+    padding-bottom: 32pt;
 }
 
 #game.lah-stage-judging.lah-judge #play-cards-area .card-group * {
@@ -622,14 +880,19 @@ smaller {
     overflow: visible;
 }
 
+#play-cards-scroll-area {
+    align-items: flex-end;
+    padding-bottom: 36pt;
+}
+
 /* JUDGE CONTROLS AREA */
 
 #judge-controls-area {
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-    transform: translate(0, -20pt);
+    bottom: 0;
+    transform: translate(0, calc(var(--card-height) * -1 - 24px - 100%));
     display: none;
     flex-direction: row;
     align-content: center;
@@ -651,7 +914,7 @@ smaller {
     grid-row-start: r-start;
     grid-row-end: r-center;
     grid-column-start: c-start;
-    grid-column-end: c-end;
+    grid-column-end: c-end;    
 }
 
 #black-card-area {
@@ -873,7 +1136,7 @@ card .ribbon {
     border-radius: 0 0 calc(var(--card-border-radius) - 2px) calc(var(--card-border-radius) - 2px);
 }
 
-card .ribbon:after {
+card[data-packid] .ribbon:after {
     position: absolute;
     left: 0;
     top: 40px;
@@ -881,7 +1144,7 @@ card .ribbon:after {
     height: 60px;
     content: attr(data-packname);
     font-size: 11pt;    
-    background-color: black;
+    background-color: #444;
     background-size: 100%;
     padding: 8px 15px;
     text-align: left;
@@ -890,15 +1153,18 @@ card .ribbon:after {
     transition: transform .2s, color .2s, background-size .2s;
     border-left: none !important;
     background-clip: padding-box;
+    background-repeat: repeat-x;
 }
 
-card .ribbon:not(:hover):after {
+card[data-packid] .ribbon:not(:hover):after {
     color: rgba(0,0,0,0) !important;
+    background-size: 12.5% !important;
 }
 
 card .ribbon:hover:after {
     color: #fff;
     transform: rotate(0deg) translateY(-10px);
+    background-size: 100% !important;
 }
 
 card .ribbon:hover ~ .pick, card .ribbon:hover ~ .draw {
@@ -1093,14 +1359,6 @@ card[data-selection]::after {
     z-index: 8000;
 }
 
-#hand-controls-area {
-    transform: translate(-50%, -30%);
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 9999;
-}
-
 .lah-btn {
     outline: none;
     padding: 8pt 25pt;
@@ -1162,6 +1420,56 @@ card[data-selection]::after {
     font-size: 13pt;
     margin: 4pt 1pt;
     color: #444;
+}
+
+input[type=checkbox].lah-checkbox {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+input[type=checkbox].lah-checkbox + label {
+    position: relative;
+    padding-left: 32px;
+    cursor: default;
+    user-select: none;
+}
+
+input[type=checkbox].lah-checkbox + label:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 3px;
+    box-sizing: border-box;
+    transition: background-color .25s ease;
+}
+
+input[type=checkbox].lah-checkbox:active + label:before {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+input[type=checkbox].lah-checkbox:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: inline-block;
+    height: 8px;
+    width: 15px;
+    border: 0 solid black;
+    border-left-width: 3px;
+    border-bottom-width: 3px;
+    transform: rotate(-45deg) translate(-1px, 1px);
+    box-sizing: border-box;
 }
 
 .wide {
@@ -1268,7 +1576,6 @@ card[data-selection]::after {
     display: flex;
     flex-direction: column;
     margin: 4pt 2pt;
-    width: 100%;
 }
 
 .lah-vlist > .lah-gap, .modal-body > .lah-gap {
@@ -1431,4 +1738,26 @@ card[data-selection]::after {
     transform: translate(-25px, 50px) rotate(45deg);
     text-shadow: 0 0 20px black;
 }
+
+/* DESKTOP COMPACT */
+@media only screen and (min-aspect-ratio: 5/3)
+{
+
+    /* GAME AREA */
+
+    #game {
+        grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end sb-start] 330px [sb-end];
+        grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
+    }
+
+    #player-list-area {
+        grid-column: sb-start / sb-end;
+        grid-row: r-start / r-end;
+        margin-bottom: 12px;
+        border-left: 2px solid rgba(64, 64, 64, .2);
+    }
+
+    #player-list-wrapper {
+        flex-basis: 40%;
+    }
 }

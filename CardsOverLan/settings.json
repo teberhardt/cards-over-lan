@@ -1,33 +1,74 @@
 ﻿{
-	"host": "http://localhost:80",
+	/* WEBSERVER SETTINGS */
+	"host_url": "http://localhost:80",
+	"ws_url": "ws://0.0.0.0:3000",
+	"client_ws_port": 3000,
+	"web_root": "./web_content",
+	"allow_duplicates": false,
+
+	/* GENERAL GAME SETTINGS */
 	"server_name": "Cards Over LAN",
-	"max_players": 15,
+	"server_password": "",
+	"max_players": 10,
 	"min_players": 3,
 	"max_spectators": 10,
 	"max_player_name_length": 64,
-	"allow_duplicates": false,
+	"max_blank_card_length": 150,
 	"hand_size": 10,
+	"pick_one_only": false,
 	"blank_cards": 3,
-	"discards": 10,
+	"discards": 15,
 	"allow_skips": true,
 	"enable_upgrades": true,
-	"round_end_timeout": 5000,
-	"game_end_timeout": 30000,
+	"enable_chat": true,	
+	"enable_afk": true,
+	"enable_idle_kick": true,
+	"enable_trophies": true,	
 	"max_points": 8,
 	"max_rounds": 16,
 	"perma_czar": false,
-	"winner_czar": false,
-	"afk_time_seconds": 180,
-	"afk_recovery_time_seconds": 90,
+	"winner_czar": true,
+	"round_end_timeout": 5000,
+	"game_end_timeout": 30000,
+	"afk_recovery_time_seconds": 60,
+	"afk_time_seconds": 90,
+	"idle_kick_time_seconds": 180,
+
+	/* PLAYER PRESERVES */
+	"enable_player_preserve": true,
+	"player_preserve_time": 30,
+
+	/* CONTENT SETTINGS */
 	"exclude_content": [],
-	"enable_trophies": true,
-	"bot_count": 2,
+	"exclude_packs": [],
+	"require_languages": ["en"],
+	"use_packs": [],
+
+	/* BOT SETTINGS */
+	"bot_count": 1,
+	"enable_bot_taunts": true,
 	"bot_czars": false,
 	"bot_names": [
 		"AutoRodney", "AutoJavier", "AutoDixon", "AutoJanet", 
-		"AutoVon", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
+		"AutoBob", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
 		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
 	],
-	"require_languages": ["en"],
-	"use_packs": []
+	"bot_config": {
+		"play_min_base_delay": 3000,
+		"play_max_base_delay": 10000,
+		"play_min_per_card_delay": 3000,
+		"play_max_per_card_delay": 4000,
+		"judge_min_per_play_delay": 3000,
+		"judge_max_per_play_delay": 5500,
+		"judge_min_per_card_delay": 2000,
+		"judge_max_per_card_delay": 3000,
+		"min_typing_interval": 40,
+		"max_typing_interval": 55,
+		"min_typing_delay": 750,
+		"max_typing_delay": 2000
+	},
+
+	/* ANALYTICS SETTINGS */
+	"enable_analytics": true,
+	"analytics_path": "./data/colan_analytics.db"
 }

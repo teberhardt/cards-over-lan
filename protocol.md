@@ -25,7 +25,7 @@ ID strings must follow the following conventions:
 * Non-custom IDs may only contain alphanumeric characters and underscores.
 * White card IDs start with `w_`.
 * Black card IDs start with `b_`.
-* Custom card IDs start with `custom:` followed by the card text.
+* Custom card IDs start with `custom_` followed by the card text encoded from UTF8 to Base64.
 
 ## Client messages
 
@@ -98,6 +98,17 @@ Sent by the user when they change their vote to skip the current black card.
 {
     "msg": "c_vote_skip",
     "voted": true // sets vote status
+}
+```
+
+### c_chat_msg
+
+Send by the user when they send a message in chat.
+
+```json
+{
+    "msg": "c_chat_msg",
+    "body": "AutoRodney sucks"
 }
 ```
 
@@ -264,7 +275,8 @@ Contains information that identifies a client. Sent by server when the player ch
 {
     "msg": "s_clientinfo",
     "player_id": 123,
-    "player_name": "Berkin"
+    "player_name": "Berkin",
+    "player_token": "XXXXXXXX"
 }
 ```
 
@@ -289,3 +301,17 @@ After sending, the client is immediately disconnected.
 |`reject_server_full`|The server is full and cannot accept any more players.|
 |`reject_banned`|The server has banned the connecting client.|
 |`reject_duplicate`|The server has detected that the client is attempting to open more than one instance of the game.|
+|`reject_afk`|The server has disconnected the client due to an extended period of inactivity.|
+|`reject_bad_password`|The server has rejected the client because they provided the wrong password.|
+
+### s_chat_msg
+
+Sent to clients when a new chat message is posted.
+
+```json
+{
+    "msg": "s_chat_msg",
+    "author": "Berkin",
+    "body": "Example text"
+}
+```

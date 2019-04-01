@@ -56,7 +56,7 @@ namespace CardsOverLan
 
 			Game = new CardGame(_packs, Settings);
 
-			Console.WriteLine("\n========= GAME STARTING =========\n");
+			Console.WriteLine("\n=========== GAME INFO ===========\n");
 			Console.WriteLine($"Player limit: [{Settings.MinPlayers}, {Settings.MaxPlayers}]");
 			Console.WriteLine($"Hand size: {Settings.HandSize}");
 			Console.WriteLine($"Perma-Czar: {Settings.PermanentCzar}");
@@ -66,6 +66,11 @@ namespace CardsOverLan
 			Console.WriteLine($"Max Rounds: {Settings.MaxRounds}");
 			Console.WriteLine($"Upgrades enabled: {Settings.UpgradesEnabled}");
 			Console.WriteLine($"Allow duplicate players: {Settings.AllowDuplicatePlayers}");
+			Console.WriteLine($"Player Preserves: {Settings.PlayerPreserveEnabled}");
+			if (Settings.PlayerPreserveEnabled)
+			{
+				Console.WriteLine($"Player Preserve Time: {Settings.PlayerPreserveTimeSeconds}s");
+			}
 			Console.WriteLine($"Cards: {Game.BlackCardCount + Game.WhiteCardCount} ({Game.WhiteCardCount}x white, {Game.BlackCardCount}x black)");
 			Console.WriteLine();
 			Console.WriteLine($"Packs:\n{Game.GetPacks().Select(d => $"        [{d}]").Aggregate((c, n) => $"{c}\n{n}")}");
@@ -83,7 +88,7 @@ namespace CardsOverLan
 
 		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
 		{
-			Console.WriteLine($"Black card skipped: {skippedCard.ID} -> {replacementCard.ID}");
+			Console.WriteLine($"SKIPPED BLACK CARD: {skippedCard.ID} -> {replacementCard.ID}");
 		}
 
 		public object GetGameInfoObject()
@@ -97,40 +102,42 @@ namespace CardsOverLan
 				hand_size = Settings.HandSize,
 				white_card_count = Game.WhiteCardCount,
 				black_card_count = Game.BlackCardCount,
-				upgrades_enabled = Game.Settings.UpgradesEnabled,
-				perma_czar = Game.Settings.PermanentCzar,
-				bot_czars = Game.Settings.AllowBotCzars,
-				bot_count = Game.Settings.BotCount,
-				winner_czar = Game.Settings.WinnerCzar,
-				max_points = Game.Settings.MaxPoints,
-				max_rounds = Game.Settings.MaxRounds,
-				blank_cards = Game.Settings.BlankCards,
-				discards = Game.Settings.Discards,
-				allow_skips = Game.Settings.AllowBlackCardSkips,
-				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name })
+				upgrades_enabled = Settings.UpgradesEnabled,
+				perma_czar = Settings.PermanentCzar,
+				bot_czars = Settings.AllowBotCzars,
+				bot_count = Settings.BotCount,
+				winner_czar = Settings.WinnerCzar,
+				max_points = Settings.MaxPoints,
+				max_rounds = Settings.MaxRounds,
+				blank_cards = Settings.BlankCards,
+				discards = Settings.Discards,
+				allow_skips = Settings.AllowBlackCardSkips,
+				chat_enabled = Settings.ChatEnabled,
+				pack_info = _packs.Select(p => new { id = p.Id, name = p.Name }),
+				game_port = Settings.ClientWebSocketPort
 			};
 		}
 
 		private void OnGameEnded(Player[] winners)
 		{
-			Console.WriteLine($"Game ended. Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
+			Console.WriteLine($"GAME OVER: Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 		}
 
-		private void OnGameRoundEnded(int round, Player roundWinner)
+		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
 		{
 			Console.WriteLine($"Round {round} ended: {roundWinner?.ToString() ?? "Nobody"} wins!");
 		}
 
 		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
 		{
-			Console.WriteLine($"Stage changed: {oldStage} -> {currentStage}");
+			Console.WriteLine($"STAGE CHANGE: {oldStage} -> {currentStage}");
 		}
 
 		private void OnGameRoundStarted()
 		{
 			Console.WriteLine($"ROUND {Game.Round}:");
-			Console.WriteLine($"Current black card: {Game.CurrentBlackCard} (draw {Game.CurrentBlackCard.DrawCount}, pick {Game.CurrentBlackCard.PickCount})");
-			Console.WriteLine($"Judge is {Game.Judge}");
+			Console.WriteLine($"BLACK CARD: {Game.CurrentBlackCard} (draw {Game.CurrentBlackCard.DrawCount}, pick {Game.CurrentBlackCard.PickCount})");
+			Console.WriteLine($"CARD CZAR: {Game.Judge}");
 		}
 
 		private void OnGameStateChanged()

@@ -1,4 +1,5 @@
-﻿using CardsOverLan.Game.Trophies;
+﻿using CardsOverLan.Analytics;
+using CardsOverLan.Game.Trophies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,6 @@ namespace CardsOverLan.Game
 	public sealed class Player
 	{
 		private const string DefaultName = "Player";
-		private const int AutoPlayDelayMin = 2000;
-		private const int AutoPlayDelayMax = 6000;
-		private const int AutoJudgeDelayMin = 2000;
-		private const int AutoJudgeDelayIncrementMin = 1000;
-		private const int AutoJudgeDelayIncrementMax = 1300;
 
 		private readonly List<RoundPlay> _prevPlays;
 		private readonly HashList<WhiteCard> _hand;
@@ -53,10 +49,11 @@ namespace CardsOverLan.Game
 		public event PlayerAfkChangedEventDelegate AfkChanged;
 		public event PlayerAuxDataChangedEventDelegate AuxDataChanged;
 
-		internal Player(CardGame game, int id)
+		internal Player(CardGame game, int id, string token = "")
 		{
 			Game = game;
 			Id = id;
+			Token = token ?? "";
 			_hand = new HashList<WhiteCard>();
 			_selectedCards = new HashList<WhiteCard>();
 			_prevPlays = new List<RoundPlay>();
@@ -73,6 +70,8 @@ namespace CardsOverLan.Game
 				RaiseNameChanged(value);
 			}
 		}
+
+		public string Token { get; }
 
 		public CardGame Game { get; }
 
@@ -216,9 +215,26 @@ namespace CardsOverLan.Game
 			_hand.RemoveRange(cards);
 			_selectedCards.Clear();
 			_selectedCards.AddRange(cardArray);
+
+			// Record card usages
+			RecordPlayedCards(cardArray);
+
 			RaiseCardsChanged();
 			RaiseSelectionChanged();
 			return true;
+		}
+
+		private async void RecordPlayedCards(WhiteCard[] cards)
+		{
+			if (IsAutonomous) return;
+			await Task.Run(() =>
+			{
+				foreach (var card in cards)
+				{
+					if (card.IsCustom) continue;
+					AnalyticsManager.Instance.RecordCardUseAsync(card);
+				}
+			});
 		}
 
 		public bool UpgradeCard(WhiteCard card)
@@ -240,6 +256,7 @@ namespace CardsOverLan.Game
 			_hand.Remove(card);
 			Game.Deal(this);
 			RaiseCardsChanged();
+			AnalyticsManager.Instance.RecordDiscardAsync(card);
 			return true;
 		}
 
@@ -250,7 +267,11 @@ namespace CardsOverLan.Game
 			{
 				_botPlayDelays++;
 			}
-			await Task.Delay(_rng.Next(AutoPlayDelayMin, AutoPlayDelayMax + 1));
+			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var cfg = Game.Settings.BotConfig;
+			int delayBase = _rng.Next(cfg.PlayMinBaseDelay, cfg.PlayMaxBaseDelay + 1);
+			int delayCards = _rng.Next(cfg.PlayMinPerCardDelay * pickCount, cfg.PlayMaxPerCardDelay * pickCount + 1);
+			await Task.Delay(delayBase + delayCards);
 			lock (_botPlayDelayLock)
 			{
 				_botPlayDelays--;
@@ -268,14 +289,18 @@ namespace CardsOverLan.Game
 			{
 				_botJudgeDelays++;
 			}
-			await Task.Delay(AutoJudgeDelayMin + _rng.Next(AutoJudgeDelayIncrementMin, AutoJudgeDelayIncrementMax + 1) * Game.CurrentBlackCard.PickCount);
+			int playCount = Game.GetRoundPlays().Count();
+			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var cfg = Game.Settings.BotConfig;
+			int delayCards = _rng.Next(cfg.JudgeMinPerCardDelay * pickCount, cfg.JudgeMaxPerCardDelay * pickCount + 1);
+			int delayPlays = _rng.Next(cfg.JudgeMinPerPlayDelay * playCount, cfg.JudgeMaxPerPlayDelay * playCount + 1);
+			await Task.Delay(delayCards + delayPlays);
 			lock (_botJudgeDelayLock)
 			{
 				_botJudgeDelays--;
 				if (_botJudgeDelays == 0)
-				{
-					int count = Game.GetRoundPlays().Count();
-					JudgeCards(_rng.Next(count));
+				{					
+					JudgeCards(_rng.Next(playCount));
 				}
 			}
 		}
@@ -303,6 +328,16 @@ namespace CardsOverLan.Game
 			{
 				if (numBlankCards == 0 || _blankCardsRemaining < numBlankCards) return;
 				_blankCardsRemaining -= numBlankCards;
+				RaiseCardsChanged();
+			}
+		}
+
+		public void SetBlankCards(int numBlankCards)
+		{
+			lock(_blankCardLock)
+			{
+				if (numBlankCards < 0) return;
+				_blankCardsRemaining = numBlankCards;
 				RaiseCardsChanged();
 			}
 		}
@@ -455,5 +490,7 @@ namespace CardsOverLan.Game
 		public int HandSize => _hand.Count;
 
 		public override string ToString() => $"{Name} (#{Id})";
+
+		public override int GetHashCode() => Token.GetHashCode() ^ Id.GetHashCode();
 	}
 }

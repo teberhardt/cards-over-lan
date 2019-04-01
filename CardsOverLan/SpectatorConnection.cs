@@ -26,12 +26,7 @@ namespace CardsOverLan
 			{
 				base.OnOpen();
 
-				if (!Server.TryAddToPool(this))
-				{
-					_isRejectedDuplicate = true;
-					Reject(RejectCodes.Duplicate);
-					return;
-				}
+				if (!IsOpen) return;				
 
 				if (!Server.AddSpectator(this))
 				{
@@ -53,11 +48,6 @@ namespace CardsOverLan
 			lock (_createDestroyLock)
 			{
 				base.OnClose(e);
-
-				if (!_isRejectedDuplicate)
-				{
-					Server.TryRemoveFromPool(this);
-				}
 
 				Server.RemoveSpectator(this);
 				UnsubscribeEvents();

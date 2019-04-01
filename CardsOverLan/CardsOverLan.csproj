@@ -38,6 +38,9 @@
     <Reference Include="HtmlAgilityPack, Version=1.8.11.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.8.11\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.1.4.5\lib\net40\Nancy.dll</HintPath>
     </Reference>
@@ -46,6 +49,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Rant, Version=3.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rant.3.0.531\lib\net45\Rant.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,10 +67,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analytics\AnalyticsManager.cs" />
+    <Compile Include="Analytics\CardFrequencyRecord.cs" />
+    <Compile Include="Analytics\StringFrequencyRecord.cs" />
+    <Compile Include="Analytics\WinningPlayRecord.cs" />
     <Compile Include="ClientIgnoreAttribute.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ClientConnectionBase.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="Game\Bots\BotConfiguration.cs" />
+    <Compile Include="Game\Bots\Taunt.cs" />
     <Compile Include="Game\ClientFacingAttribute.cs" />
     <Compile Include="Game\ClientObjectPolicyAttribute.cs" />
     <Compile Include="Game\ClientObjectPolicyType.cs" />
@@ -79,6 +91,7 @@
     <Compile Include="Game\CardGame.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\NameAttribute.cs" />
+    <Compile Include="Game\PlayerTokenGenerator.cs" />
     <Compile Include="Game\StringUtilities.cs" />
     <Compile Include="Game\Trophies\AllTrophyRequirement.cs" />
     <Compile Include="Game\Trophies\AnyTrophyRequirement.cs" />
@@ -99,8 +112,10 @@
     <Compile Include="Game\RoundPlay.cs" />
     <Compile Include="RejectCodes.cs" />
     <Compile Include="SpectatorConnection.cs" />
-    <Compile Include="Web\IndexModule.cs" />
-    <Compile Include="Web\GameBootstrapper.cs" />
+    <Compile Include="Tally.cs" />
+    <Compile Include="Web\NotFoundStatusHandler.cs" />
+    <Compile Include="Web\WebappModule.cs" />
+    <Compile Include="Web\WebappBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -110,6 +125,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Rant License.txt" />
     <Content Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

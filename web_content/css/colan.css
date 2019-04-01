@@ -1,3 +1,7 @@
+@import "colan-desktop.css" only screen and (min-width: 771px);
+
+@import "colan-mobile.css" only screen and (max-width: 770px);
+
 @font-face {
     font-family: "LAH";
     src: url(/fonts/Roboto-Regular.ttf);
@@ -86,6 +90,10 @@
     color: var(--placeholder-color);
 }
 
+::-moz-focus-inner {
+    border: 0;
+}  
+
 ::placeholder {
     /* Most modern browsers support this now. */
     color: var(--placeholder-color);
@@ -94,6 +102,8 @@
 * {
     font-family: "LAH", sans-serif !important;
     font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 hr {
@@ -130,12 +140,6 @@ hr {
     transition: none !important;
 }
 
-.hidden:not(.fade) {
-    display: none !important;
-    pointer-events: none;
-    opacity: 0;
-}
-
 #game.lah-spectating .player-only, #game:not(.lah-spectating) .spectator-only {
     display: none !important;
 }
@@ -145,7 +149,7 @@ hr {
     flex-grow: 0;
     background: var(--accent-group);
     padding: 3pt;
-    margin: 0 4pt;
+    margin: 4pt 4pt;
     border-radius: 8pt;
 }
 
@@ -264,24 +268,38 @@ span.highlight {
 /* SHOW/HIDE FADING */
 
 @keyframes fade-out {
-    to {        
-        display: none !important;
+    99% {
+        visibility: visible !important;
     }
+    100% {        
+        visibility: collapse !important;
+    }
+}
+
+@keyframes fade-in {
+    99% {
+        visibility: collapse !important;
+    }
+    100% {        
+        visibility: visible !important;
+    }
+}
+
+.hidden:not(.fade) {
+    display: none !important;
+    pointer-events: none;
+    opacity: 0;
 }
 
 .hidden.fade {
     opacity: 0;
+    visibility: collapse;
     pointer-events: none;
-    animation-name: fade-out;
-    animation-duration: .3s;
-    animation-fill-mode: forwards;
-    animation-iteration-count: 1;
-    animation-timing-function: step-start;
-    backdrop-filter: none !important;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-end;  
 }
 
 .fade {
-    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-start;
 }
 
 .hidden.fade.fade-up {
@@ -327,118 +345,6 @@ span.highlight {
     filter: brightness(0);
 }
 
-/* RIBBON ACCENTS */
-
-.ribbon[data-packaccent=red]:after {
-    background: #800;
-}
-
-.ribbon[data-packaccent=orange]:after {
-    background: #d70;
-    color: #000 !important;
-}
-
-.ribbon[data-packaccent=yellow]:after {
-    background: #ed0;
-    color: #000 !important;
-}
-
-.ribbon[data-packaccent=navy]:after {
-    background: #035;
-}
-
-.ribbon[data-packaccent=blue]:after {
-    background: #36a;
-}
-
-.ribbon[data-packaccent=lightblue]:after {
-    background: #58c;
-}
-
-.ribbon[data-packaccent=green]:after {
-    background: #181;
-}
-
-.ribbon[data-packaccent=turquoise]:after {
-    background: #2a8;
-}
-
-.ribbon[data-packaccent=black]:after {
-    background: #000;   
-}
-
-card[black] .ribbon[data-packaccent=black]:after {
-    background: #505050;
-}
-
-.ribbon[data-packaccent=purple]:after {
-    background: #606;
-}
-
-.ribbon[data-packaccent=poo]:after {
-    background: #650;
-}
-
-.ribbon[data-packaccent=brown]:after {
-    background: #420;
-}
-
-.ribbon[data-packaccent=limegreen]:after {
-    background: #0f0;
-    color: #000 !important;
-}
-
-.ribbon[data-packaccent=vs]:after {
-    background: #865FC5;
-    color: #fff !important;
-    font-family: "Segoe UI", "LAH", sans-serif !important;
-    font-weight: 600;
-}
-
-.ribbon[data-packaccent=rainbow]:after {
-    background: linear-gradient(to right, #f00, #f90, #ff0, #0f0, #0df, #00f, #f0f);
-    color: #000 !important;
-    background-size: 100%;
-}
-
-.ribbon[data-packaccent=rainbow]:not(:hover):after {
-    background-repeat: repeat-x;
-    background-size: 10%;
-}
-
-.ribbon[data-packaccent=white]:after {
-    background: #fff;
-    border: 2px solid black;
-}
-
-.ribbon[data-packaccent=headache]:after {
-    background: repeating-linear-gradient(115deg, #000, #000 4px, #0f0 4px, #f0f 6px);
-    color: #fff !important;
-    font-weight: 900;
-}
-
-.ribbon[data-packaccent=pink]:after {
-    background: #f78;
-    color: #000 !important;
-}
-
-.ribbon[data-packaccent=flesh]:after {
-    background: #fa9;
-    color: #a00 !important;
-}
-
-.ribbon[data-packaccent=nostalgia]:after {
-    background: #37d;
-    color: #f81 !important;
-    font-family: "Times New Roman", "LAH", sans-serif !important;
-}
-
-.ribbon[data-packaccent=transcend]:after {
-    background: #03f;
-    color: #f0f !important;
-    font-weight: 900 !important;
-}
-
 /* CARD TIER COLORS */
 
 #hand-area card[data-tier="1"] {
@@ -469,4 +375,8 @@ card[black] .ribbon[data-packaccent=black]:after {
     background-color: var(--accent-btn-secondary) !important;
     color: white !important;
     border: none !important;
+}
+
+.lah-inv {
+    --accent-fg: white;
 }

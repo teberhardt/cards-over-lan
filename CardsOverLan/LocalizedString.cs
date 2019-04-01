@@ -25,7 +25,10 @@ namespace CardsOverLan
 		{
 			get
 			{
-				if (String.IsNullOrWhiteSpace(langCode)) throw new ArgumentException("The provided language code is blank.");
+				if (String.IsNullOrWhiteSpace(langCode))
+				{
+					langCode = DefaultLocale;
+				}
 
 				var parts = langCode.SplitTrim(new[] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
 

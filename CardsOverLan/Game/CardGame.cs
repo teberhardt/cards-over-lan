@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CardsOverLan.Game
 {
@@ -14,12 +16,12 @@ namespace CardsOverLan.Game
 	public delegate void GameStateChangedEventDelegate();
 	public delegate void RoundStartedEventDelegate();
 	public delegate void GameStageChangedEventDelegate(in GameStage oldStage, in GameStage currentStage);
-	public delegate void RoundEndedEventDelegate(int round, Player roundWinner);
+	public delegate void RoundEndedEventDelegate(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay);
 	public delegate void GameEndedEventDelegate(Player[] winners);
 	public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
 
 	// TODO: Find some way to combine state updates
-	public sealed class CardGame
+	public sealed class CardGame : IDisposable
 	{
 		#region Constants
 		private const string DefaultPlayerName = "Player";
@@ -36,6 +38,8 @@ namespace CardsOverLan.Game
 
 		// ID for next player created
 		private int _nextPlayerId = 0;
+
+		private readonly PlayerTokenGenerator _tokenGen;
 
 		// White cards drawn by players, also used for dealing
 		private readonly HashList<WhiteCard> _whiteDrawPile;
@@ -64,6 +68,12 @@ namespace CardsOverLan.Game
 		// Current players in the game
 		private readonly HashList<Player> _players;
 
+		// Map of player tokens to preserved players
+		private readonly Dictionary<string, Player> _preservedPlayerMap;
+
+		// Disconnected players that are currently preserved
+		private readonly HashSet<Player> _preservedPlayers;
+
 		// Current stage of the game
 		private GameStage _stage = GameStage.GameStarting;
 
@@ -79,9 +89,13 @@ namespace CardsOverLan.Game
 		// Round number
 		private int _roundNum = 0;
 
-		private readonly object _allPlayersSync = new object();
+		private bool _disposed;
+
+		private readonly object _playerListLock = new object();
 		private readonly object _stageChangeLock = new object();
 		private readonly object _skipCheckLock = new object();
+		private readonly object _preserveLock = new object();
+		private readonly object _disposeLock = new object();
 
 		// Raised when player joins game
 		public event PlayerJoinedEventDelegate PlayerJoined;
@@ -110,13 +124,17 @@ namespace CardsOverLan.Game
 			_blackCards = new HashList<BlackCard>();
 			_whiteCards = new HashList<WhiteCard>();
 			_players = new HashList<Player>();
+			_preservedPlayerMap = new Dictionary<string, Player>();
+			_preservedPlayers = new HashSet<Player>();
 			_rng = new Random();
 			_cards = new Dictionary<string, Card>();
 			_roundPlays = new HashList<(Player, WhiteCard[])>();
 			_trophies = new HashList<Trophy>();
+			_tokenGen = new PlayerTokenGenerator();
 
 			_packs = packs
-				.Where(p => Settings.UsePacks == null || Settings.UsePacks.Length == 0 || Settings.UsePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase))
+				.Where(p => (Settings.UsePacks == null || Settings.UsePacks.Length == 0 || Settings.UsePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase))
+				&& (Settings.ExcludePacks == null || settings.ExcludePacks.Length == 0 || !Settings.ExcludePacks.Contains(p.Id, StringComparer.InvariantCultureIgnoreCase)))
 				.ToArray();
 
 			// Combine decks and remove duplicates
@@ -163,7 +181,7 @@ namespace CardsOverLan.Game
 		/// </summary>
 		private void ResetCards()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				var playerArray = _players.ToArray();
 
@@ -192,44 +210,54 @@ namespace CardsOverLan.Game
 				{
 					if (!_players.Contains(player)) continue;
 					Deal(player);
+					player.SetBlankCards(Settings.BlankCards);
 				}
 			}
 		}
 
 		private void NewRound()
 		{
-			lock (_allPlayersSync)
-			{
-				// Move to next black card
-				NextBlackCard();
+			// Move to next black card
+			NextBlackCard();
 
-				// Reset player selections
+			// Reset player selections
+			lock (_playerListLock)
+			{	
 				foreach (var player in _players)
 				{
 					player.DiscardSelection();
 					Deal(player, CurrentBlackCard.DrawCount);
 				}
 
-				// Move to next judge
-				NextJudge();
-
-				// Move to next round
-				_roundNum++;
-
-				// Change stage
-				Stage = GameStage.RoundInProgress;
-
-				// Raise round started event
-				RaiseRoundStarted();
 			}
+
+			// Reset preserve selections
+			lock(_preserveLock)
+			{
+				foreach(var preserve in _preservedPlayers)
+				{
+					preserve.DiscardSelection();
+				}
+			}
+
+			// Move to next judge
+			NextJudge();
+
+			// Move to next round
+			_roundNum++;
+
+			// Change stage
+			Stage = GameStage.RoundInProgress;
+
+			// Raise round started event
+			RaiseRoundStarted();
 		}
 
 		private void EndGame()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				Stage = GameStage.GameEnd;
-				GameEndTimeoutAsync();
 			}
 		}
 
@@ -242,17 +270,29 @@ namespace CardsOverLan.Game
 			}
 			else
 			{
-				_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+				if (Settings.PickOneCardsOnly)
+				{
+					for (int i = 0; i < _blackCards.Count; i++)
+					{
+						_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+						if (_blackCards[_blackCardIndex].PickCount == 1) break;
+					}
+				}
+				else
+				{
+					_blackCardIndex = (_blackCardIndex + 1) % _blackCards.Count;
+				}
 			}
 		}
 
 		private void NextJudge()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				var judge = Judge;
 				int n = PlayerCount;
 				var assholes = _players.Select((p, i) => (index: i, player: p)).Where(t => t.player.IsAsshole).ToArray();
+				var roundWinner = RoundWinner;
 
 				// If nobody's home, it's simple; nobody is the judge. Goodbye.
 				if (n == 0)
@@ -298,9 +338,9 @@ namespace CardsOverLan.Game
 					}
 
 					// If winner_czar is enabled, choose the round winner
-					if (Settings.WinnerCzar && _winningPlayIndex > -1 && (Settings.AllowBotCzars || !RoundWinner.IsAutonomous))
+					if (Settings.WinnerCzar && roundWinner != null && _players.Contains(roundWinner) && (Settings.AllowBotCzars || !RoundWinner.IsAutonomous))
 					{
-						_judgeIndex = _players.IndexOf(RoundWinner);
+						_judgeIndex = _players.IndexOf(roundWinner);
 						return;
 					}
 
@@ -324,25 +364,58 @@ namespace CardsOverLan.Game
 
 		private void NewGame()
 		{
-			lock (_allPlayersSync)
+			// Reset scores and awards
+			lock (_playerListLock)
 			{
-				// Reset scores
 				foreach (var p in _players)
 				{
 					p.Discards = Settings.Discards;
 					p.ResetAwards();
 				}
+			}
 
-				// Clear play data
-				ClearRoundPlays();
-				// Reset all cards
-				ResetCards();
-				// Reset round
-				_roundNum = 0;
-				_judgeIndex = -1;
+			// Delete preserved players
+			RemoveAllPreservedPlayers();
+			// Clear play data
+			ClearRoundPlays();
+			// Reset all cards
+			ResetCards();
+			// Reset round
+			_roundNum = 0;
+			_judgeIndex = -1;
 
-				Stage = GameStage.GameStarting;
-				RaisePlayersChanged();
+			Stage = GameStage.GameStarting;
+
+			RaisePlayersChanged();
+
+		}
+
+		private void RemoveAllPreservedPlayers()
+		{
+			lock (_preserveLock)
+			{
+				foreach (var player in _preservedPlayers)
+				{
+					player.DiscardHand();
+					player.DiscardSelection();
+				}
+				_preservedPlayers.Clear();
+				_preservedPlayerMap.Clear();
+			}
+		}
+
+		private void RemovePreservedPlayer(Player p, bool shouldReturnCards = true)
+		{
+			lock (_preserveLock)
+			{
+				// Return all cards if player is no longer in the game
+				if (shouldReturnCards && !_players.Contains(p))
+				{
+					p.DiscardHand();
+					p.DiscardSelection();
+				}
+				_preservedPlayers.Remove(p);
+				_preservedPlayerMap.Remove(p.Token);
 			}
 		}
 
@@ -365,10 +438,7 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public IEnumerable<Player> GetPlayers()
 		{
-			lock (_allPlayersSync)
-			{
-				return _players.ToArray();
-			}
+			return _players.ToArray();
 		}
 
 		/// <summary>
@@ -384,18 +454,15 @@ namespace CardsOverLan.Game
 		}
 
 		/// <summary>
-		/// Enumerates the current top player(s) in the game.
+		/// Returns the current top player(s) in the game.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Player> GetWinningPlayers()
+		public Player[] GetWinningPlayers()
 		{
-			lock (_allPlayersSync)
+			int maxScore = _players.Max(p => p.Score);
+			lock (_playerListLock)
 			{
-				int maxScore = _players.Max(p => p.Score);
-				foreach (var player in _players.Where(p => p.Score == maxScore))
-				{
-					yield return player;
-				}
+				return _players.Where(p => p.Score == maxScore).ToArray();
 			}
 		}
 
@@ -405,17 +472,17 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public IEnumerable<Player> GetPendingPlayers()
 		{
-			lock (_allPlayersSync)
+			if (Stage != GameStage.RoundInProgress) yield break;
+
+			Player[] playerArray;
+			lock (_playerListLock)
 			{
-				if (Stage != GameStage.RoundInProgress) yield break;
-				bool activeRound = false;
-				foreach (var player in _players.ToArray())
-				{
-					if (!player.IsSelectionValid && Judge != player)
-					{
-						yield return player;
-					}
-				}
+				playerArray = _players.Where(p => !p.IsSelectionValid && Judge != p).ToArray();
+			}
+
+			foreach (var player in playerArray)
+			{
+				yield return player;
 			}
 		}
 
@@ -425,12 +492,9 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public IEnumerable<(Player, WhiteCard[])> GetRoundPlays()
 		{
-			lock (_allPlayersSync)
+			foreach (var play in _roundPlays)
 			{
-				foreach (var play in _roundPlays)
-				{
-					yield return play;
-				}
+				yield return play;
 			}
 		}
 
@@ -482,7 +546,7 @@ namespace CardsOverLan.Game
 		/// </summary>
 		private void CheckRoundPlays()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				if (Stage != GameStage.RoundInProgress || _players.All(p => p.IsAfk)) return;
 				if (_players.All(p => p.IsSelectionValid || Judge == p || p.IsAfk) && !_players.All(p => p.IsAfk || p == Judge))
@@ -495,6 +559,23 @@ namespace CardsOverLan.Game
 		public Card GetCardById(string id)
 		{
 			if (String.IsNullOrWhiteSpace(id)) return null;
+			const string customCardPrefix = "custom_";
+
+			if (id.StartsWith(customCardPrefix))
+			{
+				var customCardBase64Text = id.Substring(customCardPrefix.Length);
+				try
+				{
+					var customCardText = Encoding.UTF8.GetString(Convert.FromBase64String(customCardBase64Text)).Trim().Truncate(Settings.MaxBlankCardLength);
+					return WhiteCard.CreateCustom(customCardText);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Could not parse custom card '{id}': {ex.Message}");
+					return null;
+				}
+			}
+
 			return _cards.TryGetValue(id, out var card) ? card : null;
 		}
 
@@ -530,34 +611,53 @@ namespace CardsOverLan.Game
 		/// <param name="name">The requested player name.</param>
 		/// <param name="bot">Are they a bot?</param>
 		/// <returns></returns>
-		public Player CreatePlayer(string name = null, bool bot = false)
+		public Player CreatePlayer(string name = null, bool bot = false, string token = "")
 		{
-			lock (_allPlayersSync)
-			{
-				var player = new Player(this, CreatePlayerId());
-				player.Name = CreatePlayerName(name, player);
-				if (bot) player.IsAutonomous = true;
+			Player player = null;
 
-				// Subscribe events
-				player.SelectionChanged += OnPlayerSelectionChanged;
-				player.NameChanged += OnPlayerNameChanged;
-				player.JudgedCards += OnPlayerJudgedCards;
-				player.ScoreChanged += OnPlayerScoreChanged;
-				player.AfkChanged += OnPlayerAfkChanged;
+			// Check if there's a token, and if it's preserved
+			if (!String.IsNullOrWhiteSpace(token))
+			{
+				lock (_preserveLock)
+				{
+					if (_preservedPlayerMap.TryGetValue(token, out player))
+					{
+						RemovePreservedPlayer(player, shouldReturnCards: false);
+					}
+				}
+			}
+
+			// If no player was restored, create a new one
+			if (player == null)
+			{
+				player = new Player(this, CreatePlayerId(), _tokenGen.CreateToken());
 
 				// Give them some cards
 				Deal(player, CurrentBlackCard?.DrawCount ?? 0);
 				player.AddBlankCards(Settings.BlankCards);
 				player.Discards = Settings.Discards;
+			}
 
+			player.Name = CreatePlayerName(name, player);
+			if (bot) player.IsAutonomous = true;
+
+			// Subscribe events
+			player.SelectionChanged += OnPlayerSelectionChanged;
+			player.NameChanged += OnPlayerNameChanged;
+			player.JudgedCards += OnPlayerJudgedCards;
+			player.ScoreChanged += OnPlayerScoreChanged;
+			player.AfkChanged += OnPlayerAfkChanged;
+
+			lock (_playerListLock)
+			{
 				// Add them to the player list
 				_players.Add(player);
-
-				if (Judge == null) NextJudge();
-
-				RaisePlayerJoined(player);
-				return player;
 			}
+
+			if (Judge == null) NextJudge();
+
+			RaisePlayerJoined(player);
+			return player;
 		}
 
 		/// <summary>
@@ -566,75 +666,117 @@ namespace CardsOverLan.Game
 		/// <param name="player">The player to remove.</param>
 		/// <param name="reason">The reason for removal.</param>
 		/// <returns></returns>
-		public bool RemovePlayer(Player player, string reason)
+		public bool RemovePlayer(Player player, string reason, bool shouldPreserve = true)
 		{
-			lock (_allPlayersSync)
+			bool isRemovedPlayerJudge = Judge == player;
+
+			lock (_playerListLock)
 			{
 				if (player == null || !_players.Remove(player)) return false;
+			}
 
-				// Unsubscribe events
-				player.SelectionChanged -= OnPlayerSelectionChanged;
-				player.NameChanged -= OnPlayerNameChanged;
-				player.JudgedCards -= OnPlayerJudgedCards;
-				player.ScoreChanged -= OnPlayerScoreChanged;
-				player.AfkChanged -= OnPlayerAfkChanged;
+			bool willPreserve = shouldPreserve && IsInProgress;
 
+			// Unsubscribe events
+			player.SelectionChanged -= OnPlayerSelectionChanged;
+			player.NameChanged -= OnPlayerNameChanged;
+			player.JudgedCards -= OnPlayerJudgedCards;
+			player.ScoreChanged -= OnPlayerScoreChanged;
+			player.AfkChanged -= OnPlayerAfkChanged;
+
+			if (!willPreserve)
+			{
 				// Reclaim their cards
 				player.DiscardHand();
 				player.DiscardSelection();
+			}
 
-				if (Judge == player)
-				{
-					NextJudge();
-				}
+			if (isRemovedPlayerJudge)
+			{
+				NextJudge();
+			}
 
-				RaisePlayerLeft(player, reason);
-				return true;
+			// Preserve (if enabled)
+			if (willPreserve)
+			{
+				PreservePlayerAsync(player);
+			}
+
+			RaisePlayerLeft(player, reason);
+			return true;
+		}
+
+		private async void PreservePlayerAsync(Player player)
+		{
+			// Return immediately if preserves are disabled
+			if (!Settings.PlayerPreserveEnabled) return;
+
+			// Add player to preserves
+			lock (_preserveLock)
+			{
+				_preservedPlayerMap[player.Token] = player;
+				_preservedPlayers.Add(player);
+			}
+
+			int timeElapsed = 0;
+
+			// Wait for preserve timer to expire. Do it in 1s intervals so if the game restarts, it expires sooner
+			while (_preservedPlayers.Contains(player) && timeElapsed < Settings.PlayerPreserveTimeSeconds)
+			{
+				await Task.Delay(1000);
+				timeElapsed++;
+			}
+
+			// Remove preserved player after timer expires
+			lock (_preserveLock)
+			{
+				RemovePreservedPlayer(player);
 			}
 		}
 
 		internal void UpdateSkipVotes()
 		{
-			lock (_allPlayersSync)
+			lock (_skipCheckLock)
 			{
-				lock (_skipCheckLock)
+				if (Stage != GameStage.RoundInProgress) return;
+				var cardToSkip = CurrentBlackCard;
+				int eligibleSkipVoterCount, numVoted;
+				lock (_playerListLock)
 				{
-					if (Stage != GameStage.RoundInProgress) return;
-					var cardToSkip = CurrentBlackCard;
-					int eligibleSkipVoterCount = _players.Count(p => !p.IsAutonomous && !p.IsAfk && !p.IsAsshole);
-					int numVoted = _players.Count(p => p.VotedForBlackCardSkip);
-
-					if (numVoted > 0)
-					{
-						if (eligibleSkipVoterCount == 0 || numVoted * 100 / eligibleSkipVoterCount > 50)
-						{
-							foreach (var p in _players)
-							{
-								p.DiscardSelection();
-							}
-							NextBlackCard();
-							RaiseStateChanged();
-							RaiseBlackCardSkipped(cardToSkip, CurrentBlackCard);
-							ClearSkipVotes();
-							PromptAutoPlays();
-						}
-					}
-
-					RaisePlayersChanged();
+					eligibleSkipVoterCount = _players.Count(p => !p.IsAutonomous && !p.IsAfk && !p.IsAsshole);
+					numVoted = _players.Count(p => p.VotedForBlackCardSkip);
 				}
+
+				if (numVoted > 0)
+				{
+					if (eligibleSkipVoterCount == 0 || numVoted * 100 / eligibleSkipVoterCount > 50)
+					{
+						foreach (var p in _players)
+						{
+							p.DiscardSelection();
+						}
+						NextBlackCard();
+						RaiseStateChanged();
+						RaiseBlackCardSkipped(cardToSkip, CurrentBlackCard);
+						ClearSkipVotes();
+						PromptAutoPlays();
+					}
+				}
+
+				RaisePlayersChanged();
 			}
 		}
 
 		public void ClearSkipVotes()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				foreach (var player in _players)
 				{
 					player.ClearSkipVote();
 				}
-				RaisePlayersChanged();
 			}
+			RaisePlayersChanged();
 		}
 
 		/// <summary>
@@ -646,14 +788,17 @@ namespace CardsOverLan.Game
 			_winningPlayIndex = -1;
 		}
 
+		/// <summary>
+		/// Collects selected cards from players and adds them to the round plays.
+		/// </summary>
 		private void PopulateRoundPlays()
 		{
-			lock (_allPlayersSync)
+			_roundPlays.Clear();
+			lock (_playerListLock)
 			{
-				_roundPlays.Clear();
 				_roundPlays.AddRange(_players.Where(p => p != Judge && p.IsSelectionValid).Select(p => (p, p.GetSelectedCards().ToArray())));
-				Shuffle(_roundPlays); // mitigate favoritism
 			}
+			Shuffle(_roundPlays); // mitigate favoritism
 		}
 
 		private void CheckMinPlayers()
@@ -698,7 +843,7 @@ namespace CardsOverLan.Game
 
 		private void PromptAutoPlays()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				if (_players.Any(p => !p.IsAutonomous))
 				{
@@ -712,7 +857,7 @@ namespace CardsOverLan.Game
 
 		private void PromptAutoJudge()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				if (Judge?.IsAutonomous ?? false)
 				{
@@ -769,6 +914,8 @@ namespace CardsOverLan.Game
 
 		public Player Judge => PlayerCount == 0 || _judgeIndex < 0 || _judgeIndex >= _players.Count ? null : _players[_judgeIndex];
 
+		public bool IsInProgress => Stage != GameStage.GameStarting && Stage != GameStage.GameEnd;
+
 		public GameSettings Settings { get; }
 
 		#endregion
@@ -777,15 +924,12 @@ namespace CardsOverLan.Game
 
 		private void OnPlayerSelectionChanged(Player player, WhiteCard[] selection)
 		{
-			lock (_allPlayersSync)
+			if (Stage == GameStage.RoundInProgress && player.IsSelectionValid)
 			{
-				if (Stage == GameStage.RoundInProgress && player.IsSelectionValid)
-				{
-					Console.WriteLine($"{player} selected: {selection.Select(c => c.IsCustom ? $"(Custom) {c.GetContent("en-US")}" : c.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
-					CheckRoundPlays();
-					Deal(player);
-					RaiseStateChanged();
-				}
+				Console.WriteLine($"{player} selected: {selection.Select(c => c.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
+				CheckRoundPlays();
+				Deal(player);
+				RaiseStateChanged();
 			}
 		}
 
@@ -851,6 +995,7 @@ namespace CardsOverLan.Game
 				case GameStage.GameEnd:
 					AssignTrophies();
 					GameEndTimeoutAsync();
+					RaiseGameEnded();
 					break;
 				case GameStage.GameStarting:
 					if (PlayerCount >= Settings.MinPlayers)
@@ -890,7 +1035,7 @@ namespace CardsOverLan.Game
 
 		private void SaveRoundPlays()
 		{
-			lock (_allPlayersSync)
+			lock (_playerListLock)
 			{
 				foreach (var player in _players)
 				{
@@ -920,17 +1065,19 @@ namespace CardsOverLan.Game
 
 			if (Stage == GameStage.RoundEnd && _roundNum == roundNumForTimeout)
 			{
-				lock (_allPlayersSync)
+				bool maxScoreReached;
+				lock (_playerListLock)
 				{
-					// Check if any of the players have reached the winning score or max rounds are reached
-					if (_players.Any(p => p.Score >= Settings.MaxPoints) || (Settings.MaxRounds > 0 && Round >= Settings.MaxRounds))
-					{
-						EndGame();
-					}
-					else
-					{
-						NewRound();
-					}
+					maxScoreReached = _players.Any(p => p.Score >= Settings.MaxPoints);
+				}
+				// Check if any of the players have reached the winning score or max rounds are reached
+				if (maxScoreReached || (Settings.MaxRounds > 0 && Round >= Settings.MaxRounds))
+				{
+					EndGame();
+				}
+				else
+				{
+					NewRound();
 				}
 			}
 		}
@@ -951,8 +1098,9 @@ namespace CardsOverLan.Game
 		{
 			if (!player.CanJudgeCards || winningPlayIndex < 0 || winningPlayIndex >= _roundPlays.Count) return;
 			_winningPlayIndex = winningPlayIndex;
+			var blackCard = CurrentBlackCard;
 			Stage = GameStage.RoundEnd;
-			RaiseRoundEnded(Round, RoundWinner);
+			RaiseRoundEnded(Round, blackCard, player, RoundWinner, _roundPlays[winningPlayIndex].Item2.ToArray());
 		}
 
 		private void OnPlayerNameChanged(Player player, string name)
@@ -999,11 +1147,26 @@ namespace CardsOverLan.Game
 			OnPlayerCountChanged();
 		}
 
-		private void RaiseRoundEnded(int round, Player winner) => RoundEnded?.Invoke(round, winner);
+		private void RaiseRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player winner, WhiteCard[] winningPlay) => RoundEnded?.Invoke(round, blackCard, roundJudge, winner, winningPlay);
 
 		private void RaiseStageChanged(in GameStage oldStage, in GameStage currentStage) => StageChanged?.Invoke(oldStage, currentStage);
 
 		private void RaiseBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard) => BlackCardSkipped?.Invoke(skippedCard, replacementCard);
+
+		public void Dispose()
+		{
+			lock (_disposeLock)
+			{
+				if (_disposed)
+				{
+					throw new ObjectDisposedException("Object is disposed.");
+				}
+
+				_tokenGen.Dispose();
+
+				_disposed = true;
+			}
+		}
 
 		#endregion
 	}
