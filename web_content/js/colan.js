@@ -1263,18 +1263,18 @@
     }
 
     async function loadGame() {
-        // Check if user has already agreed to cookies
-        if (Cookies.get("cookie_consent")) {
-            loadOptions();
-        } else {
-            elem("#cookie-notice").setClass("hidden", false);
-        }
-
         // Load string resources
         try {
             await loadStringResources("/etc/strings.json");
         } catch (reason) {
             console.error("Failed to load game resources: " + reason);
+        }
+
+        // Check if user has already agreed to cookies
+        if (Cookies.get("cookie_consent")) {
+            loadOptions();
+        } else {
+            elem("#cookie-notice").setClass("hidden", false);
         }
 
         // Fetch server info

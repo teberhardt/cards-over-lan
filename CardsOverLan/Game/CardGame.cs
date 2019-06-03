@@ -498,6 +498,8 @@ namespace CardsOverLan.Game
 			}
 		}
 
+		public int GetRoundPlayCount() => _roundPlays.Count;
+
 		public IEnumerable<WhiteCard> DrawWhiteCards(int count)
 		{
 			for (int i = 0; i < count; i++)

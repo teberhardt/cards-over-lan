@@ -81,6 +81,7 @@ The settings.json file contains a number of properties that control how the serv
 |`game_end_timeout`|Integer|Time, in milliseconds, to wait before starting a new game.|
 |`hand_size`|Integer|Number of cards dealt to each player.|
 |`host_url`|String|The endpoint that the webserver will listen on.|
+|`judge_per_card_timeout_bonus`|Integer|Number of additional seconds per card added to czar's timeout when judging cards.|
 |`max_blank_card_length`|Integer|Maximum number of characters allowed in blank cards.|
 |`max_player_name_length`|Integer|Maximum number of characters that a player name can have.|
 |`max_players`|Integer|Maximum number of players that the server can hold.|
@@ -90,6 +91,7 @@ The settings.json file contains a number of properties that control how the serv
 |`min_players`|Integer|Minimum required players in order for the game to start.|
 |`perma_czar`|Boolean|One lucky winner is selected to be the Card Czar for the entire game.|
 |`pick_one_only`|Boolean|Specifies whether to prevent black cards with multiple blanks from being drawn.|
+|`player_per_card_timeout_bonus`|Integer|Number of additional seconds per card added to player's timeout when playing.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
 |`server_name`|String|The server name displayed in on the join screen.|

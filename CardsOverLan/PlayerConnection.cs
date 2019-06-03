@@ -20,13 +20,12 @@ namespace CardsOverLan
 		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
 
 		private readonly object _createDestroySync = new object();
-		private bool _removalNotified;
 		private Player _player;
 		private Thread _idleCheckThread;
 		private int _inactiveTime, _afkTime;
 		private bool _afkRecovery = false;
 		private readonly object _afkLock = new object();
-		private bool _isRejectedDuplicate;
+
 		public Player Player => _player;
 
 		public PlayerConnection(CardGameServer server, CardGame game) : base(server, game)
@@ -60,12 +59,14 @@ namespace CardsOverLan
 					bool isAfkEligible = 
 						(Game.Judge == Player && (Game.Stage == GameStage.JudgingCards))
 						|| (Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress);
+
 					bool shouldKick = _inactiveTime >= Game.Settings.IdleKickTimeSeconds;
-					bool afk = _afkRecovery ? _afkTime >= Game.Settings.AfkRecoveryTimeSeconds : _afkTime >= Game.Settings.AfkTimeSeconds;
+
+					bool afk = _afkRecovery ? _afkTime >= Game.Settings.AfkRecoveryTimeSeconds : _afkTime >= Game.Settings.AfkTimeSeconds + GetCurrentTimeoutBonus();
 
 					if (shouldKick && isAfkEligible && Game.Settings.IdleKickEnabled)
 					{
-						Reject("reject_afk", $"Inactive {Game.Settings.IdleKickTimeSeconds}s");
+						Reject("reject_afk", $"Inactive {_inactiveTime}s");
 						continue;
 					}
 					else if (Player.IsAfk != afk)
@@ -73,7 +74,7 @@ namespace CardsOverLan
 						if (afk && isAfkEligible && Game.Settings.AfkEnabled)
 						{
 							Player.IsAfk = true;
-							Console.WriteLine($"{Player} is AFK (inactive for {Game.Settings.AfkTimeSeconds}s)");
+							Console.WriteLine($"{Player} is AFK (inactive {_afkTime}s)");
 						}
 						else
 						{
@@ -85,6 +86,22 @@ namespace CardsOverLan
 				_inactiveTime = _inactiveTime < int.MaxValue ? _inactiveTime + 1 : int.MaxValue;
 				_afkTime = _afkTime < int.MaxValue ? _afkTime + 1 : int.MaxValue;
 			}
+		}
+
+		private int GetCurrentTimeoutBonus()
+		{
+			if (Player.IsAfk) return 0;
+
+			if (Game.Stage == GameStage.JudgingCards && Game.Judge == Player)
+			{
+				return Game.Settings.JudgePerCardTimeoutBonus * Game.CurrentBlackCard.PickCount * Game.GetRoundPlayCount();
+			}
+			else if (Game.Stage == GameStage.RoundInProgress && Game.Judge != Player)
+			{
+				return Game.Settings.PlayerPerCardTimeoutBonus * Game.CurrentBlackCard.PickCount;
+			}
+
+			return 0;
 		}
 
 		private void CreatePlayer()
@@ -318,7 +335,6 @@ namespace CardsOverLan
 		internal void NotifyRemoval(string reason)
 		{
 			if (!IsOpen) return;
-			_removalNotified = true;
 			Console.WriteLine($"Player {Player} disconnected by server ({reason})");
 			Context.WebSocket.Close();
 		}

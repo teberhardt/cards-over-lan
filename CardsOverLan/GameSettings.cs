@@ -1,12 +1,7 @@
 ﻿using CardsOverLan.Game.Bots;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan
 {
@@ -43,6 +38,8 @@ namespace CardsOverLan
 		private const int DefaultDiscards = 5;
 		private const int DefaultMaxBlankCardLength = 140;
 		private const int DefaultPlayerPreserveTimeSeconds = 30;
+		private const int DefaultJudgePerCardTimeoutBonus = 7;
+		private const int DefaultPlayerPerCardTimeoutBonus = 10;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -288,6 +285,14 @@ namespace CardsOverLan
 		[JsonProperty("player_preserve_time", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue(DefaultPlayerPreserveTimeSeconds)]
 		public int PlayerPreserveTimeSeconds { get; set; } = DefaultPlayerPreserveTimeSeconds;
+
+		[JsonProperty("judge_per_card_timeout_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(DefaultJudgePerCardTimeoutBonus)]
+		public int JudgePerCardTimeoutBonus { get; set; } = DefaultJudgePerCardTimeoutBonus;
+
+		[JsonProperty("player_per_card_timeout_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(DefaultPlayerPerCardTimeoutBonus)]
+		public int PlayerPerCardTimeoutBonus { get; set; } = DefaultPlayerPerCardTimeoutBonus;
 
 		public static GameSettings FromFile(string path) => JsonConvert.DeserializeObject<GameSettings>(File.ReadAllText(path));
 	}

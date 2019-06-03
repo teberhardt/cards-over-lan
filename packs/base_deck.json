@@ -3247,9 +3247,83 @@
         {
             "id": "w_sextapeforall",
             "content": {
-                "en": "Our sex tape being played in front of everyone."
+                "en": "Our sex tape playing in front of everyone.",
+                "de": "Unser vor allen abspielendes Sextape."
             },
             "flags": "s"
+        },
+        {
+            "id": "w_bailoutdad",
+            "content": {
+                "en": "Bailing out Dad."
+            }
+        },
+        {
+            "id": "w_humanashes",
+            "content": {
+                "en": "Human ashes."
+            }
+        },
+        {
+            "id": "w_ballsackcaprisun",
+            "content": {
+                "en": "Stabbing a straw into your man's ballsack and drinking it like a Capri Sun."
+            },
+            "flags": "gn gnm g to s"
+        },
+        {
+            "id": "w_daddy",
+            "content": {
+                "en": "Daddy."
+            }
+        },
+        {
+            "id": "w_maxvibration",
+            "content": {
+                "en": "Maximum vibration."
+            }
+        },
+        {
+            "id": "w_threeinchdust",
+            "content": {
+                "en": "Three inches of dust."
+            }
+        },
+        {
+            "id": "w_mypaper4skin",
+            "content": {
+                "en": "My papery foreskin."
+            },
+            "flags": "gn gnm g"
+        },
+        {
+            "id": "w_goodhairsmell",
+            "content": {
+                "en": "How good your hair smells.",
+                "de": "Wie gut deine Haare riecht."
+            },
+            "flags": "w"
+        },
+        {
+            "id": "w_lactosefartfury",
+            "content": {
+                "en": "Furious lactose farts."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "w_rottenteethglass",
+            "content": {
+                "en": "A shot glass of rotten teeth."
+            },
+            "flags": "g"
+        },
+        {
+            "id": "b_notyouwhenhungry",
+            "content": {
+                "en": "You're not you when you're hungry. Have ________."
+            },
+            "pick": 1
         },
         {
             "id": "b_notmuchdiffreally",
@@ -3664,9 +3738,9 @@
             "pick": 1
         },
         {
-            "id": "b_hostageescapetrick",
+            "id": "b_whatmenlove",
             "content": {
-                "en": "What's the one thing that could most likely save you in a hostage situation?"
+                "en": "What do all men love?"
             },
             "pick": 1
         },
@@ -3680,7 +3754,7 @@
         {
             "id": "b_sadpresent",
             "content": {
-                "en": "When Christmas morning came, the kids excitedly ran to their stockings, but were shocked find them filled with ________."
+                "en": "When Christmas morning came, the kids ran excitedly to their stockings, only to find them filled with ________."
             },
             "pick": 1
         },
