@@ -16,7 +16,7 @@ namespace CardsOverLan.Game
 	public delegate void GameStateChangedEventDelegate();
 	public delegate void RoundStartedEventDelegate();
 	public delegate void GameStageChangedEventDelegate(in GameStage oldStage, in GameStage currentStage);
-	public delegate void RoundEndedEventDelegate(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay);
+	public delegate void RoundEndedEventDelegate(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, bool ego, WhiteCard[] winningPlay);
 	public delegate void GameEndedEventDelegate(Player[] winners);
 	public delegate void BlackCardSkippedEventDelegate(BlackCard skippedCard, BlackCard replacementCard);
 
@@ -89,6 +89,9 @@ namespace CardsOverLan.Game
 		// Round number
 		private int _roundNum = 0;
 
+		// Ready-Up active state
+		private bool _readyUpActive = false;
+
 		private bool _disposed;
 
 		private readonly object _playerListLock = new object();
@@ -142,13 +145,13 @@ namespace CardsOverLan.Game
 				.SelectMany(d => d.GetAllCards())
 				.Where(c => settings.RequiredLanguages?.Length == 0 || settings.RequiredLanguages.All(l => c.SupportsLanguage(l))))
 			{
-				if (!_cards.ContainsKey(card.ID))
+				if (!_cards.TryGetValue(card.ID, out var existingCard))
 				{
 					_cards.Add(card.ID, card);
 				}
 				else
 				{
-					Console.WriteLine($"Duplicate card ID: {card.ID} in [{card.Owner.Name}]");
+					Console.WriteLine($"Duplicate card ID: {card.ID} in [{card.Owner.Name}] and [{existingCard.Owner.Name}]");
 				}
 			}
 
@@ -253,6 +256,26 @@ namespace CardsOverLan.Game
 			RaiseRoundStarted();
 		}
 
+		private bool CheckAllPlayersReady()
+		{
+			if (!ReadyUpActive) return false;
+			lock(_playerListLock)
+			{
+				return _players.All(p => p.IsAutonomous || p.ReadyUp);
+			}
+		}
+
+		private void ResetPlayerReadyUpStatus()
+		{
+			lock(_playerListLock)
+			{
+				foreach(var p in _players)
+				{
+					p.ReadyUp = false;
+				}
+			}
+		}
+
 		private void EndGame()
 		{
 			lock (_playerListLock)
@@ -289,6 +312,7 @@ namespace CardsOverLan.Game
 		{
 			lock (_playerListLock)
 			{
+				JudgeVotedSelf = false;
 				var judge = Judge;
 				int n = PlayerCount;
 				var assholes = _players.Select((p, i) => (index: i, player: p)).Where(t => t.player.IsAsshole).ToArray();
@@ -649,6 +673,7 @@ namespace CardsOverLan.Game
 			player.JudgedCards += OnPlayerJudgedCards;
 			player.ScoreChanged += OnPlayerScoreChanged;
 			player.AfkChanged += OnPlayerAfkChanged;
+			player.ReadyUpChanged += OnPlayerReadyUpChanged;
 
 			lock (_playerListLock)
 			{
@@ -685,6 +710,7 @@ namespace CardsOverLan.Game
 			player.JudgedCards -= OnPlayerJudgedCards;
 			player.ScoreChanged -= OnPlayerScoreChanged;
 			player.AfkChanged -= OnPlayerAfkChanged;
+			player.ReadyUpChanged -= OnPlayerReadyUpChanged;
 
 			if (!willPreserve)
 			{
@@ -900,6 +926,8 @@ namespace CardsOverLan.Game
 			}
 		}
 
+		public bool JudgeVotedSelf { get; private set; }
+
 		public int BlackCardCount => _blackCards.Count;
 
 		public int WhiteCardCount => _whiteCards.Count;
@@ -917,6 +945,19 @@ namespace CardsOverLan.Game
 		public Player Judge => PlayerCount == 0 || _judgeIndex < 0 || _judgeIndex >= _players.Count ? null : _players[_judgeIndex];
 
 		public bool IsInProgress => Stage != GameStage.GameStarting && Stage != GameStage.GameEnd;
+
+		public bool ReadyUpActive
+		{
+			get => _readyUpActive;
+			set
+			{
+				if (_readyUpActive != value)
+				{
+					_readyUpActive = value;
+					RaiseStateChanged();
+				}
+			}
+		}
 
 		public GameSettings Settings { get; }
 
@@ -944,7 +985,19 @@ namespace CardsOverLan.Game
 				{
 					if (PlayerCount >= Settings.MinPlayers)
 					{
-						NewRound();
+						if (Settings.GameReadyUpEnabled)
+						{
+							ReadyUpActive = true;
+						}
+						else
+						{
+							NewRound();
+						}
+					}
+					else if (Settings.GameReadyUpEnabled)
+					{
+						ResetPlayerReadyUpStatus();
+						ReadyUpActive = false;
 					}
 					break;
 				}
@@ -977,6 +1030,20 @@ namespace CardsOverLan.Game
 		/// <param name="currentStage">The current stage as of invocation.</param>
 		private void OnStageChanged(GameStage oldStage, GameStage currentStage)
 		{
+			// Handle events for departing stage
+			switch(oldStage)
+			{
+				case GameStage.GameStarting:
+				case GameStage.GameEnd:
+					if (Settings.GameReadyUpEnabled)
+					{
+						ReadyUpActive = false;
+						ResetPlayerReadyUpStatus();
+					}
+					break;
+			}
+
+			// Handle events for next stage
 			switch (currentStage)
 			{
 				case GameStage.RoundInProgress:
@@ -1000,12 +1067,22 @@ namespace CardsOverLan.Game
 					RaiseGameEnded();
 					break;
 				case GameStage.GameStarting:
+					ClearRoundPlays();
+
+					// Check if game is allowed to begin
 					if (PlayerCount >= Settings.MinPlayers)
 					{
-						NewRound();
+						// Check if Ready-Up is enabled by admin
+						if (Settings.GameReadyUpEnabled)
+						{
+							ReadyUpActive = true;
+						}
+						else
+						{
+							NewRound();
+						}
 						return;
 					}
-					ClearRoundPlays();
 					break;
 			}
 
@@ -1099,10 +1176,24 @@ namespace CardsOverLan.Game
 		private void OnPlayerJudgedCards(Player player, int winningPlayIndex)
 		{
 			if (!player.CanJudgeCards || winningPlayIndex < 0 || winningPlayIndex >= _roundPlays.Count) return;
-			_winningPlayIndex = winningPlayIndex;
+			var winningPlay = _roundPlays[winningPlayIndex];
+			bool votedSelf = winningPlay.Item1 == player;
+
+			// Check if the czar voted for themselves somehow
+			if (votedSelf)
+			{
+				_winningPlayIndex = (winningPlayIndex + 1 + _rng.Next(_roundPlays.Count - 1)) % _roundPlays.Count;
+			}
+			else
+			{
+				_winningPlayIndex = winningPlayIndex;
+			}
+
+			JudgeVotedSelf = votedSelf;
+			
 			var blackCard = CurrentBlackCard;
 			Stage = GameStage.RoundEnd;
-			RaiseRoundEnded(Round, blackCard, player, RoundWinner, _roundPlays[winningPlayIndex].Item2.ToArray());
+			RaiseRoundEnded(Round, blackCard, player, RoundWinner, votedSelf, _roundPlays[winningPlayIndex].Item2.ToArray());
 		}
 
 		private void OnPlayerNameChanged(Player player, string name)
@@ -1123,6 +1214,24 @@ namespace CardsOverLan.Game
 			}
 			OnPlayersChanged();
 			RaiseStateChanged();
+		}
+
+		private void OnPlayerReadyUpChanged(Player player, bool readyUp)
+		{
+			if (!ReadyUpActive) return;
+
+			RaisePlayersChanged();
+
+			if (CheckAllPlayersReady())
+			{
+				switch(Stage)
+				{
+					case GameStage.GameStarting:
+						NewRound();
+						break;
+					// TODO: Round-end Ready-Up
+				}
+			}
 		}
 
 		#endregion
@@ -1149,7 +1258,7 @@ namespace CardsOverLan.Game
 			OnPlayerCountChanged();
 		}
 
-		private void RaiseRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player winner, WhiteCard[] winningPlay) => RoundEnded?.Invoke(round, blackCard, roundJudge, winner, winningPlay);
+		private void RaiseRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player winner, bool ego, WhiteCard[] winningPlay) => RoundEnded?.Invoke(round, blackCard, roundJudge, winner, ego, winningPlay);
 
 		private void RaiseStageChanged(in GameStage oldStage, in GameStage currentStage) => StageChanged?.Invoke(oldStage, currentStage);
 

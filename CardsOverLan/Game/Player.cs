@@ -15,6 +15,7 @@ namespace CardsOverLan.Game
 	public delegate void PlayerJudgedCardsEventDelegate(Player player, int winningPlayIndex);
 	public delegate void PlayerAfkChangedEventDelegate(Player player, bool afk);
 	public delegate void PlayerAuxDataChangedEventDelegate(Player player);
+	public delegate void PlayerReadyUpChangedEventDelegate(Player player, bool readyUp);
 
 	// TODO: Develop pattern for combining *Changed events to reduce unnecessary client updates
 	public sealed class Player
@@ -48,6 +49,7 @@ namespace CardsOverLan.Game
 		public event PlayerJudgedCardsEventDelegate JudgedCards;
 		public event PlayerAfkChangedEventDelegate AfkChanged;
 		public event PlayerAuxDataChangedEventDelegate AuxDataChanged;
+		public event PlayerReadyUpChangedEventDelegate ReadyUpChanged;
 
 		internal Player(CardGame game, int id, string token = "")
 		{
@@ -109,6 +111,30 @@ namespace CardsOverLan.Game
 					_afk = value;
 					RaiseAfkChanged(value);
 				}
+			}
+		}
+
+		/// <summary>
+		/// The Ready-Up status of the current player.
+		/// Setting this property directly will not notify the game.
+		/// </summary>
+		public bool ReadyUp { get; set; }
+
+		/// <summary>
+		/// Sets Ready-Up status of player and notifies game of change.
+		/// Setting the ReadyUp property directly does not notify the game.
+		/// </summary>
+		/// <param name="readyUp">The Ready-Up status to set.</param>
+		public void SetReadyUp(bool readyUp)
+		{
+			if (ReadyUp != readyUp && Game.ReadyUpActive)
+			{
+				ReadyUp = readyUp;
+				if (readyUp)
+				{
+					Console.WriteLine($"{this} readying up");
+				}
+				RaiseReadyUpChanged(readyUp);
 			}
 		}
 
@@ -485,6 +511,11 @@ namespace CardsOverLan.Game
 		private void RaiseAuxDataChanged()
 		{
 			AuxDataChanged?.Invoke(this);
+		}
+
+		private void RaiseReadyUpChanged(bool readyUp)
+		{
+			ReadyUpChanged?.Invoke(this, readyUp);
 		}
 
 		public int HandSize => _hand.Count;

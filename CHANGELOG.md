@@ -87,3 +87,14 @@
 - FIX: Occasional deadlock when accessing player list with many clients
 - FIX: Faulty duplicate prevention
 - FIX: Disappearing czar bug (fingers crossed)
+
+## 1.0.0b4
+
+### Server
+
+- ADD: Game Ready-Up Feature
+    - Allow players to collectively choose when to start the next game.
+- ADD: Bots now have a special name badge in the player list so they can be more easily identified
+
+- FIX: If a czar disconnected or went idle, the new czar used to be able to select their own play. This is no longer possible.
+    - If a czar tries to self-vote, another play will be randomly selected instead.

@@ -1444,11 +1444,12 @@
             }
         },
         {
-            "id": "w_uranus",
+            "id": "w_mytightass",
             "content": {
-                "en": "Uranus.",
-                "de": "Uranus."
-            }
+                "en": "My tight ass.",
+                "de": "Mein enger Arsch."
+            },
+            "flags": "l"
         },
         {
             "id": "w_smarterthan5g",
@@ -3300,7 +3301,7 @@
             "id": "w_goodhairsmell",
             "content": {
                 "en": "How good your hair smells.",
-                "de": "Wie gut deine Haare riecht."
+                "de": "Wie gut dein Haar riecht."
             },
             "flags": "w"
         },
@@ -3317,6 +3318,71 @@
                 "en": "A shot glass of rotten teeth."
             },
             "flags": "g"
+        },
+        {
+            "id": "w_bbbaplus",
+            "content": {
+                "en": "An A+ rating by the Better Business Bureau."
+            }
+        },
+        {
+            "id": "w_bebigblubberbaby",
+            "content": {
+                "en": "Being a big blubbering baby."
+            }
+        },
+        {
+            "id": "w_dicksogross",
+            "content": {
+                "en": "Having a dick so nasty that even your Fleshlight gags."
+            },
+            "flags": "g gn gnm"
+        },
+        {
+            "id": "w_unlimitedammo",
+            "content": {
+                "en": "Unlimited ammo."
+            }
+        },
+        {
+            "id": "w_nicebrick",
+            "content": {
+                "en": "This nice, heavy brick."
+            }
+        },
+        {
+            "id": "w_creamgoodness",
+            "content": {
+                "en": "Creamy goodness."
+            }
+        },
+        {
+            "id": "w_goinheat",
+            "content": {
+                "en": "Going into heat."
+            },
+            "flags": "s"
+        },
+        {
+            "id": "w_morehungthandad",
+            "content": {
+                "en": "Being way more hung than your father."
+            },
+            "flags": "gn gnm"
+        },
+        {
+            "id": "w_nothingbutbs",
+            "content": {
+                "en": "Nothing but a bunch of bullshit."
+            },
+            "flags": "l"
+        },
+        {
+            "id": "w_realgayshit",
+            "content": {
+                "en": "Some real gay shit."
+            },
+            "flags": "lgbt l"
         },
         {
             "id": "b_notyouwhenhungry",
@@ -3583,14 +3649,6 @@
             "content": {
                 "en": "Officer, come quick! I just saw someone ________ and then run off!",
                 "de": "Herr Polizist, bitte kommen Sie schnell! Ich habe gerade jemanden ________ und dann weglaufen gesehen!"
-            },
-            "pick": 1
-        },
-        {
-            "id": "b_kojimagame",
-            "content": {
-                "en": "____________: a Hideo Kojima game.",
-                "de": "____________: ein Spiel von Hideo Kojima."
             },
             "pick": 1
         },

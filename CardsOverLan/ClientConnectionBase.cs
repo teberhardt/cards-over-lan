@@ -98,6 +98,7 @@ namespace CardsOverLan
 			{
 				msg = "s_gamestate",
 				stage = Game.Stage,
+				ready_up = Game.ReadyUpActive,
 				round = Game.Round,
 				black_card = Game.CurrentBlackCard?.ID,
 				pending_players = Game.GetPendingPlayers().Select(p => p.Id),
@@ -105,6 +106,7 @@ namespace CardsOverLan
 				plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.ID)),
 				winning_play = Game.WinningPlayIndex,
 				winning_player = Game.RoundWinner?.Id ?? -1,
+				judge_voted_self = Game.JudgeVotedSelf,
 				game_results = Game.Stage == GameStage.GameEnd
 					? new
 					{
@@ -143,7 +145,9 @@ namespace CardsOverLan
 					score = p.Score,
 					upgrade_points = p.Coins,
 					voted_skip = p.VotedForBlackCardSkip,
-					idle = p.IsAfk
+					idle = p.IsAfk,
+					is_bot = p.IsAutonomous,
+					ready_up = p.ReadyUp
 				})
 			});
 		}

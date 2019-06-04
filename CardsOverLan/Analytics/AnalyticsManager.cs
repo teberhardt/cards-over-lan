@@ -62,7 +62,7 @@ namespace CardsOverLan.Analytics
 			RecordBlackCardSkip(skippedCard);
 		}
 
-		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
+		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, bool ego, WhiteCard[] winningPlay)
 		{
 			RecordWinningPlay(blackCard, winningPlay, roundJudge.IsAutonomous, roundWinner.IsAutonomous);
 		}

@@ -103,12 +103,23 @@ Sent by the user when they change their vote to skip the current black card.
 
 ### c_chat_msg
 
-Send by the user when they send a message in chat.
+Sent by the user when they send a message in chat.
 
 ```json
 {
     "msg": "c_chat_msg",
     "body": "AutoRodney sucks"
+}
+```
+
+### c_ready_up
+
+Sent by the user when they set their "ready up" status.
+
+```json
+{
+    "msg": "c_ready_up",
+    "status": true // True when ready, false when not ready
 }
 ```
 
@@ -158,6 +169,7 @@ The possible strings for the `stage` property are listed below:
 {
     "msg": "s_gamestate",
     "stage": "game_starting",
+    "ready_up": true, // Players are currently in Ready-Up mode (game_start, round_end)
 
     "round": 1, // Round number. (all stages)
 
@@ -208,7 +220,8 @@ Sent by the server to provide clients with the current list of players and their
             "score": 2,
             "upgrade_points": 1,
             "voted_skip": false,
-            "idle": false
+            "idle": false,
+            "ready_up": true,
         }
     ]
 }
@@ -216,7 +229,7 @@ Sent by the server to provide clients with the current list of players and their
 
 ### s_auxclientdata
 
-Provides auxiliary client data to a single player, such as auxiliary points.
+Provides auxiliary client data to a single player, such as upgrade points.
 
 ```json
 {
@@ -224,7 +237,6 @@ Provides auxiliary client data to a single player, such as auxiliary points.
     "aux_points": 3
 }
 ```
-
 
 ### s_notify_skipped
 

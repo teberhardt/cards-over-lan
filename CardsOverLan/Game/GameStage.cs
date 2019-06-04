@@ -27,7 +27,7 @@ namespace CardsOverLan.Game
 		[Name("game_end")]
 		GameEnd,
 		/// <summary>
-		/// Game is starting and waiting for minimum player count.
+		/// Game is waiting to begin.
 		/// </summary>
 		[Name("game_starting")]
 		GameStarting

@@ -115,6 +115,16 @@
         return -1;
     }
 
+    Array.prototype.count = function(predicate) {
+        let n = 0;
+        for(let i = 0; i < this.length; i++) {
+            if (predicate(this[i])) {
+                n++;
+            }
+        }
+        return n;
+    }
+
     if (typeof g.lah === "undefined") {
         var lah = g.lah = {};
     }
@@ -131,6 +141,7 @@
     lah.localPlayerName = ""; // Local player name
     lah.localPlayerId = -1; // Local player ID
     lah.currentJudgeId = -1; // Player ID of current judge
+    lah.judgeVotedSelf = false;
     lah.isClientJudge = false; // boolean - Am I the judge right now?
     lah.roundPlays = []; // string[][] - Array of card IDs played by all users
     lah.stage = STAGE_GAME_STARTING; // Current game stage ID
@@ -151,23 +162,26 @@
     lah.spectating = false;
     lah.clientVotedSkip = false;
 
-    let gameArea;
-    let handArea;
-    let handCardsContainer;
-    let handCardsScrollArea;
-    let playArea;
-    let playCardsArea;
-    let playCardsScrollArea;
-    let blackCardArea;
-    let judgeStatusCardText;
-    let judgeMessageBody;
-    let gameEndScreen;
-    let gameEndScoreboardEntries;
-    let gameEndTrophiesList;
-    let btnPlay;
-    let btnPick;
-    let playerList;
-    let playerChat;
+    let gameArea = elem("#game");
+    let handArea = elem("#hand-area");
+    let readyUpArea = elem("#ready-up-area");
+    let readyUpVotesValue = elem("#ready-up-votes-value");
+    let handCardsContainer = elem("#hand-cards-container");
+    let handCardsScrollArea = elem("#hand-cards-scroll-area");
+    let playArea = elem("#play-area");
+    let playCardsArea = elem("#play-cards-area");
+    let playCardsScrollArea = elem("#play-cards-scroll-area");
+    let blackCardArea = elem("#black-card-area");
+    let judgeStatusCardText = elem("#judge-status-card-text");
+    let judgeMessageBody = elem("#judge-message-body");
+    let gameEndScreen = elem("#game-end-screen");
+    let gameEndScoreboardEntries = elem("#game-end-scoreboard-entries");
+    let gameEndTrophiesList = elem("#game-end-trophies-list");
+    let btnPlay = elem("#btn-play");
+    let btnPick = elem("#btn-judge-pick");
+    let btnReadyUp = elem("#btn-ready-up");
+    let playerList = elem("#player-list");
+    let playerChat = elem("#player-chat-messages");
 
     let ws = new SuperiorWebSocket(null, "fibonacci");
 
@@ -373,18 +387,35 @@
         if (player.idle === true) {
             e.classList.add("is-idle");
         }
+        if (player.is_bot === true) {
+            e.classList.add("is-bot");
+        }
         if (player.voted_skip === true) {
             e.classList.add("voted-skip");
         }
         if (lah.pendingPlayers.includes(player.id)) {
             e.classList.add("is-pending");
         }
+        if (player.ready_up && lah.readyUpEnabled === true) {
+            e.classList.add("is-ready");
+        }
 
+        // Create name col
         let colName = make("span");
         colName.classList.add("col-name");
-        colName.innerText = player.name;
-        if (player.idle === true) colName.innerText += " (" + getUiString("ui_idle") + ")";
 
+        // Add badge element
+        let colNameBadge = make("span");
+        colNameBadge.classList.add("badge");
+        colName.appendChild(colNameBadge);
+
+        // Set name text
+        let nameText = player.name;
+        if (player.idle === true) nameText += " (" + getUiString("ui_idle") + ")";
+        let nameTextElem = document.createTextNode(nameText);
+        colName.appendChild(nameTextElem);
+
+        // Create score col
         let colScore = make("span");
         colScore.classList.add("col-score");
         colScore.innerText = player.score.toString();
@@ -476,9 +507,11 @@
             let roundChanged = lah.round !== msg.round;
             let stageChanged = lah.stage != msg.stage;
             lah.round = msg.round;
+            lah.readyUpEnabled = !!msg.ready_up;
             lah.stage = msg.stage;
             lah.pendingPlayers = msg.pending_players;
             lah.currentJudgeId = msg.judge;
+            lah.judgeVotedSelf = msg.judge_voted_self;
             lah.roundPlays = msg.plays;
             lah.winningPlayerId = msg.winning_player;
             lah.winningPlayIndex = msg.winning_play;
@@ -831,11 +864,25 @@
     function onPlayerListChanged() {
         elem("#player-count").textContent = lah.playerList.length;
         populatePlayerList();
+        updateReadyUpArea();
+    }
+
+    function updateReadyUpArea() {
+        let readyUpAreaEnabled = lah.readyUpEnabled && lah.stage == STAGE_GAME_STARTING;       
+        if (readyUpAreaEnabled) {
+            let readyUpVotesLeft = lah.playerList.count(p => !p.is_bot && !p.ready_up);
+            let amReady = getPlayer(lah.localPlayerId).ready_up;
+            readyUpVotesValue.textContent = readyUpVotesLeft.toString();
+            btnReadyUp.value = getUiString(amReady ? "ui_btn_ready_up_voted" : "ui_btn_ready_up");
+            btnReadyUp.disabled = amReady;            
+        }
+        readyUpArea.setVisible(readyUpAreaEnabled);
     }
 
     // Make sure the correct elements are visible/enabled
     function updateUiState() {
         let handEnabled = lah.isWaitingOnPlayer && !lah.isClientJudge;
+        
         let pendingPlayerCount = lah.pendingPlayers.length;
 
         gameArea.setClass("lah-stage-game-starting", lah.stage == STAGE_GAME_STARTING);
@@ -952,6 +999,7 @@
         updateUiState();
         updateStatus();
         onSelectionChanged();
+        updateReadyUpArea();
     }
 
     // Called when s_cardsplayed received
@@ -985,7 +1033,7 @@
 
         switch (lah.stage) {
             case STAGE_GAME_STARTING:
-                setStatusText(getUiString("ui_waiting_for_players"));
+                setStatusText(getUiString(lah.readyUpEnabled ? "ui_readying_up" : "ui_waiting_for_players"));
                 break;
             case STAGE_PLAYING:
                 setStatusText(getUiString("ui_round_num", lah.round));
@@ -1039,7 +1087,9 @@
             case STAGE_ROUND_END:
             {
                 let roundEndMsg;
-                if (lah.winningPlayerId == lah.localPlayerId) {
+                if (lah.currentJudgeId == lah.localPlayerId && lah.judgeVotedSelf === true) {
+                    roundEndMsg = getUiString("ui_voted_self");
+                } else if (lah.winningPlayerId == lah.localPlayerId) {
                     roundEndMsg = getUiString("ui_you_win_round");                    
                 } else {
                     let winningPlayer = lah.playerList.find(p => p.id == lah.winningPlayerId);
@@ -1156,6 +1206,13 @@
     // Raised when the VOTE button is clicked
     function onJudgePickClicked() {
         lah.judgeCards(lah.selectedPlayIndex);
+    }
+
+    function onReadyUpClicked() {
+        sendMessage({
+            msg: "c_ready_up",
+            status: true
+        });
     }
 
     function onPlayerNameChanged() {
@@ -1280,31 +1337,13 @@
         // Fetch server info
         refreshServerInfo();
 
-        // Get game elements
-        gameArea = elem("#game");
-        handCardsContainer = elem("#hand-cards-container");
-        handCardsScrollArea = elem("#hand-cards-scroll-area");
-        handArea = elem("#hand-area");
-        playCardsArea = elem("#play-cards-area");
-        playCardsScrollArea = elem("#play-cards-scroll-area");
-        playArea = elem("#play-area");
-        btnPlay = elem("#btn-play");
-        btnPick = elem("#btn-judge-pick");
-        blackCardArea = elem("#black-card-area");
-        judgeStatusCardText = elem("#judge-status-card-text");
-        judgeMessageBody = elem("#judge-message-body");
-        gameEndScreen = elem("#game-end-screen");
-        gameEndScoreboardEntries = elem("#game-end-scoreboard-entries");
-        gameEndTrophiesList = elem("#game-end-trophies-list");
-        playerList = elem("#player-list");
-        playerChat = elem("#player-chat-messages");
-
         updateStatus();
         updateUiState();
 
         // Set events
         btnPlay.onclick = onPlayClicked;
         btnPick.onclick = onJudgePickClicked;
+        btnReadyUp.onclick = onReadyUpClicked;
 
         elem("#btn-play-game").onclick = onPlayGameClicked;
         elem("#btn-spectate-game").onclick = onSpectateGameClicked;

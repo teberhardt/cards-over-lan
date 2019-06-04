@@ -1,17 +1,10 @@
 ﻿using CardsOverLan.Game;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 using WebSocketSharp;
-using WebSocketSharp.Server;
 
 namespace CardsOverLan
 {
@@ -184,15 +177,15 @@ namespace CardsOverLan
 		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
 		{
 			// Players who were waiting for a game to start aren't exactly AFK
-			if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
-			{
-				_afkRecovery = true;
-				SetAfkState(false);
-				ResetIdleTime(true);
-			}
-			else if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
+			if (oldStage == GameStage.GameStarting && currentStage == GameStage.RoundInProgress)
 			{
 				_afkRecovery = false;
+				SetAfkState(false);
+				ResetIdleTime(false);
+			}
+			else if (Player.IsAfk && currentStage == GameStage.RoundInProgress)
+			{
+				_afkRecovery = true;
 				SetAfkState(false);
 				ResetIdleTime(true);
 			}
@@ -419,6 +412,11 @@ namespace CardsOverLan
 				{
 					Server.SendChatMessage(Player, json["body"].Value<string>());
 					ResetIdleTime(false);
+					break;
+				}
+				case "c_ready_up":
+				{
+					Player.SetReadyUp(true);
 					break;
 				}
 			}

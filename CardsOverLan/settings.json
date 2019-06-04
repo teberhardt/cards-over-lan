@@ -4,7 +4,7 @@
 	"ws_url": "ws://0.0.0.0:3000",
 	"client_ws_port": 3000,
 	"web_root": "./web_content",
-	"allow_duplicates": false,
+	"allow_duplicates": true,
 
 	/* GENERAL GAME SETTINGS */
 	"server_name": "Cards Over LAN",
@@ -22,6 +22,7 @@
 	"enable_upgrades": true,
 	"enable_chat": true,
 	"enable_trophies": true,
+	"enable_game_ready_up": true,
 	"max_points": 8,
 	"max_rounds": 16,
 	"perma_czar": false,

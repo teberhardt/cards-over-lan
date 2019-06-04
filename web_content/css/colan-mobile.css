@@ -77,7 +77,8 @@ smaller {
 #btn-mobile-nav {
     position: absolute;
     top: 0;
-    right: 0;        
+    right: 0;  
+    z-index: 2147483647;      
 }
 
 #navbar {
@@ -95,7 +96,7 @@ smaller {
     bottom: 0;
     min-height: 30pt;
     padding: 56pt 16pt;
-    z-index: 9999;
+    z-index: 2147483647;
 }
 
 #navbar .lah-btn {
@@ -233,6 +234,57 @@ card > .btn-skip:not(:disabled):hover {
 .lah-stage-playing.lah-judge #prompt-area {
     grid-row: r-start / r-center;
     grid-column: c-start / c-end;
+}
+
+/* READY-UP AREA */
+#ready-up-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 130px;
+    display: grid;
+    padding: 16px;
+    grid-template-columns: [c-start] 10fr [c-center] 7fr [c-end];
+    grid-template-rows: [r-start] 2em [r-center] 1fr [r-end];
+    grid-row-gap: 16px;
+    font-size: .9em;
+    background: var(--accent-bg);
+    border: 2px solid var(--accent-fg);
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    border-bottom-width: 0;
+    z-index: 20000;
+}
+
+#ready-up-msg {
+    grid-row: r-start / r-center;
+    grid-column: c-start / c-center;
+    text-align: center;
+    margin: 0 16px;
+}
+
+#btn-ready-up {
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-center;
+    margin: auto 0;
+    height: 64px;
+    padding: 8px 16px;
+    font-size: 20pt;
+}
+
+#ready-up-votes-label {
+    grid-row: r-start / r-center;
+    grid-column: c-center / c-end;
+    text-align: center;
+}
+
+#ready-up-votes-value {
+    grid-row: r-center / r-end;
+    grid-column: c-center / c-end;
+    text-align: center;
+    margin: auto auto;
+    font-size: 36pt;
+    line-height: 1.0em;
 }
 
 /* JUDGE STATUS & MESSAGE AREAS */
@@ -1100,7 +1152,7 @@ card[data-selection]::after {
     /* border-bottom-width: 3px; */
 }
 
-.lah-btn.disabled {
+.lah-btn.disabled, .lah-btn[disabled] {
     opacity: .35;
 }
 

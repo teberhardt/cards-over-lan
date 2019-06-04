@@ -123,7 +123,7 @@ namespace CardsOverLan
 			Console.WriteLine($"GAME OVER: Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 		}
 
-		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
+		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, bool ego, WhiteCard[] winningPlay)
 		{
 			Console.WriteLine($"Round {round} ended: {roundWinner?.ToString() ?? "Nobody"} wins!");
 		}

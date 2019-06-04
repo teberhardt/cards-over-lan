@@ -179,6 +179,58 @@ smaller {
     border: none;
 }
 
+/* READY-UP AREA */
+#ready-up-area {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 500px;
+    width: 30%;
+    min-height: 130px;
+    display: grid;
+    padding: 16px;
+    grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end];
+    grid-template-rows: [r-start] 2em [r-center] 1fr [r-end];
+    grid-row-gap: 16px;
+    background: var(--accent-bg);
+    border: 2px solid var(--accent-fg);
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    border-bottom-width: 0;
+    z-index: 2147483647;
+}
+
+#ready-up-msg {
+    grid-row: r-start / r-center;
+    grid-column: c-start / c-center;
+    text-align: center;
+    margin: 0 16px;
+}
+
+#btn-ready-up {
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-center;
+    height: 70px;
+    width: 90%;
+    box-sizing: border-box;
+    margin: auto auto;
+}
+
+#ready-up-votes-label {
+    grid-row: r-start / r-center;
+    grid-column: c-center / c-end;
+    text-align: center;
+}
+
+#ready-up-votes-value {
+    grid-row: r-center / r-end;
+    grid-column: c-center / c-end;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 50pt;
+    line-height: 1.1em;
+}
+
 /* PLAYER LIST AND CHAT */
 
 #player-list-area {
@@ -275,20 +327,26 @@ smaller {
     grid-column: c-start / c-center;
 }
 
-.player-list-entry > .col-name:before {
+.player-list-entry > .col-name:before, .player-list-entry > .col-name > .badge:before, .player-list-entry > .col-name > .badge:after {
     display: inline-block;
     width: 1em;
     height: 1em;
     background-color: var(--accent-ol);
     border-radius: 3px;
     background-size: 100% 100%;
-    transform: translateY(.125em);
+    transform: translateY(.1125em);
     background-repeat: no-repeat;
     background-origin: content-box;
     background-position: bottom;
 }
 
-.player-list-entry.is-judge > .col-name:before {
+.player-list-entry.is-bot > .col-name > .badge:before {
+    content: "";
+    margin-right: 3pt;
+    background-image: url("/img/bot.png");
+}
+
+#game:not(.lah-stage-game-starting) .player-list-entry.is-judge > .col-name:before {
     content: "";
     margin-right: 3pt;
     background-image: url("/img/lah-czar.png");    
@@ -298,6 +356,12 @@ smaller {
     content: "";
     margin-right: 3pt;
     background-image: url("/img/lah-pending.png");    
+}
+
+#game.lah-stage-game-starting .player-list-entry.is-ready > .col-name:before {
+    content: "";
+    margin-right: 3pt;
+    background-image: url("/img/ready.png");
 }
 
 .player-list-entry > .col-score {
@@ -1136,6 +1200,11 @@ card .ribbon {
     border-radius: 0 0 calc(var(--card-border-radius) - 2px) calc(var(--card-border-radius) - 2px);
 }
 
+card[data-packid] .ribbon:not(:hover):after {
+    color: rgba(0,0,0,0) !important;
+    background-size: 12.5% !important;
+}
+
 card[data-packid] .ribbon:after {
     position: absolute;
     left: 0;
@@ -1145,7 +1214,7 @@ card[data-packid] .ribbon:after {
     content: attr(data-packname);
     font-size: 11pt;    
     background-color: #444;
-    background-size: 100%;
+    background-size: 100% !important;
     padding: 8px 15px;
     text-align: left;
     transform-origin: left top;
@@ -1154,11 +1223,6 @@ card[data-packid] .ribbon:after {
     border-left: none !important;
     background-clip: padding-box;
     background-repeat: repeat-x;
-}
-
-card[data-packid] .ribbon:not(:hover):after {
-    color: rgba(0,0,0,0) !important;
-    background-size: 12.5% !important;
 }
 
 card .ribbon:hover:after {

@@ -1,5 +1,5 @@
 {
-    "ui_version": "v1.0.0b3",
+    "ui_version": "v1.0.0b4",
     "ui_game_title": {
         "en": "Cards Over LAN",
         "de": "Cards Over LAN"
@@ -125,8 +125,8 @@
         "de": "Verbindung getrennt ({0})"
     },
     "ui_reject_server_full": {
-        "en": "Server is full",
-        "de": "Server ist voll"
+        "en": "Server full",
+        "de": "Server voll"
     },
     "ui_reject_duplicate": {
         "en": "Duplicate player",
@@ -192,9 +192,25 @@
         "en": "Player count",
         "de": "Spieleranzahl"
     },
+    "ui_ready_up_msg": {
+        "en": "Press READY UP once everyone's ready.",
+        "de": "Alle bereit?"
+    },
+    "ui_ready_up_votes_label": {
+        "en": "Ready Votes needed:",
+        "de": "Bereit-Stimmen übrig:"
+    },
+    "ui_btn_ready_up": {
+        "en": "READY UP",
+        "de": "BEREIT"
+    },
+    "ui_btn_ready_up_voted": {
+        "en": "READY!",
+        "de": "BEREIT!"
+    },
     "ui_btn_play": {
         "en": "PLAY",
-        "de": "FERTIG"
+        "de": "AUSSPIELEN"
     },
     "ui_btn_vote": {
         "en": "VOTE",
@@ -232,6 +248,10 @@
         "en": "{0} wins the round!",
         "de": "{0} hat die Runde gewonnen!"
     },
+    "ui_voted_self": {
+        "en": "Only losers self-vote.",
+        "de": "Nur Versager wählen sich selbst."
+    },
     "ui_you_win_round": {
         "en": "You win the round!",
         "de": "Du hast die Runde gewonnen!"
@@ -259,6 +279,10 @@
     "ui_waiting_for_x": {
         "en": "Waiting for {0}...",
         "de": "Warte auf {0}..."
+    },
+    "ui_readying_up": {
+        "en": "Readying up",
+        "de": "Warte auf Bereit-Abstimmung"
     },
     "ui_list_and": {
         "en": "and ",

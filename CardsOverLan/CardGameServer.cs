@@ -51,7 +51,7 @@ namespace CardsOverLan
 				bot => EnumerateEventTaunts(bot, "game_end", b => true));
 		}
 
-		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, WhiteCard[] winningPlay)
+		private void OnGameRoundEnded(int round, BlackCard blackCard, Player roundJudge, Player roundWinner, bool ego, WhiteCard[] winningPlay)
 		{
 			var czar = Game.Judge;			
 
@@ -117,7 +117,7 @@ namespace CardsOverLan
 			// Select a taunt
 			var activeTaunt = eligibleCardTaunts[_rng.Next(eligibleCardTaunts.Length)];
 
-			// Calculate probability
+			// Calculate taunt probability
 			double tauntChance = ((activeTaunt.ResponseChance / botCount) + activeTaunt.ResponseChance) * 0.5;
 
 			// Check against probability and send message

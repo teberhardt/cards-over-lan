@@ -14,18 +14,6 @@ namespace CardsOverLan
 		private const int DefaultMinPlayers = 3;
 		private const int DefaultMaxPlayers = 10;
 		private const int DefaultMaxSpectators = 10;
-		private const int MinMaxPlayers = 3;
-		private const int MinMinPlayers = 3;
-		private const int MinMaxPoints = 1;
-		private const int MinRoundEndTimeout = 0;
-		private const int MinGameEndTimeout = 10000;
-		private const int MinAfkTimeSeconds = 30;
-		private const int MinAfkRecoveryTimeSeconds = 30;
-		private const int MinIdleKickTimeSeconds = 60;
-		private const int MinBlankCards = 0;
-		private const int MinBotCount = 0;
-		private const int MinDiscards = 0;
-
 		private const int DefaultRoundEndTimeout = 10000;
 		private const int DefaultGameEndTimeout = 30000;
 		private const int DefaultAfkTimeSeconds = 300;
@@ -40,6 +28,18 @@ namespace CardsOverLan
 		private const int DefaultPlayerPreserveTimeSeconds = 30;
 		private const int DefaultJudgePerCardTimeoutBonus = 7;
 		private const int DefaultPlayerPerCardTimeoutBonus = 10;
+
+		private const int MinMaxPlayers = 3;
+		private const int MinMinPlayers = 3;
+		private const int MinMaxPoints = 1;
+		private const int MinRoundEndTimeout = 0;
+		private const int MinGameEndTimeout = 10000;
+		private const int MinAfkTimeSeconds = 30;
+		private const int MinAfkRecoveryTimeSeconds = 30;
+		private const int MinIdleKickTimeSeconds = 60;
+		private const int MinBlankCards = 0;
+		private const int MinBotCount = 0;
+		private const int MinDiscards = 0;
 
 		private int _blankCards = DefaultBlankCards;
 		private int _maxPoints = DefaultMaxPoints;
@@ -209,15 +209,12 @@ namespace CardsOverLan
 		public int MaxPoints
 		{
 			get => _maxPoints;
-			set
-			{
-				_maxPoints = value < MinMaxPoints ? MinMaxPoints : value;
-			}
+			set => _maxPoints = value < MinMaxPoints ? MinMaxPoints : value;
 		}
 
 		[JsonProperty("max_rounds", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultMaxRounds)]
-		public int MaxRounds { get; set; }
+		public int MaxRounds { get; set; } = DefaultMaxRounds;
 
 		[JsonProperty("bot_count", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(DefaultBotCount)]
@@ -285,6 +282,14 @@ namespace CardsOverLan
 		[JsonProperty("player_preserve_time", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue(DefaultPlayerPreserveTimeSeconds)]
 		public int PlayerPreserveTimeSeconds { get; set; } = DefaultPlayerPreserveTimeSeconds;
+
+		[JsonProperty("enable_game_ready_up", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(true)]
+		public bool GameReadyUpEnabled { get; set; } = true;
+
+		[JsonProperty("enable_round_ready_up", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		[DefaultValue(false)]
+		public bool RoundReadyUpEnabled { get; set; } = false;
 
 		[JsonProperty("judge_per_card_timeout_bonus", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue(DefaultJudgePerCardTimeoutBonus)]
