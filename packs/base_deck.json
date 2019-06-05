@@ -3385,6 +3385,46 @@
             "flags": "lgbt l"
         },
         {
+            "id": "w_bigtoes",
+            "content": {
+                "en": "Big toes.",
+                "de": "Große Zehen."
+            }
+        },
+        {
+            "id": "w_permashitstain",
+            "content": {
+                "en": "A permanent shit-stain."
+            },
+            "flags": "l g fe"
+        },
+        {
+            "id": "w_wholemargarinetub",
+            "content": {
+                "en": "This whole tub of margarine."
+            }
+        },
+        {
+            "id": "w_biglocust",
+            "content": {
+                "en": "A really big locust."
+            },
+            "flags": "in"
+        },
+        {
+            "id": "w_longhappysadshit",
+            "content": {
+                "en": "Taking the biggest, longest, most beautiful shit, shedding a tear, and bowing before its splendor."
+            },
+            "flags": "fe g l"
+        },
+        {
+            "id": "w_homiecuddleparty",
+            "content": {
+                "en": "Snuggling with all my homies."
+            }
+        },
+        {
             "id": "b_notyouwhenhungry",
             "content": {
                 "en": "You're not you when you're hungry. Have ________."
