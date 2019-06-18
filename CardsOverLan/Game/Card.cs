@@ -1,4 +1,4 @@
-﻿using CardsOverLan.Game.Converters;
+using CardsOverLan.Game.Converters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,15 +26,15 @@ namespace CardsOverLan.Game
 
 		[ClientFacing]
 		[JsonProperty("id")]
-		public string ID
+		public string Id
 		{
 			get => _id;
 			set
 			{
-				if (String.IsNullOrWhiteSpace(value))
+				if (string.IsNullOrWhiteSpace(value))
 					throw new ArgumentException("Card ID cannot be null nor empty.");
-				if (!value.All(c => c == '_' || Char.IsLetterOrDigit(c) || c == '/' || c == '+' || c == '='))
-					throw new ArgumentException("Card IDs can only contain underscores, alphanumeric charactrs, and those allowed by Base64.");
+				if (!value.All(c => c == '_' || char.IsLetterOrDigit(c) || c == '/' || c == '+' || c == '='))
+					throw new ArgumentException("Card IDs can only contain underscores, alphanumeric characters, and those allowed by Base64.");
 				_id = value;
 			}
 		}
@@ -49,7 +49,7 @@ namespace CardsOverLan.Game
 
 		public void AddContent(string languageCode, string content) => _content[languageCode] = content;
 
-		public string GetContent(string languageCode) => String.IsNullOrWhiteSpace(languageCode) || !_content.TryGetValue(languageCode, out var c) ? null : c;
+		public string GetContent(string languageCode) => string.IsNullOrWhiteSpace(languageCode) || !_content.TryGetValue(languageCode, out var c) ? null : c;
 
 
 		[OnDeserialized]
@@ -60,12 +60,12 @@ namespace CardsOverLan.Game
 
 		public static WhiteCard CreateCustom(string content)
 		{
-			if (String.IsNullOrWhiteSpace(content)) return null;
+			if (string.IsNullOrWhiteSpace(content)) return null;
 			var contentBytes = Encoding.UTF8.GetBytes(content);
 			var base64ContentText = Convert.ToBase64String(contentBytes);
 			var card = new WhiteCard
 			{
-				ID = $"custom_{base64ContentText}",
+				Id = $"custom_{base64ContentText}",
 				IsCustom = true
 			};
 			card.AddContent(DefaultLocale, content);
@@ -83,22 +83,14 @@ namespace CardsOverLan.Game
 				.Select(s => s.Trim())
 				.Select(s => (shouldMatch: !s.StartsWith("!"), flag: s.TrimStart('!'))).ToArray();
 			var cardFlagParts = ContentFlags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
-			for (int i = 0; i < searchFlagParts.Length; i++)
+			for (var i = 0; i < searchFlagParts.Length; i++)
 			{
-				bool found = false;
-				for (int j = 0; j < cardFlagParts.Length; j++)
-				{
-					if (cardFlagParts[j] == searchFlagParts[i].flag)
-					{
-						found = true;
-						break;
-					}
-				}
+				var found = cardFlagParts.Any(t => t == searchFlagParts[i].flag);
 				if (found != searchFlagParts[i].shouldMatch) return false;
 			}
 			return true;
 		}
 
-		public override string ToString() => IsCustom ? "(custom)" : ID;
+		public override string ToString() => IsCustom ? "(custom)" : Id;
 	}
 }

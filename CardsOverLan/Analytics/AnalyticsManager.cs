@@ -1,10 +1,9 @@
-﻿using CardsOverLan.Game;
+using CardsOverLan.Game;
 using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CardsOverLan.Analytics
@@ -17,13 +16,12 @@ namespace CardsOverLan.Analytics
 		private const string DiscardsTableName = "cards_discarded";
 		private const string WinningPlaysTableName = "winning_plays";
 		private const string SkippedBlackCardsTableName = "skipped_black_cards";
-		private const string ReferersTableName = "referers";
+		private const string ReferrersTableName = "referrers";
 
 		private LiteDatabase _db;
 		private readonly object _dbLock = new object();
-		private bool _active;
 
-		public bool IsActive => _active;
+		public bool IsActive { get; private set; }
 
 		public void Start(string databaseFile)
 		{
@@ -41,7 +39,7 @@ namespace CardsOverLan.Analytics
 
 					// Load/create DB
 					_db = new LiteDatabase(databaseFile);
-					_active = true;
+					IsActive = true;
 
 					// Subscribe (and smash that like button)
 					var game = GameManager.Instance.Game;
@@ -67,7 +65,7 @@ namespace CardsOverLan.Analytics
 			RecordWinningPlay(blackCard, winningPlay, roundJudge.IsAutonomous, roundWinner.IsAutonomous);
 		}
 
-		public async void RecordReferer(string referer)
+		public async void RecordReferrer(string referrer)
 		{
 			if (!IsActive) return;
 			await Task.Run(() =>
@@ -76,13 +74,13 @@ namespace CardsOverLan.Analytics
 				{
 					try
 					{	
-						var table = _db.GetCollection<StringFrequencyRecord>(ReferersTableName);
-						var record = table.FindById(referer);
+						var table = _db.GetCollection<StringFrequencyRecord>(ReferrersTableName);
+						var record = table.FindById(referrer);
 						if (record == null)
 						{
 							record = new StringFrequencyRecord
 							{
-								Value = referer,
+								Value = referrer,
 								Count = 0
 							};
 							table.Insert(record);
@@ -94,7 +92,7 @@ namespace CardsOverLan.Analytics
 					}
 					catch(Exception ex)
 					{
-						Console.WriteLine($"Failed to record referer in DB: {ex.Message}");
+						Console.WriteLine($"Failed to record referrer in DB: {ex.Message}");
 					}
 				}
 			});
@@ -110,12 +108,12 @@ namespace CardsOverLan.Analytics
 					try
 					{
 						var table = _db.GetCollection<CardFrequencyRecord>(SkippedBlackCardsTableName);
-						var record = table.FindById(card.ID);
+						var record = table.FindById(card.Id);
 						if (record == null)
 						{
 							record = new CardFrequencyRecord
 							{
-								CardId = card.ID,
+								CardId = card.Id,
 								Count = 0
 							};
 							table.Insert(record);
@@ -141,7 +139,7 @@ namespace CardsOverLan.Analytics
 				{
 					try
 					{
-						var cardId = card.IsCustom ? "custom" : card.ID;
+						var cardId = card.IsCustom ? "custom" : card.Id;
 						var table = _db.GetCollection<CardFrequencyRecord>(CardsPlayedTableName);
 						var record = table.FindById(cardId);
 						if (record == null)
@@ -176,12 +174,12 @@ namespace CardsOverLan.Analytics
 					try
 					{
 						var table = _db.GetCollection<CardFrequencyRecord>(DiscardsTableName);
-						var record = table.FindById(card.ID);
+						var record = table.FindById(card.Id);
 						if (record == null)
 						{
 							record = new CardFrequencyRecord
 							{
-								CardId = card.ID,
+								CardId = card.Id,
 								Count = 0
 							};
 							table.Insert(record);
@@ -199,7 +197,7 @@ namespace CardsOverLan.Analytics
 			});
 		}
 
-		public async void RecordWinningPlay(BlackCard blackCard, WhiteCard[] whiteCards, bool isWinnerBot, bool isJudgeBot)
+		public async void RecordWinningPlay(BlackCard blackCard, IEnumerable<WhiteCard> whiteCards, bool isWinnerBot, bool isJudgeBot)
 		{
 			if (!IsActive) return;
 			await Task.Run(() =>
@@ -208,12 +206,12 @@ namespace CardsOverLan.Analytics
 				{
 					try
 					{
-						var whiteCardListString = String.Join(";", whiteCards.Select(w => w.IsCustom ? "custom" : w.ID));
+						var whiteCardListString = string.Join(";", whiteCards.Select(w => w.IsCustom ? "custom" : w.Id));
 						var table = _db.GetCollection<WinningPlayRecord>(WinningPlaysTableName);
 						var record = table.FindOne(r =>
 						r.IsPlayerBot == isWinnerBot
 						&& r.IsJudgeBot == isJudgeBot
-						&& r.BlackCard == blackCard.ID
+						&& r.BlackCard == blackCard.Id
 						&& r.WhiteCards == whiteCardListString);
 
 						if (record == null)
@@ -223,7 +221,7 @@ namespace CardsOverLan.Analytics
 								Id = ObjectId.NewObjectId(),
 								IsJudgeBot = isJudgeBot,
 								IsPlayerBot = isWinnerBot,
-								BlackCard = blackCard.ID,
+								BlackCard = blackCard.Id,
 								WhiteCards = whiteCardListString,
 								Count = 0
 							};
@@ -251,7 +249,7 @@ namespace CardsOverLan.Analytics
 			{
 				if (!IsActive) return;
 				_db.Dispose();
-				_active = false;
+				IsActive = false;
 			}
 		}
 	}

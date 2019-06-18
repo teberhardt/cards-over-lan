@@ -1,0 +1,1363 @@
+/* Cards have .715 w/h ratio */
+
+:root {
+    --card-scale: 2.25;
+    --card-width: calc(10vh * var(--card-scale));
+    --card-height: calc(14vh * var(--card-scale));
+    --card-font-size: 1.9vh;
+    --card-border-radius: 14px;
+    --card-padding: 1em;
+    --final-score-row-height: 22pt;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    background-color: var(--accent-bg);
+    color: var(--accent-fg);
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    text-size-adjust: 100%;
+}
+
+.desktop-only {
+    display: none !important;
+}
+
+.disabled {
+    opacity: .35;
+    pointer-events: none;
+}
+
+small {
+    display: inline;
+    font-size: .65em;
+}
+
+smaller {
+    display: inline;
+    font-size: .4em;
+}
+
+.mobile-hidden {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.mobile-btn-menu {
+    display: block;
+    width: 1em;
+    height: 1em;
+    background: url("/img/lah_settings.png");
+    background-size: .9em .9em;
+    background-origin: 50% 50%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: var(--accent-ol);
+    border-radius: 3px;
+    margin: 3px;
+    padding: .2em;
+    font-size: 24pt;
+    overflow: visible;
+    color: #333;
+    opacity: .5;
+    z-index: 10000;
+}
+
+.mobile-btn-menu:active {
+    color: #666;
+    background-color: rgba(.5, .5, .5, .05);
+}
+
+#btn-mobile-nav {
+    position: absolute;
+    top: 0;
+    right: 0;        
+}
+
+#navbar {
+    position: fixed;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    color: #111 !important;
+    background: #ddd !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 30pt;
+    padding: 56pt 16pt;
+    z-index: 9999;
+}
+
+#navbar .lah-btn {
+    padding: 12pt 6pt;
+    margin: 4pt 0;
+    color: #111;
+    background: #eee;
+    border-color: #111;
+}
+
+#navbar .nav-header {
+    position: absolute;
+    left: 16pt;
+    top: 0;
+    right: 16pt;
+    margin-top: 12pt;
+    font-size: 150%;
+    text-align:center;
+}
+
+#navbar input[type="button"] {
+    width: 100%;
+}
+
+.nav-end {
+    align-self: flex-end;
+}
+
+#game {
+    position: relative;
+    max-width: 100vw;
+    max-height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: [c-start] 1fr [c-center] 1fr [c-end];
+    grid-template-rows: [r-start] 1fr [r-center] 1fr [r-end];
+}
+
+/* PLAYER LIST */
+#player-list-area {
+    /* Currently not supported on mobile */
+    display: none;
+}
+
+/* NOTIFICATION BANNER */
+
+#notify-banner {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    left: 0;
+    top: 48vh;
+    transform: translateY(-50%);
+    min-height: 85pt;
+    padding: 12pt;
+    background: rgba(16, 16, 16, .75);
+    cursor: default;
+    box-sizing: border-box;
+    backdrop-filter: blur(5px);
+}
+
+#notify-banner-text {
+    font-size: 24pt;
+    max-width: 100%;
+    word-wrap: break-word;
+    color: white;
+    text-align: center;
+}
+
+/* PROMPT AREA */
+
+#prompt-area {
+    grid-column: c-start / c-end;
+    grid-row: r-start / r-center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#black-card-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+card > .btn-skip {
+    position: absolute;
+    display: inline-block;
+    bottom: -2.5em;
+    left: 50%;
+    font-size: 12pt;
+    line-height: 1.02em;
+    font-weight: 600;
+    height: 1em;
+    transform: translateX(-50%);
+    background: none;
+    outline: none;
+    color: var(--accent-fg);
+    border: 2px solid var(--accent-fg);
+    box-sizing: content-box;
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transition: opacity .1s ease;
+    opacity: .4;
+}
+
+#game:not(.lah-stage-playing) .btn-skip {
+    display: none;
+}
+
+card > .btn-skip:not(:disabled):hover {
+    border-color: var(--accent-fg);
+    opacity: 1;
+}
+
+.lah-voted-skip card > .btn-skip {
+    color: var(--accent-skip);
+    border-color: var(--accent-skip) !important;
+}
+
+.lah-stage-playing:not(.lah-judge) #prompt-area {
+    margin-bottom: 12pt; 
+}
+
+.lah-stage-playing.lah-judge #prompt-area {
+    grid-row: r-start / r-center;
+    grid-column: c-start / c-end;
+}
+
+/* JUDGE STATUS & MESSAGE AREAS */
+
+#judge-message-area {
+    display: none;
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-end;
+    justify-self: center;
+    align-self: center;
+    font-size: 14pt !important;
+}
+
+#judge-message-body, #judge-message-body * {
+    text-align: center;
+    font-size: inherit !important;
+}
+
+#judge-status-card-area {
+    display: none;
+    flex-direction: row;
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-end;
+    justify-content: flex-end;
+    align-items: center;
+    transform: translateY(8pt);
+    margin: 16px;
+    color: #888;
+    pointer-events: none;
+}
+
+#game.lah-stage-playing.lah-judge #judge-message-area {
+    display: flex;
+}
+
+#judge-status-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    --card-scale: .75;
+    width: calc(var(--card-width) * var(--card-scale));
+    height: calc(var(--card-height) * var(--card-scale));
+    border-radius: var(--card-border-radius);
+    border: 4px dashed #888;
+    box-sizing: border-box;
+}
+
+#judge-status-card-text {
+    font-size: 36pt;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* HAND AREA */
+
+#hand-area {
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-end;
+    display: flex;
+    position: relative;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+/* PLAY AREA */
+
+#play-area {        
+    grid-row: r-center / r-end;
+    grid-column: c-start / c-end;
+    position: relative;  
+    display: flex;
+    align-items: center;   
+    overflow: hidden;   
+}
+
+.lah-stage-judging.lah-judge #play-cards-area {
+    margin-bottom: 64pt;
+}
+
+.lah-stage-round-end #play-cards-scroll-area {
+    overflow: visible;
+}
+
+#play-cards-scroll-area > .lah-card-container-inner {
+    margin: 24pt 0;
+}
+
+#play-cards-scroll-area::-webkit-scrollbar {
+    display: none;
+}
+
+#hand-cards-scroll-area::-webkit-scrollbar {
+    display: none;
+}
+
+#judge-controls-area {
+    position: absolute;
+    bottom: 4pt;
+    left: 8pt;
+    right: 8pt;
+    display: none;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#judge-controls-area > * {
+    flex-grow: 1;
+}
+
+#game.lah-stage-judging.lah-judge #judge-controls-area {
+    display: flex;
+}
+
+#game.lah-stage-judging.lah-judge #play-cards-area > .card-group {
+    transition: margin .3s, transform .3s !important;
+}
+
+#game.lah-stage-judging.lah-judge #play-cards-area > .card-group:hover {
+    background: var(--accent-group-hover);
+}
+
+#game.lah-stage-judging.lah-judge #play-cards-area > .card-group.judge-selected {
+    background: var(--accent-group-hover);
+    margin: 0 8pt;
+    transform: translate(0, -8pt);
+}
+
+.card-group.judge-selected card {
+    animation-name: rumble;
+    animation-duration: .3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+.card-group.judge-selected card:nth-child(odd) {
+    animation-delay: .3s;
+}
+
+.card-group.judge-selected card:only-child {
+    animation-name: tilt;
+    animation-duration: .275s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+card[white].winner, .card-group.winner card[white] {
+    background: linear-gradient(to bottom, rgb(255, 230, 5), rgb(231, 160, 8));
+    color: black;
+}
+
+#game.lah-stage-judging #play-area {
+    justify-content: space-between;
+}
+
+/* STATUS AREA */
+
+#status-area {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: var(--accent-fg);
+    left: 10pt;
+    top: 10pt;  
+    right: 24pt;      
+    min-width: 64pt;
+    cursor: default;
+    opacity: .65;
+    transition: opacity .3s;
+}
+
+#stat-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 2pt;
+}
+
+#status-area:hover {
+    opacity: 1;
+}
+
+#status-area > *:not(:last-child) {
+    margin-bottom: 2pt;
+}
+
+#status {
+    font-size: 12pt;
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+#stat-list .stat {
+    font-size: 11pt;
+    text-align: left;  
+    max-width: 50%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+}
+
+#status-area .stat.bare {
+    margin-left: 1pt;
+    max-width: 90%;
+    color: var(--accent-fg);
+    opacity: .8;
+}
+
+#status-area .stat:not(.bare):before {
+    content: "";
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 4pt;
+    transform: translateY(.25em);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 3px;
+    background-color: var(--accent-ol);
+}
+
+#status-area #myname, #spectator-label {
+    font-size: .75em;
+    margin-left: 2px;
+}
+
+#status-area #player-count:before {
+    background-image: url("/img/lah-person.png");
+}
+
+#status-area #score:before {
+    background-image: url("/img/lah-score.png");
+}
+
+#status-area #czar:before {
+    background-image: url("/img/lah-czar.png");
+}
+
+#status-area #pending-players:before {
+    background-image: url("/img/lah-pending.png");
+}
+
+#status-area #coins:before {
+    background-image: url("/img/lah-coin.png");
+}
+
+/* GAME OVER SCREEN / TROPHIES */
+
+#game-end-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999999999;
+}
+
+#game-end-grid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: grid;
+    grid-template-rows: [r-start] 48pt [r-c1] 1fr [r-c2] 150px [r-end];
+    grid-template-columns: [c-start] 1fr [c-end];
+    overflow: hidden;
+    background: #dfdfdf;
+}
+
+#game-end-heading {
+    grid-row: r-start / r-center;
+    grid-column: c-start / c-end;
+    padding: 10pt 16pt;
+    font-size: 22pt;
+    text-align: center;
+}
+
+#game-end-scoreboard {
+    display: flex;
+    grid-row: r-c1 / r-c2;
+    grid-column: c-start / c-end;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 8pt 16pt;
+    margin-top: 8pt;
+}
+
+#game-end-scoreboard-header {    
+    padding-bottom: 3pt;
+    border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+#game-end-scoreboard-header > div {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#game-end-scoreboard-header, #game-end-scoreboard-entries > .scoreboard-entry {
+    display: grid;
+    grid-template-columns: [c-start] 50% [c-2] 20% [c-3] 30% [c-end];
+    grid-template-rows: [r-start] 100% [r-end];
+}
+
+#game-end-scoreboard-entries > .scoreboard-entry > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #5a5a5a;
+    font-size: 14pt;
+    margin-left: 2pt;
+    padding-right: 4pt;
+}
+
+/* Hack to get overflow ellipsis to work inside flexbox */
+#game-end-scoreboard-entries > .scoreboard-entry > .text[data-text]:before {
+    content: attr(data-text);
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#game-end-scoreboard-entries > .scoreboard-entry > *:not(:first-child) {
+    padding-left: 2pt;
+}
+
+#game-end-scoreboard-header > * {
+    font-size: 12pt;
+    color: #333;
+    text-align: left;
+    margin-left: 2pt;
+}
+
+#game-end-scoreboard-entries > .scoreboard-entry {
+    height: var(--final-score-row-height);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+#game-end-scoreboard-entries > .scoreboard-entry.winner > * {
+    color: #d92;
+}
+
+#game-end-trophies-heading {
+    color: #eee;
+    font-size: 14pt;
+    text-align: center;
+    padding: 4pt 10pt;
+}
+
+#game-end-trophies-area {
+    grid-row: r-c2 / r-end;
+    grid-column: c-start / c-end;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: #333;
+    overflow: hidden;
+}
+
+#game-end-trophies-list {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    flex-grow: 1;
+    overflow-y: hidden;
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+
+#game-end-trophies-list:empty:before {
+    content: attr(data-emptymsg);
+    display: block;
+    height: 1em;
+    position: relative;
+    left: 50%;
+    top: 40%;
+    color: #eee;
+    opacity: .4;
+    font-size: 12pt;
+    transform: translate(-50%, -50%);
+}
+
+.trophy {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+/* trophy description */
+.trophy:before {
+    content: attr(data-trophy-name) ":\a\a" attr(data-trophy-desc);
+    white-space: pre-wrap;
+    line-height: 1.25em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 6pt 8pt;
+    color: #eee;
+    font-weight: 300;
+    overflow-y: auto;
+    font-size: 9.5pt;
+    background: rgba(30, 30, 30, .97);
+    transition: opacity .3s;
+    z-index: 99999;
+}
+
+.trophy:not(:hover):before {
+    opacity: 0;
+}
+
+.trophy .trophy-icon {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto;
+    transform: translateY(-4pt);
+    border: 3px solid #ddd;
+    background: black;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: 100% !important;
+}
+
+/* trophy overlay icon */
+.trophy .trophy-icon:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url("/img/lah-trophy.png");
+    background-repeat: no-repeat;
+    background-position: 50% 55%;
+    background-size: 60%;
+    filter: drop-shadow(0 0 4px black);
+}
+
+#hand-cards-area {     
+    
+}
+
+#hand-cards-container {
+    padding: 32pt 8pt;
+    margin-bottom: 28pt;
+}
+
+#hand-cards-container > card:last-child {
+    margin-right: 0;
+}
+
+#hand-cards-container > card:first-child {
+    margin-left: 0;
+}
+
+.lah-scroll-left::before, .lah-scroll-right::after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 9999;
+    top: 50%;
+    transform: translateY(-50%);
+    animation-direction: alternate;
+    animation-duration: .25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+}
+
+.lah-scroll-left::before {    
+    border-right: 12pt solid rgba(0, 0, 0, .5);
+    border-top: 18pt solid transparent;
+    border-bottom: 18pt solid transparent;
+    left: 8pt;
+    animation-name: left-arrow-nudge;
+}
+
+.lah-scroll-right::after {
+    border-left: 12pt solid rgba(0, 0, 0, .5);
+    border-top: 18pt solid transparent;
+    border-bottom: 18pt solid transparent;
+    right: 8pt;
+    animation-name: right-arrow-nudge;
+}
+
+@keyframes left-arrow-nudge {
+    from {
+        transform: translate(0, -50%);
+        opacity: .9;
+    }
+    to {
+        transform: translate(-2pt, -50%);
+    }
+}
+
+@keyframes right-arrow-nudge {
+    from {
+        transform: translate(0, -50%);
+        opacity: .9;
+    }
+    to {
+        transform: translate(2pt, -50%); 
+    }
+}
+
+/* CARD STYLES */
+
+card {
+    display: block;
+    position: relative;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 14px;
+    padding: 1em;
+    line-height: 1.35;
+    margin: .3rem .3rem;
+    cursor: default;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    transition: box-shadow 0.3s;
+    user-select: none;
+    box-sizing: border-box !important;
+    min-width: var(--card-width) !important;
+    max-width: var(--card-width) !important;
+    max-height: var(--card-height) !important;
+    min-height: var(--card-height) !important;
+    font-size: var(--card-font-size);
+}
+
+card.collapse {
+    animation: collapse .35s ease-in-out !important;
+}
+
+card.placeholder {
+    border-style: dashed;
+    border-width: 2px;
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+}
+
+card.placeholder::after {
+    content: "?";
+    font-size: 300%;
+    display: block;
+    text-align: center;
+    align-self: center;
+    margin: 0 auto;
+    color: #555;
+}
+
+card .pick {
+    position: absolute;
+    font-size: .75em;
+    right: 1.75em;
+    bottom: 2em;
+}
+
+card .draw {
+    position: absolute;
+    font-size: .75em;
+    left: 3.5em;
+    bottom: 2em;
+    transition: opacity .35s;
+}
+
+card .pick::before {
+    content: "PICK ";
+}
+
+card .draw::before {
+    content: "DRAW ";
+}
+
+card .pick .num, card .draw .num {
+    color: black;
+    display: inline-block;
+    text-align: center;
+    line-height: .9em;
+    font-weight: 900;
+    font-size: 1.2em;
+    background: white;
+    border: 2px solid white;
+    border-radius: 100%;
+    padding: 1px 1px 1px 0px;
+    min-width: .8em;
+    height: .8em;
+    white-space: nowrap;
+    box-sizing: initial !important;
+}
+
+/* CARD RIBBON */
+
+card .ribbon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    overflow: hidden;
+    font-weight: 500;
+    border-radius: 0 0 calc(var(--card-border-radius) - 2px) calc(var(--card-border-radius) - 2px);
+}
+
+card .ribbon:after {
+    position: absolute;
+    left: 0;
+    top: 40px;
+    right: 0;
+    height: 60px;
+    content: attr(data-packname);
+    font-size: 11pt;    
+    background-color: black;
+    background-size: 100%;
+    padding: 8px 15px;
+    text-align: left;
+    transform-origin: left top;
+    transform: rotate(45deg);
+    transition: transform .2s, color .2s, background-size .2s;
+    border-left: none !important;
+    background-clip: padding-box;
+}
+
+card .ribbon:not(:hover):after {
+    color: rgba(0,0,0,0) !important;
+}
+
+card .ribbon:hover:after {
+    color: #fff;
+    transform: rotate(0deg) translateY(-10px);
+}
+
+card .ribbon:hover+.pick {
+    opacity: 0;
+}
+
+card[black] {
+    background-color: black;
+    color: white;
+    border: 2px solid var(--accent-ol);
+    font-weight: 200;
+}
+
+card[white] {
+    background-color: #f6f6f6;
+    color: black;
+    font-weight: 500;
+}
+
+/* DISCARD BUTTONS */
+
+card .btn-discard {
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    height: 24px;
+    width: 24px;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    border-bottom-left-radius: 4px;
+    box-sizing: content-box;
+    opacity: .5;
+}
+
+card .btn-discard:after {
+    content: "\d7";
+}
+
+card .btn-discard:hover {
+    background-color: rgba(0, 0, 0, .075);
+}
+
+/* CARD UPGRADE BUTTONS */
+
+card .btn-upgrade {
+    position: absolute;
+    left: 0;
+    top: -8pt;
+    font-size: 8pt;
+    min-width: 16pt;
+    border-radius: 6px;
+    border: 2px solid var(--accent-ol);
+    color: white;
+    background: black;
+    padding: 2px 3px;
+    z-index: 9999;
+    transition: background-color .4s;
+}
+
+card .btn-upgrade:hover {
+    background-color: #454545;
+}
+
+card .btn-upgrade.nope {
+    background-color: red;
+}
+
+.icon-coin {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-image: url("/img/lah-coin-inv.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    transform: translateY(.15em);
+}
+
+/* BLANK CARDS */
+
+card[data-card="blank"] > .blank-card-text-container {
+    pointer-events: auto !important;
+    position: absolute;    
+    top: 10pt;
+    left: 10pt;
+    right: 10pt;
+    bottom: 32pt;
+    box-sizing: content-box;
+    border-radius: 6pt;
+    border: 2px dashed transparent;
+    transition: border-color .3s;
+}
+
+card[data-card="blank"] > .blank-card-text-container .blank-card-text {
+    font-size: inherit !important;
+    font-weight: 500;
+    line-height: inherit !important;
+    resize: none;
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 4pt;
+    color: #368;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+card[data-card="blank"] .blank-card-text-container:hover {
+    border: 2px dashed #ccc;
+}
+
+card[data-card="blank"] .blank-card-text, card[data-card^="custom:"] {
+    font-family: "Comic Sans MS", inherit, sans-serif !important;
+}
+
+card[data-card="blank"] .blank-card-text::placeholder {
+    font-family: "LAH", sans-serif;
+}
+
+*:not(.disabled) card[white].user:active, #hand-area:not(.disabled) card[white]:active, .selecting card[white]:active {
+    filter: brightness(0.95);
+    color: #333;
+    border-color: #333;
+    transform: translate(0, 1.75pt);
+}
+
+card[white].winner {
+    background: linear-gradient(to bottom, rgb(255, 230, 5), rgb(231, 160, 8));
+    color: black;
+}
+
+@keyframes card-selection {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -60%);
+    }
+}
+
+card[data-selection]::after {
+    content: attr(data-selection);
+    transform: translate(-50%, -60%);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    color: white;
+    background: black;
+    border-radius: 100%;
+    padding: 2px 2px;
+    font-size: 15pt;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
+    overflow: visible;
+    text-align: center;
+    pointer-events: none;
+    animation-name: card-selection;
+    animation-duration: .25s;
+    animation-timing-function: ease-out;
+}
+
+#hand-controls-area {
+    position: absolute;
+    bottom: 4pt;
+    left: 8pt;
+    right: 8pt;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#hand-controls-area > * {
+    flex-grow: 1;
+}
+
+.lah-btn {
+    outline: none;
+    padding: 8pt 25pt;
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
+    border: 2px solid var(--btn-border-color);
+    border-radius: 6pt;
+    font-size: 22pt;
+    min-height: 44px;
+}
+
+/* themed controls */
+#game .lah-btn, #game .lah-txtbox {
+    color: var(--accent-fg);
+    background-color: var(--accent-bg);
+    border-color: var(--accent-fg);
+}
+
+.lah-btn-small {
+    font-size: 16pt;
+    padding: 4pt 12pt;
+    margin: 4pt 4pt;
+}
+
+.lah-btn:not(.disabled):hover {
+    border-color: #444;
+    color: #444;
+    cursor: pointer;
+}
+
+.lah-btn:not(.disabled):active {
+    transform: translate(0, 2px);
+    /* border-bottom-width: 5px; */
+}
+
+.lah-btn.lah-btn-small:not(.disabled):active {
+    transform: translate(0, 2px);
+    /* border-bottom-width: 3px; */
+}
+
+.lah-btn.disabled {
+    opacity: .35;
+}
+
+.lah-txtbox {
+    flex-shrink: 0;
+    height: 16pt;
+    min-height: 16pt;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 4pt;
+    font-size: 14pt;
+    padding: 6pt;
+}
+
+.lah-label {
+    display: block;
+    font-size: 14pt;
+    margin: 4pt 1pt;
+    color: #444;
+    flex-shrink: 0;
+}
+
+.lah-fill {
+    flex-grow: 1 !important;
+}
+
+.wide {
+    align-self: stretch;
+}
+
+#txt-accent-color {
+    transition: background-color .3s;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    color: #111;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2147483647;
+}
+
+.modal-dialog {
+    background: #f6f6f6; 
+    padding: 20pt 16pt;
+    flex-grow: 1;
+    max-width: 100vw;
+    max-height: 100vh;
+    box-sizing: border-box;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-nav {
+    position: absolute;
+    top: 4pt;
+    left: 8pt;
+    right: 8pt;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: var(--modal-nav-height);
+}
+
+.modal-close {
+    width: 20pt;
+    height: 20pt;
+    font-size: 20pt;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #666;
+}
+
+.modal-close:active {
+    transform: translate(0, 1pt);
+}
+
+.lah-vlist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.lah-vlist > .lah-listitem, .modal-body > .lah-listitem {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    margin: 4pt;
+}
+
+.lah-vlist > .lah-gap {
+    flex-shrink: 0;
+    margin: 4pt 4pt;
+}
+
+.lah-vlist > .lah-listend {
+    align-self: flex-end;
+    justify-self: flex-end;    
+}
+
+.lah-hlist {
+    display: flex;
+    flex-direction: row;
+}
+
+.lah-align-end {
+    justify-content: flex-end;
+}
+
+.lah-stretch-items > * {
+    justify-self: stretch;
+    flex-grow: 1;
+}
+
+.lah-listitem > input[type="text"] {
+    flex-grow: 1;
+}
+
+#cookie-notice {
+    position: sticky;
+    top: 0;
+    height: auto;
+    padding: 1em 1em;
+    background: black;  
+    color: white; 
+    z-index: 99999999; 
+}
+
+#cookie-notice > p {
+    font-size: 12pt;
+    font-weight: 400;
+    margin: 6px auto;
+}
+
+#cookie-notice > h1 {
+    text-align: center;
+    font-size: 18pt;
+    font-weight: 600;
+    margin: 6px 6px;
+}
+
+#cookie-notice > input[type=button].closer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14pt;
+    line-height: 1em;
+    color: white;
+    width: 1em;
+    height: 1em;
+    outline: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+#join-version {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 8pt;
+    opacity: .45;
+}
+
+#join-screen-title {
+    margin: 4px 0;
+    text-align: center;
+}
+
+#join-screen-server-name {
+    margin: 4px;
+    font-size: 12pt;
+    color: #444;
+    text-align: center;
+}
+
+#join-stat-grid {
+    display: grid;
+    grid-template: [r-start] 1fr [r1] 1fr [r-end] / [c-start] 1fr [c1] 1fr [c-end];
+    margin: 4px 0;
+    color: #333;
+}
+
+#join-stat-grid .server-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 6px 6px;
+    padding: 2px 6px;
+}
+
+#join-stat-grid .server-stat .name {
+    display: block;
+    text-align: center;
+}
+
+#join-stat-grid .server-stat .value {
+    display: block;
+    font-size: 24pt;
+    text-align: center;
+    color: #454545;
+    font-weight: 700;
+}
+
+#join-marquee {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    align-self: stretch;
+    overflow: hidden;
+    height: 14pt;
+    padding: 2px;
+    font-size: 12pt;
+}
+
+#join-marquee:before, #join-marquee:after {
+    content: attr(data-marquee-text);
+    flex-shrink: 0;
+    min-width: 100%;
+    font-size: 12pt;
+    color: #333;
+    padding-left: 2em;
+    padding-right: 6em;  
+    animation: join-marquee 14s linear 1s infinite;
+    box-sizing: content-box;
+}
+
+@keyframes join-marquee {    
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+#join-controls {
+    flex-direction: column;
+    align-content: stretch;
+}
+
+#join-controls > .lah-btn {
+    margin: 4pt 0;
+}

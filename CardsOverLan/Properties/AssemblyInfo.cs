@@ -1,16 +1,15 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Cards Over LAN")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Cards Against Humanity clone for hosting on your own network.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Cards Over LAN")]
-[assembly: AssemblyCopyright("Copyright © Nicholas Fleck 2019")]
+[assembly: AssemblyCopyright("Copyright © 2019, Nicholas Fleck and contributors")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

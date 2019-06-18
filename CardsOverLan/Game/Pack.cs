@@ -1,14 +1,10 @@
-﻿using CardsOverLan.Game.Bots;
-using CardsOverLan.Game.Converters;
+using CardsOverLan.Game.Bots;
 using CardsOverLan.Game.Trophies;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan.Game
 {
@@ -60,13 +56,14 @@ namespace CardsOverLan.Game
 			{
 				card.Owner = this;
 
-				if (card is WhiteCard whiteCard)
+				switch (card)
 				{
-					_whiteCards[card.ID] = whiteCard;
-				}
-				else if (card is BlackCard blackCard)
-				{
-					_blackCards[card.ID] = blackCard;
+					case WhiteCard whiteCard:
+						_whiteCards[card.Id] = whiteCard;
+						break;
+					case BlackCard blackCard:
+						_blackCards[card.Id] = blackCard;
+						break;
 				}
 			}
 		}

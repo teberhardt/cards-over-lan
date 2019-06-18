@@ -1,0 +1,382 @@
+@import "colan-desktop.css" only screen and (min-width: 771px);
+
+@import "colan-mobile.css" only screen and (max-width: 770px);
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-Italic.ttf);
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-Medium.ttf);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-MediumItalic.ttf);
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-Bold.ttf);
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "LAH";
+    src: url(/fonts/Roboto-BoldItalic.ttf);
+    font-weight: 700;
+    font-style: italic;
+}
+
+:root {
+    --placeholder-color: #999;
+    --modal-nav-height: 22pt;
+    --main-bg-color: #d4d4d4;
+    --btn-border-color: #111;
+    --btn-bg-color: #f6f6f6;
+    --btn-text-color: #111;
+    --default-accent-color: #eee;
+    --accent-bg: var(--default-accent-color);
+    --accent-fg: #111;
+    --accent-ol: transparent;
+    --accent-btn-primary: #39f;
+    --accent-btn-secondary: #f93;
+    --accent-highlight: #094;
+    --accent-skip: #06c;
+    --accent-idle: #5a5a5a;
+    --accent-group: rgba(0, 0, 0, .25);
+    --accent-group-hover: rgba(0, 0, 0, .35);
+    --main-bg-line: rgba(0, 0, 0, .0);
+    --btn-color: rgba(0, 0, 0, .05);
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: var(--placeholder-color);
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: var(--placeholder-color);
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: var(--placeholder-color);
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: var(--placeholder-color);
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: var(--placeholder-color);
+}
+
+::-moz-focus-inner {
+    border: 0;
+}  
+
+::placeholder {
+    /* Most modern browsers support this now. */
+    color: var(--placeholder-color);
+}
+
+* {
+    font-family: "LAH", sans-serif !important;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+hr {
+    border: 0 solid rgba(0, 0, 0, .1);
+    border-bottom-width: 1px;
+    margin: 0.5em 8px;
+    flex-shrink: 0;
+    align-self: stretch;
+    height: 1px;
+}
+
+#score-area {
+    display: none !important;
+}
+
+.icon-score {
+    display: inline-block;
+    background-image: url(/img/lah-score-icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: .9em;
+    height: .9em;
+}
+
+.disabled {
+    opacity: .35;
+    pointer-events: none;
+}
+
+.preload :not(.allow-load-transitions) {
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+#game.lah-spectating .player-only, #game:not(.lah-spectating) .spectator-only {
+    display: none !important;
+}
+
+.card-group {
+    display: flex;
+    flex-grow: 0;
+    background: var(--accent-group);
+    padding: 3pt;
+    margin: 4pt 4pt;
+    border-radius: 8pt;
+}
+
+i.arrow-left {
+    display: inline-block;
+    height: 0;
+    border-top: .5em solid transparent;
+    border-bottom: .5em solid transparent;
+    border-right: .5em solid black;
+}
+
+i.arrow-right {
+    display: inline-block;
+    height: 0;
+    border-top: .5em solid transparent;
+    border-bottom: .5em solid transparent;
+    border-left: .5em solid black;
+}
+
+card {
+    box-sizing: content-box;
+}
+
+card.disabled {
+    pointer-events: none !important;
+    opacity: .8;
+}
+
+span.highlight {
+    color: var(--accent-highlight);
+}
+
+.lah-card-area {
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    width: 100%;
+}
+
+.lah-card-container-outer {
+    margin: auto;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+
+.lah-card-container-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.lah-card-container-inner > * {
+    flex: none;
+}
+
+/* CARD SELECTION ANIMATIONS */
+
+@keyframes rumble {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(0, -3pt);
+    }
+}
+
+
+@keyframes tilt {
+    0% {
+        transform: rotate(-1.1deg);
+    }
+    100% {
+        transform: rotate(1.1deg);
+    }
+}
+
+@keyframes collapse {
+    to {
+        transform: rotate(90deg) scale(0);
+        -webkit-transform: rotate(90deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* WIN SPIN ANIMATION */
+
+.lah-stage-round-end #play-cards-area .card-group.winner {
+    animation: win-spin .9s 
+}
+
+@keyframes win-spin {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg) scale(.5);
+        animation-timing-function: ease-in-out;
+    }
+
+    65% {
+        opacity: 1;
+        transform: rotate(360deg) scale(1.1);
+        animation-timing-function: step-end;
+    }
+
+    92% {
+        transform: scale(1.1);
+        animation-timing-function: ease-in;
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* SHOW/HIDE FADING */
+
+@keyframes fade-out {
+    99% {
+        visibility: visible !important;
+    }
+    100% {        
+        visibility: collapse !important;
+    }
+}
+
+@keyframes fade-in {
+    99% {
+        visibility: collapse !important;
+    }
+    100% {        
+        visibility: visible !important;
+    }
+}
+
+.hidden:not(.fade) {
+    display: none !important;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.hidden.fade {
+    opacity: 0;
+    visibility: collapse;
+    pointer-events: none;
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-end;  
+}
+
+.fade {
+    transition: opacity .3s, backdrop-filter .3s, transform .3s ease-in-out, visibility .3s step-start;
+}
+
+.hidden.fade.fade-up {
+    transform: translateY(-10px);
+}
+
+.hidden.fade.fade-zoom {
+    transform: scale(1.03);
+}
+
+/* TROPHY IMAGES */
+
+.trophy[data-trophy-id="trophy_gross"] .trophy-icon {
+    background: url("/img/trophies/trophy_gross.png");
+}
+
+.trophy[data-trophy-id="trophy_dick1"] .trophy-icon {
+    background: url("/img/trophies/trophy_dick1.png");
+}
+
+.trophy[data-trophy-id="trophy_loosecannon"] .trophy-icon {
+    background: url("/img/trophies/trophy_loosecannon.png");
+}
+
+.trophy[data-trophy-id="trophy_beans"] .trophy-icon {
+    background: url("/img/trophies/trophy_beans.png");
+}
+
+.trophy[data-trophy-id="trophy_balls"] .trophy-icon {
+    background: url("/img/trophies/trophy_balls.png");
+}
+
+.trophy[data-trophy-id="trophy_loser"] .trophy-icon {
+    background: url("/img/trophies/trophy_loser.png");
+}
+
+.trophy[data-trophy-id="trophy_nazi"] .trophy-icon {
+    border-color: #c00;
+    background: radial-gradient(white 0%,  white 53%, #c00 54%);
+}
+
+.trophy[data-trophy-id="trophy_nazi"] .trophy-icon:after {
+    filter: brightness(0);
+}
+
+/* CARD TIER COLORS */
+
+#hand-area card[data-tier="1"] {
+    color: #7f4321;
+}
+
+#hand-area card[data-tier="2"] {
+    color: #777798;
+}
+
+#hand-area card[data-tier="3"] {
+    color: #cf6024;
+}
+
+#hand-area card[data-tier="4"] {
+    color: #bc0000;
+}
+
+/* BUTTON COLORS */
+
+.lah-btn.primary {
+    background-color: var(--accent-btn-primary) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.lah-btn.secondary {
+    background-color: var(--accent-btn-secondary) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.lah-inv {
+    --accent-fg: white;
+}

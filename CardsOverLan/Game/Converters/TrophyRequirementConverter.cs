@@ -1,20 +1,17 @@
-﻿using CardsOverLan.Game.Trophies;
+using CardsOverLan.Game.Trophies;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan.Game.Converters
 {
 	internal sealed class TrophyRequirementConverter : JsonConverter
 	{
-		private static readonly Dictionary<string, Type> _reqTypes = new Dictionary<string, Type>();
-		private static readonly Dictionary<Type, string> _reqNames = new Dictionary<Type, string>();
-		private static readonly BaseSpecifiedConcreteClassConverter _resolver = new BaseSpecifiedConcreteClassConverter();
+		private static readonly Dictionary<string, Type> ReqTypes = new Dictionary<string, Type>();
+		private static readonly Dictionary<Type, string> ReqNames = new Dictionary<Type, string>();
+		private static readonly BaseSpecifiedConcreteClassConverter Resolver = new BaseSpecifiedConcreteClassConverter();
 
 		private sealed class BaseSpecifiedConcreteClassConverter : DefaultContractResolver
 		{
@@ -37,8 +34,8 @@ namespace CardsOverLan.Game.Converters
 
 		private static void RegisterRequirementType(string requirementName, Type requirementType)
 		{
-			_reqTypes.Add(requirementName, requirementType);
-			_reqNames.Add(requirementType, requirementName);
+			ReqTypes.Add(requirementName, requirementType);
+			ReqNames.Add(requirementType, requirementName);
 		}
 
 		public override bool CanRead => true;
@@ -53,17 +50,16 @@ namespace CardsOverLan.Game.Converters
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var token = JToken.ReadFrom(reader) as JObject;
-			if (token == null) return null;
-			var reqTypeName = token["type"]?.Value<string>();
+			var reqTypeName = token?["type"]?.Value<string>();
 			if (reqTypeName == null) return null;
-			if (!_reqTypes.TryGetValue(reqTypeName, out var reqType)) return null;
-			return token.ToObject(reqType, new JsonSerializer { ContractResolver = _resolver }) as TrophyRequirement;
+			if (!ReqTypes.TryGetValue(reqTypeName, out var reqType)) return null;
+			return token.ToObject(reqType, new JsonSerializer { ContractResolver = Resolver }) as TrophyRequirement;
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-			var token = JToken.FromObject(value, new JsonSerializer { ContractResolver = _resolver });
-			if (_reqNames.TryGetValue(value.GetType(), out var reqTypeName))
+			var token = JToken.FromObject(value, new JsonSerializer { ContractResolver = Resolver });
+			if (ReqNames.TryGetValue(value.GetType(), out var reqTypeName))
 			{
 				token["type"] = reqTypeName;
 			}

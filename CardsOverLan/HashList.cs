@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace CardsOverLan
 		{
 		}
 
-		public HashList(int capacity)
+		private HashList(int capacity)
 		{
 			_list = new List<T>(capacity);
 			_hashSet = new HashSet<T>(capacity);
@@ -68,7 +68,7 @@ namespace CardsOverLan
 			lock (_editLock)
 			{
 				if (index < 0 || index > Count) throw new IndexOutOfRangeException("Index must be non-negative and less than or equal to the size of the collection.");
-				int i = 0;
+				var i = 0;
 				foreach (var item in items)
 				{
 					Insert(index + i, item);
@@ -102,26 +102,24 @@ namespace CardsOverLan
 			}
 		}
 
-		public bool Swap(int indexA, int indexB)
+		public void Swap(int indexA, int indexB)
 		{
 			lock (_editLock)
 			{
-				if (indexA < 0 || indexA >= Count || indexB < 0 || indexB >= Count) return false;
+				if (indexA < 0 || indexA >= Count || indexB < 0 || indexB >= Count) return;
 				var temp = _list[indexA];
 				_list[indexA] = _list[indexB];
 				_list[indexB] = temp;
-				return true;
 			}
 		}
 
-		public bool Replace(T original, T replacement)
+		public void Replace(T original, T replacement)
 		{
 			lock (_editLock)
 			{
-				if (!Contains(original)) return false;
-				int index = IndexOf(original);
+				if (!Contains(original)) return;
+				var index = IndexOf(original);
 				this[index] = replacement;
-				return true;
 			}
 		}
 
@@ -247,7 +245,6 @@ namespace CardsOverLan
 			{
 				_hashSet.SymmetricExceptWith(other);
 				_list.RemoveAll(t => !_hashSet.Contains(t));
-				int c = _list.Count;
 				foreach (var item in _hashSet)
 				{
 					if (!_list.Contains(item))

@@ -1,8 +1,8 @@
-﻿namespace CardsOverLan.Game
+namespace CardsOverLan.Game
 {
-	internal enum ClientObjectPolicyType
-	{
-		OptIn,
-		OptOut
-	}
+    internal enum ClientObjectPolicyType
+    {
+        OptIn,
+        OptOut
+    }
 }

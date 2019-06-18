@@ -1,0 +1,329 @@
+{
+    "id": "base_trophies",
+    "name": "Base Trophies",
+    "trophies": [
+        {
+            "id": "trophy_nazi",
+            "name": {
+                "en": "Probably a Nazi",
+                "de": "Wahrscheinlich ein Nazi"
+            },
+            "desc": {
+                "en": "This person is, with overwhelming likelihood, probably a Nazi.",
+                "de": "Diese Person ist, mit überwältigender Sicherheit, wahrscheinlich ein Nazi."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["as"],
+                    "winning": false,
+                    "percent": 25
+                }
+            ]
+        },
+        {
+            "id": "trophy_childhate",
+            "name": {
+                "en": "Child Hater",
+                "de": "Kinderhasser"
+            },
+            "desc": {
+                "en": "Should never have children. Ever.",
+                "de": "Sollte nie Kinder haben. Niemals."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["ch a", "ch_cr"],
+                    "winning": false,
+                    "percent": 20
+                }
+            ]
+        },
+        {
+            "id": "trophy_dick1",
+            "name": {
+                "en": "Cocky",
+                "de": "Schwanzig"
+            },
+            "desc": {
+                "en": "Likes talking about dicks, perhaps a bit too much.",
+                "de": "Redet gern über Penisse... vielleicht ein bisschen zu gern."
+            },
+            "trophy_class": "dick",
+            "trophy_grade": 1,
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["gnm"],
+                    "winning": false,
+                    "percent": 20
+                }
+            ]
+        },
+        {
+            "id": "trophy_dick2",
+            "name": {
+                "en": "Penis Connoisseur",
+                "de": "Penisliebhaber"
+            },
+            "desc": {
+                "en": "Absolutely obsessed with the male genitals.",
+                "de": "Total Penisbesessen."
+            },
+            "trophy_class": "dick",
+            "trophy_grade": 2,
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["gnm"],
+                    "winning": false,
+                    "percent": 30
+                }
+            ]
+        },
+        {
+            "id": "trophy_dick3",
+            "name": {
+                "en": "Penis Veteran",
+                "de": "Penisexperte"
+            },
+            "desc": {
+                "en": "A seasoned veteran of cock.",
+                "de": "Ein erfahrener Fachmann des Penis."
+            },
+            "trophy_class": "dick",
+            "trophy_grade": 3,
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["gnm"],
+                    "winning": true,
+                    "percent": 40
+                }
+            ]
+        },
+        {
+            "id": "trophy_dick4",
+            "name": {
+                "en": "Grandmaster of the Golden Phallus",
+                "de": "Großmeister des goldenen Phallus"
+            },
+            "desc": {
+                "en": "Awarded only to a true master of dick jokes. The highest honor anyone can ever receive.",
+                "de": "Nur an den wahren Meistern der Schwanzwitze verliehen. Die höchste Ehre, die man je erhalten kann."
+            },
+            "trophy_class": "dick",
+            "trophy_grade": 4,
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["gnm"],
+                    "winning": true,
+                    "percent": 50
+                }
+            ]
+        },
+        {
+            "id": "trophy_loosecannon",
+            "name": {
+                "en": "Loose Cannon",
+                "de": "Tickende Zeitbombe"
+            },
+            "desc": {
+                "en": "Likely to end up on the news.",
+                "de": "Wird wahrscheinlich in den Nachrichten landen."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["v", "t"],
+                    "winning": false,
+                    "percent": 20
+                }
+            ]
+        },
+        {
+            "id": "trophy_gross",
+            "name": {
+                "en": "Disgusting Motherfucker",
+                "de": "Verdammt Ekelhaft"
+            },
+            "desc": {
+                "en": "What the fuck is wrong with you?!",
+                "de": "Was zur Hölle ist los mit dir?!"
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["g"],
+                    "winning": false,
+                    "percent": 20
+                }
+            ]
+        },
+        {
+            "id": "trophy_futurekiller",
+            "name": {
+                "en": "Aspiring Serial Killer",
+                "de": "Zukünftiger Serienmörder"
+            },
+            "desc": {
+                "en": "Suggest \"theoretical\" methods of torturing and murdering people."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["mu", "bg", "a bg", "a i", "ch i", "to"],
+                    "winning": false,
+                    "percent": 45
+                }
+            ]
+        },
+        {
+            "id": "trophy_loser",
+            "name": {
+                "en": "Fucking Loser",
+                "de": "Versager"
+            },
+            "desc": {
+                "en": "You didn't win a single round. Great job!",
+                "de": "Du hast keine einzige Runde gewonnen. Toll gemacht!"
+            },
+            "requirements": [
+                {
+                    "type": "win_proportion",
+                    "percent": 0,
+                    "maximum": true,
+                    "inclusive": true
+                }
+            ]
+        },
+        {
+            "id": "trophy_lost_to_bot",
+            "name": {
+                "en": "Obsolete",
+                "de": "Veraltet"
+            },
+            "desc": {
+                "en": "You lost to a bot.\nWait, really?",
+                "de": "Du hast gegen einen Bot verloren.\nWarte mal, wirklich?"
+            },
+            "requirements": [
+                {
+                    "type": "lost_to_bot"
+                }
+            ]
+        },
+        {
+            "id": "trophy_cogdis",
+            "name": {
+                "en": "Cognitive Dissonance"
+            },
+            "desc": {
+                "en": "Express your crippling moral ambivalence."
+            },
+            "requirements": [
+                {
+                    "type": "any",
+                    "requirements": [
+                        {
+                            "type": "all",
+                            "requirements": [
+                                {
+                                    "type": "card_proportion",
+                                    "percent": 6,
+                                    "flags": ["hp !nh !lgbt", "as !nh !lgbt"]
+                                },
+                                {
+                                    "type": "card_proportion",
+                                    "percent": 6,
+                                    "flags": ["lgbt !hp !as", "nh !hp !as"]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "trophy_priest",
+            "name": {
+                "en": "As God Intended"
+            },
+            "desc": {
+                "en": "Embrace your inner priest."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["re"],
+                    "percent": 10
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["pd"],
+                    "percent": 10
+                }
+            ]
+        },
+        {
+            "id": "trophy_incest",
+            "name": {
+                "en": "Sweet Home Alabama"
+            },
+            "desc": {
+                "en": "Drain the gene pool."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["ic"],
+                    "percent": 15
+                }
+            ]
+        },
+        {
+            "id": "trophy_biblebelt",
+            "name": {
+                "en": "Bible Belt"
+            },
+            "desc": {
+                "en": "Preach the good word."
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["re"],
+                    "percent": 10
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["as", "ra"],
+                    "percent": 10
+                },
+                {
+                    "type": "card_proportion",
+                    "flags": ["ic", "pd", "hp"],
+                    "percent": 10
+                }
+            ]
+        },
+        {
+            "id": "trophy_racist",
+            "name": {
+                "en": "That's Racist!"
+            },
+            "desc": {
+                "en": "With that attitude, you could run for president!"
+            },
+            "requirements": [
+                {
+                    "type": "card_proportion",
+                    "flags": ["ra"],
+                    "percent": 20
+                }
+            ]
+        }
+    ]
+}

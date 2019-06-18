@@ -1,0 +1,242 @@
+{
+    "id": "programmer_pack",
+    "name": "Programmer Pack",
+    "accent_background": "#865FC5",
+    "accent_color": "white",
+    "author": "Nicholas Fleck, Tamme Schichler",
+    "cards": [
+        {
+            "id": "w_nan",
+            "content": {
+                "en": "NaN"
+            }
+        },
+        {
+            "id": "w_undefined",
+            "content": {
+                "en": "undefined"
+            }
+        },
+        {
+            "id": "w_intoverflow",
+            "content": {
+                "en": "Integer overflow."
+            }
+        },
+        {
+            "id": "w_toomanydeps",
+            "content": {
+                "en": "80 fucking dependencies."
+            }
+        },
+        {
+            "id": "w_greeksemi",
+            "content": {
+                "en": "Replacing their semicolons with Greek question marks."
+            }
+        },
+        {
+            "id": "w_java",
+            "content": {
+                "en": "The Java programming language."
+            }
+        },
+        {
+            "id": "w_floatingpointdeath",
+            "content": {
+                "en": "Getting all wobbly from floating-point precision loss."
+            }
+        },
+        {
+            "id": "w_cpp",
+            "content": {
+                "en": "The festering assemblage of horrors that is C++."
+            }
+        },
+        {
+            "id": "w_aprilfoolrfcs",
+            "content": {
+                "en": "April Fools RFCs."
+            }
+        },
+        {
+            "id": "w_vsupdate",
+            "content": {
+                "en": "A 4GB Visual Studio update."
+            }
+        },
+        {
+            "id": "w_bfprodcode",
+            "content": {
+                "en": "Production code written in Brainfuck."
+            }
+        },
+        {
+            "id": "w_stackoverflowpaste",
+            "content": {
+                "en": "Copying and pasting code from Stack Overflow."
+            }
+        },
+        {
+            "id": "w_jsdesigners",
+            "content": {
+                "en": "The sick fucks who designed JavaScript."
+            }
+        },
+        {
+            "id": "w_base64layers",
+            "content": {
+                "en": "Three layers of nested Base64."
+            }
+        },
+        {
+            "id": "w_schlinkert",
+            "content": {
+                "en": "Jon Schlinkert."
+            }
+        },
+        {
+            "id": "w_blockchain",
+            "content": {
+                "en": "\"Blockchain\"."
+            }
+        },
+        {
+            "id": "w_phpconventions",
+            "content": {
+                "en": "PHP's schizophrenic naming conventions."
+            }
+        },
+        {
+            "id": "w_sweardebug",
+            "content": {
+                "en": "Printing swear words as debug traces."
+            }
+        },
+        {
+            "id": "w_redditmarkovchain",
+            "content": {
+                "en": "A Markov chain trained on every Reddit comment."
+            }
+        },
+        {
+            "id": "w_ie7compat",
+            "content": {
+                "en": "Backwards compatability with Internet Explorer 7."
+            }
+        },
+        {
+            "id": "w_stupidcsdegree",
+            "content": {
+                "en": "Blowing $40,000 on a Computer Science degree."
+            }
+        },
+        {
+            "id": "w_racecondition",
+            "content": {
+                "en": "A race condition."
+            }
+        },
+        {
+            "id": "w_drunkprs",
+            "content": {
+                "en": "Drunk pull requests."
+            }
+        },
+        {
+            "id": "w_whatsjscript",
+            "content": {
+                "en": "Whatever JScript is."
+            }
+        },
+        {
+            "id": "w_nakedprogramming",
+            "content": {
+                "en": "Programming naked."
+            }
+        },
+        {
+            "id": "w_violatecoc",
+            "content": {
+                "en": "Violating the shit out of the Code of Conduct."
+            }
+        },
+        {
+            "id": "w_stillfortran",
+            "content": {
+                "en": "Still using Fortran."
+            }
+        },
+        {
+            "id": "w_gitdetachedhead",
+            "content": {
+                "en": "A detached HEAD."
+            }
+        },
+        {
+            "id": "w_usetabsnotspaces",
+            "content": {
+                "en": "Using tabs instead of spaces."
+            }
+        },
+        {
+            "id": "w_usespacesnottabs",
+            "content": {
+                "en": "Using spaces instead of tabs."
+            }
+        },
+        {
+            "id": "w_usespacesandtabs",
+            "content": {
+                "en": "Mixing spaces and tabs."
+            }
+        },
+        {
+            "id": "w_unsanuserinputs",
+            "content": {
+                "en": "Unsanitized user inputs."
+            }
+        },
+        {
+            "id": "w_csharpineclipse",
+            "content": {
+                "en": "Writing C# code in Eclipse."
+            }
+        },
+        {
+            "id": "b_weirdcodebug",
+            "content": {
+                "en": "What's causing this weird bug in my code?"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_compilererror",
+            "content": {
+                "en": "I can't figure out this compiler error... it says I'm missing ________.dll, but I don't even use that!"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_whygithubban",
+            "content": {
+                "en": "Why did I get banned from GitHub?"
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_exestoppedworking",
+            "content": {
+                "en": "________.exe has stopped working."
+            },
+            "pick": 1
+        },
+        {
+            "id": "b_gitcommit",
+            "content": {
+                "en": "My last Git commit message: \"Added _________.\""
+            },
+            "pick": 1
+        }
+    ]
+}
