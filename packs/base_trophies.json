@@ -17,7 +17,7 @@
                     "type": "card_proportion",
                     "flags": ["as"],
                     "winning": false,
-                    "percent": 25
+                    "percent": 15
                 }
             ]
         },
@@ -36,7 +36,7 @@
                     "type": "card_proportion",
                     "flags": ["ch a", "ch_cr"],
                     "winning": false,
-                    "percent": 20
+                    "percent": 15
                 }
             ]
         },
@@ -57,7 +57,7 @@
                     "type": "card_proportion",
                     "flags": ["gnm"],
                     "winning": false,
-                    "percent": 20
+                    "percent": 15
                 }
             ]
         },
@@ -78,7 +78,7 @@
                     "type": "card_proportion",
                     "flags": ["gnm"],
                     "winning": false,
-                    "percent": 30
+                    "percent": 25
                 }
             ]
         },
@@ -99,7 +99,7 @@
                     "type": "card_proportion",
                     "flags": ["gnm"],
                     "winning": true,
-                    "percent": 40
+                    "percent": 30
                 }
             ]
         },
@@ -120,7 +120,7 @@
                     "type": "card_proportion",
                     "flags": ["gnm"],
                     "winning": true,
-                    "percent": 50
+                    "percent": 40
                 }
             ]
         },
@@ -139,7 +139,7 @@
                     "type": "card_proportion",
                     "flags": ["v", "t"],
                     "winning": false,
-                    "percent": 20
+                    "percent": 15
                 }
             ]
         },
@@ -158,7 +158,7 @@
                     "type": "card_proportion",
                     "flags": ["g"],
                     "winning": false,
-                    "percent": 20
+                    "percent": 15
                 }
             ]
         },
@@ -176,7 +176,7 @@
                     "type": "card_proportion",
                     "flags": ["mu", "bg", "a bg", "a i", "ch i", "to"],
                     "winning": false,
-                    "percent": 45
+                    "percent": 20
                 }
             ]
         },
@@ -258,12 +258,12 @@
                 {
                     "type": "card_proportion",
                     "flags": ["re"],
-                    "percent": 10
+                    "percent": 8
                 },
                 {
                     "type": "card_proportion",
                     "flags": ["pd"],
-                    "percent": 10
+                    "percent": 8
                 }
             ]
         },
@@ -321,7 +321,7 @@
                 {
                     "type": "card_proportion",
                     "flags": ["ra"],
-                    "percent": 20
+                    "percent": 15
                 }
             ]
         }

@@ -44,6 +44,15 @@ namespace CardsOverLan.Game
 		[JsonProperty("accent_background", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		public string AccentBackground { get; private set; }
 
+		[JsonProperty("accent_text_decoration", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AccentTextDecoration { get; private set; }
+
+		[JsonProperty("accent_font_style", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AccentFontStyle { get; private set; }
+
+		[JsonProperty("accent_font_weight", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+		public string AccentFontWeight { get; private set; }
+
 		public Pack()
 		{
 			_blackCards = new Dictionary<string, BlackCard>();

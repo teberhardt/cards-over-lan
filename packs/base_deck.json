@@ -3425,6 +3425,102 @@
             }
         },
         {
+            "id": "w_badstaplegunuses",
+            "content": {
+                "en": "Inappropriate uses for a staple gun."
+            }
+        },
+        {
+            "id": "w_huffingthiscan",
+            "content": {
+                "en": "Deliberately concentrating and inhaling the contents of this aerosol can."
+            }
+        },
+        {
+            "id": "w_smartbraindamage",
+            "content": {
+                "en": "Brain damage that makes you smarter."
+            },
+            "flags": "i"
+        },
+        {
+            "id": "w_cantstoptheboner",
+            "content": {
+                "en": "My unstoppable erection."
+            },
+            "flags": "gn gnm s"
+        },
+        {
+            "id": "w_doitforthegram",
+            "content": {
+                "en": "Doing it for the Gram."
+            }
+        },
+        {
+            "id": "w_havezerosubstance",
+            "content": {
+                "en": "Being a shallow, vapid shell of a person with zero substance to your personality."
+            }
+        },
+        {
+            "id": "w_autofellatio",
+            "content": {
+                "en": "Autofellatio."
+            },
+            "flags": "s gn gnm xf w"
+        },
+        {
+            "id": "w_recordtimeorgasm",
+            "content": {
+                "en": "Cumming in record time."
+            },
+            "flags": "s"
+        },
+        {
+            "id": "w_turdvstaint",
+            "content": {
+                "en": "A turd so massive it rips open your taint."
+            },
+            "flags": "i fe w"
+        },
+        {
+            "id": "w_smilethroughpain",
+            "content": {
+                "en": "Smiling through the pain."
+            }
+        },
+        {
+            "id": "w_tranqforelephant",
+            "content": {
+                "en": "Enough tranquilizers to take down an elephant."
+            }
+        },
+        {
+            "id": "w_familyfun",
+            "content": {
+                "en": "Fun for the whole family!"
+            }
+        },
+        {
+            "id": "w_shitinlitterbox",
+            "content": {
+                "en": "Shitting in the litter box."
+            },
+            "flags": "l fe"
+        },
+        {
+            "id": "w_flexseal",
+            "content": {
+                "en": "Flex Seal.®"
+            }
+        },
+        {
+            "id": "w_oncomingtraffic",
+            "content": {
+                "en": "Oncoming traffic."
+            }
+        },
+        {
             "id": "b_notyouwhenhungry",
             "content": {
                 "en": "You're not you when you're hungry. Have ________."
@@ -3774,7 +3870,7 @@
         {
             "id": "b_fbifindpackage",
             "content": {
-                "en": "The FBI is investigating after the White House received a suspicious package addressed to the President that contained _______.",
+                "en": "The FBI is investigating after the White House received a suspicious package addressed to the President containing _______.",
                 "de": "Das FBI untersucht, nachdem das Weiße Haus ein verdächtiges Paket an den Präsidenten erhalten hat, das _______ enthielt."
             },
             "pick": 1
@@ -3838,7 +3934,8 @@
         {
             "id": "b_whatmenlove",
             "content": {
-                "en": "What do all men love?"
+                "en": "What do all men love?",
+                "de": "Was lieben alle Männer?"
             },
             "pick": 1
         },

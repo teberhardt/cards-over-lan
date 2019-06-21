@@ -90,11 +90,31 @@
 
 ## 1.0.0b4
 
+This is a slightly smaller update, which includes some much-needed additions and bugfixes.
+
+### Content
+
+- ADD: A whole lotta new cards, as usual.
+
+- CHANGE: Trophy requirements relaxed a bit.
+
+### Client
+
+- ADD: Bots now have a special badge by their name, because some people seem to think they're actual humans.
+- ADD: Some new styling options for deck ribbons
+    - `accent_text_decoration`: Corresponds to CSS `text-decoration` property
+    - `accent_font_style`: Corresponds to CSS `font-style` property
+    - `accent_font_weight`: Corresponds to CSS `font-weight` property
+
 ### Server
 
+- ADD: More Granular timeouts
+    - Players and judges now have separate timeout settings
 - ADD: Game Ready-Up Feature
     - Allow players to collectively choose when to start the next game.
 - ADD: Bots now have a special name badge in the player list so they can be more easily identified
+- ADD: `judge_per_card_timeout_bonus` setting
+- ADD: `player_per_card_timeout_bonus` setting
 
 - FIX: If a czar disconnected or went idle, the new czar used to be able to select their own play. This is no longer possible.
     - If a czar tries to self-vote, another play will be randomly selected instead.

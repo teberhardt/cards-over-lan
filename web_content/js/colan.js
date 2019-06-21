@@ -489,7 +489,9 @@
                     id: packData.id,
                     name: packData.name,
                     accent_color: packData.accent_color,
-                    accent_background: packData.accent_background
+                    accent_background: packData.accent_background,
+                    accent_text_decoration: packData.accent_text_decoration,
+                    accent_font_weight: packData.accent_font_weight
                 };
                 packData.cards.forEach(cardData => {
                     cardData.pack = packData.id;
@@ -1200,6 +1202,8 @@
             let rule = packStyles.cssRules[0];
             if (pack.accent_color) rule.style.setProperty("color", pack.accent_color, "important");
             if (pack.accent_background) rule.style.setProperty("background", pack.accent_background, "important");
+            if (pack.accent_text_decoration) rule.style.setProperty("text-decoration", pack.accent_text_decoration, "important");
+            if (pack.accent_font_weight) rule.style.setProperty("font-weight", pack.accent_font_weight, "important");
         }
     }
 
