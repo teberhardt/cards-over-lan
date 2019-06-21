@@ -1,7 +1,6 @@
-﻿using CardsOverLan.Game;
+using CardsOverLan.Game;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using WebSocketSharp;
@@ -10,16 +9,12 @@ namespace CardsOverLan
 {
 	internal sealed class PlayerConnection : ClientConnectionBase
 	{
-		private static readonly HashSet<char> AllowedCustomCardChars = new HashSet<char>(new[] { ' ', '$', '\"', '\'', '(', ')', '%', '!', '?', '&', ':', '/', ',', '.', '@' });
-
 		private readonly object _createDestroySync = new object();
-		private Player _player;
-		private Thread _idleCheckThread;
+		private readonly Thread _idleCheckThread;
 		private int _inactiveTime, _afkTime;
-		private bool _afkRecovery = false;
+		private bool _afkRecovery;
 		private readonly object _afkLock = new object();
-
-		public Player Player => _player;
+		private Player Player { get; set; }
 
 		public PlayerConnection(CardGameServer server, CardGame game) : base(server, game)
 		{
@@ -49,20 +44,19 @@ namespace CardsOverLan
 			{
 				lock (_afkLock)
 				{
-					bool isAfkEligible = 
-						(Game.Judge == Player && (Game.Stage == GameStage.JudgingCards))
-						|| (Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress);
-
-					bool shouldKick = _inactiveTime >= Game.Settings.IdleKickTimeSeconds;
-
-					bool afk = _afkRecovery ? _afkTime >= Game.Settings.AfkRecoveryTimeSeconds : _afkTime >= Game.Settings.AfkTimeSeconds + GetCurrentTimeoutBonus();
+					var isAfkEligible = 
+						Game.Judge == Player && Game.Stage == GameStage.JudgingCards
+						|| Game.Judge != Player && !Player.IsSelectionValid && Game.Stage == GameStage.RoundInProgress;
+					var shouldKick = _inactiveTime >= Game.Settings.IdleKickTimeSeconds;
+					var afk = _afkRecovery ? _afkTime >= Game.Settings.AfkRecoveryTimeSeconds : _afkTime >= Game.Settings.AfkTimeSeconds;
 
 					if (shouldKick && isAfkEligible && Game.Settings.IdleKickEnabled)
 					{
 						Reject("reject_afk", $"Inactive {_inactiveTime}s");
 						continue;
 					}
-					else if (Player.IsAfk != afk)
+
+					if (Player.IsAfk != afk)
 					{
 						if (afk && isAfkEligible && Game.Settings.AfkEnabled)
 						{
@@ -99,7 +93,7 @@ namespace CardsOverLan
 
 		private void CreatePlayer()
 		{
-			_player = Game.CreatePlayer(GetCookie("name"), false, GetCookie("player_token"));
+			Player = Game.CreatePlayer(GetCookie("name"), false, GetCookie("player_token"));
 
 			RegisterEvents();
 
@@ -141,7 +135,7 @@ namespace CardsOverLan
 
 		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
 		{
-			SendSkipNotification(skippedCard.ID, replacementCard.ID);
+			SendSkipNotification(skippedCard.Id, replacementCard.Id);
 		}
 
 		private void OnGamePlayersChanged()
@@ -197,9 +191,9 @@ namespace CardsOverLan
 			SendMessageObject(new
 			{
 				msg = "s_hand",
-				blanks = _player.RemainingBlankCards,
-				hand = _player.GetCurrentHand().Select(c => c.ID),
-				discards = _player.Discards
+				blanks = Player.RemainingBlankCards,
+				hand = Player.GetCurrentHand().Select(c => c.Id),
+				discards = Player.Discards
 			});
 		}
 
@@ -221,7 +215,7 @@ namespace CardsOverLan
 			SendMessageObject(new
 			{
 				msg = "s_cardsplayed",
-				selection = _player.GetSelectedCards().Select(c => c.ID)
+				selection = Player.GetSelectedCards().Select(c => c.Id)
 			});
 		}
 
@@ -231,7 +225,7 @@ namespace CardsOverLan
 			SendMessageObject(new
 			{
 				msg = "s_auxclientdata",
-				aux_points = _player.Coins
+				aux_points = Player.Coins
 			});
 		}
 
@@ -258,7 +252,7 @@ namespace CardsOverLan
 					_idleCheckThread.Start();
 				}
 
-				Console.WriteLine($"{Player} ({GetIPAddress()}) connected");
+				Console.WriteLine($"{Player} ({GetIpAddress()}) connected");
 			}
 		}
 
@@ -270,7 +264,7 @@ namespace CardsOverLan
 
 				UnregisterEvents();
 
-				string closeReason = e.Reason;
+				var closeReason = e.Reason;
 				if (string.IsNullOrWhiteSpace(closeReason))
 				{
 					switch (e.Code)
@@ -315,7 +309,7 @@ namespace CardsOverLan
 					}
 				}
 
-				bool shouldPreserve = !IsRejected;
+				var shouldPreserve = !IsRejected;
 
 				if (Game.RemovePlayer(Player, closeReason, shouldPreserve))
 				{
@@ -336,28 +330,26 @@ namespace CardsOverLan
 		{
 			base.OnMessage(e);
 			var json = JToken.Parse(e.Data) as JObject;
-			if (json == null) return;
 
-			var msg = json["msg"]?.Value<string>();
+			var msg = json?["msg"]?.Value<string>();
 			if (msg == null) return;
 
 			switch (msg)
 			{
 				case "c_updateinfo":
 				{
-					var userInfoObject = json["userinfo"] as JObject;
-					if (userInfoObject == null) break;
-					foreach (var key in userInfoObject)
+					if (!(json["userinfo"] is JObject userInfoObject)) break;
+					foreach (var (key, value) in userInfoObject)
 					{
-						switch (key.Key.ToLowerInvariant())
+						switch (key.ToLowerInvariant())
 						{
 							case "name":
 							{
-								var strName = key.Value.Value<string>();
+								var strName = value.Value<string>();
 								if (strName != Player.Name)
 								{
 									var oldName = Player.Name;
-									var name = Game.CreatePlayerName(strName, Player);
+									var name = Game.CreatePlayerName(strName);
 									Player.Name = name;
 									Console.WriteLine($"{oldName} changed their name to {name}");
 								}
@@ -371,8 +363,9 @@ namespace CardsOverLan
 				case "c_playcards":
 				{
 					var cardArray = (json["cards"] as JArray)?
-						.Select(v => Game.GetCardById(v.Value<string>()))?
-						.OfType<WhiteCard>()?.ToArray();
+						.Select(v => Game.GetCardById(v.Value<string>()))
+						.OfType<WhiteCard>()
+						.ToArray();
 
 					if (cardArray == null) break;
 					Player.PlayCards(cardArray);
@@ -403,7 +396,7 @@ namespace CardsOverLan
 				}
 				case "c_vote_skip":
 				{
-					bool voted = json["voted"]?.Value<bool>() ?? false;
+					var voted = json["voted"]?.Value<bool>() ?? false;
 					Player.SetSkipVoteState(voted);
 					ResetIdleTime(false);
 					break;

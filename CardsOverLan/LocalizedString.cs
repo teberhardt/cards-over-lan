@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan
 {
@@ -25,14 +23,14 @@ namespace CardsOverLan
 		{
 			get
 			{
-				if (String.IsNullOrWhiteSpace(langCode))
+				if (string.IsNullOrWhiteSpace(langCode))
 				{
 					langCode = DefaultLocale;
 				}
 
 				var parts = langCode.SplitTrim(new[] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
 
-				for (int i = parts.Length; i > 0; i--)
+				for (var i = parts.Length; i > 0; i--)
 				{
 					if (_stringValues.TryGetValue(parts.LimitedConcat(i, "-"), out var value)) return value;
 				}
@@ -42,7 +40,7 @@ namespace CardsOverLan
 
 			set
 			{
-				if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("The provided language code is blank.");
+				if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("The provided language code is blank.");
 
 				_stringValues[langCode] = value.SplitTrim(new[] { '-', '_' }, StringSplitOptions.RemoveEmptyEntries).LimitedConcat(-1, "-");
 			}
@@ -59,14 +57,13 @@ namespace CardsOverLan
 
 			public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 			{
-				var o = JToken.ReadFrom(reader) as JObject;
-				if (o == null) throw new JsonReaderException($"No object found for reading {nameof(LocalizedString)}.");
+				if (!(JToken.ReadFrom(reader) is JObject o)) throw new JsonReaderException($"No object found for reading {nameof(LocalizedString)}.");
 				var ls = new LocalizedString();
-				foreach (var kvp in o)
+				foreach (var (key, value) in o)
 				{
-					var str = kvp.Value.Value<string>();
+					var str = value.Value<string>();
 					if (str == null) continue;
-					ls[kvp.Key] = str;
+					ls[key] = str;
 				}
 				return ls;
 			}

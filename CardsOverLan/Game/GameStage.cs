@@ -1,4 +1,4 @@
-﻿using CardsOverLan.Game.Converters;
+using CardsOverLan.Game.Converters;
 using Newtonsoft.Json;
 
 namespace CardsOverLan.Game

@@ -1,13 +1,11 @@
 ﻿{
-	/* WEBSERVER SETTINGS */
 	"host_url": "http://localhost:80",
 	"ws_url": "ws://0.0.0.0:3000",
 	"client_ws_port": 3000,
 	"web_root": "./web_content",
 	"allow_duplicates": true,
 
-	/* GENERAL GAME SETTINGS */
-	"server_name": "Cards Over LAN",
+	"server_name": "Cards Against Humanity",
 	"server_password": "",
 	"max_players": 10,
 	"min_players": 3,
@@ -39,24 +37,21 @@
 	"judge_per_card_timeout_bonus": 7,
 	"player_per_card_timeout_bonus": 10,
 
-	/* PLAYER PRESERVES */
 	"enable_player_preserve": true,
 	"player_preserve_time": 30,
 
-	/* CONTENT SETTINGS */
 	"exclude_content": [],
 	"exclude_packs": [],
 	"require_languages": ["en"],
 	"use_packs": [],
 
-	/* BOT SETTINGS */
 	"bot_count": 1,
 	"enable_bot_taunts": true,
 	"bot_czars": false,
 	"bot_names": [
 		"AutoRodney", "AutoJavier", "AutoDixon", "AutoJanet", 
-		"AutoBob", "AutoJinnie", "AutoAnderson", "AutoShirlene", 
-		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBahn"
+		"AutoBob", "AutoJennie", "AutoAnderson", "AutoShirlene", 
+		"AutoClara", "AutoAlvin", "AutoRiley", "AutoBob"
 	],
 	"bot_config": {
 		"play_min_base_delay": 3000,
@@ -73,7 +68,6 @@
 		"max_typing_delay": 2000
 	},
 
-	/* ANALYTICS SETTINGS */
 	"enable_analytics": true,
 	"analytics_path": "./data/colan_analytics.db"
 }

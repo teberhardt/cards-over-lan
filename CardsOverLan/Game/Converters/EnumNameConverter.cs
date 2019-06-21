@@ -1,41 +1,39 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan.Game.Converters
 {
-	class EnumNameConverter : JsonConverter
+	internal class EnumNameConverter : JsonConverter
 	{
-		private static Dictionary<Type, Dictionary<string, object>> _nameToEnumMap;
-		private static Dictionary<Type, Dictionary<object, string>> _enumToNameMap;
+		private static readonly Dictionary<Type, Dictionary<string, object>> NameToEnumMap;
+		private static readonly Dictionary<Type, Dictionary<object, string>> EnumToNameMap;
 
 		static EnumNameConverter()
 		{
-			_nameToEnumMap = new Dictionary<Type, Dictionary<string, object>>();
-			_enumToNameMap = new Dictionary<Type, Dictionary<object, string>>();
+			NameToEnumMap = new Dictionary<Type, Dictionary<string, object>>();
+			EnumToNameMap = new Dictionary<Type, Dictionary<object, string>>();
 		}
 
 		private static void RegisterEnum(Type enumType)
 		{
-			if (_nameToEnumMap.ContainsKey(enumType)) return;
+			if (NameToEnumMap.ContainsKey(enumType)) return;
 
-			var nameToEnum = _nameToEnumMap[enumType] = new Dictionary<string, object>();
-			var enumToName = _enumToNameMap[enumType] = new Dictionary<object, string>();
+			var nameToEnum = NameToEnumMap[enumType] = new Dictionary<string, object>();
+			var enumToName = EnumToNameMap[enumType] = new Dictionary<object, string>();
 
 			var pairs = enumType.GetFields()
 				.Where(f => f.FieldType == f.DeclaringType)
 				.Select(f => (val: Enum.ToObject(enumType, f.GetRawConstantValue()), name: f.GetCustomAttribute<NameAttribute>()?.Name))
 				.Where(pair => !string.IsNullOrWhiteSpace(pair.name));
 
-			foreach (var pair in pairs)
+			foreach (var (val, name) in pairs)
 			{
-				nameToEnum[pair.name] = pair.val;
-				enumToName[pair.val] = pair.name;
+				nameToEnum[name] = val;
+				enumToName[val] = name;
 			}
 		}
 
@@ -53,9 +51,8 @@ namespace CardsOverLan.Game.Converters
 			var token = JToken.Load(reader);
 			if (token == null) return defaultValue;
 			var strValue = token.Value<string>();
-			if (!_nameToEnumMap.TryGetValue(objectType, out var map)) return defaultValue;
-			if (!map.TryGetValue(strValue, out var val)) return defaultValue;
-			return val;
+			if (!NameToEnumMap.TryGetValue(objectType, out var map)) return defaultValue;
+			return !map.TryGetValue(strValue, out var val) ? defaultValue : val;
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -67,7 +64,7 @@ namespace CardsOverLan.Game.Converters
 			}
 			var type = value.GetType();
 			RegisterEnum(type);
-			if (_enumToNameMap.TryGetValue(type, out var map) && map.TryGetValue(value, out var str))
+			if (EnumToNameMap.TryGetValue(type, out var map) && map.TryGetValue(value, out var str))
 			{
 				writer.WriteValue(str);
 			}

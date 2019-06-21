@@ -1,14 +1,9 @@
-﻿using CardsOverLan.Analytics;
 using CardsOverLan.Game;
 using CardsOverLan.Game.ContractResolvers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using WebSocketSharp;
 using WebSocketSharp.Server;
@@ -26,13 +21,13 @@ namespace CardsOverLan
 
 		private string _ip = string.Empty;
 		private readonly Dictionary<string, string> _cookies;
-		private bool _rejected;
 
-		public bool IsRejected => _rejected;
+		public bool IsRejected { get; private set; }
+
 		public CardGameServer Server { get; }
 		public CardGame Game { get; }
 		public string ClientLanguage { get; private set; } = DefaultLanguage;
-		public bool IsOpen => State == WebSocketSharp.WebSocketState.Open;
+		public bool IsOpen => State == WebSocketState.Open;
 
 		public ClientConnectionBase(CardGameServer server, CardGame game)
 		{
@@ -46,7 +41,7 @@ namespace CardsOverLan
 			return _cookies.TryGetValue(name, out var val) ? val : fallback;
 		}
 
-		public string GetIPAddress() => _ip;
+		public string GetIpAddress() => _ip;
 
 		private void LoadCookies()
 		{
@@ -62,8 +57,8 @@ namespace CardsOverLan
 			LoadCookies();
 
 			// Get the client's original IP
-			var xForwardedFor = Context.Headers["X-Forwarded-For"] ?? String.Empty;
-			var forwardedAddresses = xForwardedFor.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+			var xForwardedFor = Context.Headers["X-Forwarded-For"] ?? string.Empty;
+			var forwardedAddresses = xForwardedFor.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
 			_ip = forwardedAddresses.Length > 0 ? forwardedAddresses[0].ToLowerInvariant() : Context.UserEndPoint.Address.ToString();
 
 			// Kick duplicates
@@ -74,7 +69,7 @@ namespace CardsOverLan
 			}
 
 			// Verify password
-			if (String.IsNullOrEmpty(Game.Settings.ServerPassword) || GetCookie("game_password") == Game.Settings.ServerPassword)
+			if (string.IsNullOrEmpty(Game.Settings.ServerPassword) || GetCookie("game_password") == Game.Settings.ServerPassword)
 			{
 				ClientLanguage = GetCookie("client_lang", "en");
 				Server.AddConnection(this);				
@@ -82,7 +77,6 @@ namespace CardsOverLan
 			else
 			{
 				Reject("reject_bad_password");
-				return;
 			}
 		}
 
@@ -100,10 +94,10 @@ namespace CardsOverLan
 				stage = Game.Stage,
 				ready_up = Game.ReadyUpActive,
 				round = Game.Round,
-				black_card = Game.CurrentBlackCard?.ID,
+				black_card = Game.CurrentBlackCard?.Id,
 				pending_players = Game.GetPendingPlayers().Select(p => p.Id),
 				judge = Game.Judge?.Id ?? -1,
-				plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.ID)),
+				plays = Game.GetRoundPlays().Select(p => p.Item2.Select(c => c.Id)),
 				winning_play = Game.WinningPlayIndex,
 				winning_player = Game.RoundWinner?.Id ?? -1,
 				judge_voted_self = Game.JudgeVotedSelf,
@@ -174,7 +168,7 @@ namespace CardsOverLan
 			});
 		}
 
-		protected void SendRejection(string rejectReason, string rejectDesc = "")
+		private void SendRejection(string rejectReason, string rejectDesc = "")
 		{
 			SendMessageObject(new
 			{
@@ -186,7 +180,7 @@ namespace CardsOverLan
 
 		protected void Reject(string rejectReason, string rejectDesc = "")
 		{
-			_rejected = true;
+			IsRejected = true;
 			SendRejection(rejectReason, rejectDesc);
 			Context.WebSocket.Close(CloseStatusCode.Normal, rejectReason);
 		}

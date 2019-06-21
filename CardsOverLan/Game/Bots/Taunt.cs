@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,10 +15,6 @@ namespace CardsOverLan.Game.Bots
 		[JsonProperty("responses", DefaultValueHandling = DefaultValueHandling.Ignore, Required = Required.Always)]
 		private readonly HashList<LocalizedString> _responses = new HashList<LocalizedString>();
 
-		public Taunt()
-		{
-		}
-
 		[JsonProperty("response_chance", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
 		[DefaultValue(1.0)]
 		public double ResponseChance { get; set; } = 1.0;
@@ -33,15 +29,14 @@ namespace CardsOverLan.Game.Bots
 
 		public bool IsPlayEligible(IEnumerable<WhiteCard> play)
 		{
-			return play.Any(c => _triggerCards.Contains(c.ID)) || _triggerContent.Any(tc => play.Any(p => p.ContainsContentFlags(tc)));
+			return play.Any(c => _triggerCards.Contains(c.Id)) || _triggerContent.Any(tc => play.Any(p => p.ContainsContentFlags(tc)));
 		}
 
 		public bool AddContentTrigger(string content)
 		{
 			lock(_triggerContent)
 			{
-				if (string.IsNullOrWhiteSpace(content)) return false;
-				return _triggerContent.Add(content.Trim().ToLowerInvariant());
+				return !string.IsNullOrWhiteSpace(content) && _triggerContent.Add(content.Trim().ToLowerInvariant());
 			}
 		}
 
@@ -49,8 +44,7 @@ namespace CardsOverLan.Game.Bots
 		{
 			lock(_triggerContent)
 			{
-				if (string.IsNullOrWhiteSpace(content)) return false;
-				return _triggerContent.Remove(content.Trim().ToLowerInvariant());
+				return !string.IsNullOrWhiteSpace(content) && _triggerContent.Remove(content.Trim().ToLowerInvariant());
 			}
 		}
 
@@ -58,8 +52,7 @@ namespace CardsOverLan.Game.Bots
 		{
 			lock(_triggerCards)
 			{
-				if (string.IsNullOrWhiteSpace(cardId)) return false;
-				return _triggerCards.Add(cardId.Trim().ToLowerInvariant());
+				return !string.IsNullOrWhiteSpace(cardId) && _triggerCards.Add(cardId.Trim().ToLowerInvariant());
 			}
 		}
 
@@ -67,8 +60,7 @@ namespace CardsOverLan.Game.Bots
 		{
 			lock(_triggerCards)
 			{
-				if (string.IsNullOrWhiteSpace(cardId)) return false;
-				return _triggerCards.Remove(cardId.Trim().ToLowerInvariant());
+				return !string.IsNullOrWhiteSpace(cardId) && _triggerCards.Remove(cardId.Trim().ToLowerInvariant());
 			}
 		}
 
@@ -76,8 +68,7 @@ namespace CardsOverLan.Game.Bots
 		{
 			lock(_responses)
 			{
-				if (response == null) return false;
-				return _responses.Add(response);
+				return response != null && _responses.Add(response);
 			}
 		}
 
@@ -85,8 +76,7 @@ namespace CardsOverLan.Game.Bots
 		{
 			lock(_responses)
 			{
-				if (response == null) return false;
-				return _responses.Remove(response);
+				return response != null && _responses.Remove(response);
 			}
 		}
 

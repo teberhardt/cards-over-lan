@@ -1,4 +1,4 @@
-﻿using CardsOverLan.Game.Bots;
+using CardsOverLan.Game.Bots;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.IO;
@@ -123,7 +123,7 @@ namespace CardsOverLan
 
 		[JsonProperty("allow_duplicates", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(false)]
-		public bool AllowDuplicatePlayers { get; set; } = false;
+		public bool AllowDuplicatePlayers { get; set; }
 
 		[JsonProperty("hand_size", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(10)]
@@ -199,7 +199,7 @@ namespace CardsOverLan
 
 		[JsonProperty("winner_czar", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(false)]
-		public bool WinnerCzar { get; set; } = false;
+		public bool WinnerCzar { get; set; }
 
 		[JsonProperty("exclude_content", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public string[] ContentExclusions { get; set; } = new string[0];
@@ -254,7 +254,7 @@ namespace CardsOverLan
 
 		[JsonProperty("pick_one_only", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(false)]
-		public bool PickOneCardsOnly { get; set; } = false;
+		public bool PickOneCardsOnly { get; set; }
 
 		[JsonProperty("enable_chat", DefaultValueHandling = DefaultValueHandling.Populate)]
 		[DefaultValue(true)]

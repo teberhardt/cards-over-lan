@@ -1,12 +1,10 @@
-﻿using CardsOverLan.Game;
+using CardsOverLan.Game;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardsOverLan
 {
@@ -59,7 +57,7 @@ namespace CardsOverLan
 			Console.WriteLine("\n=========== GAME INFO ===========\n");
 			Console.WriteLine($"Player limit: [{Settings.MinPlayers}, {Settings.MaxPlayers}]");
 			Console.WriteLine($"Hand size: {Settings.HandSize}");
-			Console.WriteLine($"Perma-Czar: {Settings.PermanentCzar}");
+			Console.WriteLine($"Permanent Czar: {Settings.PermanentCzar}");
 			Console.WriteLine($"Bot Czars: {Settings.AllowBotCzars}");
 			Console.WriteLine($"Winner Is Czar: {Settings.WinnerCzar}");
 			Console.WriteLine($"Points to win: {Settings.MaxPoints}");
@@ -86,9 +84,9 @@ namespace CardsOverLan
 			UpdateTitle();
 		}
 
-		private void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
+		private static void OnBlackCardSkipped(BlackCard skippedCard, BlackCard replacementCard)
 		{
-			Console.WriteLine($"SKIPPED BLACK CARD: {skippedCard.ID} -> {replacementCard.ID}");
+			Console.WriteLine($"SKIPPED BLACK CARD: {skippedCard.Id} -> {replacementCard.Id}");
 		}
 
 		public object GetGameInfoObject()
@@ -118,7 +116,7 @@ namespace CardsOverLan
 			};
 		}
 
-		private void OnGameEnded(Player[] winners)
+		private static void OnGameEnded(Player[] winners)
 		{
 			Console.WriteLine($"GAME OVER: Winners: {winners.Select(w => w.ToString()).Aggregate((c, n) => $"{c}, {n}")}");
 		}
@@ -128,7 +126,7 @@ namespace CardsOverLan
 			Console.WriteLine($"Round {round} ended: {roundWinner?.ToString() ?? "Nobody"} wins!");
 		}
 
-		private void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
+		private static void OnGameStageChanged(in GameStage oldStage, in GameStage currentStage)
 		{
 			Console.WriteLine($"STAGE CHANGE: {oldStage} -> {currentStage}");
 		}

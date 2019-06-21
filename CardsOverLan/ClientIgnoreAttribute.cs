@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace CardsOverLan
 {
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-	internal sealed class ClientIgnoreAttribute : Attribute
-	{
-		public ClientIgnoreAttribute()
-		{
-		}
-	}
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    internal sealed class ClientIgnoreAttribute : Attribute
+    {
+    }
 }

@@ -1,9 +1,8 @@
-﻿using CardsOverLan.Analytics;
+using CardsOverLan.Analytics;
 using CardsOverLan.Game.Trophies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CardsOverLan.Game
@@ -26,20 +25,16 @@ namespace CardsOverLan.Game
 		private readonly HashList<WhiteCard> _hand;
 		private readonly HashList<WhiteCard> _selectedCards;
 		private readonly HashList<Trophy> _trophies;
-		private int _score;
-		private int _coins;
 		private int _discards;
 		private string _name = DefaultName;
 		private bool _afk;
-		private bool _votedForSkip;
-		private int _blankCardsRemaining;
 		private readonly object _blankCardLock = new object();
 		private readonly object _discardLock = new object();
 		private readonly object _skipVoteLock = new object();
 		private readonly object _botPlayDelayLock = new object();
 		private readonly object _botJudgeDelayLock = new object();
-		private uint _botPlayDelays = 0;
-		private uint _botJudgeDelays = 0;
+		private uint _botPlayDelays;
+		private uint _botJudgeDelays;
 		private readonly Random _rng;
 
 		public event PlayerCardsChangedEventDelegate CardsChanged;
@@ -79,9 +74,9 @@ namespace CardsOverLan.Game
 
 		public int Id { get; }
 
-		public int Score => _score;
+		public int Score { get; private set; }
 
-		public int Coins => _coins;
+		public int Coins { get; private set; }
 
 		public int Discards
 		{
@@ -106,11 +101,9 @@ namespace CardsOverLan.Game
 			get => _afk;
 			set
 			{
-				if (_afk != value)
-				{
-					_afk = value;
-					RaiseAfkChanged(value);
-				}
+				if (_afk == value) return;
+				_afk = value;
+				RaiseAfkChanged(value);
 			}
 		}
 
@@ -142,23 +135,23 @@ namespace CardsOverLan.Game
 
 		public bool IsAutonomous { get; set; }
 
-		public bool VotedForBlackCardSkip => _votedForSkip;
+		public bool VotedForBlackCardSkip { get; private set; }
 
-		public int RemainingBlankCards => _blankCardsRemaining;
+		public int RemainingBlankCards { get; private set; }
 
 		public void AddTrophy(Trophy trophy)
 		{
 			if (_trophies.Any(t =>
-			!String.IsNullOrWhiteSpace(t.TrophyClass)
-			&& String.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase)
+			!string.IsNullOrWhiteSpace(t.TrophyClass)
+			&& string.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase)
 			&& t.TrophyGrade > trophy.TrophyGrade))
 			{
 				return;
 			}
 
 			_trophies.RemoveAll(t =>
-			!String.IsNullOrWhiteSpace(t.TrophyClass)
-			&& String.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase)
+			!string.IsNullOrWhiteSpace(t.TrophyClass)
+			&& string.Equals(t.TrophyClass, trophy.TrophyClass, StringComparison.InvariantCultureIgnoreCase)
 			&& t.TrophyGrade < trophy.TrophyGrade);
 
 			_trophies.Add(trophy);
@@ -192,21 +185,17 @@ namespace CardsOverLan.Game
 		/// <returns></returns>
 		public IEnumerable<WhiteCard> GetCurrentHand()
 		{
-			foreach (var card in _hand.ToArray())
-			{
-				yield return card;
-			}
+			return _hand.ToArray();
 		}
 
-		public bool SetSkipVoteState(bool voted)
+		public void SetSkipVoteState(bool voted)
 		{
 			lock (_skipVoteLock)
 			{
-				if (!Game.Settings.AllowBlackCardSkips || Game.Stage != GameStage.RoundInProgress || IsAutonomous || voted == _votedForSkip) return false;
-				_votedForSkip = voted;
+				if (!Game.Settings.AllowBlackCardSkips || Game.Stage != GameStage.RoundInProgress || IsAutonomous || voted == VotedForBlackCardSkip) return;
+				VotedForBlackCardSkip = voted;
 				Game.UpdateSkipVotes();
 				Console.WriteLine(voted ? $"{this} voted to skip black card" : $"{this} withdrew skip vote");
-				return true;
 			}
 		}
 
@@ -214,7 +203,7 @@ namespace CardsOverLan.Game
 		{
 			lock (_skipVoteLock)
 			{
-				_votedForSkip = false;
+				VotedForBlackCardSkip = false;
 			}
 		}
 
@@ -223,22 +212,23 @@ namespace CardsOverLan.Game
 		/// </summary>
 		/// <param name="cards">The cards to select. They must be present in the hand at the time of calling.</param>
 		/// <returns></returns>
-		public bool PlayCards(IEnumerable<WhiteCard> cards)
+		public void PlayCards(IEnumerable<WhiteCard> cards)
 		{
-			if (!CanPlayCards) return false;
-			var cardArray = cards.ToArray();
+			if (!CanPlayCards) return;
+			var whiteCards = cards as WhiteCard[] ?? cards.ToArray();
+			var cardArray = whiteCards.ToArray();
 
 			// Count how many custom cards they are playing
-			int numCustomCards = cards.Count(c => c.IsCustom);
+			var numCustomCards = whiteCards.Count(c => c.IsCustom);
 
 			// Make sure they have enough custom cards for what they're requesting
-			if (RemainingBlankCards < numCustomCards) return false;
+			if (RemainingBlankCards < numCustomCards) return;
 
 			// Make sure they own all the cards they want to play, and that they are playing the correct number of cards
-			if (cardArray.Length != Game.CurrentBlackCard.PickCount || cardArray.Any(c => !c.IsCustom && !HasWhiteCard(c))) return false;
+			if (cardArray.Length != Game.CurrentBlackCard.PickCount || cardArray.Any(c => !c.IsCustom && !HasWhiteCard(c))) return;
 
 			RemoveBlankCards(numCustomCards);
-			_hand.RemoveRange(cards);
+			_hand.RemoveRange(whiteCards);
 			_selectedCards.Clear();
 			_selectedCards.AddRange(cardArray);
 
@@ -247,10 +237,9 @@ namespace CardsOverLan.Game
 
 			RaiseCardsChanged();
 			RaiseSelectionChanged();
-			return true;
 		}
 
-		private async void RecordPlayedCards(WhiteCard[] cards)
+		private async void RecordPlayedCards(IEnumerable<WhiteCard> cards)
 		{
 			if (IsAutonomous) return;
 			await Task.Run(() =>
@@ -263,27 +252,25 @@ namespace CardsOverLan.Game
 			});
 		}
 
-		public bool UpgradeCard(WhiteCard card)
+		public void UpgradeCard(WhiteCard card)
 		{
-			if (!Game.Settings.UpgradesEnabled || card == null || !HasWhiteCard(card)) return false;
+			if (!Game.Settings.UpgradesEnabled || card == null || !HasWhiteCard(card)) return;
 			var tierCard = Game.GetNextTierCard(card);
-			if (tierCard == null) return false;
-			if (!SpendCoins(tierCard.TierCost)) return false;
+			if (tierCard == null) return;
+			if (!SpendCoins(tierCard.TierCost)) return;
 			_hand.Replace(card, tierCard);
 			RaiseCardsChanged();
-			Console.WriteLine($"{this} upgraded {card.ID} to {tierCard.ID} (-{tierCard.TierCost} CC)");
-			return true;
+			Console.WriteLine($"{this} upgraded {card.Id} to {tierCard.Id} (-{tierCard.TierCost} CC)");
 		}
 
-		public bool DiscardCard(WhiteCard card)
+		public void DiscardCard(WhiteCard card)
 		{
-			if (card == null || !HasWhiteCard(card)) return false;
-			if (!SpendDiscard()) return false;
+			if (card == null || !HasWhiteCard(card)) return;
+			if (!SpendDiscard()) return;
 			_hand.Remove(card);
 			Game.Deal(this);
 			RaiseCardsChanged();
 			AnalyticsManager.Instance.RecordDiscardAsync(card);
-			return true;
 		}
 
 		public async void AutoPlayAsync()
@@ -293,10 +280,10 @@ namespace CardsOverLan.Game
 			{
 				_botPlayDelays++;
 			}
-			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var pickCount = Game.CurrentBlackCard.DrawCount;
 			var cfg = Game.Settings.BotConfig;
-			int delayBase = _rng.Next(cfg.PlayMinBaseDelay, cfg.PlayMaxBaseDelay + 1);
-			int delayCards = _rng.Next(cfg.PlayMinPerCardDelay * pickCount, cfg.PlayMaxPerCardDelay * pickCount + 1);
+			var delayBase = _rng.Next(cfg.PlayMinBaseDelay, cfg.PlayMaxBaseDelay + 1);
+			var delayCards = _rng.Next(cfg.PlayMinPerCardDelay * pickCount, cfg.PlayMaxPerCardDelay * pickCount + 1);
 			await Task.Delay(delayBase + delayCards);
 			lock (_botPlayDelayLock)
 			{
@@ -315,11 +302,11 @@ namespace CardsOverLan.Game
 			{
 				_botJudgeDelays++;
 			}
-			int playCount = Game.GetRoundPlays().Count();
-			int pickCount = Game.CurrentBlackCard.DrawCount;
+			var playCount = Game.GetRoundPlays().Count();
+			var pickCount = Game.CurrentBlackCard.DrawCount;
 			var cfg = Game.Settings.BotConfig;
-			int delayCards = _rng.Next(cfg.JudgeMinPerCardDelay * pickCount, cfg.JudgeMaxPerCardDelay * pickCount + 1);
-			int delayPlays = _rng.Next(cfg.JudgeMinPerPlayDelay * playCount, cfg.JudgeMaxPerPlayDelay * playCount + 1);
+			var delayCards = _rng.Next(cfg.JudgeMinPerCardDelay * pickCount, cfg.JudgeMaxPerCardDelay * pickCount + 1);
+			var delayPlays = _rng.Next(cfg.JudgeMinPerPlayDelay * playCount, cfg.JudgeMaxPerPlayDelay * playCount + 1);
 			await Task.Delay(delayCards + delayPlays);
 			lock (_botJudgeDelayLock)
 			{
@@ -331,11 +318,10 @@ namespace CardsOverLan.Game
 			}
 		}
 
-		public bool JudgeCards(int winningPlayIndex)
+		public void JudgeCards(int winningPlayIndex)
 		{
-			if (!CanJudgeCards) return false;
+			if (!CanJudgeCards) return;
 			RaiseJudgedCards(winningPlayIndex);
-			return true;
 		}
 
 		public void AddBlankCards(int numBlankCards)
@@ -343,7 +329,7 @@ namespace CardsOverLan.Game
 			lock (_blankCardLock)
 			{
 				if (numBlankCards <= 0) return;
-				_blankCardsRemaining += numBlankCards;
+				RemainingBlankCards += numBlankCards;
 				RaiseCardsChanged();
 			}
 		}
@@ -352,8 +338,8 @@ namespace CardsOverLan.Game
 		{
 			lock (_blankCardLock)
 			{
-				if (numBlankCards == 0 || _blankCardsRemaining < numBlankCards) return;
-				_blankCardsRemaining -= numBlankCards;
+				if (numBlankCards == 0 || RemainingBlankCards < numBlankCards) return;
+				RemainingBlankCards -= numBlankCards;
 				RaiseCardsChanged();
 			}
 		}
@@ -363,7 +349,7 @@ namespace CardsOverLan.Game
 			lock(_blankCardLock)
 			{
 				if (numBlankCards < 0) return;
-				_blankCardsRemaining = numBlankCards;
+				RemainingBlankCards = numBlankCards;
 				RaiseCardsChanged();
 			}
 		}
@@ -387,16 +373,16 @@ namespace CardsOverLan.Game
 
 		public void ResetAwards()
 		{
-			_score = 0;
-			_coins = 0;
+			Score = 0;
+			Coins = 0;
 			_trophies.Clear();
 			RaiseAuxDataChanged();
 		}
 
 		public bool SpendCoins(int coins)
 		{
-			if (coins > _coins) return false;
-			_coins -= coins;
+			if (coins > Coins) return false;
+			Coins -= coins;
 			RaiseAuxDataChanged();
 			return true;
 		}
@@ -447,7 +433,7 @@ namespace CardsOverLan.Game
 		/// <param name="points">The number of points to add. Use a negative number to remove points.</param>
 		public void AddPoints(int points)
 		{
-			_score += points;
+			Score += points;
 			if (points != 0)
 			{
 				RaiseScoreChanged();
@@ -456,7 +442,7 @@ namespace CardsOverLan.Game
 
 		public void AddAuxPoints(int auxPoints)
 		{
-			_coins += auxPoints > 0 ? auxPoints : 0;
+			Coins += auxPoints > 0 ? auxPoints : 0;
 			RaiseAuxDataChanged();
 		}
 
@@ -485,7 +471,7 @@ namespace CardsOverLan.Game
 
 		private void RaiseScoreChanged()
 		{
-			ScoreChanged?.Invoke(this, _score);
+			ScoreChanged?.Invoke(this, Score);
 		}
 
 		private void RaiseSelectionChanged()
