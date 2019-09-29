@@ -141,13 +141,13 @@ namespace CardsOverLan.Game
 				.SelectMany(d => d.GetAllCards())
 				.Where(c => settings.RequiredLanguages?.Length == 0 || (settings.RequiredLanguages ?? throw new InvalidOperationException()).All(c.SupportsLanguage)))
 			{
-				if (!_cards.TryGetValue(card.ID, out var existingCard))
+				if (!_cards.TryGetValue(card.Id, out var existingCard))
 				{
 					_cards.Add(card.Id, card);
 				}
 				else
 				{
-					Console.WriteLine($"Duplicate card ID: {card.ID} in [{card.Owner.Name}] and [{existingCard.Owner.Name}]");
+					Console.WriteLine($"Duplicate card ID: {card.Id} in [{card.Owner.Name}] and [{existingCard.Owner.Name}]");
 				}
 			}
 
@@ -1164,11 +1164,11 @@ namespace CardsOverLan.Game
 			// Check if the czar voted for themselves somehow
 			if (votedSelf)
 			{
-				_winningPlayIndex = (winningPlayIndex + 1 + _rng.Next(_roundPlays.Count - 1)) % _roundPlays.Count;
+				WinningPlayIndex = (winningPlayIndex + 1 + _rng.Next(_roundPlays.Count - 1)) % _roundPlays.Count;
 			}
 			else
 			{
-				_winningPlayIndex = winningPlayIndex;
+				WinningPlayIndex = winningPlayIndex;
 			}
 
 			JudgeVotedSelf = votedSelf;
