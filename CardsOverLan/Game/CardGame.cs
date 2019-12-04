@@ -139,7 +139,12 @@ namespace CardsOverLan.Game
 			// Combine decks and remove duplicates
 			foreach (var card in _packs
 				.SelectMany(d => d.GetAllCards())
-				.Where(c => settings.RequiredLanguages?.Length == 0 || (settings.RequiredLanguages ?? throw new InvalidOperationException()).All(c.SupportsLanguage)))
+				.Where(
+					// Either the server has no language requirements, ...
+					c => settings.RequiredLanguages?.Length == 0 
+					// ... or pack supports all required languages.
+					|| (settings.RequiredLanguages ?? throw new InvalidOperationException()).All(c.SupportsLanguage))
+			)
 			{
 				if (!_cards.TryGetValue(card.Id, out var existingCard))
 				{
@@ -404,7 +409,6 @@ namespace CardsOverLan.Game
 			Stage = GameStage.GameStarting;
 
 			RaisePlayersChanged();
-
 		}
 
 		private void RemoveAllPreservedPlayers()

@@ -14,28 +14,27 @@ A Cards Against Humanity clone you can host on your own network.
 ## Features
 
 * **Completely local.** Host it on any old system. No Internet connection necessary!
-* **Mobile friendly.** The game was designed in a responsive manner, so it's almost like you're really playing the game and not sitting in a sad circle staring at screens.
+* **Mobile friendly.** The game was designed to work on phones, so it's almost like you're really playing a game and not sitting in a sad circle staring at screens.
 * **Custom decks.** Write your own decks with a simple JSON format. You can also mix and match cards by adding multiple decks to your server.
 * **Localizable cards.** Cards written in multiple languages will adapt to the system language of your device.
 * **Trophies.** At the end of each game, see what Special Kind of Awful™ your friends really are.
-* **Bots.** Add fake player to your game that pick random cards which are still funnier than you.
+* **Bots.** Add fake players to your game that pick random cards, yet are still funnier than you.
 * **Card upgrades.** Some card may be "upgraded" by using Card Coins, which you get when you win a round. They might have more uses later, or removed entirely! Isn't that fun?
 * **Skippable cards.** If you don't like the current black card, you can vote to skip it with the press of a button.
 * **Idle detection.** If players are idle, the server ignores them to make them feel socially awkward.
-* **Player preservation.** In conjunction with idle detection, if a player disconnects and returns within a set time limit, they continue as if they never left the game.
+* **Player preservation.** If a player disconnects and returns within a set time limit, they can continue on as if they never left the game.
 
 ## How does it work?
 
-The game server is a [Nancy](http://nancyfx.org/) web server combined with a [WebSocket-Sharp](https://github.com/sta/websocket-sharp) real-time communication system.
-The game server dishes out the static assets like Emeril Lagasse with his Baby Bam, and the WebSocket server keeps the player sessions running like Hell's Kitchen. ***[BAM!](https://www.youtube.com/watch?v=XvazQUYG1kE)***
+The game server is a [Nancy](http://nancyfx.org/) web server combined with a [WebSocket-Sharp](https://github.com/sta/websocket-sharp) server. Basically, it's hosted like a website, but right inside your own home! Incredible.
 
 ## How do I use it?
 
 The root directory of the project contains three important folders:
 
-* `/packs` contains all of the JSON-formatted card decks, trophies and taunts for the game.
-* `/web_content` contains the web UI code.
-* `/CardsOverLan` contains the server that keeps the game kickin'.
+* `/packs` contains all of the JSON-formatted card decks, trophies and bot taunts for the game.
+* `/web_content` contains the webapp code.
+* `/CardsOverLan` contains the server code.
 
 ## Building the Server
 
@@ -65,7 +64,7 @@ This launches the server on whatever port you specified on the startup of the pr
 
 ### Visual Studio
 
-Open the `CardsOverLan` solution file in Visual Studio. (You need to have Visual Studio 2017's .NET Core support added, see [here](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore2x) for instructions.
+Open the `CardsOverLan` solution file in Visual Studio. (You need to have Visual Studio's .NET Core support added, see [here](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore2x) for instructions.
 
 Build the project after it loads itself. You should find a copy of the server in one of the subdirectories of the newly-created `bin` folder.
 
@@ -119,7 +118,7 @@ The `settings.json` file is the place to be when messing around with how the gam
 |`player_per_card_timeout_bonus`|Integer|Number of additional seconds per card added to player's timeout when playing.|
 |`require_languages`|String[]|Excludes any cards that don't support all of the specified language codes. Leave empty to disable.|
 |`round_end_timeout`|Integer|Time, in milliseconds, to wait before starting the next round.|
-|`server_name`|String|The server name displayed in on the join screen.|
+|`server_name`|String|The server name displayed on the join screen.|
 |`server_password`|String|The password to the server. Leave blank to disable.|
 |`use_packs`|String[]|Array of pack IDs. Forces the server to only load packs in this array. Leave empty to load all available packs.|
 |`web_root`|String|The path to the webapp directory. Leave blank to default to `./web_content`.|
@@ -145,11 +144,11 @@ The following table explains the dials on the bot's brain. All values are in mil
 
 ### Why?
 
-I was bored and wanted a fun project to work on over winter break.
+I was bored.
 
-### There's already other projects that do this. Why not just use those?
+### There's already other projects like this. Why not just use those?
 
-They're all good in their own way, and each of them has different strengths. Below is a (non-exhaustive) comparison table:
+They're all decent. Each of them has different strengths/weaknesses. Below is a (non-exhaustive) comparison table:
 
 |                       |**PYX**|**Azala**|**Cardcast**|**Cards Over LAN**|
 |-----------------------|:-:|:---:|:------:|:------------:|
@@ -177,27 +176,27 @@ Yes.
 
 ### Why the emphasis on LAN?
 
-Cards Over LAN is designed to cater to local small group/party settings to provide a controlled, reliable service that can be easily customized.
-Moreover, it makes it more suitable for situations where physical cards may be inconvenient, or Internet service might be unavailable (such as while travelling).
+Cards Over LAN is designed to cater to local small group/party settings and provide a controlled, reliable service that can be easily customized.
+Moreover, it makes it suitable for situations where physical cards may be inconvenient, or Internet service might be unavailable or unreliable (such as during travel).
 
-Here are some creative ways you can play CoLAN:
+Here are some creative ways you can play:
 
 * Set it up on your home computer and host games privately on your network
 * Use a LAN tunneling service (e.g. Hamachi) to allow people to join local games from anywhere in the world
 * Play on the go-- Host on a portable LAN using a travel router or hotspot
 * Use a Raspberry Pi as a dedicated CAH server
 
-### Can I host this on a public webserver?
+### Can I host this on the Internet?
 
-Yes. But you should do it behind a remote proxy with HTTPS forwarding to be safe.
+Yes, there's literally nothing stopping you. But you should do it behind a reverse proxy with HTTPS forwarding to be safe. Also, some TLDs don't allow unencrypted traffic, so you might be forced to use HTTPS whether you want to or not. Also, it's just a good idea.
 
 ### You suck at web development! I could do this much better!
 
 That's not a question.
 
-### You should use React/Angular/Bootstrap/Vue.
+### You should use React/Angular/Bootstrap/Vue/etc.
 
-That's not a question either. Also the answer is no.
+That's not a question either.
 
 ### There's a feature I want you to add.
 
@@ -205,9 +204,9 @@ Submit an issue and I'll send your request to the great and powerful Oz for pond
 
 ### Why don't you include the original cards from the game?
 
-The original deck is licensed under the Creative Commons BY-NC-SA 2.0 license.
+The official CAH cards are licensed under the Creative Commons BY-NC-SA 2.0 license.
 
-I would have to place all the code under this license otherwise, but the CC isn't designed for code, so I decoupled the base deck from the server and placed it [here](https://github.com/cardsoverlan/cah-packs).
+If I bundled them with my code, I would have to place all the code under that license, but the CC isn't designed for code, so I decoupled the original deck from this repo and placed it [here](https://github.com/cardsoverlan/cah-packs). Just download the files and place them in your `packs` folder.
 
 ### Can I filter cards out of the deck that morally offend me?
 
@@ -229,13 +228,34 @@ Likewise, if you only hate cards that have *both* violence and sexual content, t
 }
 ```
 
-Reload the server after making any changes and enjoy your morally superior version of a purposely offensive card game.
+Reload the server after making any changes and enjoy your morally superior version of an intentionally offensive card game.
 
-### How can I contribute?
+### I have Duplicate Prevention enabled on a public server but the server thinks my friends are duplicates. How come?
+
+This is caused by your router's NAT settings. NAT is a setting that can make the traffic from multiple people on your network look like it's coming from the same IP address, so the server thinks it's all coming from one person because it doesn't know better. 
+
+If you can't change your NAT settings or don't know how,
+you might have to disable duplicate prevention, or have your friends connect over a different network (e.g. mobile data).
+
+### I'm unable to load the webapp / I can't connect to my game, what gives?
+
+Okay, deep breaths, there's no need to shout. First, let's check a few things:
+
+* Make sure you're connecting to the **webserver port** and not the **WebSocket port**. The latter is for live game session traffic and is *far* less exciting to view in a browser.
+* **If you are trying to connect from a different subnet/network:** Make sure you forwarded the correct ports and there are no firewalls blocking the traffic.
+* Make sure the server app is actually running. Yes, I'm serious. I have seen people forget this.
+* Make sure there are no error messages in the server console (especially ones mentioning being unable to reserve ports).
+* If you are trying to connect via a hostname, make sure your DNS server/router knows the hostname exists and that it points to the correct node on the network.
+* Make sure your network allows traffic between nodes on the same subnet.
+* Make sure that WebSocket connections are allowed in your browser's settings.
+
+If none of the above troubleshooting tips help you, it may simply be that the universe hates you. Drop into the Discord server and we might be able to point you in the right direction.
+
+### How can I contribute to this project?
 
 Regarding code contributions, send a pull request with any changes and I'll take a look whenever I have the chance.
 
-If you want to translate some of the deck or the phrases used in the UI, feel free to send a pull request for that too!
+If you want to translate cards or UI text into your native language, feel free to send a pull request for that too! Translations help the project reach a wider audience.
 
 ### Where's the legal stuff?
 

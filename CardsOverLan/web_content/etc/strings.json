@@ -342,7 +342,7 @@
     },
     "ui_accent_color_placeholder": {
         "en": "Type a color name (e.g. \"dead babies\")",
-        "de": "Farbename hier eingeben"
+        "de": "Farbename eingeben"
     },
     "ui_menu_title": {
         "en": "Menu",
@@ -381,7 +381,7 @@
         "de": "Runde {0} hat begonnen."
     },
     "ui_notify_player_judging": {
-        "en": "Cards are being judged."
+        "en": "The Czar is selecting a winner..."
     },
     "ui_notify_czar_judging": {
         "en": "You're up. Choose the winning play."
