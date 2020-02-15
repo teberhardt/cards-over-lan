@@ -4,8 +4,6 @@ A Cards Against Humanity clone for hosting on your home network.
 
 [Official Discord Server](https://discord.gg/VsZkprN)
 
-<p align="center"><img src="https://thumbs.gfycat.com/HealthyInformalGalapagoshawk-size_restricted.gif"><p>
-
 |**This software is currently in beta. It may contain bugs that impact gameplay.**|
 |---|
 
