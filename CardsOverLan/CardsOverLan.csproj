@@ -132,9 +132,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rmdir /s /q "$(TargetDir)web_content"
+    <PostBuildEvent Condition=" '$(OS)' != 'Unix' ">rmdir /s /q "$(TargetDir)web_content"
 rmdir /s /q "$(TargetDir)packs"
 xcopy /e /s /y /i "$(SolutionDir)web_content" "$(TargetDir)web_content"
 xcopy /e /s /y /i "$(SolutionDir)packs" "$(TargetDir)packs"</PostBuildEvent>
+      <PostBuildEvent Condition=" '$(OS)' == 'Unix' ">rm -rf "$(TargetDir)web_content"
+rm -rf "$(TargetDir)packs"
+cp -r "$(SolutionDir)web_content" "$(TargetDir)web_content"
+cp -r "$(SolutionDir)packs" "$(TargetDir)packs"</PostBuildEvent>
   </PropertyGroup>
 </Project>
