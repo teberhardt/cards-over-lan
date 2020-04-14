@@ -1,12 +1,13 @@
 FROM mono:latest
 EXPOSE 80
+EXPOSE 3000
 
 WORKDIR /usr/src/app/build
 
-Copy CardsOverLan/ CardsOverLan/ 
-Copy packs/ packs/
-Copy web_content/ web_content/
-Copy CardsOverLan.sln .
+COPY CardsOverLan/ CardsOverLan/ 
+COPY packs/ packs/
+COPY web_content/ web_content/
+COPY CardsOverLan.sln .
 
 RUN nuget restore CardsOverLan.sln
 RUN msbuild CardsOverLan.sln
